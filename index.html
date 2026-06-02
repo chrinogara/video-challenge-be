@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Video Challenge BE — Referee Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F1EA; --paper-2:#EAE6DB; --ink:#15171C; --ink-soft:#3A3D45;
+    --muted:#6E6F73; --line:#D8D3C7; --accent:#F24E1E; --accent-press:#D33F14;
+    --teal:#0F5C4C; --ok:#1E8E5A; --warn:#C9881C; --bad:#C53A20; --white:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Hanken Grotesk",sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:"Archivo",sans-serif;font-weight:800;line-height:1.02;letter-spacing:-0.02em;margin:0}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:"Archivo";font-weight:700;font-size:14px;padding:12px 18px;border-radius:2px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;transition:transform .12s ease,background .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn:disabled{opacity:.6;cursor:default;transform:none}
+  .btn.accent{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.accent:hover{background:var(--accent-press);border-color:var(--accent-press)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper)}
+  nav{position:sticky;top:0;z-index:50;background:rgba(244,241,234,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .navin{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{display:flex;align-items:center;gap:11px}
+  .badge{width:40px;height:40px;border-radius:2px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:22px}
+  .brand b{font-family:"Archivo";font-weight:800;font-size:16px;display:block;line-height:1}
+  .brand span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .navlinks{display:flex;align-items:center;gap:26px}
+  .navlinks a{font-family:"Archivo";font-weight:600;font-size:14px;color:var(--ink-soft)}
+  .navlinks a:hover{color:var(--ink)}
+  .lang{display:flex;border:1.5px solid var(--ink);border-radius:2px;overflow:hidden}
+  .lang button{font-family:"Archivo";font-weight:700;font-size:12px;padding:7px 11px;border:none;background:transparent;color:var(--ink);cursor:pointer}
+  .lang button+button{border-left:1.5px solid var(--ink)}
+  .lang button.on{background:var(--ink);color:var(--paper)}
+  header.hero{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+  .hero .wrap{padding-top:84px;padding-bottom:92px;position:relative;z-index:2}
+  .courtlines{position:absolute;inset:0;z-index:1;opacity:.10;pointer-events:none}
+  .courtlines i{position:absolute;background:var(--paper)}
+  .kick{font-family:"Archivo";font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-block;margin-bottom:20px;opacity:0;animation:rise .7s .05s forwards}
+  .hero h1{font-size:clamp(40px,7vw,82px);max-width:14ch;opacity:0;animation:rise .8s .12s forwards}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{font-size:19px;max-width:52ch;margin:26px 0 34px;color:#C9C7C0;opacity:0;animation:rise .8s .22s forwards}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:rise .8s .32s forwards}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  .kick,.hero h1,.hero p,.hero .cta{transform:translateY(14px)}
+  section{padding:88px 0}
+  .seclabel{font-family:"Archivo";font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .sectitle{font-size:clamp(30px,4.4vw,46px);max-width:18ch}
+  .secsub{font-size:17px;color:var(--muted);max-width:60ch;margin-top:16px}
+  .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:3px;padding:26px;transition:transform .15s ease,border-color .15s ease}
+  .card:hover{transform:translateY(-4px);border-color:var(--ink)}
+  .card .ic{width:46px;height:46px;border-radius:2px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px}
+  .card.hl{outline:3px solid var(--accent);outline-offset:-1px}
+  .card h3{font-size:21px;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:15px;margin:0 0 18px}
+  .card a.more{font-family:"Archivo";font-weight:700;font-size:13px;color:var(--accent);display:inline-flex;gap:6px;align-items:center}
+  #documents{background:var(--paper-2)}
+  .doclist{margin-top:42px;display:grid;gap:12px}
+  .doc{display:flex;align-items:center;gap:16px;background:var(--white);border:1px solid var(--line);border-radius:3px;padding:16px 20px}
+  .doc .dic{width:42px;height:42px;border-radius:2px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:21px;color:var(--accent)}
+  .doc .meta{flex:1;min-width:0}
+  .doc .meta b{font-family:"Archivo";font-weight:700;font-size:15px;display:block}
+  .doc .meta span{font-size:13px;color:var(--muted)}
+  .doc .tag{font-family:"Archivo";font-weight:700;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--teal);background:#E2EFEA;padding:4px 9px;border-radius:2px}
+  .empty{color:var(--muted);font-size:15px;padding:20px 0}
+  .vidgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:42px}
+  .vid{background:var(--white);border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer}
+  .vid .thumb{aspect-ratio:16/9;background:var(--ink);position:relative;display:flex;align-items:center;justify-content:center}
+  .vid .thumb .play{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px}
+  .vid .thumb .dur{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.7);color:#fff;font-size:12px;font-weight:600;padding:3px 7px;border-radius:2px}
+  .vid .vbody{padding:15px 17px}
+  .vid .vbody b{font-family:"Archivo";font-weight:700;font-size:15px;display:block;margin-bottom:3px}
+  .vid .vbody span{font-size:13px;color:var(--muted)}
+  .upload{border:2px dashed var(--line);border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px;color:var(--muted);background:transparent;cursor:pointer}
+  .upload .uic{font-size:34px;color:var(--accent);margin-bottom:8px}
+  .upload b{font-family:"Archivo";color:var(--ink);font-size:15px}
+  #report{background:var(--ink);color:var(--paper)}
+  #report .seclabel{color:var(--accent)}
+  #report .secsub{color:#C2C0BA}
+  .formcard{background:var(--paper);color:var(--ink);border-radius:4px;margin-top:42px;padding:34px;max-width:760px}
+  .fgroup{margin-bottom:26px}
+  .fgroup>legend{font-family:"Archivo";font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:block;border:0;padding:0}
+  .field{margin-bottom:16px}
+  .field>label{font-weight:600;font-size:14px;display:block;margin-bottom:7px}
+  .field>label .req{color:var(--accent)}
+  input[type=text],input[type=date],input[type=password],input[type=url],select,textarea{width:100%;font-family:"Hanken Grotesk";font-size:15px;color:var(--ink);background:var(--white);border:1.5px solid var(--line);border-radius:2px;padding:11px 13px;outline:none;transition:border-color .12s}
+  input.err{border-color:var(--bad)}
+  input:focus,select:focus,textarea:focus{border-color:var(--ink)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:2px;overflow:hidden}
+  .seg button{font-family:"Archivo";font-weight:700;font-size:13px;padding:9px 15px;border:none;background:transparent;color:var(--ink);cursor:pointer;transition:background .12s}
+  .seg button+button{border-left:1.5px solid var(--ink)}
+  .seg button.on{background:var(--ink);color:var(--paper)}
+  .checkrow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+  .checkrow:last-child{border-bottom:1px solid var(--line)}
+  .checkrow span{font-size:14.5px;font-weight:500}
+  .counters{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .counter{background:var(--white);border:1px solid var(--line);border-radius:3px;padding:14px;text-align:center}
+  .counter .cl{font-family:"Archivo";font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px}
+  .counter.tot .cl{color:var(--ink)} .counter.right .cl{color:var(--ok)} .counter.wrong .cl{color:var(--bad)}
+  .ctrls{display:flex;align-items:center;justify-content:center;gap:12px}
+  .ctrls button{width:32px;height:32px;border-radius:2px;border:1.5px solid var(--ink);background:var(--white);font-size:18px;font-weight:700;cursor:pointer;line-height:1}
+  .ctrls .v{font-family:"Archivo";font-weight:800;font-size:22px;min-width:24px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:"Archivo";font-weight:700;font-size:13px;padding:9px 15px;border:1.5px solid var(--line);border-radius:30px;background:var(--white);color:var(--ink);cursor:pointer;transition:.12s}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .stars{display:flex;gap:8px;font-size:30px;color:var(--line);cursor:pointer}
+  .stars i.on{color:var(--warn)}
+  .sendnote{font-size:13px;color:var(--muted);margin:6px 0 14px;display:flex;gap:8px;align-items:flex-start}
+  .sendnote i{color:var(--accent);font-size:16px;margin-top:2px}
+  #submitstatus{font-size:14px;margin-top:12px;min-height:1px}
+  #submitstatus.ok{color:var(--ok)} #submitstatus.bad{color:var(--bad)}
+  #output{display:none;margin-top:30px}
+  #output.show{display:block}
+  .preview{background:var(--white);color:#000;border:1px solid var(--line);border-radius:3px;padding:34px;max-width:760px;margin:0 auto}
+  .preview h2{font-family:"Archivo";font-weight:800;font-size:24px;color:#000}
+  .preview .phead{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--accent);padding-bottom:14px;margin-bottom:20px}
+  .preview .pref{font-size:13px;color:#555;text-align:right}
+  .preview table{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:18px}
+  .preview td{padding:8px 6px;border-bottom:1px solid #eee;vertical-align:top}
+  .preview td.k{color:#666;width:55%}
+  .preview td.v{font-weight:600;text-align:right}
+  .preview .ptitle{font-family:"Archivo";font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:18px 0 6px}
+  .okline{display:flex;gap:10px;align-items:center;background:#E7F4EC;border:1px solid #BfE3CC;color:#136B3E;border-radius:3px;padding:13px 16px;font-size:14px;margin-bottom:16px}
+  .okline i{font-size:20px}
+  #manage{background:var(--paper-2)}
+  .mng-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+  .mng-grid .card h3{font-size:18px;margin-bottom:16px}
+  .mng-grid .field{margin-bottom:12px}
+  .mrow{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:9px 13px;margin-bottom:8px;font-size:14px}
+  .mrow .rm{border:none;background:transparent;color:var(--bad);font-size:20px;cursor:pointer;line-height:1}
+  .mlist{margin-top:14px}
+  #mng_err{color:var(--bad);font-size:13px;margin-top:8px}
+  footer{background:var(--ink);color:#9A988F;border-top:1px solid #2a2d34;padding:40px 0}
+  footer .fin{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;align-items:center}
+  footer b{font-family:"Archivo";color:var(--paper)}
+  @media (max-width:860px){.navlinks{display:none}.feat,.vidgrid,.mng-grid{grid-template-columns:1fr}.row2{grid-template-columns:1fr}.formcard{padding:22px}}
+  @media print{
+    nav,header.hero,section:not(#report),#report .wrap>*:not(#output),footer,.formcard{display:none !important}
+    body{background:#fff}#report{background:#fff;padding:0}#output{display:block !important;margin:0}.preview{border:none;max-width:100%;padding:0}.btnbar{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap navin">
+    <div class="brand">
+      <div class="badge">&#11041;</div>
+      <div><b>Video Challenge BE</b><span data-i18n="brandsub">Referee portal</span></div>
+    </div>
+    <div class="navlinks">
+      <a href="#documents" data-i18n="nav_docs">Documents</a>
+      <a href="#video" data-i18n="nav_video">Video &amp; VAR</a>
+      <a href="#report" data-i18n="nav_report">Report</a>
+    </div>
+    <div class="lang">
+      <button data-l="en" class="on" onclick="setLang('en')">EN</button>
+      <button data-l="fr" onclick="setLang('fr')">FR</button>
+      <button data-l="nl" onclick="setLang('nl')">NL</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="courtlines">
+    <i style="left:0;right:0;top:50%;height:2px"></i><i style="top:0;bottom:0;left:50%;width:2px"></i>
+    <i style="left:8%;right:8%;top:18%;height:2px"></i><i style="left:8%;right:8%;bottom:18%;height:2px"></i>
+  </div>
+  <div class="wrap">
+    <span class="kick" data-i18n="hero_kick">Belgian Volleyball &middot; Season 2026/27</span>
+    <h1 data-i18n="hero_h1">The home of <em>Video Challenge</em> referees</h1>
+    <p data-i18n="hero_p">Rules, video review and your post-match report — everything in one place, in your language. No account needed.</p>
+    <div class="cta">
+      <a href="#report" class="btn accent" data-i18n="hero_cta1">Fill the report</a>
+      <a href="#documents" class="btn ghost" style="border-color:var(--paper);color:var(--paper)" data-i18n="hero_cta2">Browse documents</a>
+    </div>
+  </div>
+</header>
+
+<section id="overview">
+  <div class="wrap">
+    <div class="seclabel" data-i18n="feat_label">What's inside</div>
+    <h2 class="sectitle" data-i18n="feat_title">Everything a Video Challenge referee needs</h2>
+    <div class="feat">
+      <div class="card"><div class="ic">&#128196;</div><h3 data-i18n="f1t">Documents</h3><p data-i18n="f1d">Download rules and guidelines as PDF.</p><a class="more" href="#documents"><span data-i18n="f_open">Open</span> &rarr;</a></div>
+      <div class="card"><div class="ic">&#9654;</div><h3 data-i18n="f2t">Video &amp; VAR</h3><p data-i18n="f2d">Watch clips and upload challenge footage.</p><a class="more" href="#video"><span data-i18n="f_open">Open</span> &rarr;</a></div>
+      <div class="card hl"><div class="ic">&#10003;</div><h3 data-i18n="f3t">Challenge report</h3><p data-i18n="f3d">Fill the form; it becomes a PDF, emailed automatically.</p><a class="more" href="#report"><span data-i18n="f_open">Open</span> &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="documents">
+  <div class="wrap">
+    <div class="seclabel" data-i18n="doc_label">Library</div>
+    <h2 class="sectitle" data-i18n="doc_title">Documents &amp; downloads</h2>
+    <p class="secsub" data-i18n="doc_sub">Official rules and Video Challenge protocols.</p>
+    <div class="doclist" id="doclist"></div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <div class="seclabel" data-i18n="vid_label">Video hub</div>
+    <h2 class="sectitle" data-i18n="vid_title">Video &amp; VAR review</h2>
+    <p class="secsub" data-i18n="vid_sub">Training clips and contested challenges.</p>
+    <div class="vidgrid" id="vidgrid"></div>
+    <div id="clipstatus" style="margin-top:14px;font-size:14px;color:var(--ok)"></div>
+  </div>
+</section>
+
+<section id="report">
+  <div class="wrap">
+    <div class="seclabel" data-i18n="rep_label">After the match</div>
+    <h2 class="sectitle" data-i18n="rep_title">Video Challenge report</h2>
+    <p class="secsub" data-i18n="rep_sub">To be completed at the end of each game. Just enter your name.</p>
+    <div class="formcard" id="formcard">
+      <fieldset class="fgroup" style="border:0;margin:0;padding:0">
+        <legend data-i18n="g_match">Match</legend>
+        <div class="row2">
+          <div class="field"><label data-i18n="l_ref">Challenge referee <span class="req">*</span></label><input type="text" id="f_ref" list="refs" data-i18n-ph="ph_ref" placeholder="Type your name"><datalist id="refs"></datalist></div>
+          <div class="field"><label data-i18n="l_date">Match date</label><input type="date" id="f_date"></div>
+        </div>
+        <div class="field"><label data-i18n="l_league">League</label><br>
+          <div class="seg" id="seg_league"><button class="on" data-v="Men" data-i18n="o_men">Men</button><button data-v="Women" data-i18n="o_women">Women</button></div>
+        </div>
+        <div class="field"><label data-i18n="l_host">Host team</label><select id="f_team"></select></div>
+      </fieldset>
+      <fieldset class="fgroup" style="border:0;margin:0;padding:0">
+        <legend data-i18n="g_check">Pre-game checklist</legend>
+        <div class="checkrow"><span data-i18n="c1">Arrived 1h30 before the match</span><div class="seg" data-k="arrive"><button class="on" data-v="Yes" data-i18n="o_yes">Yes</button><button data-v="No" data-i18n="o_no">No</button></div></div>
+        <div class="checkrow"><span data-i18n="c2">TR on-site at the sports hall</span><div class="seg" data-k="tr_site"><button class="on" data-v="Yes" data-i18n="o_yes">Yes</button><button data-v="No" data-i18n="o_no">No</button></div></div>
+        <div class="checkrow"><span data-i18n="c3">Preliminary camera check</span><div class="seg" data-k="cams"><button class="on" data-v="Operational" data-i18n="o_op">Operational</button><button data-v="Non operational" data-i18n="o_nop">Non op.</button></div></div>
+        <div class="checkrow"><span data-i18n="c4">Tablets available</span><div class="seg" data-k="tablets"><button class="on" data-v="Yes" data-i18n="o_yes">Yes</button><button data-v="No" data-i18n="o_no">No</button></div></div>
+        <div class="checkrow"><span data-i18n="c5">Headsets functioning properly</span><div class="seg" data-k="headsets"><button class="on" data-v="Yes" data-i18n="o_yes">Yes</button><button data-v="No" data-i18n="o_no">No</button></div></div>
+        <div class="checkrow"><span data-i18n="c6">Official English terminology used</span><div class="seg" data-k="terms"><button class="on" data-v="Yes" data-i18n="o_yes">Yes</button><button data-v="No" data-i18n="o_no">No</button></div></div>
+        <div class="checkrow"><span data-i18n="c7">TR remained available during the game</span><div class="seg" data-k="tr_game"><button class="on" data-v="Yes" data-i18n="o_yes">Yes</button><button data-v="No" data-i18n="o_no">No</button></div></div>
+        <div class="checkrow"><span data-i18n="c8">Cooperation with scoreboard &amp; broadcast</span><div class="seg" data-k="coop"><button class="on" data-v="Good" data-i18n="o_good">Good</button><button data-v="Sufficient" data-i18n="o_suff">Suff.</button><button data-v="Not sufficient" data-i18n="o_nsuff">Not suff.</button></div></div>
+      </fieldset>
+      <fieldset class="fgroup" style="border:0;margin:0;padding:0">
+        <legend data-i18n="g_data">Challenge data</legend>
+        <div class="counters">
+          <div class="counter tot"><div class="cl" data-i18n="cnt_tot">Total <span class="req">*</span></div><div class="ctrls" data-k="total"><button class="dec">&minus;</button><span class="v">0</span><button class="inc">+</button></div></div>
+          <div class="counter right"><div class="cl" data-i18n="cnt_right">Team right</div><div class="ctrls" data-k="right"><button class="dec">&minus;</button><span class="v">0</span><button class="inc">+</button></div></div>
+          <div class="counter wrong"><div class="cl" data-i18n="cnt_wrong">Team wrong</div><div class="ctrls" data-k="wrong"><button class="dec">&minus;</button><span class="v">0</span><button class="inc">+</button></div></div>
+        </div>
+        <div class="checkrow" style="margin-top:16px"><span data-i18n="c9">At least one request by R1</span><div class="seg" data-k="r1"><button data-v="Yes" data-i18n="o_yes">Yes</button><button class="on" data-v="No" data-i18n="o_no">No</button></div></div>
+      </fieldset>
+      <fieldset class="fgroup" style="border:0;margin:0;padding:0">
+        <legend data-i18n="g_issues">Issues &amp; feedback</legend>
+        <div class="field"><label data-i18n="l_issues">Issues encountered <span class="req">*</span></label>
+          <div class="chips" id="chips_issue">
+            <button class="chip on" data-v="No problem" data-i18n="iss_none">No problem</button>
+            <button class="chip" data-v="System components" data-i18n="iss_sys">System components</button>
+            <button class="chip" data-v="Broadcast screen" data-i18n="iss_bc">Broadcast screen</button>
+            <button class="chip" data-v="Other" data-i18n="iss_oth">Other</button>
+          </div>
+        </div>
+        <div class="field"><label data-i18n="l_sol">Solutions found</label><textarea id="f_sol" rows="3" data-i18n-ph="ph_sol" placeholder="Describe briefly…"></textarea></div>
+        <div class="field"><label data-i18n="l_rate">Experience rating</label><div class="stars" id="stars"><i data-v="1">&#9733;</i><i data-v="2">&#9733;</i><i data-v="3">&#9733;</i><i data-v="4">&#9733;</i><i data-v="5">&#9733;</i></div></div>
+      </fieldset>
+      <div class="sendnote"><i>&#10022;</i><span data-i18n="send_note">When you submit, a PDF is generated and emailed to cnogara25@gmail.com.</span></div>
+      <button class="btn accent" style="width:100%;justify-content:center;font-size:15px;padding:14px" id="genbtn" data-i18n="btn_send">Generate PDF &amp; send</button>
+      <div id="submitstatus"></div>
+    </div>
+    <div id="output">
+      <div class="okline btnbar"><i>&#10003;</i><span id="okmsg" data-i18n="sent_ok">Report sent and emailed to cnogara25@gmail.com.</span></div>
+      <div class="btnbar" style="display:flex;gap:12px;margin-bottom:18px;justify-content:flex-end">
+        <button class="btn ghost" style="border-color:var(--paper);color:var(--paper)" onclick="window.print()" data-i18n="btn_print">Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('output').classList.remove('show');document.getElementById('report').scrollIntoView({behavior:'smooth'})" data-i18n="btn_edit">Back to form</button>
+      </div>
+      <div class="preview" id="preview"></div>
+    </div>
+  </div>
+</section>
+
+<section id="manage">
+  <div class="wrap">
+    <div class="seclabel" data-i18n="mng_label">Admin</div>
+    <h2 class="sectitle" data-i18n="mng_title">Library management</h2>
+    <p class="secsub" data-i18n="mng_sub">Add or remove documents and videos.</p>
+    <div id="mng_gate" style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">
+      <input type="password" id="mng_code" data-i18n-ph="ph_code" placeholder="admin password" style="max-width:260px">
+      <button class="btn" id="mng_unlock" data-i18n="mng_unlock">Unlock</button>
+    </div>
+    <div id="mng_err"></div>
+    <div id="mng_panel" style="display:none">
+      <div class="mng-grid">
+        <div class="card">
+          <h3 data-i18n="mdoc">Documents</h3>
+          <div class="field"><input type="text" id="d_title" data-i18n-ph="ph_dtitle" placeholder="Document title"></div>
+          <div class="field"><input type="text" id="d_cat" data-i18n-ph="ph_dcat" placeholder="Category (e.g. Rules)"></div>
+          <div class="field"><input type="file" id="d_file" accept="application/pdf"></div>
+          <button class="btn accent" id="add_doc" data-i18n="m_addd">Add document</button>
+          <div class="mlist" id="mng_doclist"></div>
+        </div>
+        <div class="card">
+          <h3 data-i18n="mvid">Videos</h3>
+          <div class="field"><input type="text" id="v_title" data-i18n-ph="ph_vtitle" placeholder="Video title"></div>
+          <div class="field"><input type="text" id="v_sub" data-i18n-ph="ph_vsub" placeholder="Subtitle (e.g. Training · 8 clips)"></div>
+          <div class="field"><input type="url" id="v_url" data-i18n-ph="ph_vurl" placeholder="Video link (YouTube/Vimeo)"></div>
+          <button class="btn accent" id="add_vid" data-i18n="m_addv">Add video</button>
+          <div class="mlist" id="mng_vidlist"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fin">
+    <div><b>Video Challenge BE</b> — <span data-i18n="foot_tag">Referee portal · 2026/27</span></div>
+    <div style="font-size:13px" data-i18n="foot_note">Free access · EN · FR · NL</div>
+  </div>
+</footer>
+
+<script>
+const SB_URL="https://apbusqbeneppepfkvklv.supabase.co";
+const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwYnVzcWJlbmVwcGVwZmt2a2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzNDI5MTcsImV4cCI6MjA5NDkxODkxN30.fRXGuqOrFIY0OAX7ZX2moe6RzG807vLM490FU1JTNnU";
+const FN=SB_URL+"/functions/v1";
+const H={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY};
+
+let REFS=["BAGUETTES BENJAMIN","BLAISE PECHEUR","BLYAERT GEERT","BONAMI EMANUEL","DIGIACOMO ARTURO","EMMA YVVAN","FREDERICKX WIM","GERDY GELEYN","HERBOTS PAUL","JASPER SIMON","MENSCHAERT STEPHAN","MESTDAGH MICHEL","NOGARA CHRISTIAN","PENNINCK XAVIER","PINTER PIERRE","POCKELE JOHAN","PORIAU ETIENNE","STEVENS RONNY","THUYS CHRIS","VAN DE VELDE DIRK","VIELVOYE THOMAS","WILLEMS FLORIAN","YVES CNUDDE","STEVE MELSENS"];
+let TEAMS={Men:["Caruur Volley GENT","Decospan Volley Team MENEN","Knack ROESELARE","Lindemans AALST","Tectum ACHEL","Thuismakers BRABO ANTWERP VT","VC Greenyard MAASEIK","VOLLEY GUIBERTIN","VOLLEY HAASRODE LEUVEN","WAREMME Volley"],Women:["Asterix AVO Beveren","CapitalatWork Tchalou Volley","Damesvolley DOK NOORD Gent","Darta Bevo Roeselare","E.S. Charleroi Volley","KwadrO Amigos Sint-Antonius Zoersel","NRG VC Geel","Servantes Volley Noorderkempen","Thuismakers Brabo Antwerp VT","VC Oudegem","VLAVO Saturnus Michelbeke"]};
+let DOCS=[], VIDEOS=[], ADMIN_PW=null;
+
+const T={
+ en:{brandsub:"Referee portal",nav_docs:"Documents",nav_video:"Video & VAR",nav_report:"Report",hero_kick:"Belgian Volleyball · Season 2026/27",hero_h1:'The home of <em>Video Challenge</em> referees',hero_p:"Rules, video review and your post-match report — everything in one place, in your language. No account needed.",hero_cta1:"Fill the report",hero_cta2:"Browse documents",feat_label:"What's inside",feat_title:"Everything a Video Challenge referee needs",f1t:"Documents",f1d:"Download rules and guidelines as PDF.",f2t:"Video & VAR",f2d:"Watch clips and upload challenge footage.",f3t:"Challenge report",f3d:"Fill the form; it becomes a PDF, emailed automatically.",f_open:"Open",doc_label:"Library",doc_title:"Documents & downloads",doc_sub:"Official rules and Video Challenge protocols.",doc_dl:"Download",doc_empty:"No documents yet.",vid_label:"Video hub",vid_title:"Video & VAR review",vid_sub:"Training clips and contested challenges.",vid_upt:"Upload a challenge clip",vid_ups:"Click to select a video",vid_empty:"No videos yet.",rep_label:"After the match",rep_title:"Video Challenge report",rep_sub:"To be completed at the end of each game. Just enter your name.",g_match:"Match",l_ref:'Challenge referee <span class="req">*</span>',ph_ref:"Type your name",l_date:"Match date",l_league:"League",o_men:"Men",o_women:"Women",l_host:"Host team",g_check:"Pre-game checklist",c1:"Arrived 1h30 before the match",c2:"TR on-site at the sports hall",c3:"Preliminary camera check",c4:"Tablets available",c5:"Headsets functioning properly",c6:"Official English terminology used",c7:"TR remained available during the game",c8:"Cooperation with scoreboard & broadcast",o_yes:"Yes",o_no:"No",o_op:"Operational",o_nop:"Non op.",o_good:"Good",o_suff:"Suff.",o_nsuff:"Not suff.",g_data:"Challenge data",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Team right",cnt_wrong:"Team wrong",c9:"At least one request by R1",g_issues:"Issues & feedback",l_issues:'Issues encountered <span class="req">*</span>',iss_none:"No problem",iss_sys:"System components",iss_bc:"Broadcast screen",iss_oth:"Other",l_sol:"Solutions found",ph_sol:"Describe briefly…",l_rate:"Experience rating",send_note:"When you submit, a PDF is generated and emailed to cnogara25@gmail.com.",btn_send:"Generate PDF & send",btn_sending:"Sending…",sent_ok:"Report sent and emailed to cnogara25@gmail.com.",sent_saved:"Report saved, but the email could not be sent.",err_name:"Please enter the referee name.",err_send:"Could not send. Please try again.",btn_print:"Print / Save as PDF",btn_edit:"Back to form",mng_label:"Admin",mng_title:"Library management",mng_sub:"Add or remove documents and videos.",ph_code:"admin password",mng_unlock:"Unlock",mng_wrong:"Wrong password.",mdoc:"Documents",mvid:"Videos",ph_dtitle:"Document title",ph_dcat:"Category (e.g. Rules)",ph_vtitle:"Video title",ph_vsub:"Subtitle (e.g. Training · 8 clips)",ph_vurl:"Video link (YouTube/Vimeo)",m_addd:"Add document",m_addv:"Add video",foot_tag:"Referee portal · 2026/27",foot_note:"Free access · EN · FR · NL",clip_ok:"Clip uploaded — thank you.",clip_bad:"Upload failed, please retry.",pv_title:"Video Challenge Report",pv_season:"Season 2026/27",pv_league:"League",pv_team:"Host team",pv_check:"Pre-game checklist",pv_data:"Challenge data",pv_total:"Total requests",pv_right:"Team right",pv_wrong:"Team wrong",pv_r1:"Request by R1",pv_issues:"Issues encountered",pv_sol:"Solutions found",pv_rate:"Experience rating",pv_none:"—"},
+ fr:{brandsub:"Portail arbitres",nav_docs:"Documents",nav_video:"Vidéo & VAR",nav_report:"Rapport",hero_kick:"Volleyball belge · Saison 2026/27",hero_h1:'La maison des arbitres <em>Video Challenge</em>',hero_p:"Règlements, révision vidéo et rapport d'après-match — tout au même endroit, dans votre langue. Sans compte.",hero_cta1:"Remplir le rapport",hero_cta2:"Voir les documents",feat_label:"Au programme",feat_title:"Tout ce qu'un arbitre Video Challenge attend",f1t:"Documents",f1d:"Téléchargez règlements et directives en PDF.",f2t:"Vidéo & VAR",f2d:"Regardez des clips et téléversez vos vidéos.",f3t:"Rapport de challenge",f3d:"Remplissez le formulaire ; il devient un PDF, envoyé automatiquement.",f_open:"Ouvrir",doc_label:"Bibliothèque",doc_title:"Documents & téléchargements",doc_sub:"Règlements officiels et protocoles Video Challenge.",doc_dl:"Télécharger",doc_empty:"Aucun document pour l'instant.",vid_label:"Espace vidéo",vid_title:"Révision Vidéo & VAR",vid_sub:"Clips de formation et challenges contestés.",vid_upt:"Téléverser un clip de challenge",vid_ups:"Cliquez pour choisir une vidéo",vid_empty:"Aucune vidéo pour l'instant.",rep_label:"Après le match",rep_title:"Rapport Video Challenge",rep_sub:"À remplir à la fin de chaque match. Indiquez votre nom.",g_match:"Match",l_ref:'Arbitre challenge <span class="req">*</span>',ph_ref:"Tapez votre nom",l_date:"Date du match",l_league:"Division",o_men:"Messieurs",o_women:"Dames",l_host:"Équipe hôte",g_check:"Checklist d'avant-match",c1:"Arrivé 1h30 avant le match",c2:"TR présent dans la salle",c3:"Contrôle préalable des caméras",c4:"Tablettes disponibles",c5:"Casques fonctionnant correctement",c6:"Terminologie officielle anglaise utilisée",c7:"TR resté disponible pendant le match",c8:"Coopération marquoir & diffusion",o_yes:"Oui",o_no:"Non",o_op:"Opérationnel",o_nop:"Non op.",o_good:"Bonne",o_suff:"Suff.",o_nsuff:"Insuff.",g_data:"Données challenge",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Équipe correcte",cnt_wrong:"Équipe erronée",c9:"Au moins une demande par R1",g_issues:"Problèmes & avis",l_issues:'Problèmes rencontrés <span class="req">*</span>',iss_none:"Aucun problème",iss_sys:"Composants système",iss_bc:"Écran de diffusion",iss_oth:"Autre",l_sol:"Solutions trouvées",ph_sol:"Décrivez brièvement…",l_rate:"Note d'expérience",send_note:"À l'envoi, un PDF est généré et envoyé à cnogara25@gmail.com.",btn_send:"Générer le PDF & envoyer",btn_sending:"Envoi…",sent_ok:"Rapport envoyé par e-mail à cnogara25@gmail.com.",sent_saved:"Rapport enregistré, mais l'e-mail n'a pas pu être envoyé.",err_name:"Veuillez indiquer le nom de l'arbitre.",err_send:"Envoi impossible. Réessayez.",btn_print:"Imprimer / PDF",btn_edit:"Retour au formulaire",mng_label:"Admin",mng_title:"Gestion de la bibliothèque",mng_sub:"Ajoutez ou supprimez documents et vidéos.",ph_code:"mot de passe admin",mng_unlock:"Déverrouiller",mng_wrong:"Mot de passe incorrect.",mdoc:"Documents",mvid:"Vidéos",ph_dtitle:"Titre du document",ph_dcat:"Catégorie (ex. Règles)",ph_vtitle:"Titre de la vidéo",ph_vsub:"Sous-titre (ex. Formation · 8 clips)",ph_vurl:"Lien vidéo (YouTube/Vimeo)",m_addd:"Ajouter le document",m_addv:"Ajouter la vidéo",foot_tag:"Portail arbitres · 2026/27",foot_note:"Accès libre · EN · FR · NL",clip_ok:"Clip téléversé — merci.",clip_bad:"Échec du téléversement, réessayez.",pv_title:"Rapport Video Challenge",pv_season:"Saison 2026/27",pv_league:"Division",pv_team:"Équipe hôte",pv_check:"Checklist d'avant-match",pv_data:"Données challenge",pv_total:"Demandes totales",pv_right:"Équipe correcte",pv_wrong:"Équipe erronée",pv_r1:"Demande par R1",pv_issues:"Problèmes rencontrés",pv_sol:"Solutions trouvées",pv_rate:"Note d'expérience",pv_none:"—"},
+ nl:{brandsub:"Scheidsrechtersportaal",nav_docs:"Documenten",nav_video:"Video & VAR",nav_report:"Verslag",hero_kick:"Belgisch volleybal · Seizoen 2026/27",hero_h1:'Het thuis van <em>Video Challenge</em>-scheidsrechters',hero_p:"Reglementen, videoreview en je verslag na de match — alles op één plek, in jouw taal. Geen account nodig.",hero_cta1:"Verslag invullen",hero_cta2:"Documenten bekijken",feat_label:"Wat erin zit",feat_title:"Alles wat een Video Challenge-scheidsrechter nodig heeft",f1t:"Documenten",f1d:"Download reglementen en richtlijnen als PDF.",f2t:"Video & VAR",f2d:"Bekijk clips en upload challengebeelden.",f3t:"Challenge-verslag",f3d:"Vul het formulier in; het wordt een PDF, automatisch gemaild.",f_open:"Openen",doc_label:"Bibliotheek",doc_title:"Documenten & downloads",doc_sub:"Officiële reglementen en Video Challenge-protocollen.",doc_dl:"Download",doc_empty:"Nog geen documenten.",vid_label:"Videohub",vid_title:"Video & VAR-review",vid_sub:"Trainingsclips en betwiste challenges.",vid_upt:"Upload een challengeclip",vid_ups:"Klik om een video te kiezen",vid_empty:"Nog geen video's.",rep_label:"Na de match",rep_title:"Video Challenge-verslag",rep_sub:"In te vullen na elke match. Vul gewoon je naam in.",g_match:"Match",l_ref:'Challenge-scheidsrechter <span class="req">*</span>',ph_ref:"Typ je naam",l_date:"Matchdatum",l_league:"Reeks",o_men:"Heren",o_women:"Dames",l_host:"Thuisploeg",g_check:"Checklist vóór de match",c1:"1u30 voor de match aangekomen",c2:"TR aanwezig in de zaal",c3:"Voorafgaande cameracontrole",c4:"Tablets beschikbaar",c5:"Headsets werken correct",c6:"Officiële Engelse terminologie gebruikt",c7:"TR bleef beschikbaar tijdens de match",c8:"Samenwerking scorebord & uitzending",o_yes:"Ja",o_no:"Nee",o_op:"Operationeel",o_nop:"Niet op.",o_good:"Goed",o_suff:"Voldoende",o_nsuff:"Onvold.",g_data:"Challenge-data",cnt_tot:'Totaal <span class="req">*</span>',cnt_right:"Ploeg correct",cnt_wrong:"Ploeg fout",c9:"Minstens één aanvraag door R1",g_issues:"Problemen & feedback",l_issues:'Ondervonden problemen <span class="req">*</span>',iss_none:"Geen probleem",iss_sys:"Systeemonderdelen",iss_bc:"Uitzendscherm",iss_oth:"Andere",l_sol:"Gevonden oplossingen",ph_sol:"Beschrijf kort…",l_rate:"Ervaringsscore",send_note:"Bij verzenden wordt een PDF gemaakt en gemaild naar cnogara25@gmail.com.",btn_send:"PDF maken & verzenden",btn_sending:"Verzenden…",sent_ok:"Verslag verzonden en gemaild naar cnogara25@gmail.com.",sent_saved:"Verslag opgeslagen, maar de e-mail kon niet worden verzonden.",err_name:"Vul de naam van de scheidsrechter in.",err_send:"Verzenden mislukt. Probeer opnieuw.",btn_print:"Afdrukken / PDF",btn_edit:"Terug naar formulier",mng_label:"Admin",mng_title:"Bibliotheekbeheer",mng_sub:"Voeg documenten en video's toe of verwijder ze.",ph_code:"adminwachtwoord",mng_unlock:"Ontgrendelen",mng_wrong:"Verkeerd wachtwoord.",mdoc:"Documenten",mvid:"Video's",ph_dtitle:"Documenttitel",ph_dcat:"Categorie (bv. Regels)",ph_vtitle:"Videotitel",ph_vsub:"Ondertitel (bv. Training · 8 clips)",ph_vurl:"Videolink (YouTube/Vimeo)",m_addd:"Document toevoegen",m_addv:"Video toevoegen",foot_tag:"Scheidsrechtersportaal · 2026/27",foot_note:"Vrije toegang · EN · FR · NL",clip_ok:"Clip geüpload — bedankt.",clip_bad:"Upload mislukt, probeer opnieuw.",pv_title:"Video Challenge-verslag",pv_season:"Seizoen 2026/27",pv_league:"Reeks",pv_team:"Thuisploeg",pv_check:"Checklist vóór de match",pv_data:"Challenge-data",pv_total:"Totaal aanvragen",pv_right:"Ploeg correct",pv_wrong:"Ploeg fout",pv_r1:"Aanvraag door R1",pv_issues:"Ondervonden problemen",pv_sol:"Gevonden oplossingen",pv_rate:"Ervaringsscore",pv_none:"—"}
+};
+
+let LANG="en";
+function esc(s){return (s==null?"":""+s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function t(k){return T[LANG][k];}
+
+function setLang(l){
+  LANG=l;document.documentElement.lang=l;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{const k=el.getAttribute("data-i18n-ph");if(T[l][k]!==undefined)el.placeholder=T[l][k];});
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.getAttribute("data-l")===l));
+  renderDocs();renderVideos();
+}
+
+function renderDocs(){
+  const el=document.getElementById("doclist");el.innerHTML="";
+  if(!DOCS.length){el.innerHTML='<div class="empty">'+t("doc_empty")+'</div>';return;}
+  DOCS.forEach(d=>{const r=document.createElement("div");r.className="doc";
+    const dl=d.url?'<a class="btn ghost" href="'+esc(d.url)+'" target="_blank" rel="noopener">'+t("doc_dl")+'</a>':'<a class="btn ghost">'+t("doc_dl")+'</a>';
+    r.innerHTML='<div class="dic">&#128196;</div><div class="meta"><b>'+esc(d.title)+'</b><span>'+esc(d.size||"")+'</span></div>'+(d.cat?'<span class="tag">'+esc(d.cat)+'</span>':'')+dl;
+    el.appendChild(r);});
+}
+function renderVideos(){
+  const el=document.getElementById("vidgrid");el.innerHTML="";
+  VIDEOS.forEach(v=>{const c=document.createElement("div");c.className="vid";
+    c.innerHTML='<div class="thumb"><div class="play">&#9654;</div><div class="dur">'+esc(v.dur||"")+'</div></div><div class="vbody"><b>'+esc(v.title)+'</b><span>'+esc(v.sub||"")+'</span></div>';
+    if(v.url)c.addEventListener("click",()=>window.open(v.url,"_blank","noopener"));
+    el.appendChild(c);});
+  const up=document.createElement("div");up.className="upload";
+  up.innerHTML='<div class="uic">&#11014;</div><b>'+t("vid_upt")+'</b><div style="font-size:13px;margin-top:6px">'+t("vid_ups")+'</div>';
+  up.addEventListener("click",()=>{const i=document.createElement("input");i.type="file";i.accept="video/*";i.onchange=()=>{if(i.files[0])uploadClip(i.files[0]);};i.click();});
+  el.appendChild(up);
+}
+
+async function uploadClip(file){
+  const st=document.getElementById("clipstatus");st.style.color="var(--muted)";st.textContent="…";
+  try{
+    const path=Date.now()+"_"+file.name.replace(/[^a-zA-Z0-9._-]+/g,"_");
+    const up=await fetch(SB_URL+"/storage/v1/object/vcbe-clips/"+encodeURIComponent(path),{method:"POST",headers:{...H,"Content-Type":file.type||"application/octet-stream","x-upsert":"true"},body:file});
+    if(!up.ok)throw new Error("upload");
+    await fetch(SB_URL+"/rest/v1/vcbe_clip_uploads",{method:"POST",headers:{...H,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({storage_path:path,note:"Uploaded from site"})});
+    st.style.color="var(--ok)";st.textContent=t("clip_ok");
+  }catch(e){st.style.color="var(--bad)";st.textContent=t("clip_bad");}
+}
+
+const refdl=document.getElementById("refs");
+function fillRefs(){refdl.innerHTML="";REFS.forEach(n=>{const o=document.createElement("option");o.value=n;refdl.appendChild(o);});}
+const teamSel=document.getElementById("f_team");
+function fillTeams(lg){teamSel.innerHTML="";(TEAMS[lg]||[]).forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;teamSel.appendChild(o);});}
+let league="Men";
+document.querySelectorAll("#seg_league button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("#seg_league button").forEach(x=>x.classList.remove("on"));b.classList.add("on");league=b.getAttribute("data-v");fillTeams(league);}));
+document.querySelectorAll('.seg[data-k]').forEach(g=>g.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");})));
+document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");}));
+document.querySelectorAll(".ctrls").forEach(g=>{const v=g.querySelector(".v");g.querySelector(".inc").addEventListener("click",()=>v.textContent=parseInt(v.textContent)+1);g.querySelector(".dec").addEventListener("click",()=>v.textContent=Math.max(0,parseInt(v.textContent)-1));});
+let rating=0;
+document.querySelectorAll("#stars i").forEach(st=>st.addEventListener("click",()=>{rating=parseInt(st.getAttribute("data-v"));document.querySelectorAll("#stars i").forEach(x=>x.classList.toggle("on",parseInt(x.getAttribute("data-v"))<=rating));}));
+
+function segVal(k){const g=document.querySelector('.seg[data-k="'+k+'"]');const b=g.querySelector("button.on");return b?b.getAttribute("data-v"):"";}
+function segBool(k){const v=segVal(k);return v==="Yes"?true:v==="No"?false:null;}
+function cntVal(k){return parseInt(document.querySelector('.ctrls[data-k="'+k+'"] .v').textContent)||0;}
+function chipVal(){const c=document.querySelector(".chip.on");return c?c.getAttribute("data-v"):"";}
+
+function renderPreview(p){
+  const yn=v=>v===true?t("o_yes"):v===false?t("o_no"):"-";
+  const checks=[["c1",p.arrive_1h30],["c2",p.tr_onsite],["c3",p.cameras],["c4",p.tablets],["c5",p.headsets],["c6",p.english_terms],["c7",p.tr_available],["c8",p.cooperation]];
+  const cr=checks.map(c=>'<tr><td class="k">'+t(c[0])+'</td><td class="v">'+(typeof c[1]==="boolean"?yn(c[1]):esc(c[1]||"-"))+'</td></tr>').join("");
+  let h='<div class="phead"><div><h2>'+t("pv_title")+'</h2><div style="font-size:13px;color:#777">'+t("pv_season")+'</div></div><div class="pref"><b>'+esc(p.referee_name)+'</b><br>'+esc(p.match_date||"-")+'</div></div>';
+  h+='<table><tr><td class="k">'+t("pv_league")+'</td><td class="v">'+esc(p.league)+'</td></tr><tr><td class="k">'+t("pv_team")+'</td><td class="v">'+esc(p.host_team)+'</td></tr></table>';
+  h+='<div class="ptitle">'+t("pv_check")+'</div><table>'+cr+'</table>';
+  h+='<div class="ptitle">'+t("pv_data")+'</div><table><tr><td class="k">'+t("pv_total")+'</td><td class="v">'+p.challenges_total+'</td></tr><tr><td class="k">'+t("pv_right")+'</td><td class="v">'+p.team_right+'</td></tr><tr><td class="k">'+t("pv_wrong")+'</td><td class="v">'+p.team_wrong+'</td></tr><tr><td class="k">'+t("pv_r1")+'</td><td class="v">'+yn(p.request_by_r1)+'</td></tr></table>';
+  h+='<div class="ptitle">'+t("pv_issues")+'</div><table><tr><td class="k">'+esc(p.issues)+'</td><td class="v"></td></tr></table>';
+  h+='<div class="ptitle">'+t("pv_sol")+'</div><div style="font-size:14px;color:#333;margin-bottom:14px">'+esc(p.solutions||"-")+'</div>';
+  h+='<div class="ptitle">'+t("pv_rate")+'</div><div style="font-size:18px;color:#C9881C">'+(p.rating?p.rating+" / 5":"-")+'</div>';
+  document.getElementById("preview").innerHTML=h;
+}
+
+const genbtn=document.getElementById("genbtn");
+genbtn.addEventListener("click",async()=>{
+  const name=document.getElementById("f_ref").value.trim();
+  const status=document.getElementById("submitstatus");status.className="";status.textContent="";
+  const ref=document.getElementById("f_ref");
+  if(!name){ref.classList.add("err");status.className="bad";status.textContent=t("err_name");ref.focus();return;}
+  ref.classList.remove("err");
+  const p={referee_name:name,match_date:document.getElementById("f_date").value||null,league:league,host_team:teamSel.value,arrive_1h30:segBool("arrive"),tr_onsite:segBool("tr_site"),cameras:segVal("cams"),tablets:segBool("tablets"),headsets:segBool("headsets"),english_terms:segBool("terms"),tr_available:segBool("tr_game"),cooperation:segVal("coop"),challenges_total:cntVal("total"),team_right:cntVal("right"),team_wrong:cntVal("wrong"),request_by_r1:segBool("r1"),issues:chipVal(),solutions:document.getElementById("f_sol").value.trim(),rating:rating,lang:LANG};
+  genbtn.disabled=true;genbtn.textContent=t("btn_sending");status.className="";status.textContent="";
+  try{
+    const res=await fetch(FN+"/send-report",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});
+    const j=await res.json();
+    if(j.ok){
+      renderPreview(p);
+      document.getElementById("okmsg").textContent=j.email_sent?t("sent_ok"):t("sent_saved");
+      document.getElementById("output").classList.add("show");
+      document.getElementById("output").scrollIntoView({behavior:"smooth"});
+    }else{status.className="bad";status.textContent=(j.error||t("err_send"));}
+  }catch(e){status.className="bad";status.textContent=t("err_send");}
+  finally{genbtn.disabled=false;genbtn.textContent=t("btn_send");}
+});
+
+async function adminCall(action,payload){
+  const res=await fetch(FN+"/admin-write",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:ADMIN_PW,action,payload})});
+  return res.json();
+}
+function applyLists(docs,vids){
+  DOCS=(docs||[]).map(d=>({id:d.id,title:d.title,cat:d.category,size:d.size_label,url:d.external_url}));
+  VIDEOS=(vids||[]).map(v=>({id:v.id,title:v.title,sub:v.subtitle,url:v.url,dur:v.duration}));
+  renderDocs();renderVideos();renderMngDocs();renderMngVideos();
+}
+function fileToB64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=rej;r.readAsDataURL(file);});}
+
+document.getElementById("mng_unlock").addEventListener("click",async()=>{
+  const code=document.getElementById("mng_code").value;const err=document.getElementById("mng_err");err.textContent="";
+  ADMIN_PW=code;
+  const j=await adminCall("list",{});
+  if(j.ok){document.getElementById("mng_panel").style.display="block";document.getElementById("mng_gate").style.display="none";applyLists(j.documents,j.videos);}
+  else{ADMIN_PW=null;err.textContent=t("mng_wrong");}
+});
+function renderMngDocs(){const el=document.getElementById("mng_doclist");if(!el)return;el.innerHTML="";DOCS.forEach(d=>{const r=document.createElement("div");r.className="mrow";r.innerHTML='<span><b>'+esc(d.title)+'</b> &middot; '+esc(d.cat||"")+'</span><button class="rm">&times;</button>';r.querySelector(".rm").addEventListener("click",async()=>{await adminCall("delete_document",{id:d.id});const j=await adminCall("list",{});if(j.ok)applyLists(j.documents,j.videos);});el.appendChild(r);});}
+function renderMngVideos(){const el=document.getElementById("mng_vidlist");if(!el)return;el.innerHTML="";VIDEOS.forEach(v=>{const r=document.createElement("div");r.className="mrow";r.innerHTML='<span><b>'+esc(v.title)+'</b> &middot; '+esc(v.sub||"")+'</span><button class="rm">&times;</button>';r.querySelector(".rm").addEventListener("click",async()=>{await adminCall("delete_video",{id:v.id});const j=await adminCall("list",{});if(j.ok)applyLists(j.documents,j.videos);});el.appendChild(r);});}
+
+document.getElementById("add_doc").addEventListener("click",async()=>{
+  const title=document.getElementById("d_title").value.trim();const cat=document.getElementById("d_cat").value.trim()||"Doc";const f=document.getElementById("d_file").files[0];
+  if(!title&&!f)return;const payload={title:title||(f?f.name:""),category:cat,lang:"all"};
+  if(f){payload.file_base64=await fileToB64(f);payload.file_name=f.name;payload.content_type=f.type||"application/pdf";}
+  const j=await adminCall("add_document",payload);
+  if(j.ok){document.getElementById("d_title").value="";document.getElementById("d_cat").value="";document.getElementById("d_file").value="";const l=await adminCall("list",{});if(l.ok)applyLists(l.documents,l.videos);}
+});
+document.getElementById("add_vid").addEventListener("click",async()=>{
+  const title=document.getElementById("v_title").value.trim();const sub=document.getElementById("v_sub").value.trim();const url=document.getElementById("v_url").value.trim();
+  if(!title)return;const j=await adminCall("add_video",{title,subtitle:sub,url});
+  if(j.ok){document.getElementById("v_title").value="";document.getElementById("v_sub").value="";document.getElementById("v_url").value="";const l=await adminCall("list",{});if(l.ok)applyLists(l.documents,l.videos);}
+});
+
+async function rest(path){const res=await fetch(SB_URL+"/rest/v1/"+path,{headers:H});if(!res.ok)throw new Error("rest "+res.status);return res.json();}
+async function init(){
+  try{const r=await rest("vcbe_referees?select=name&active=eq.true&order=sort_order");if(r.length)REFS=r.map(x=>x.name);}catch(e){}
+  try{const tm=await rest("vcbe_teams?select=name,league&active=eq.true&order=name");if(tm.length){TEAMS={Men:[],Women:[]};tm.forEach(x=>{(TEAMS[x.league]=TEAMS[x.league]||[]).push(x.name);});}}catch(e){}
+  try{const d=await rest("vcbe_documents?select=*&published=eq.true&order=sort_order");DOCS=d.map(x=>({id:x.id,title:x.title,cat:x.category,size:x.size_label,url:x.external_url}));}catch(e){}
+  try{const v=await rest("vcbe_videos?select=*&published=eq.true&order=sort_order");VIDEOS=v.map(x=>({id:x.id,title:x.title,sub:x.subtitle,url:x.url,dur:x.duration}));}catch(e){}
+  fillRefs();fillTeams(league);setLang("en");
+}
+init();
+</script>
+</body>
+</html>
