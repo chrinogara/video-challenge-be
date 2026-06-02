@@ -58,7 +58,7 @@
   .card{background:var(--white);border:1px solid var(--line);border-radius:3px;padding:26px;transition:transform .15s ease,border-color .15s ease}
   .card:hover{transform:translateY(-4px);border-color:var(--ink)}
   .card .ic{width:46px;height:46px;border-radius:2px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px}
-  .card.hl{outline:3px solid var(--accent);outline-offset:-1px}
+  .card.hl:hover,.card.hl:focus-within,.card.hl:active{outline:3px solid var(--accent);outline-offset:-1px;border-color:var(--accent)}
   .card h3{font-size:21px;margin-bottom:8px}
   .card p{color:var(--muted);font-size:15px;margin:0 0 18px}
   .card a.more{font-family:"Archivo";font-weight:700;font-size:13px;color:var(--accent);display:inline-flex;gap:6px;align-items:center}
@@ -95,6 +95,8 @@
   input.err{border-color:var(--bad)}
   input:focus,select:focus,textarea:focus{border-color:var(--ink)}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .row2>*{min-width:0}
+  input[type=date]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%}
   .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:2px;overflow:hidden}
   .seg button{font-family:"Archivo";font-weight:700;font-size:13px;padding:9px 15px;border:none;background:transparent;color:var(--ink);cursor:pointer;transition:background .12s}
   .seg button+button{border-left:1.5px solid var(--ink)}
