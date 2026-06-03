@@ -100,7 +100,7 @@ a{color:inherit;text-decoration:none}
 .field>label .req{color:var(--bad)}
 input[type=text],input[type=date],input[type=password],input[type=url],select,textarea{width:100%;font-family:var(--fb);font-size:15px;color:var(--ink);background:var(--surface);border:1.5px solid var(--line2);border-radius:11px;padding:11px 13px;outline:none;transition:.12s}
 input[type=date]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%}
-input.err{border-color:var(--bad)}
+input.err,select.err{border-color:var(--bad)}
 input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px var(--violet-50)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .row2>*{min-width:0}
@@ -252,7 +252,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
       <fieldset class="fgroup" style="border:0;margin:0;padding:0">
         <legend data-i18n="g_match">Match</legend>
         <div class="row2">
-          <div class="field"><label data-i18n="l_ref">Challenge referee <span class="req">*</span></label><input type="text" id="f_ref" list="refs" data-i18n-ph="ph_ref" placeholder="Type your name"><datalist id="refs"></datalist></div>
+          <div class="field"><label data-i18n="l_ref">Challenge referee <span class="req">*</span></label><select id="f_ref"></select></div>
           <div class="field"><label data-i18n="l_date">Match date</label><input type="date" id="f_date"></div>
         </div>
         <div class="field"><label data-i18n="l_league">League</label>
@@ -312,7 +312,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
     <h2 class="sectitle" data-i18n="mng_title">Library management</h2>
     <p class="secsub" data-i18n="mng_sub">Add or remove documents and videos.</p>
     <div id="mng_gate" class="gate">
-      <input type="password" id="mng_code" data-i18n-ph="ph_code" placeholder="admin password" style="max-width:260px">
+      <input type="password" id="mng_code" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" data-i18n-ph="ph_code" placeholder="admin password" style="max-width:260px" onkeydown="if(event.key==='Enter')document.getElementById('mng_unlock').click()">
       <button class="btn" id="mng_unlock" data-i18n="mng_unlock">Unlock</button>
     </div>
     <div id="mng_err"></div>
@@ -407,8 +407,8 @@ async function uploadClip(file){
   }catch(e){st.style.color="var(--bad)";st.textContent=t("clip_bad");}
 }
 
-const refdl=document.getElementById("refs");
-function fillRefs(){refdl.innerHTML="";REFS.forEach(n=>{const o=document.createElement("option");o.value=n;refdl.appendChild(o);});}
+const refSel=document.getElementById("f_ref");
+function fillRefs(){refSel.innerHTML="";const ph=document.createElement("option");ph.value="";ph.setAttribute("data-i18n","ph_ref");ph.textContent=t("ph_ref");refSel.appendChild(ph);REFS.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;refSel.appendChild(o);});}
 const teamSel=document.getElementById("f_team");
 function fillTeams(lg){teamSel.innerHTML="";(TEAMS[lg]||[]).forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;teamSel.appendChild(o);});}
 let league="Men";
@@ -472,11 +472,14 @@ function applyLists(docs,vids){
 function fileToB64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=rej;r.readAsDataURL(file);});}
 
 document.getElementById("mng_unlock").addEventListener("click",async()=>{
-  const code=document.getElementById("mng_code").value;const err=document.getElementById("mng_err");err.textContent="";
+  const code=document.getElementById("mng_code").value.trim();const err=document.getElementById("mng_err");err.textContent="";
+  if(!code){err.textContent=t("mng_wrong");return;}
   ADMIN_PW=code;
-  const j=await adminCall("list",{});
-  if(j.ok){document.getElementById("mng_panel").style.display="block";document.getElementById("mng_gate").style.display="none";applyLists(j.documents,j.videos);}
-  else{ADMIN_PW=null;err.textContent=t("mng_wrong");}
+  try{
+    const j=await adminCall("list",{});
+    if(j&&j.ok){document.getElementById("mng_panel").style.display="block";document.getElementById("mng_gate").style.display="none";applyLists(j.documents,j.videos);}
+    else{ADMIN_PW=null;err.textContent=(j&&j.error?j.error:t("mng_wrong"));}
+  }catch(e){ADMIN_PW=null;err.textContent=t("mng_wrong");}
 });
 function renderMngDocs(){const el=document.getElementById("mng_doclist");if(!el)return;el.innerHTML="";DOCS.forEach(d=>{const r=document.createElement("div");r.className="mrow";r.innerHTML='<span><b>'+esc(d.title)+'</b> &middot; '+esc(d.cat||"")+'</span><button class="rm">&times;</button>';r.querySelector(".rm").addEventListener("click",async()=>{await adminCall("delete_document",{id:d.id});const j=await adminCall("list",{});if(j.ok)applyLists(j.documents,j.videos);});el.appendChild(r);});}
 function renderMngVideos(){const el=document.getElementById("mng_vidlist");if(!el)return;el.innerHTML="";VIDEOS.forEach(v=>{const r=document.createElement("div");r.className="mrow";r.innerHTML='<span><b>'+esc(v.title)+'</b> &middot; '+esc(v.sub||"")+'</span><button class="rm">&times;</button>';r.querySelector(".rm").addEventListener("click",async()=>{await adminCall("delete_video",{id:v.id});const j=await adminCall("list",{});if(j.ok)applyLists(j.documents,j.videos);});el.appendChild(r);});}
