@@ -174,6 +174,48 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
  #report .seclabel,#report .sectitle,#report .secsub{display:none}
  #output{display:block!important}.preview{border:none;padding:0}
 }
+
+/* tabs: fit 4 */
+.tab{font-size:10.5px}.tab span{white-space:nowrap}
+/* video card buttons */
+.vid{cursor:default}.vid .thumb{cursor:pointer}
+.vid .vactions{display:flex;gap:8px;margin-top:10px}
+.vid .vactions .btn{flex:1;padding:8px 8px;font-size:12px}
+/* viewer modal */
+.viewer{position:fixed;inset:0;z-index:80;background:rgba(12,12,24,.62);display:none;align-items:center;justify-content:center;padding:14px}
+.viewer.show{display:flex}
+.vwbox{background:var(--surface);border-radius:16px;width:100%;max-width:920px;height:86vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.vwhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-bottom:1px solid var(--line)}
+.vwhead b{font-family:var(--fd);font-weight:700;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vwactions{display:flex;gap:8px;flex:none}
+.vwactions .btn{padding:8px 12px;font-size:13px}
+.vwbody{flex:1;background:#0b1020}
+.vwbody iframe{width:100%;height:100%;border:0;background:#fff;display:block}
+/* diagnostics */
+.dggrp{margin-bottom:22px}
+.dggrp h3{font-family:var(--fd);font-weight:700;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--violet);margin:0 0 10px}
+.dggrid{display:grid;gap:12px}
+.dgteam{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.dgteam.alert{border-color:var(--bad);background:#FDECEC}
+.dghead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.dghead b{font-family:var(--fd);font-weight:700;font-size:15px;min-width:0}
+.dgbadge{font-family:var(--fd);font-weight:600;font-size:11px;color:var(--muted);background:var(--bg);border:1px solid var(--line);padding:3px 9px;border-radius:20px;white-space:nowrap;flex:none}
+.dgteam.alert .dgbadge{color:#fff;background:var(--bad);border-color:var(--bad)}
+.dgprob{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;color:var(--ink);padding:4px 0;border-top:1px solid var(--line)}
+.dgprob:first-of-type{border-top:0}
+.dgprob .x{color:var(--bad);font-weight:700;flex:none;line-height:1.3}
+.dgprob .n{margin-left:auto;color:var(--muted);font-weight:700;font-size:12px;flex:none}
+.dgok{display:flex;gap:8px;align-items:center;color:var(--ok);font-size:13.5px;font-weight:600}
+.dgok i{font-style:normal}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:22px}
+.barrow{display:grid;grid-template-columns:120px 1fr 26px;gap:8px;align-items:center;margin:7px 0;font-size:12.5px}
+.barrow .bn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.bartrack{background:var(--bg);border-radius:8px;height:16px;overflow:hidden}
+.barfill{height:100%;border-radius:8px;background:var(--violet);min-width:6px}
+.barfill.warn{background:var(--warn)}
+.barfill.bad{background:var(--bad)}
+.barrow .bv{text-align:right;font-weight:700;color:var(--muted)}
+@media(min-width:620px){.dggrid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -237,8 +279,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
   <section class="page" data-page="library" id="page-library">
     <div class="block">
       <div class="seclabel" data-i18n="doc_label">Library</div>
-      <h2 class="sectitle" data-i18n="doc_title">Documents &amp; downloads</h2>
-      <p class="secsub" data-i18n="doc_sub">Official rules and Video Challenge protocols.</p>
+      <h2 class="sectitle" data-i18n="doc_title">Documents &amp; Video's</h2>
+      <p class="secsub" data-i18n="doc_sub">Official rules, Video's situations.</p>
       <div class="doclist" id="doclist"></div>
     </div>
     <div class="block">
@@ -248,6 +290,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
       <div class="vidgrid" id="vidgrid"></div>
       <div id="clipstatus" style="margin-top:12px;font-size:14px;color:var(--ok)"></div>
     </div>
+  </section>
+
+  <section class="page" data-page="diag" id="page-diag">
+    <div class="block">
+      <div class="seclabel" data-i18n="dg_label">Diagnostics</div>
+      <h2 class="sectitle" data-i18n="dg_title">Challenge diagnostics</h2>
+      <p class="secsub" data-i18n="dg_sub">Issues per team, collected from submitted reports.</p>
+    </div>
+    <div id="dg_chartwrap"></div>
+    <div id="dg_groups"></div>
   </section>
 
   <section class="page" data-page="report" id="report">
@@ -350,11 +402,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 
 </main>
 
+<div class="viewer" id="viewer" aria-hidden="true">
+  <div class="vwbox">
+    <div class="vwhead"><b id="vw_title"></b><div class="vwactions"><a id="vw_open" class="btn ghost" target="_blank" rel="noopener" data-i18n="vw_open">Open in new tab</a><button class="btn" id="vw_close" aria-label="Close">&times;</button></div></div>
+    <div class="vwbody"><iframe id="vw_frame" title="viewer" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+  </div>
+</div>
+
 <nav class="tabbar">
   <div class="in">
     <button class="tab on" data-go="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span data-i18n="tab_home">Home</span></button>
     <button class="tab" data-go="library" onclick="go('library')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-i18n="tab_lib">Library</span></button>
     <button class="tab" data-go="report" onclick="go('report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/></svg><span data-i18n="tab_rep">Report</span></button>
+    <button class="tab" data-go="diag" onclick="go('diag')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg><span data-i18n="tab_diag">Diagnostics</span></button>
   </div>
 </nav>
 
@@ -369,9 +429,9 @@ let TEAMS={Men:["Caruur Volley GENT","Decospan Volley Team MENEN","Knack ROESELA
 let DOCS=[], VIDEOS=[], ADMIN_PW=null;
 
 const T={
- en:{brandsub:"Referee portal",tab_home:"Home",tab_lib:"Library",tab_rep:"Report",nav_docs:"Documents",nav_video:"Video & VAR",nav_report:"Report",hero_kick:"Belgian Volleyball · Season 2026/27",hero_h1:'Everything <span class="be-y">Video</span> <span class="be-r">Challenge</span> referees need, in one place',hero_p:"Rules, video review and your post-match report — everything in one place, in your language. No account needed.",hero_cta1:"Fill the report",hero_cta2:"Browse documents",feat_label:"What's inside",feat_title:"Everything a Video Challenge referee needs",f1t:"Documents",f1d:"Download rules and guidelines as PDF.",f2t:"Video",f2d:"Watch clips and slide decks.",f3t:"Challenge report",f3d:"Fill the form; it becomes a PDF, emailed automatically.",f_open:"Open",doc_label:"Library",doc_title:"Documents & downloads",doc_sub:"Official rules and Video Challenge protocols.",doc_dl:"Download",doc_empty:"No documents yet.",vid_label:"Video hub",vid_title:"Video & slides",vid_sub:"Training clips and slide decks.",vid_upt:"Upload a challenge clip",vid_ups:"Click to select a video",vid_empty:"No videos yet.",rep_label:"After the match",rep_title:"Video Challenge report",rep_sub:"To be completed at the end of each game. Just enter your name.",g_match:"Match",l_ref:'Challenge referee <span class="req">*</span>',ph_ref:"Type your name",l_date:"Match date",l_league:"League",o_men:"Men",o_women:"Women",l_host:"Host team",g_check:"Pre-game checklist",c1:"Arrived 1h30 before the match",c2:"TR on-site at the sports hall",c3:"Preliminary camera check",c4:"Tablets available",c5:"Headsets functioning properly",c6:"Official English terminology used",c7:"TR remained available during the game",c8:"Cooperation with scoreboard & broadcast",o_yes:"Yes",o_no:"No",o_op:"Operational",o_nop:"Non op.",o_good:"Good",o_suff:"Suff.",o_nsuff:"Not suff.",g_data:"Challenge data",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Team right",cnt_wrong:"Team wrong",c9:"At least one request by R1",g_issues:"Issues & feedback",l_issues:'Issues encountered <span class="req">*</span>',iss_none:"No problem",iss_sys:"System components",iss_bc:"Broadcast screen",iss_oth:"Other",iss_net:"Internet connection",iss_cam:"Camera check",l_sol:"Solutions found",ph_sol:"Describe briefly…",l_rate:"Experience rating",send_note:"When you submit, a PDF is generated and emailed to cnogara25@gmail.com.",btn_send:"Generate PDF & send",btn_sending:"Sending…",sent_ok:"Report sent and emailed to cnogara25@gmail.com.",sent_saved:"Report saved, but the email could not be sent.",err_name:"Please enter the referee name.",err_send:"Could not send. Please try again.",btn_print:"Print / Save as PDF",btn_edit:"Back to form",mng_label:"Admin",mng_title:"Library management",mng_sub:"Add or remove documents and videos.",ph_code:"admin password",mng_unlock:"Unlock",mng_wrong:"Wrong password.",mdoc:"Documents",mvid:"Video & slides",ph_dtitle:"Document title",ph_dcat:"Category (e.g. Rules)",ph_durl:"Link (Google Drive, etc.)",d_hint:"Paste a link above (Google Drive…), or upload a PDF below.",ph_vtitle:"Video / slides title",ph_vsub:"Subtitle (e.g. Training · 8 clips)",ph_vurl:"Link (video or slides)",m_addd:"Add document",m_addv:"Add video / slides",v_hint:"Paste a YouTube link above, or upload a .pptx file below.",foot_tag:"Referee portal · 2026/27",foot_note:"Free access · EN · FR · NL",clip_ok:"Clip uploaded — thank you.",clip_bad:"Upload failed, please retry.",pv_title:"Video Challenge Report",pv_season:"Season 2026/27",pv_league:"League",pv_team:"Host team",pv_check:"Pre-game checklist",pv_data:"Challenge data",pv_total:"Total requests",pv_right:"Team right",pv_wrong:"Team wrong",pv_r1:"Request by R1",pv_issues:"Issues encountered",pv_sol:"Solutions found",pv_rate:"Experience rating",pv_none:"—"},
- fr:{brandsub:"Portail arbitres",tab_home:"Accueil",tab_lib:"Bibliothèque",tab_rep:"Rapport",nav_docs:"Documents",nav_video:"Vidéo & VAR",nav_report:"Rapport",hero_kick:"Volleyball belge · Saison 2026/27",hero_h1:'Tout ce dont les arbitres <span class="be-y">Video</span> <span class="be-r">Challenge</span> ont besoin, au même endroit',hero_p:"Règlements, révision vidéo et rapport d'après-match — tout au même endroit, dans votre langue. Sans compte.",hero_cta1:"Remplir le rapport",hero_cta2:"Voir les documents",feat_label:"Au programme",feat_title:"Tout ce qu'un arbitre Video Challenge attend",f1t:"Documents",f1d:"Téléchargez règlements et directives en PDF.",f2t:"Vidéo",f2d:"Clips vidéo et présentations.",f3t:"Rapport de challenge",f3d:"Remplissez le formulaire ; il devient un PDF, envoyé automatiquement.",f_open:"Ouvrir",doc_label:"Bibliothèque",doc_title:"Documents & téléchargements",doc_sub:"Règlements officiels et protocoles Video Challenge.",doc_dl:"Télécharger",doc_empty:"Aucun document pour l'instant.",vid_label:"Espace vidéo",vid_title:"Vidéos & slides",vid_sub:"Clips de formation et présentations.",vid_upt:"Téléverser un clip de challenge",vid_ups:"Cliquez pour choisir une vidéo",vid_empty:"Aucune vidéo pour l'instant.",rep_label:"Après le match",rep_title:"Rapport Video Challenge",rep_sub:"À remplir à la fin de chaque match. Indiquez votre nom.",g_match:"Match",l_ref:'Arbitre challenge <span class="req">*</span>',ph_ref:"Tapez votre nom",l_date:"Date du match",l_league:"Division",o_men:"Messieurs",o_women:"Dames",l_host:"Équipe hôte",g_check:"Checklist d'avant-match",c1:"Arrivé 1h30 avant le match",c2:"TR présent dans la salle",c3:"Contrôle préalable des caméras",c4:"Tablettes disponibles",c5:"Casques fonctionnant correctement",c6:"Terminologie officielle anglaise utilisée",c7:"TR resté disponible pendant le match",c8:"Coopération marquoir & diffusion",o_yes:"Oui",o_no:"Non",o_op:"Opérationnel",o_nop:"Non op.",o_good:"Bonne",o_suff:"Suff.",o_nsuff:"Insuff.",g_data:"Données challenge",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Équipe correcte",cnt_wrong:"Équipe erronée",c9:"Au moins une demande par R1",g_issues:"Problèmes & avis",l_issues:'Problèmes rencontrés <span class="req">*</span>',iss_none:"Aucun problème",iss_sys:"Composants système",iss_bc:"Écran de diffusion",iss_oth:"Autre",iss_net:"Connexion internet",iss_cam:"Contrôle caméra",l_sol:"Solutions trouvées",ph_sol:"Décrivez brièvement…",l_rate:"Note d'expérience",send_note:"À l'envoi, un PDF est généré et envoyé à cnogara25@gmail.com.",btn_send:"Générer le PDF & envoyer",btn_sending:"Envoi…",sent_ok:"Rapport envoyé par e-mail à cnogara25@gmail.com.",sent_saved:"Rapport enregistré, mais l'e-mail n'a pas pu être envoyé.",err_name:"Veuillez indiquer le nom de l'arbitre.",err_send:"Envoi impossible. Réessayez.",btn_print:"Imprimer / PDF",btn_edit:"Retour au formulaire",mng_label:"Admin",mng_title:"Gestion de la bibliothèque",mng_sub:"Ajoutez ou supprimez documents et vidéos.",ph_code:"mot de passe admin",mng_unlock:"Déverrouiller",mng_wrong:"Mot de passe incorrect.",mdoc:"Documents",mvid:"Vidéos & slides",ph_dtitle:"Titre du document",ph_dcat:"Catégorie (ex. Règles)",ph_durl:"Lien (Google Drive, etc.)",d_hint:"Collez un lien ci-dessus (Google Drive…), ou téléversez un PDF ci-dessous.",ph_vtitle:"Titre vidéo / slides",ph_vsub:"Sous-titre (ex. Formation · 8 clips)",ph_vurl:"Lien (vidéo ou slides)",m_addd:"Ajouter le document",m_addv:"Ajouter vidéo / slides",v_hint:"Lien YouTube ci-dessus, ou téléversez un .pptx ci-dessous.",foot_tag:"Portail arbitres · 2026/27",foot_note:"Accès libre · EN · FR · NL",clip_ok:"Clip téléversé — merci.",clip_bad:"Échec du téléversement, réessayez.",pv_title:"Rapport Video Challenge",pv_season:"Saison 2026/27",pv_league:"Division",pv_team:"Équipe hôte",pv_check:"Checklist d'avant-match",pv_data:"Données challenge",pv_total:"Demandes totales",pv_right:"Équipe correcte",pv_wrong:"Équipe erronée",pv_r1:"Demande par R1",pv_issues:"Problèmes rencontrés",pv_sol:"Solutions trouvées",pv_rate:"Note d'expérience",pv_none:"—"},
- nl:{brandsub:"Scheidsrechtersportaal",tab_home:"Home",tab_lib:"Bibliotheek",tab_rep:"Verslag",nav_docs:"Documenten",nav_video:"Video & VAR",nav_report:"Verslag",hero_kick:"Belgisch volleybal · Seizoen 2026/27",hero_h1:'Alles wat <span class="be-y">Video</span> <span class="be-r">Challenge</span>-scheidsrechters nodig hebben, op één plek',hero_p:"Reglementen, videoreview en je verslag na de match — alles op één plek, in jouw taal. Geen account nodig.",hero_cta1:"Verslag invullen",hero_cta2:"Documenten bekijken",feat_label:"Wat erin zit",feat_title:"Alles wat een Video Challenge-scheidsrechter nodig heeft",f1t:"Documenten",f1d:"Download reglementen en richtlijnen als PDF.",f2t:"Video",f2d:"Bekijk clips en slides.",f3t:"Challenge-verslag",f3d:"Vul het formulier in; het wordt een PDF, automatisch gemaild.",f_open:"Openen",doc_label:"Bibliotheek",doc_title:"Documenten & downloads",doc_sub:"Officiële reglementen en Video Challenge-protocollen.",doc_dl:"Download",doc_empty:"Nog geen documenten.",vid_label:"Videohub",vid_title:"Video & slides",vid_sub:"Trainingsclips en presentaties.",vid_upt:"Upload een challengeclip",vid_ups:"Klik om een video te kiezen",vid_empty:"Nog geen video's.",rep_label:"Na de match",rep_title:"Video Challenge-verslag",rep_sub:"In te vullen na elke match. Vul gewoon je naam in.",g_match:"Match",l_ref:'Challenge-scheidsrechter <span class="req">*</span>',ph_ref:"Typ je naam",l_date:"Matchdatum",l_league:"Reeks",o_men:"Heren",o_women:"Dames",l_host:"Thuisploeg",g_check:"Checklist vóór de match",c1:"1u30 voor de match aangekomen",c2:"TR aanwezig in de zaal",c3:"Voorafgaande cameracontrole",c4:"Tablets beschikbaar",c5:"Headsets werken correct",c6:"Officiële Engelse terminologie gebruikt",c7:"TR bleef beschikbaar tijdens de match",c8:"Samenwerking scorebord & uitzending",o_yes:"Ja",o_no:"Nee",o_op:"Operationeel",o_nop:"Niet op.",o_good:"Goed",o_suff:"Voldoende",o_nsuff:"Onvold.",g_data:"Challenge-data",cnt_tot:'Totaal <span class="req">*</span>',cnt_right:"Ploeg correct",cnt_wrong:"Ploeg fout",c9:"Minstens één aanvraag door R1",g_issues:"Problemen & feedback",l_issues:'Ondervonden problemen <span class="req">*</span>',iss_none:"Geen probleem",iss_sys:"Systeemonderdelen",iss_bc:"Uitzendscherm",iss_oth:"Andere",iss_net:"Internetverbinding",iss_cam:"Cameracontrole",l_sol:"Gevonden oplossingen",ph_sol:"Beschrijf kort…",l_rate:"Ervaringsscore",send_note:"Bij verzenden wordt een PDF gemaakt en gemaild naar cnogara25@gmail.com.",btn_send:"PDF maken & verzenden",btn_sending:"Verzenden…",sent_ok:"Verslag verzonden en gemaild naar cnogara25@gmail.com.",sent_saved:"Verslag opgeslagen, maar de e-mail kon niet worden verzonden.",err_name:"Vul de naam van de scheidsrechter in.",err_send:"Verzenden mislukt. Probeer opnieuw.",btn_print:"Afdrukken / PDF",btn_edit:"Terug naar formulier",mng_label:"Admin",mng_title:"Bibliotheekbeheer",mng_sub:"Voeg documenten en video's toe of verwijder ze.",ph_code:"adminwachtwoord",mng_unlock:"Ontgrendelen",mng_wrong:"Verkeerd wachtwoord.",mdoc:"Documenten",mvid:"Video's & slides",ph_dtitle:"Documenttitel",ph_dcat:"Categorie (bv. Regels)",ph_durl:"Link (Google Drive, enz.)",d_hint:"Plak hierboven een link (Google Drive…), of upload hieronder een PDF.",ph_vtitle:"Titel video / slides",ph_vsub:"Ondertitel (bv. Training · 8 clips)",ph_vurl:"Link (video of slides)",m_addd:"Document toevoegen",m_addv:"Video / slides toevoegen",v_hint:"YouTube-link hierboven, of upload een .pptx hieronder.",foot_tag:"Scheidsrechtersportaal · 2026/27",foot_note:"Vrije toegang · EN · FR · NL",clip_ok:"Clip geüpload — bedankt.",clip_bad:"Upload mislukt, probeer opnieuw.",pv_title:"Video Challenge-verslag",pv_season:"Seizoen 2026/27",pv_league:"Reeks",pv_team:"Thuisploeg",pv_check:"Checklist vóór de match",pv_data:"Challenge-data",pv_total:"Totaal aanvragen",pv_right:"Ploeg correct",pv_wrong:"Ploeg fout",pv_r1:"Aanvraag door R1",pv_issues:"Ondervonden problemen",pv_sol:"Gevonden oplossingen",pv_rate:"Ervaringsscore",pv_none:"—"}
+ en:{brandsub:"Referee portal",tab_home:"Home",tab_lib:"Library",tab_rep:"Report",nav_docs:"Documents",nav_video:"Video & VAR",nav_report:"Report",hero_kick:"Belgian Volleyball · Season 2026/27",hero_h1:'Everything <span class="be-y">Video</span> <span class="be-r">Challenge</span> referees need, in one place',hero_p:"Rules, video review and your post-match report — everything in one place, in your language. No account needed.",hero_cta1:"Fill the report",hero_cta2:"Browse documents",feat_label:"What's inside",feat_title:"Everything a Video Challenge referee needs",f1t:"Documents",f1d:"Download rules and guidelines as PDF.",f2t:"Video",f2d:"Watch clips and slide decks.",f3t:"Challenge report",f3d:"Fill the form; it becomes a PDF, emailed automatically.",f_open:"Open",doc_label:"Library",doc_title:"Documents & Video's",doc_sub:"Official rules, Video's situations.",tab_diag:"Diagnostics",dg_label:"Diagnostics",dg_title:"Challenge diagnostics",dg_sub:"Issues per team, collected from submitted reports.",dg_men:"Men",dg_women:"Women",dg_chart:"Teams with most issues",dg_reports:"reports",dg_clean:"No issues reported.",dg_empty:"No reports submitted yet.",dg_attention:"Attention",doc_view:"View",vid_view:"View",vid_dl:"Download",vw_open:"Open in new tab",doc_dl:"Download",doc_empty:"No documents yet.",vid_label:"Video hub",vid_title:"Video & slides",vid_sub:"Training clips and slide decks.",vid_upt:"Upload a challenge clip",vid_ups:"Click to select a video",vid_empty:"No videos yet.",rep_label:"After the match",rep_title:"Video Challenge report",rep_sub:"To be completed at the end of each game. Just enter your name.",g_match:"Match",l_ref:'Challenge referee <span class="req">*</span>',ph_ref:"Type your name",l_date:"Match date",l_league:"League",o_men:"Men",o_women:"Women",l_host:"Host team",g_check:"Pre-game checklist",c1:"Arrived 1h30 before the match",c2:"TR on-site at the sports hall",c3:"Preliminary camera check",c4:"Tablets available",c5:"Headsets functioning properly",c6:"Official English terminology used",c7:"TR remained available during the game",c8:"Cooperation with scoreboard & broadcast",o_yes:"Yes",o_no:"No",o_op:"Operational",o_nop:"Non op.",o_good:"Good",o_suff:"Suff.",o_nsuff:"Not suff.",g_data:"Challenge data",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Team right",cnt_wrong:"Team wrong",c9:"At least one request by R1",g_issues:"Issues & feedback",l_issues:'Issues encountered <span class="req">*</span>',iss_none:"No problem",iss_sys:"System components",iss_bc:"Broadcast screen",iss_oth:"Other",iss_net:"Internet connection",iss_cam:"Camera check",l_sol:"Solutions found",ph_sol:"Describe briefly…",l_rate:"Experience rating",send_note:"When you submit, a PDF is generated and emailed to cnogara25@gmail.com.",btn_send:"Generate PDF & send",btn_sending:"Sending…",sent_ok:"Report sent and emailed to cnogara25@gmail.com.",sent_saved:"Report saved, but the email could not be sent.",err_name:"Please enter the referee name.",err_send:"Could not send. Please try again.",btn_print:"Print / Save as PDF",btn_edit:"Back to form",mng_label:"Admin",mng_title:"Library management",mng_sub:"Add or remove documents and videos.",ph_code:"admin password",mng_unlock:"Unlock",mng_wrong:"Wrong password.",mdoc:"Documents",mvid:"Video & slides",ph_dtitle:"Document title",ph_dcat:"Category (e.g. Rules)",ph_durl:"Link (Google Drive, etc.)",d_hint:"Paste a link above (Google Drive…), or upload a PDF below.",ph_vtitle:"Video / slides title",ph_vsub:"Subtitle (e.g. Training · 8 clips)",ph_vurl:"Link (video or slides)",m_addd:"Add document",m_addv:"Add video / slides",v_hint:"Paste a YouTube link above, or upload a .pptx file below.",foot_tag:"Referee portal · 2026/27",foot_note:"Free access · EN · FR · NL",clip_ok:"Clip uploaded — thank you.",clip_bad:"Upload failed, please retry.",pv_title:"Video Challenge Report",pv_season:"Season 2026/27",pv_league:"League",pv_team:"Host team",pv_check:"Pre-game checklist",pv_data:"Challenge data",pv_total:"Total requests",pv_right:"Team right",pv_wrong:"Team wrong",pv_r1:"Request by R1",pv_issues:"Issues encountered",pv_sol:"Solutions found",pv_rate:"Experience rating",pv_none:"—"},
+ fr:{brandsub:"Portail arbitres",tab_home:"Accueil",tab_lib:"Bibliothèque",tab_rep:"Rapport",nav_docs:"Documents",nav_video:"Vidéo & VAR",nav_report:"Rapport",hero_kick:"Volleyball belge · Saison 2026/27",hero_h1:'Tout ce dont les arbitres <span class="be-y">Video</span> <span class="be-r">Challenge</span> ont besoin, au même endroit',hero_p:"Règlements, révision vidéo et rapport d'après-match — tout au même endroit, dans votre langue. Sans compte.",hero_cta1:"Remplir le rapport",hero_cta2:"Voir les documents",feat_label:"Au programme",feat_title:"Tout ce qu'un arbitre Video Challenge attend",f1t:"Documents",f1d:"Téléchargez règlements et directives en PDF.",f2t:"Vidéo",f2d:"Clips vidéo et présentations.",f3t:"Rapport de challenge",f3d:"Remplissez le formulaire ; il devient un PDF, envoyé automatiquement.",f_open:"Ouvrir",doc_label:"Bibliothèque",doc_title:"Documents & vidéos",doc_sub:"Règlements officiels, situations vidéo.",tab_diag:"Diagnostic",dg_label:"Diagnostic",dg_title:"Diagnostic challenge",dg_sub:"Problèmes par équipe, d'après les rapports envoyés.",dg_men:"Messieurs",dg_women:"Dames",dg_chart:"Équipes avec le plus de problèmes",dg_reports:"rapports",dg_clean:"Aucun problème signalé.",dg_empty:"Aucun rapport envoyé pour l'instant.",dg_attention:"Attention",doc_view:"Voir",vid_view:"Voir",vid_dl:"Télécharger",vw_open:"Ouvrir dans un onglet",doc_dl:"Télécharger",doc_empty:"Aucun document pour l'instant.",vid_label:"Espace vidéo",vid_title:"Vidéos & slides",vid_sub:"Clips de formation et présentations.",vid_upt:"Téléverser un clip de challenge",vid_ups:"Cliquez pour choisir une vidéo",vid_empty:"Aucune vidéo pour l'instant.",rep_label:"Après le match",rep_title:"Rapport Video Challenge",rep_sub:"À remplir à la fin de chaque match. Indiquez votre nom.",g_match:"Match",l_ref:'Arbitre challenge <span class="req">*</span>',ph_ref:"Tapez votre nom",l_date:"Date du match",l_league:"Division",o_men:"Messieurs",o_women:"Dames",l_host:"Équipe hôte",g_check:"Checklist d'avant-match",c1:"Arrivé 1h30 avant le match",c2:"TR présent dans la salle",c3:"Contrôle préalable des caméras",c4:"Tablettes disponibles",c5:"Casques fonctionnant correctement",c6:"Terminologie officielle anglaise utilisée",c7:"TR resté disponible pendant le match",c8:"Coopération marquoir & diffusion",o_yes:"Oui",o_no:"Non",o_op:"Opérationnel",o_nop:"Non op.",o_good:"Bonne",o_suff:"Suff.",o_nsuff:"Insuff.",g_data:"Données challenge",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Équipe correcte",cnt_wrong:"Équipe erronée",c9:"Au moins une demande par R1",g_issues:"Problèmes & avis",l_issues:'Problèmes rencontrés <span class="req">*</span>',iss_none:"Aucun problème",iss_sys:"Composants système",iss_bc:"Écran de diffusion",iss_oth:"Autre",iss_net:"Connexion internet",iss_cam:"Contrôle caméra",l_sol:"Solutions trouvées",ph_sol:"Décrivez brièvement…",l_rate:"Note d'expérience",send_note:"À l'envoi, un PDF est généré et envoyé à cnogara25@gmail.com.",btn_send:"Générer le PDF & envoyer",btn_sending:"Envoi…",sent_ok:"Rapport envoyé par e-mail à cnogara25@gmail.com.",sent_saved:"Rapport enregistré, mais l'e-mail n'a pas pu être envoyé.",err_name:"Veuillez indiquer le nom de l'arbitre.",err_send:"Envoi impossible. Réessayez.",btn_print:"Imprimer / PDF",btn_edit:"Retour au formulaire",mng_label:"Admin",mng_title:"Gestion de la bibliothèque",mng_sub:"Ajoutez ou supprimez documents et vidéos.",ph_code:"mot de passe admin",mng_unlock:"Déverrouiller",mng_wrong:"Mot de passe incorrect.",mdoc:"Documents",mvid:"Vidéos & slides",ph_dtitle:"Titre du document",ph_dcat:"Catégorie (ex. Règles)",ph_durl:"Lien (Google Drive, etc.)",d_hint:"Collez un lien ci-dessus (Google Drive…), ou téléversez un PDF ci-dessous.",ph_vtitle:"Titre vidéo / slides",ph_vsub:"Sous-titre (ex. Formation · 8 clips)",ph_vurl:"Lien (vidéo ou slides)",m_addd:"Ajouter le document",m_addv:"Ajouter vidéo / slides",v_hint:"Lien YouTube ci-dessus, ou téléversez un .pptx ci-dessous.",foot_tag:"Portail arbitres · 2026/27",foot_note:"Accès libre · EN · FR · NL",clip_ok:"Clip téléversé — merci.",clip_bad:"Échec du téléversement, réessayez.",pv_title:"Rapport Video Challenge",pv_season:"Saison 2026/27",pv_league:"Division",pv_team:"Équipe hôte",pv_check:"Checklist d'avant-match",pv_data:"Données challenge",pv_total:"Demandes totales",pv_right:"Équipe correcte",pv_wrong:"Équipe erronée",pv_r1:"Demande par R1",pv_issues:"Problèmes rencontrés",pv_sol:"Solutions trouvées",pv_rate:"Note d'expérience",pv_none:"—"},
+ nl:{brandsub:"Scheidsrechtersportaal",tab_home:"Home",tab_lib:"Bibliotheek",tab_rep:"Verslag",nav_docs:"Documenten",nav_video:"Video & VAR",nav_report:"Verslag",hero_kick:"Belgisch volleybal · Seizoen 2026/27",hero_h1:'Alles wat <span class="be-y">Video</span> <span class="be-r">Challenge</span>-scheidsrechters nodig hebben, op één plek',hero_p:"Reglementen, videoreview en je verslag na de match — alles op één plek, in jouw taal. Geen account nodig.",hero_cta1:"Verslag invullen",hero_cta2:"Documenten bekijken",feat_label:"Wat erin zit",feat_title:"Alles wat een Video Challenge-scheidsrechter nodig heeft",f1t:"Documenten",f1d:"Download reglementen en richtlijnen als PDF.",f2t:"Video",f2d:"Bekijk clips en slides.",f3t:"Challenge-verslag",f3d:"Vul het formulier in; het wordt een PDF, automatisch gemaild.",f_open:"Openen",doc_label:"Bibliotheek",doc_title:"Documenten & video's",doc_sub:"Officiële reglementen, videosituaties.",tab_diag:"Diagnose",dg_label:"Diagnose",dg_title:"Challenge-diagnose",dg_sub:"Problemen per ploeg, op basis van ingediende verslagen.",dg_men:"Heren",dg_women:"Dames",dg_chart:"Ploegen met de meeste problemen",dg_reports:"verslagen",dg_clean:"Geen problemen gemeld.",dg_empty:"Nog geen verslagen ingediend.",dg_attention:"Aandacht",doc_view:"Bekijken",vid_view:"Bekijken",vid_dl:"Downloaden",vw_open:"Openen in nieuw tabblad",doc_dl:"Download",doc_empty:"Nog geen documenten.",vid_label:"Videohub",vid_title:"Video & slides",vid_sub:"Trainingsclips en presentaties.",vid_upt:"Upload een challengeclip",vid_ups:"Klik om een video te kiezen",vid_empty:"Nog geen video's.",rep_label:"Na de match",rep_title:"Video Challenge-verslag",rep_sub:"In te vullen na elke match. Vul gewoon je naam in.",g_match:"Match",l_ref:'Challenge-scheidsrechter <span class="req">*</span>',ph_ref:"Typ je naam",l_date:"Matchdatum",l_league:"Reeks",o_men:"Heren",o_women:"Dames",l_host:"Thuisploeg",g_check:"Checklist vóór de match",c1:"1u30 voor de match aangekomen",c2:"TR aanwezig in de zaal",c3:"Voorafgaande cameracontrole",c4:"Tablets beschikbaar",c5:"Headsets werken correct",c6:"Officiële Engelse terminologie gebruikt",c7:"TR bleef beschikbaar tijdens de match",c8:"Samenwerking scorebord & uitzending",o_yes:"Ja",o_no:"Nee",o_op:"Operationeel",o_nop:"Niet op.",o_good:"Goed",o_suff:"Voldoende",o_nsuff:"Onvold.",g_data:"Challenge-data",cnt_tot:'Totaal <span class="req">*</span>',cnt_right:"Ploeg correct",cnt_wrong:"Ploeg fout",c9:"Minstens één aanvraag door R1",g_issues:"Problemen & feedback",l_issues:'Ondervonden problemen <span class="req">*</span>',iss_none:"Geen probleem",iss_sys:"Systeemonderdelen",iss_bc:"Uitzendscherm",iss_oth:"Andere",iss_net:"Internetverbinding",iss_cam:"Cameracontrole",l_sol:"Gevonden oplossingen",ph_sol:"Beschrijf kort…",l_rate:"Ervaringsscore",send_note:"Bij verzenden wordt een PDF gemaakt en gemaild naar cnogara25@gmail.com.",btn_send:"PDF maken & verzenden",btn_sending:"Verzenden…",sent_ok:"Verslag verzonden en gemaild naar cnogara25@gmail.com.",sent_saved:"Verslag opgeslagen, maar de e-mail kon niet worden verzonden.",err_name:"Vul de naam van de scheidsrechter in.",err_send:"Verzenden mislukt. Probeer opnieuw.",btn_print:"Afdrukken / PDF",btn_edit:"Terug naar formulier",mng_label:"Admin",mng_title:"Bibliotheekbeheer",mng_sub:"Voeg documenten en video's toe of verwijder ze.",ph_code:"adminwachtwoord",mng_unlock:"Ontgrendelen",mng_wrong:"Verkeerd wachtwoord.",mdoc:"Documenten",mvid:"Video's & slides",ph_dtitle:"Documenttitel",ph_dcat:"Categorie (bv. Regels)",ph_durl:"Link (Google Drive, enz.)",d_hint:"Plak hierboven een link (Google Drive…), of upload hieronder een PDF.",ph_vtitle:"Titel video / slides",ph_vsub:"Ondertitel (bv. Training · 8 clips)",ph_vurl:"Link (video of slides)",m_addd:"Document toevoegen",m_addv:"Video / slides toevoegen",v_hint:"YouTube-link hierboven, of upload een .pptx hieronder.",foot_tag:"Scheidsrechtersportaal · 2026/27",foot_note:"Vrije toegang · EN · FR · NL",clip_ok:"Clip geüpload — bedankt.",clip_bad:"Upload mislukt, probeer opnieuw.",pv_title:"Video Challenge-verslag",pv_season:"Seizoen 2026/27",pv_league:"Reeks",pv_team:"Thuisploeg",pv_check:"Checklist vóór de match",pv_data:"Challenge-data",pv_total:"Totaal aanvragen",pv_right:"Ploeg correct",pv_wrong:"Ploeg fout",pv_r1:"Aanvraag door R1",pv_issues:"Ondervonden problemen",pv_sol:"Gevonden oplossingen",pv_rate:"Ervaringsscore",pv_none:"—"}
 };
 
 let LANG="en";
@@ -383,15 +443,17 @@ function setLang(l){
   document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
   document.querySelectorAll("[data-i18n-ph]").forEach(el=>{const k=el.getAttribute("data-i18n-ph");if(T[l][k]!==undefined)el.placeholder=T[l][k];});
   document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.getAttribute("data-l")===l));
-  renderDocs();renderVideos();
+  renderDocs();renderVideos();renderDiag();
 }
 
 function renderDocs(){
   const el=document.getElementById("doclist");el.innerHTML="";
   if(!DOCS.length){el.innerHTML='<div class="empty">'+t("doc_empty")+'</div>';return;}
   DOCS.forEach(d=>{const r=document.createElement("div");r.className="doc";
-    const dl=d.url?'<a class="btn ghost" href="'+esc(d.url)+'" target="_blank" rel="noopener">'+t("doc_dl")+'</a>':'<a class="btn ghost">'+t("doc_dl")+'</a>';
-    r.innerHTML='<div class="dic">&#128196;</div><div class="meta"><b>'+esc(d.title)+'</b><span>'+esc(d.size||"")+'</span></div>'+(d.cat?'<span class="tag">'+esc(d.cat)+'</span>':'')+dl;
+    const vw=d.url?'<button class="btn" data-vw="1">'+t("doc_view")+'</button>':'';
+    const dl=d.url?'<a class="btn ghost" href="'+esc(d.url)+'" target="_blank" rel="noopener">'+t("doc_dl")+'</a>':'';
+    r.innerHTML='<div class="dic">&#128196;</div><div class="meta"><b>'+esc(d.title)+'</b><span>'+esc(d.size||"")+'</span></div>'+(d.cat?'<span class="tag">'+esc(d.cat)+'</span>':'')+vw+dl;
+    if(d.url){r.querySelector('[data-vw]').addEventListener("click",function(){openViewer(d.title,d.url);});}
     el.appendChild(r);});
 }
 function isSlide(u){if(!u)return false;u=(""+u).toLowerCase();return u.endsWith(".ppt")||u.endsWith(".pptx")||u.endsWith(".key")||u.indexOf("slides")>-1||u.indexOf("presentation")>-1||u.indexOf("powerpoint")>-1||u.indexOf("sway")>-1;}
@@ -402,8 +464,9 @@ function renderVideos(){
   if(!VIDEOS.length){el.innerHTML='<div class="empty">'+t("vid_empty")+'</div>';return;}
   VIDEOS.forEach(v=>{const c=document.createElement("div");c.className="vid";
     const ico=isSlide(v.url)?SLIDE_SVG:PLAY_SVG;
-    c.innerHTML='<div class="thumb"><div class="play">'+ico+'</div><div class="dur">'+esc(v.dur||"")+'</div></div><div class="vbody"><b>'+esc(v.title)+'</b><span>'+esc(v.sub||"")+'</span></div>';
-    if(v.url)c.addEventListener("click",()=>window.open(v.url,"_blank","noopener"));
+    const acts='<div class="vactions"><button class="btn" data-vw="1">'+t("vid_view")+'</button>'+(v.url?'<a class="btn ghost" href="'+esc(v.url)+'" target="_blank" rel="noopener">'+t("vid_dl")+'</a>':'')+'</div>';
+    c.innerHTML='<div class="thumb"><div class="play">'+ico+'</div><div class="dur">'+esc(v.dur||"")+'</div></div><div class="vbody"><b>'+esc(v.title)+'</b><span>'+esc(v.sub||"")+'</span>'+acts+'</div>';
+    if(v.url){c.querySelector(".thumb").addEventListener("click",function(){openViewer(v.title,v.url);});c.querySelector('[data-vw]').addEventListener("click",function(e){e.stopPropagation();openViewer(v.title,v.url);});}
     el.appendChild(c);});
 }
 
@@ -470,6 +533,7 @@ genbtn.addEventListener("click",async()=>{
       document.getElementById("okmsg").textContent=j.email_sent?t("sent_ok"):t("sent_saved");
       document.getElementById("output").classList.add("show");
       document.getElementById("output").scrollIntoView({behavior:"smooth"});
+      try{await loadReports();renderDiag();}catch(_){}
     }else{status.className="bad";status.textContent=(j.error||t("err_send"));}
   }catch(e){status.className="bad";status.textContent=t("err_send");}
   finally{genbtn.disabled=false;genbtn.textContent=t("btn_send");}
@@ -517,12 +581,102 @@ document.getElementById("add_vid").addEventListener("click",async()=>{
 });
 
 async function rest(path){const res=await fetch(SB_URL+"/rest/v1/"+path,{headers:H});if(!res.ok)throw new Error("rest "+res.status);return res.json();}
+/* ---- Viewer + Diagnostics ---- */
+function embedUrl(u){
+  if(!u)return "";
+  var s=""+u;
+  var yt=s.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|live\/|embed\/)|youtu\.be\/)([\w-]{6,})/);
+  if(yt)return "https://www.youtube.com/embed/"+yt[1];
+  var vm=s.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if(vm)return "https://player.vimeo.com/video/"+vm[1];
+  var gs=s.match(/docs\.google\.com\/presentation\/d\/([\w-]+)/);
+  if(gs)return "https://docs.google.com/presentation/d/"+gs[1]+"/embed?start=false&loop=false";
+  var gx=s.match(/docs\.google\.com\/(document|spreadsheets)\/d\/([\w-]+)/);
+  if(gx)return "https://docs.google.com/"+gx[1]+"/d/"+gx[2]+"/preview";
+  var gd=s.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+  if(gd)return "https://drive.google.com/file/d/"+gd[1]+"/preview";
+  if(/\.(pptx?|docx?|xlsx?|key)(\?|$)/i.test(s))return "https://view.officeapps.live.com/op/embed.aspx?src="+encodeURIComponent(s);
+  return s;
+}
+function openViewer(title,url){if(!url)return;var f=document.getElementById("vw_frame");document.getElementById("vw_title").textContent=title||"";document.getElementById("vw_open").href=url;f.src=embedUrl(url);document.getElementById("viewer").classList.add("show");}
+function closeViewer(){var f=document.getElementById("vw_frame");document.getElementById("viewer").classList.remove("show");f.src="about:blank";}
+document.getElementById("vw_close").addEventListener("click",closeViewer);
+document.getElementById("viewer").addEventListener("click",function(e){if(e.target.id==="viewer")closeViewer();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeViewer();});
+
+let REPORTS=[];
+const DIAG_ALERT=3;
+const ISSUE_KEY={"System components":"iss_sys","Broadcast screen":"iss_bc","Other":"iss_oth","Internet connection":"iss_net","Camera check":"iss_cam"};
+async function loadReports(){try{REPORTS=await rest("vcbe_report_problems?select=*&order=created_at.desc");}catch(e){REPORTS=[];}}
+function reportProblems(r){
+  var k=[];
+  if(r.arrive_1h30===false)k.push("c1");
+  if(r.tr_onsite===false)k.push("c2");
+  if((""+r.cameras)==="Non operational")k.push("c3");
+  if(r.tablets===false)k.push("c4");
+  if(r.headsets===false)k.push("c5");
+  if(r.english_terms===false)k.push("c6");
+  if(r.tr_available===false)k.push("c7");
+  if((""+r.cooperation)==="Not sufficient")k.push("c8");
+  (r.issues||"").split(",").map(function(x){return x.trim();}).filter(function(x){return x&&x!=="No problem";}).forEach(function(v){k.push(ISSUE_KEY[v]||("ISS::"+v));});
+  return k;
+}
+function probLabel(k){return k.indexOf("ISS::")===0?k.slice(5):t(k);}
+function buildDiag(){
+  var st={};
+  ["Men","Women"].forEach(function(lg){(TEAMS[lg]||[]).forEach(function(n){st[n]={league:lg,name:n,reports:0,withp:0,counts:{},total:0};});});
+  (REPORTS||[]).forEach(function(r){
+    var n=r.host_team;if(!n)return;
+    if(!st[n])st[n]={league:(r.league||"Men"),name:n,reports:0,withp:0,counts:{},total:0};
+    st[n].reports++;
+    var ks=reportProblems(r);
+    if(ks.length)st[n].withp++;
+    ks.forEach(function(x){st[n].counts[x]=(st[n].counts[x]||0)+1;st[n].total++;});
+  });
+  return st;
+}
+function renderDiag(){
+  var groups=document.getElementById("dg_groups");var cw=document.getElementById("dg_chartwrap");
+  if(!groups||!cw)return;
+  var st=buildDiag();
+  var all=Object.keys(st).map(function(n){return st[n];});
+  var wp=all.filter(function(s){return s.total>0;}).sort(function(a,b){return b.total-a.total;});
+  if(!REPORTS||!REPORTS.length){cw.innerHTML='<div class="empty">'+t("dg_empty")+'</div>';}
+  else if(!wp.length){cw.innerHTML='<div class="chart"><div class="seclabel" style="margin-bottom:10px">'+t("dg_chart")+'</div><div class="dgok"><i>&#10003;</i><span>'+t("dg_clean")+'</span></div></div>';}
+  else{
+    var max=wp[0].total||1;var rows="";
+    wp.slice(0,10).forEach(function(s){
+      var cls=s.withp>=DIAG_ALERT?"bad":(s.total>=3?"warn":"");
+      var w=Math.max(6,Math.round(s.total/max*100));
+      rows+='<div class="barrow"><span class="bn">'+esc(s.name)+'</span><div class="bartrack"><div class="barfill '+cls+'" style="width:'+w+'%"></div></div><span class="bv">'+s.total+'</span></div>';
+    });
+    cw.innerHTML='<div class="chart"><div class="seclabel" style="margin-bottom:10px">'+t("dg_chart")+'</div>'+rows+'</div>';
+  }
+  function card(s){
+    var al=s.withp>=DIAG_ALERT;
+    var head='<div class="dghead"><b>'+esc(s.name)+'</b><span class="dgbadge">'+(al?'&#9888; '+t("dg_attention")+' &middot; ':'')+s.reports+' '+t("dg_reports")+'</span></div>';
+    var body;
+    if(s.total===0){body='<div class="dgok"><i>&#10003;</i><span>'+t("dg_clean")+'</span></div>';}
+    else{
+      var keys=Object.keys(s.counts).sort(function(a,b){return s.counts[b]-s.counts[a];});
+      body=keys.map(function(k){return '<div class="dgprob"><span class="x">&#10007;</span><span>'+esc(probLabel(k))+'</span><span class="n">&times;'+s.counts[k]+'</span></div>';}).join("");
+    }
+    return '<div class="dgteam'+(al?' alert':'')+'">'+head+body+'</div>';
+  }
+  function grp(lg,label){
+    var items=all.filter(function(s){return s.league===lg;}).sort(function(a,b){return (b.withp-a.withp)||(b.total-a.total)||a.name.localeCompare(b.name);});
+    if(!items.length)return "";
+    return '<div class="dggrp"><h3>'+label+'</h3><div class="dggrid">'+items.map(card).join("")+'</div></div>';
+  }
+  groups.innerHTML=grp("Men",t("dg_men"))+grp("Women",t("dg_women"));
+}
 async function init(){
   try{const r=await rest("vcbe_referees?select=name&active=eq.true&order=sort_order");if(r.length)REFS=r.map(x=>x.name);}catch(e){}
   try{const tm=await rest("vcbe_teams?select=name,league&active=eq.true&order=name");if(tm.length){TEAMS={Men:[],Women:[]};tm.forEach(x=>{(TEAMS[x.league]=TEAMS[x.league]||[]).push(x.name);});}}catch(e){}
   try{const d=await rest("vcbe_documents?select=*&published=eq.true&order=sort_order");DOCS=d.map(x=>({id:x.id,title:x.title,cat:x.category,size:x.size_label,url:x.external_url}));}catch(e){}
   try{const v=await rest("vcbe_videos?select=*&published=eq.true&order=sort_order");VIDEOS=v.map(x=>({id:x.id,title:x.title,sub:x.subtitle,url:x.url,dur:x.duration}));}catch(e){}
-  fillRefs();fillTeams(league);fillCounts();setLang("en");
+  await loadReports();
+  fillRefs();fillTeams(league);fillCounts();setLang("en");renderDiag();
 }
 init();
 </script>
@@ -530,6 +684,7 @@ init();
 function go(p){
   document.querySelectorAll('.page').forEach(function(s){s.classList.toggle('active',s.dataset.page===p);});
   document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.go===p);});
+  if(p==='diag'&&typeof renderDiag==='function')renderDiag();
   try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
 }
 </script>
