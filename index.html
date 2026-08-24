@@ -229,6 +229,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 .dgright{display:flex;gap:8px;align-items:center;flex:none}
 .dgreset{padding:5px 10px;font-size:12px;border-radius:9px;border:1.5px solid var(--bad);background:transparent;color:var(--bad);cursor:pointer;font-family:var(--fd);font-weight:600;flex:none}
 .dgreset:hover{background:var(--bad);color:#fff}
+.email-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line2);font-size:13px}
+.email-row input{flex:1;padding:5px 9px;border:1.5px solid var(--line2);border-radius:8px;font-size:12px;font-family:var(--fd)}
+.email-row .btn{padding:5px 12px;font-size:12px;white-space:nowrap}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--line2);font-size:13px}
+.miss-badge{background:#FEF2F2;color:#991B1B;font-weight:700;font-size:11px;padding:2px 8px;border-radius:20px}
+.submitted-chip{display:inline-block;background:#F0FDF4;color:#166534;font-size:12px;padding:3px 10px;border-radius:20px;margin:2px}
 .heroart{position:relative;margin:6px -20px -24px}
 .heroart img{display:block;width:100%;height:auto}
 .heroart::before{content:"";position:absolute;left:0;right:0;top:0;height:52%;background:linear-gradient(to bottom,#2563EB 0%,rgba(37,99,235,.82) 16%,rgba(37,99,235,0) 100%);pointer-events:none}
@@ -428,6 +434,40 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
         <button class="btn danger" id="rst_all" data-i18n="rep_reset_all">Reset all data</button>
         <div class="mlist" id="mng_replist"></div>
       </div>
+
+      <!-- ── WEEKLY STATS ─────────────────────────────────────── -->
+      <div class="acard" id="card_weekly">
+        <h3>📊 Weekly stats &amp; reminders</h3>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 14px">Reports submitted this week · who hasn't sent · miss counter.</p>
+        <button class="btn" id="btn_load_stats" onclick="loadWeeklyStats()">↻ Refresh stats</button>
+        <button class="btn" id="btn_send_reminders" onclick="sendReminders()" style="background:var(--violet);color:#fff;margin-left:8px">✉ Send reminders now</button>
+        <div id="weekly_status" style="margin-top:10px;font-size:13px;color:var(--muted)"></div>
+        <!-- submitted this week -->
+        <div style="margin-top:16px">
+          <div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:6px" id="week_label">Week —</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:6px">✅ Submitted this week</div>
+          <div id="week_submitted" style="font-size:13px"></div>
+        </div>
+        <!-- missed this week -->
+        <div style="margin-top:14px">
+          <div style="font-size:13px;color:#dc2626;font-weight:600;margin-bottom:6px">⚠ Not submitted (with email)</div>
+          <div id="week_missed"></div>
+        </div>
+        <!-- all-time miss log -->
+        <div style="margin-top:14px">
+          <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:6px">📋 All-time miss log</div>
+          <div id="week_misslog"></div>
+        </div>
+      </div>
+
+      <!-- ── REFEREE EMAILS ───────────────────────────────────── -->
+      <div class="acard" id="card_emails">
+        <h3>📧 Referee emails</h3>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 14px">Add an email to each referee so they receive weekly reminders when they haven't submitted.</p>
+        <button class="btn" onclick="loadRefereeEmails()">↻ Load / refresh</button>
+        <div id="email_list" style="margin-top:14px"></div>
+      </div>
+
     </div>
   </section>
 
@@ -629,6 +669,109 @@ document.getElementById("add_vid").addEventListener("click",async()=>{
 });
 
 async function rest(path){const res=await fetch(SB_URL+"/rest/v1/"+path,{headers:H});if(!res.ok)throw new Error("rest "+res.status);return res.json();}
+
+/* ──────────────────── WEEKLY STATS ──────────────────── */
+async function loadWeeklyStats(){
+  const el=document.getElementById("weekly_status");
+  const sub=document.getElementById("week_submitted");
+  const mis=document.getElementById("week_missed");
+  const log=document.getElementById("week_misslog");
+  const wl=document.getElementById("week_label");
+  if(!el)return;
+  el.textContent="Loading…";
+  try{
+    const j=await adminCall("get_weekly_stats",{});
+    if(!j||j.error){el.textContent="Error: "+(j&&j.error||"failed");return;}
+    el.textContent="";
+    // week label
+    if(wl) wl.textContent="Week of "+j.week_start+" → "+j.week_end;
+    // submitted this week
+    if(sub){
+      if(!j.reports_this_week||!j.reports_this_week.length){sub.innerHTML='<span style="color:var(--muted);font-size:13px">No reports this week.</span>';
+      }else{
+        sub.innerHTML=j.reports_this_week.map(function(r){
+          var d=r.created_at?new Date(r.created_at).toLocaleDateString("en-BE",{timeZone:"Europe/Brussels"}):"";
+          return '<span class="submitted-chip"><b>'+esc(r.referee_name)+'</b> · '+esc(r.league||"")+" · "+esc(r.host_team||"")+" · "+d+'</span>';
+        }).join("");
+      }
+    }
+    // missed this week
+    if(mis){
+      if(!j.missed_this_week||!j.missed_this_week.length){mis.innerHTML='<span style="color:#166534;font-size:13px">✅ Everyone with an email submitted this week!</span>';
+      }else{
+        mis.innerHTML=j.missed_this_week.map(function(r){
+          return '<div class="stat-row"><span><b>'+esc(r.name)+'</b><br><span style="color:var(--muted);font-size:11px">'+esc(r.email||"")+'</span></span>'
+            +'<span class="miss-badge">'+r.miss_count+' miss'+(r.miss_count!==1?"es":"")+'</span></div>';
+        }).join("");
+      }
+    }
+    // all-time miss log
+    if(log){
+      var mc=j.miss_counts||{};
+      var refs=Object.keys(mc).sort(function(a,b){return mc[b]-mc[a];});
+      if(!refs.length){log.innerHTML='<span style="color:var(--muted);font-size:13px">No misses recorded yet.</span>';
+      }else{
+        log.innerHTML=refs.map(function(n){
+          return '<div class="stat-row"><b>'+esc(n)+'</b><span class="miss-badge">'+mc[n]+' miss'+(mc[n]!==1?"es":"")+'</span></div>';
+        }).join("");
+      }
+    }
+  }catch(e){el.textContent="Error: "+e.message;}
+}
+
+async function sendReminders(){
+  const btn=document.getElementById("btn_send_reminders");
+  const el=document.getElementById("weekly_status");
+  if(!ADMIN_PW){el.textContent="Not logged in.";return;}
+  if(!confirm("Send reminder emails now to all referees who haven't submitted this week?"))return;
+  if(btn)btn.disabled=true;
+  el.textContent="Sending…";
+  try{
+    const j=await adminCall("trigger_reminders",{});
+    if(j&&j.error){el.textContent="Error: "+j.error;return;}
+    var msg="✅ Sent: "+(j.sent||[]).length;
+    if((j.skipped||[]).length)msg+=" · Already reminded: "+(j.skipped||[]).length;
+    if((j.failed||[]).length)msg+=" · Failed: "+j.failed.join(", ");
+    el.textContent=msg;
+    loadWeeklyStats();
+  }catch(e){el.textContent="Error: "+e.message;}
+  finally{if(btn)btn.disabled=false;}
+}
+
+/* ──────────────────── REFEREE EMAILS ──────────────────── */
+async function loadRefereeEmails(){
+  const el=document.getElementById("email_list");
+  if(!el)return;
+  el.innerHTML='<span style="color:var(--muted);font-size:13px">Loading…</span>';
+  try{
+    const j=await adminCall("list_referee_emails",{});
+    if(!j||j.error){el.innerHTML='<span style="color:#dc2626">Error</span>';return;}
+    var refs=Array.isArray(j)?j:(j.data||[]);
+    el.innerHTML=refs.map(function(r){
+      var email=r.email||"";
+      return '<div class="email-row" data-id="'+r.id+'">'
+        +'<span style="flex:0 0 auto;min-width:160px;font-size:13px;font-weight:600">'+esc(r.name)+'</span>'
+        +'<input type="email" value="'+esc(email)+'" placeholder="email@example.com" data-ref-id="'+r.id+'" data-ref-name="'+esc(r.name)+'">'
+        +'<button class="btn" onclick="saveRefereeEmail(this)" style="flex:0 0 auto">Save</button>'
+        +'</div>';
+    }).join("");
+  }catch(e){el.innerHTML='<span style="color:#dc2626">'+e.message+'</span>';}
+}
+
+async function saveRefereeEmail(btn){
+  var row=btn.closest(".email-row");
+  var input=row.querySelector("input");
+  var id=row.getAttribute("data-id");
+  var email=input.value.trim();
+  btn.textContent="…"; btn.disabled=true;
+  try{
+    const j=await adminCall("update_referee_email",{id:id,email:email||null});
+    if(j&&j.id){btn.textContent="✓";btn.style.background="#A3E635";btn.style.color="#0E2350";
+      setTimeout(function(){btn.textContent="Save";btn.style.background="";btn.style.color="";btn.disabled=false;},2000);
+    }else{btn.textContent="✗";btn.style.background="#FEF2F2";btn.style.color="#dc2626";setTimeout(function(){btn.textContent="Save";btn.style.background="";btn.style.color="";btn.disabled=false;},2000);}
+  }catch(e){btn.textContent="✗";btn.disabled=false;}
+}
+
 /* ---- Viewer + Diagnostics ---- */
 function embedUrl(u){
   if(!u)return "";
