@@ -615,7 +615,7 @@ genbtn.addEventListener("click",async()=>{
 });
 
 async function adminCall(action,payload){
-  const res=await fetch(FN+"/admin-write",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:ADMIN_PW,action,payload})});
+  const res=await fetch(FN+"/admin-write",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({password:ADMIN_PW,action:action},payload||{}))});
   return res.json();
 }
 function applyLists(docs,vids){
