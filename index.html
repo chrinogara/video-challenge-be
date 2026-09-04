@@ -560,7 +560,7 @@ const refSel=document.getElementById("f_ref");
 function fillRefs(){refSel.innerHTML="";const ph=document.createElement("option");ph.value="";ph.setAttribute("data-i18n","ph_ref");ph.textContent=t("ph_ref");refSel.appendChild(ph);REFS.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;refSel.appendChild(o);});}
 const teamSel=document.getElementById("f_team");
 function fillTeams(lg){teamSel.innerHTML="";(TEAMS[lg]||[]).forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;teamSel.appendChild(o);});}
-function fillCounts(){document.querySelectorAll("select.cnt").forEach(function(s){s.innerHTML="";for(var i=1;i<=50;i++){var o=document.createElement("option");o.value=i;o.textContent=i;s.appendChild(o);}});}
+function fillCounts(){document.querySelectorAll("select.cnt").forEach(function(s){s.innerHTML="";for(var i=0;i<=50;i++){var o=document.createElement("option");o.value=i;o.textContent=i;s.appendChild(o);}});}
 let league="Men";
 document.querySelectorAll("#seg_league button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("#seg_league button").forEach(x=>x.classList.remove("on"));b.classList.add("on");league=b.getAttribute("data-v");fillTeams(league);}));
 document.querySelectorAll('.seg[data-k]').forEach(g=>g.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");})));
