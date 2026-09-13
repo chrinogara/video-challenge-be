@@ -801,6 +801,7 @@ function embedUrl(u){
   var gd=s.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
   if(gd)return "https://drive.google.com/file/d/"+gd[1]+"/preview";
   if(/\.(pptx?|docx?|xlsx?|key)(\?|$)/i.test(s))return "https://view.officeapps.live.com/op/embed.aspx?src="+encodeURIComponent(s);
+  if(/\.pdf(\?|$)/i.test(s))return "https://docs.google.com/viewer?url="+encodeURIComponent(s)+"&embedded=true";
   return s;
 }
 function openViewer(title,url){if(!url)return;var f=document.getElementById("vw_frame");document.getElementById("vw_title").textContent=title||"";document.getElementById("vw_open").href=url;f.src=embedUrl(url);document.getElementById("viewer").classList.add("show");}
