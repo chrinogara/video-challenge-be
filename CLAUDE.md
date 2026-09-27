@@ -15,6 +15,10 @@
 
 ## Controllo settimanale Video Referee (ogni domenica 22:00, ora di Bruxelles)
 - Cartella Drive "Challenge Video VB": https://drive.google.com/drive/folders/1RoziJRp4tE7SAlnnQ04AXq_x3uCGp_pe (proprietario cnogara25@gmail.com).
-- Ogni settimana contiene un PDF con i soli Video Referee che hanno arbitrato in quella settimana.
+- Ogni settimana contiene un PDF con i soli Video Referee che hanno arbitrato in quella settimana (es. "Video arbitri Liga - 2026-09-27.pdf", fonte VolleyAdmin2, serie LIGH/LIGD). Il file viene aggiornato o sostituito: l'ID cambia, va ritrovato ogni volta.
+- Il connettore Google Drive NON vede i file della cartella. Metodo funzionante (cartella/file condivisi via link):
+  - elenco: `curl -sSL "https://drive.google.com/embeddedfolderview?id=1RoziJRp4tE7SAlnnQ04AXq_x3uCGp_pe" | grep -oE 'file/d/[A-Za-z0-9_-]{20,}|flip-entry-title">[^<]*'`
+  - download: `curl -sSL -o vr.pdf "https://drive.google.com/uc?export=download&id=<ID>"`, poi leggere il PDF.
+- Routine "Controllo settimanale Video Referee" (trig_01KD4SuUQaMEH7KEdAQKFPek) gira nella sessione Claude Code che l'ha creata, collegata a Drive/Gmail/Supabase.
 - Controllo: incrociare i nomi del PDF con `vcbe_referees`, verificare in `vcbe_reports` se hanno inviato il modulo per quella partita/settimana.
 - Azioni, tutte e tre: (a) riepilogo via email a srlchrisa@gmail.com, (b) promemoria email trilingue EN/FR/NL a chi non ha inviato, (c) registrazione in `vcbe_miss_log` (una riga per arbitro per settimana, niente duplicati).
