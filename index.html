@@ -178,8 +178,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 @media (min-width:620px){.tiles{grid-template-columns:repeat(3,1fr)}.tile.wide{grid-column:auto}.hero h1{font-size:30px}.mng-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:380px){.brand span{display:none}}
 @media print{
- .appbar,.tabbar,.btnbar,.formcard,.foot{display:none!important}
- body{background:#fff;padding:0}
+ .appbar,.tabbar,.btnbar,.formcard,.foot,.adm-rail,.adm-top{display:none!important}
+ body,body.adm{background:#fff;padding:0}
+ .adm-main{padding:0}.rep-wrap #output{box-shadow:none;padding:0}
  .page{display:none!important}.page#report{display:block!important}
  #report .seclabel,#report .sectitle,#report .secsub{display:none}
  #output{display:block!important}.preview{border:none;padding:0}
@@ -250,7 +251,22 @@ body.adm{background:radial-gradient(circle at 78% 28%,#2F6FE4 0%,#17408F 42%,#0B
 body.adm .appbar{background:rgba(9,26,74,.88);border-bottom-color:rgba(255,255,255,.12)}
 body.adm .brand b{color:#fff}body.adm .brand span{color:#B9C8EE}
 body.adm .foot{display:none}
-#manage,#page-diag{padding:0}
+#manage,#page-diag,#page-library,#report{padding:0}
+/* library board */
+.acol .doclist{gap:8px}
+.acol .doc{border:0;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.acol .vidgrid{grid-template-columns:1fr;gap:8px}
+.acol .vid,.acol .upload{border:0;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.acol .upload{border:2px dashed rgba(255,255,255,.5);background:rgba(255,255,255,.14);color:#fff}
+.acol .upload b,.acol .upload .uic{color:#fff}
+@media(min-width:900px){.adm-board.lib-board{grid-template-columns:1fr 1fr}.acol .vidgrid{grid-template-columns:1fr 1fr}}
+/* report form inside the console */
+.rep-wrap{width:100%;max-width:900px;margin:0 auto}
+.rep-wrap .formcard{border:0;box-shadow:0 2px 8px rgba(0,0,0,.14)}
+.rep-wrap .counter{background:var(--bg)}
+.rep-wrap #output{background:var(--surface);border-radius:18px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.14)}
+.rep-wrap .preview{border:1px solid var(--line)}
+.rep-wrap #submitstatus.bad{background:#FDECEC;padding:8px 12px;border-radius:10px}
 .adm-shell{display:flex;min-height:60vh}
 /* diagnostics board */
 .acol .chart,.acol .dgteam{border:0;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.14);margin:0 0 8px;padding:12px 14px}
@@ -407,18 +423,31 @@ details.aadd .btn{width:100%;padding:9px 12px;font-size:13px;border-radius:10px}
   </section>
 
   <section class="page" data-page="library" id="page-library">
-    <div class="block">
-      <div class="seclabel" data-i18n="doc_label">Library</div>
-      <h2 class="sectitle" data-i18n="doc_title">Documents &amp; Video's</h2>
-      <p class="secsub" data-i18n="doc_sub">Official rules, Video's situations.</p>
-      <div class="doclist" id="doclist"></div>
-    </div>
-    <div class="block">
-      <div class="seclabel" data-i18n="vid_label">Video hub</div>
-      <h2 class="sectitle" data-i18n="vid_title">Video &amp; slides</h2>
-      <p class="secsub" data-i18n="vid_sub">Training clips and slide decks.</p>
-      <div class="vidgrid" id="vidgrid"></div>
-      <div id="clipstatus" style="margin-top:12px;font-size:14px;color:var(--ok)"></div>
+    <div class="adm-shell">
+      <aside class="adm-rail" data-rail="library" aria-label="Navigation"></aside>
+      <div class="adm-main">
+        <div class="adm-top">
+          <button class="adm-back" onclick="go('home')" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg><span data-i18n="adm_back">Back</span></button>
+          <div class="ttl">
+            <div class="seclabel" data-i18n="doc_label">Library</div>
+            <h2 class="sectitle" data-i18n="doc_title">Documents &amp; Video's</h2>
+            <p class="secsub" data-i18n="doc_sub">Official rules, Video's situations.</p>
+          </div>
+        </div>
+        <div class="adm-board lib-board">
+          <div class="acol c1" id="col_libdocs">
+            <div class="acol-h"><span data-i18n="mdoc">Documents</span><i id="cnt_libdocs">0</i></div>
+            <div class="acol-big"><span id="big_libdocs">0</span><small data-i18n="mdoc">Documents</small></div>
+            <div class="doclist" id="doclist"></div>
+          </div>
+          <div class="acol c2" id="col_libvids">
+            <div class="acol-h"><span data-i18n="vid_title">Video &amp; slides</span><i id="cnt_libvids">0</i></div>
+            <div class="acol-big"><span id="big_libvids">0</span><small data-i18n="mvid">Videos</small></div>
+            <div class="vidgrid" id="vidgrid"></div>
+            <div id="clipstatus" style="margin-top:12px;font-size:14px;color:#fff"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -462,9 +491,18 @@ details.aadd .btn{width:100%;padding:9px 12px;font-size:13px;border-radius:10px}
   </section>
 
   <section class="page" data-page="report" id="report">
-    <div class="seclabel" data-i18n="rep_label">After the match</div>
-    <h2 class="sectitle" data-i18n="rep_title">Video Challenge report</h2>
-    <p class="secsub" data-i18n="rep_sub">To be completed at the end of each game. Just enter your name.</p>
+    <div class="adm-shell">
+      <aside class="adm-rail" data-rail="report" aria-label="Navigation"></aside>
+      <div class="adm-main">
+        <div class="adm-top">
+          <button class="adm-back" onclick="go('home')" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg><span data-i18n="adm_back">Back</span></button>
+          <div class="ttl">
+            <div class="seclabel" data-i18n="rep_label">After the match</div>
+            <h2 class="sectitle" data-i18n="rep_title">Video Challenge report</h2>
+            <p class="secsub" data-i18n="rep_sub">To be completed at the end of each game. Just enter your name.</p>
+          </div>
+        </div>
+        <div class="rep-wrap">
     <div class="formcard" id="formcard">
       <fieldset class="fgroup" style="border:0;margin:0;padding:0">
         <legend data-i18n="g_match">Match</legend>
@@ -524,6 +562,9 @@ details.aadd .btn{width:100%;padding:9px 12px;font-size:13px;border-radius:10px}
         <button class="btn" onclick="document.getElementById('output').classList.remove('show');window.scrollTo({top:0,behavior:'smooth'})" data-i18n="btn_edit">Back to form</button>
       </div>
       <div class="preview" id="preview"></div>
+    </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -719,7 +760,7 @@ function isNewItem(createdAt){
   if(isNaN(t))return false;
   return (Date.now()-t) < NEW_DAYS*24*60*60*1000;
 }
-function renderDocs(){
+function renderDocs(){admCount("libdocs",DOCS.length);
   const el=document.getElementById("doclist");el.innerHTML="";
   if(!DOCS.length){el.innerHTML='<div class="empty">'+t("doc_empty")+'</div>';return;}
   DOCS.forEach(d=>{const r=document.createElement("div");r.className="doc";
@@ -733,7 +774,7 @@ function renderDocs(){
 function isSlide(u){if(!u)return false;u=(""+u).toLowerCase();return u.endsWith(".ppt")||u.endsWith(".pptx")||u.endsWith(".key")||u.indexOf("slides")>-1||u.indexOf("presentation")>-1||u.indexOf("powerpoint")>-1||u.indexOf("sway")>-1;}
 const PLAY_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 const SLIDE_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg>';
-function renderVideos(){
+function renderVideos(){admCount("libvids",VIDEOS.length);
   const el=document.getElementById("vidgrid");if(!el)return;el.innerHTML="";
   if(!VIDEOS.length){el.innerHTML='<div class="empty">'+t("vid_empty")+'</div>';return;}
   VIDEOS.forEach(v=>{const c=document.createElement("div");c.className="vid";
@@ -1139,10 +1180,18 @@ async function init(){
 init();
 </script>
 <script>
+(function buildRails(){
+  var I={home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',library:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',report:'<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/>',diag:'<path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',admin:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
+  var T={home:'Home',library:'Library',report:'Report',diag:'Diagnostics',admin:'Admin'};
+  document.querySelectorAll('.adm-rail[data-rail]').forEach(function(r){
+    var cur=r.getAttribute('data-rail');
+    r.innerHTML=Object.keys(I).map(function(k){return '<button data-go="'+k+'" onclick="go(\''+k+'\')" title="'+T[k]+'"'+(k===cur?' class="on"':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+I[k]+'</svg></button>';}).join('');
+  });
+})();
 function go(p){
   document.querySelectorAll('.page').forEach(function(s){s.classList.toggle('active',s.dataset.page===p);});
   document.querySelectorAll('.tab,.adm-rail button[data-go]').forEach(function(b){b.classList.toggle('on',b.dataset.go===p);});
-  document.body.classList.toggle('adm',p==='admin'||p==='diag');
+  document.body.classList.toggle('adm',p!=='home');
   if(p==='diag'&&typeof renderDiag==='function')renderDiag();
   try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
 }
