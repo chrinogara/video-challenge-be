@@ -252,6 +252,18 @@ body.adm .appbar{background:rgba(9,26,74,.88);border-bottom-color:rgba(255,255,2
 body.adm .brand b{color:#fff}body.adm .brand span{color:#B9C8EE}
 body.adm .foot{display:none}
 #manage,#page-diag,#page-library,#report{padding:0}
+/* collapsible cards */
+.acol-h{cursor:pointer;user-select:none}
+.acol-h::after{content:"";width:8px;height:8px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg);margin:-3px 4px 0 6px;flex:none;transition:transform .15s}
+.acol.collapsed .acol-h::after{transform:rotate(-45deg);margin-top:2px}
+.acol.collapsed>:not(.acol-h){display:none!important}
+.acol.collapsed{min-height:0!important}
+.fgroup>legend{cursor:pointer;user-select:none;width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:12px;color:var(--ink)}
+.fgroup>legend::after{content:"";width:7px;height:7px;border-right:2px solid var(--violet);border-bottom:2px solid var(--violet);transform:rotate(45deg);margin-top:-3px;flex:none;transition:transform .15s}
+.fgroup.collapsed>legend::after{transform:rotate(-45deg);margin-top:2px}
+.fgroup.collapsed>legend{margin-bottom:0}
+.fgroup.collapsed>:not(legend){display:none!important}
+.fgroup{margin-bottom:12px}
 /* library board */
 .acol .doclist{gap:8px}
 .acol .doc{border:0;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.14)}
@@ -837,7 +849,7 @@ genbtn.addEventListener("click",async()=>{
   const name=document.getElementById("f_ref").value.trim();
   const status=document.getElementById("submitstatus");status.className="";status.textContent="";
   const ref=document.getElementById("f_ref");
-  if(!name){ref.classList.add("err");status.className="bad";status.textContent=t("err_name");ref.focus();return;}
+  if(!name){ref.classList.add("err");status.className="bad";status.textContent=t("err_name");var fg=ref.closest(".fgroup");if(fg)fg.classList.remove("collapsed");ref.focus();return;}
   ref.classList.remove("err");
   const p={referee_name:name,match_date:document.getElementById("f_date").value||null,league:league,host_team:teamSel.value,arrive_1h30:segBool("arrive"),tr_onsite:segBool("tr_site"),cameras:segVal("cams"),tablets:segBool("tablets"),headsets:segBool("headsets"),english_terms:segBool("terms"),tr_available:segBool("tr_game"),cooperation:segVal("coop"),challenges_total:cntVal("total"),team_right:cntVal("right"),team_wrong:cntVal("wrong"),request_by_r1:segBool("r1"),issues:chipVal(),solutions:document.getElementById("f_sol").value.trim(),rating:rating,lang:LANG};
   genbtn.disabled=true;genbtn.textContent=t("btn_sending");status.className="";status.textContent="";
@@ -890,7 +902,7 @@ function admUnlocked(on){
 }
 function lockAdmin(){ADMIN_PW=null;admUnlocked(false);var c=document.getElementById("mng_code");if(c)c.value="";if(typeof renderDiag==="function")renderDiag();}
 function admCount(key,n){var a=document.getElementById("cnt_"+key),b=document.getElementById("big_"+key);if(a)a.textContent=n;if(b)b.textContent=n;}
-function admJump(id){var el=document.getElementById(id);if(!el)return;try{el.scrollIntoView({behavior:"smooth",block:"nearest",inline:"start"});}catch(e){el.scrollIntoView();}}
+function admJump(id){var el=document.getElementById(id);if(!el)return;el.classList.remove("collapsed");try{el.scrollIntoView({behavior:"smooth",block:"nearest",inline:"start"});}catch(e){el.scrollIntoView();}}
 function renderMngDocs(){admCount("docs",DOCS.length);const el=document.getElementById("mng_doclist");if(!el)return;el.innerHTML="";DOCS.forEach(d=>{const r=document.createElement("div");r.className="mrow";r.innerHTML='<span><b>'+esc(d.title)+'</b><span class="sub">'+esc(d.cat||"")+'</span></span><button class="rm">&times;</button>';r.querySelector(".rm").addEventListener("click",async()=>{await adminCall("delete_document",{id:d.id});const j=await adminCall("list",{});if(j.ok)applyLists(j.documents,j.videos);});el.appendChild(r);});}
 function renderMngVideos(){admCount("vids",VIDEOS.length);const el=document.getElementById("mng_vidlist");if(!el)return;el.innerHTML="";VIDEOS.forEach(v=>{const r=document.createElement("div");r.className="mrow";r.innerHTML='<span><b>'+esc(v.title)+'</b><span class="sub">'+esc(v.sub||"")+'</span></span><button class="rm">&times;</button>';r.querySelector(".rm").addEventListener("click",async()=>{await adminCall("delete_video",{id:v.id});const j=await adminCall("list",{});if(j.ok)applyLists(j.documents,j.videos);});el.appendChild(r);});}
 
@@ -1180,6 +1192,20 @@ async function init(){
 init();
 </script>
 <script>
+/* Collapsible cards: every board column and every report form section starts closed;
+   a click on its header toggles it. */
+(function collapsibles(){
+  document.querySelectorAll('.acol').forEach(function(c){
+    c.classList.add('collapsed');
+    var h=c.querySelector('.acol-h');
+    if(h)h.addEventListener('click',function(){c.classList.toggle('collapsed');});
+  });
+  document.querySelectorAll('.fgroup').forEach(function(f){
+    f.classList.add('collapsed');
+    var l=f.querySelector('legend');
+    if(l)l.addEventListener('click',function(){f.classList.toggle('collapsed');});
+  });
+})();
 (function buildRails(){
   var I={home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',library:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',report:'<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/>',diag:'<path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',admin:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
   var T={home:'Home',library:'Library',report:'Report',diag:'Diagnostics',admin:'Admin'};
