@@ -11,6 +11,7 @@
 - `vcbe_referees`: elenco Video Referee (name, email, active). Non esiste registrazione individuale: l'arbitro si identifica tramite nome/email di questa tabella.
 - `vcbe_reports`: moduli di fine partita inviati dall'app (referee_name, match_date, host_team, league, created_at).
 - `vcbe_miss_log`: moduli mancanti (referee_name, week_start = lunedì della settimana, reminded_at).
+- Edge function `send-report` (v4, 27/09/2026): salva il modulo + PDF, invia il PDF a cnogara25@gmail.com e una copia separata all'arbitro (email da `vcbe_referees`). Mittente Resend di prova `onboarding@resend.dev`: finché non si verifica un dominio su Resend, le email verso indirizzi diversi dal titolare dell'account Resend possono essere rifiutate.
 - Edge function `admin-write` (service role): azioni admin protette da password in `vcbe_admin_config`.
 - `vcbe_admin_config` e `vcbe_miss_log` hanno RLS attiva senza policy (accesso solo lato server). Non disattivarla.
 - DA FARE: cambiare la password admin in `vcbe_admin_config` (è stata leggibile pubblicamente fino al 27/09/2026, prima dell'attivazione della RLS).
