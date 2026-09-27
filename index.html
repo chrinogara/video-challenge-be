@@ -258,12 +258,6 @@ body.adm .foot{display:none}
 .acol.collapsed .acol-h::after{transform:rotate(-45deg);margin-top:2px}
 .acol.collapsed>:not(.acol-h){display:none!important}
 .acol.collapsed{min-height:0!important}
-.fgroup>legend{cursor:pointer;user-select:none;width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:12px;color:var(--ink)}
-.fgroup>legend::after{content:"";width:7px;height:7px;border-right:2px solid var(--violet);border-bottom:2px solid var(--violet);transform:rotate(45deg);margin-top:-3px;flex:none;transition:transform .15s}
-.fgroup.collapsed>legend::after{transform:rotate(-45deg);margin-top:2px}
-.fgroup.collapsed>legend{margin-bottom:0}
-.fgroup.collapsed>:not(legend){display:none!important}
-.fgroup{margin-bottom:12px}
 /* library board */
 .acol .doclist{gap:8px}
 .acol .doc{border:0;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.14)}
@@ -849,7 +843,7 @@ genbtn.addEventListener("click",async()=>{
   const name=document.getElementById("f_ref").value.trim();
   const status=document.getElementById("submitstatus");status.className="";status.textContent="";
   const ref=document.getElementById("f_ref");
-  if(!name){ref.classList.add("err");status.className="bad";status.textContent=t("err_name");var fg=ref.closest(".fgroup");if(fg)fg.classList.remove("collapsed");ref.focus();return;}
+  if(!name){ref.classList.add("err");status.className="bad";status.textContent=t("err_name");ref.focus();return;}
   ref.classList.remove("err");
   const p={referee_name:name,match_date:document.getElementById("f_date").value||null,league:league,host_team:teamSel.value,arrive_1h30:segBool("arrive"),tr_onsite:segBool("tr_site"),cameras:segVal("cams"),tablets:segBool("tablets"),headsets:segBool("headsets"),english_terms:segBool("terms"),tr_available:segBool("tr_game"),cooperation:segVal("coop"),challenges_total:cntVal("total"),team_right:cntVal("right"),team_wrong:cntVal("wrong"),request_by_r1:segBool("r1"),issues:chipVal(),solutions:document.getElementById("f_sol").value.trim(),rating:rating,lang:LANG};
   genbtn.disabled=true;genbtn.textContent=t("btn_sending");status.className="";status.textContent="";
@@ -1199,11 +1193,6 @@ init();
     c.classList.add('collapsed');
     var h=c.querySelector('.acol-h');
     if(h)h.addEventListener('click',function(){c.classList.toggle('collapsed');});
-  });
-  document.querySelectorAll('.fgroup').forEach(function(f){
-    f.classList.add('collapsed');
-    var l=f.querySelector('legend');
-    if(l)l.addEventListener('click',function(){f.classList.toggle('collapsed');});
   });
 })();
 (function buildRails(){
