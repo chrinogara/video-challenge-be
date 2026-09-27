@@ -1,5 +1,6 @@
 # Video Challenge BE
 
+- Rispondere e scrivere all'utente SEMPRE in italiano.
 - App in un unico file: `index.html` (niente build, niente framework separati).
 - Live: https://video-challenge-be.vercel.app — repo `chrinogara/video-challenge-be`.
 - Trilingue EN / FR / NL: ogni testo UI nuovo va aggiunto in tutte e tre le lingue.
@@ -12,6 +13,7 @@
 - `vcbe_miss_log`: moduli mancanti (referee_name, week_start = lunedì della settimana, reminded_at).
 - Edge function `admin-write` (service role): azioni admin protette da password in `vcbe_admin_config`.
 - `vcbe_admin_config` e `vcbe_miss_log` hanno RLS attiva senza policy (accesso solo lato server). Non disattivarla.
+- DA FARE: cambiare la password admin in `vcbe_admin_config` (è stata leggibile pubblicamente fino al 27/09/2026, prima dell'attivazione della RLS).
 
 ## Controllo settimanale Video Referee (ogni domenica 22:00, ora di Bruxelles)
 - Cartella Drive "Challenge Video VB": https://drive.google.com/drive/folders/1RoziJRp4tE7SAlnnQ04AXq_x3uCGp_pe (proprietario cnogara25@gmail.com).
