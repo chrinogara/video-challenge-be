@@ -250,8 +250,20 @@ body.adm{background:radial-gradient(circle at 78% 28%,#2F6FE4 0%,#17408F 42%,#0B
 body.adm .appbar{background:rgba(9,26,74,.88);border-bottom-color:rgba(255,255,255,.12)}
 body.adm .brand b{color:#fff}body.adm .brand span{color:#B9C8EE}
 body.adm .foot{display:none}
-#manage{padding:0}
+#manage,#page-diag{padding:0}
 .adm-shell{display:flex;min-height:60vh}
+/* diagnostics board */
+.acol .chart,.acol .dgteam{border:0;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.14);margin:0 0 8px;padding:12px 14px}
+.acol .chart .seclabel{margin-bottom:8px}
+.acol .dggrp{margin:0}
+.acol .dggrp h3{display:none}
+.acol .dggrid{display:block}
+.acol .dgteam.alert{background:#FFF1F1;box-shadow:0 0 0 1.5px var(--bad) inset}
+.acol .dghead b{font-size:14px}
+.acol .empty{background:rgba(255,255,255,.92);border:0;color:var(--muted);font-size:13px;padding:14px;border-radius:12px}
+.acol .dgok{background:var(--surface);border-radius:12px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.acol .barrow{grid-template-columns:96px 1fr 26px}
+@media(min-width:900px){.adm-board.dg-board{grid-template-columns:minmax(300px,1.1fr) minmax(260px,1fr) minmax(260px,1fr)}}
 .adm-rail{display:none}
 .adm-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;padding:14px 0 18px}
 .adm-top{display:flex;align-items:center;justify-content:space-between;gap:12px 18px;flex-wrap:wrap;background:var(--surface);border-radius:14px;padding:12px 16px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
@@ -411,13 +423,42 @@ details.aadd .btn{width:100%;padding:9px 12px;font-size:13px;border-radius:10px}
   </section>
 
   <section class="page" data-page="diag" id="page-diag">
-    <div class="block">
-      <div class="seclabel" data-i18n="dg_label">Diagnostics</div>
-      <h2 class="sectitle" data-i18n="dg_title">Challenge diagnostics</h2>
-      <p class="secsub" data-i18n="dg_sub">Issues per team, collected from submitted reports.</p>
+    <div class="adm-shell">
+      <aside class="adm-rail" aria-label="Navigation">
+        <button data-go="home" onclick="go('home')" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg></button>
+        <button data-go="library" onclick="go('library')" title="Library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></button>
+        <button data-go="report" onclick="go('report')" title="Report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/></svg></button>
+        <button data-go="diag" class="on" onclick="go('diag')" title="Diagnostics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg></button>
+        <button data-go="admin" onclick="go('admin')" title="Admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></button>
+      </aside>
+      <div class="adm-main">
+        <div class="adm-top">
+          <button class="adm-back" onclick="go('home')" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg><span data-i18n="adm_back">Back</span></button>
+          <div class="ttl">
+            <div class="seclabel" data-i18n="dg_label">Diagnostics</div>
+            <h2 class="sectitle" data-i18n="dg_title">Challenge diagnostics</h2>
+            <p class="secsub" data-i18n="dg_sub">Issues per team, collected from submitted reports.</p>
+          </div>
+        </div>
+        <div class="adm-board dg-board" id="dg_groups">
+          <div class="acol c1" id="col_dgchart">
+            <div class="acol-h"><span data-i18n="dg_chart">Teams with most issues</span><i id="cnt_dgall">0</i></div>
+            <div class="acol-big"><span id="big_dgall">0</span><small data-i18n="dg_reports">reports</small></div>
+            <div id="dg_chartwrap"></div>
+          </div>
+          <div class="acol c3" id="col_dgmen">
+            <div class="acol-h"><span data-i18n="dg_men">Men</span><i id="cnt_dgmen">0</i></div>
+            <div class="acol-big"><span id="big_dgmen">0</span><small data-i18n="dg_reports">reports</small></div>
+            <div id="dg_men"></div>
+          </div>
+          <div class="acol c5" id="col_dgwomen">
+            <div class="acol-h"><span data-i18n="dg_women">Women</span><i id="cnt_dgwomen">0</i></div>
+            <div class="acol-big"><span id="big_dgwomen">0</span><small data-i18n="dg_reports">reports</small></div>
+            <div id="dg_women"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="dg_chartwrap"></div>
-    <div id="dg_groups"></div>
   </section>
 
   <section class="page" data-page="report" id="report">
@@ -1071,10 +1112,20 @@ function renderDiag(){
   }
   function grp(lg,label){
     var items=all.filter(function(s){return s.league===lg;}).sort(function(a,b){return (b.withp-a.withp)||(b.total-a.total)||a.name.localeCompare(b.name);});
-    if(!items.length)return "";
+    var reps=items.reduce(function(a,s){return a+(s.reports||0);},0);
+    var attn=items.filter(function(s){return s.withp>=DIAG_ALERT;}).length;
+    var key=lg==="Men"?"dgmen":"dgwomen";
+    var cnt=document.getElementById("cnt_"+key),big=document.getElementById("big_"+key);
+    if(cnt)cnt.textContent=attn?"⚠ "+attn:items.length;if(big)big.textContent=reps;
+    if(!items.length)return '<div class="empty">'+t("dg_empty")+'</div>';
     return '<div class="dggrp"><h3>'+label+'</h3><div class="dggrid">'+items.map(card).join("")+'</div></div>';
   }
-  groups.innerHTML=grp("Men",t("dg_men"))+grp("Women",t("dg_women"));
+  var mEl=document.getElementById("dg_men"),wEl=document.getElementById("dg_women");
+  var mH=grp("Men",t("dg_men")),wH=grp("Women",t("dg_women"));
+  if(mEl&&wEl){mEl.innerHTML=mH;wEl.innerHTML=wH;}else{groups.innerHTML=mH+wH;}
+  var totRep=all.reduce(function(a,s){return a+(s.reports||0);},0);
+  var ca=document.getElementById("cnt_dgall"),ba=document.getElementById("big_dgall");
+  if(ca)ca.textContent=wp.length;if(ba)ba.textContent=totRep;
   Array.prototype.slice.call(groups.querySelectorAll("[data-rt]")).forEach(function(b){b.addEventListener("click",function(){resetTeam(b.getAttribute("data-rt"));});});
 }
 async function init(){
@@ -1091,7 +1142,7 @@ init();
 function go(p){
   document.querySelectorAll('.page').forEach(function(s){s.classList.toggle('active',s.dataset.page===p);});
   document.querySelectorAll('.tab,.adm-rail button[data-go]').forEach(function(b){b.classList.toggle('on',b.dataset.go===p);});
-  document.body.classList.toggle('adm',p==='admin');
+  document.body.classList.toggle('adm',p==='admin'||p==='diag');
   if(p==='diag'&&typeof renderDiag==='function')renderDiag();
   try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
 }
