@@ -21,4 +21,4 @@
   - download: `curl -sSL -o vr.pdf "https://drive.google.com/uc?export=download&id=<ID>"`, poi leggere il PDF.
 - Routine "Controllo settimanale Video Referee" (trig_01KD4SuUQaMEH7KEdAQKFPek) gira nella sessione Claude Code che l'ha creata, collegata a Drive/Gmail/Supabase.
 - Controllo: incrociare i nomi del PDF con `vcbe_referees`, verificare in `vcbe_reports` se hanno inviato il modulo per quella partita/settimana.
-- Azioni, tutte e tre: (a) riepilogo via email a srlchrisa@gmail.com, (b) promemoria email trilingue EN/FR/NL a chi non ha inviato, (c) registrazione in `vcbe_miss_log` (una riga per arbitro per settimana, niente duplicati).
+- Azioni, tutte e tre: (a) riepilogo via email SOLO a cnogara25@gmail.com (mai a srlchrisa@gmail.com), oggetto con prefisso "[VideoReferees]" per il filtro Gmail che applica l'etichetta VideoReferees, (b) promemoria email trilingue EN/FR/NL a chi non ha inviato, (c) registrazione in `vcbe_miss_log` (una riga per arbitro per settimana, niente duplicati).
