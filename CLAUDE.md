@@ -18,7 +18,7 @@
 - Edge function `admin-write` (service role): azioni admin protette da password in `vcbe_admin_config`.
   - PDF dei rapporti per l'admin (v12, 04/10/2026): azione `report_pdf` {id} → link firmato di 10 minuti al file `pdf_path` nel bucket privato `vcbe-reports`; `list_reports` restituisce `has_pdf`. Nell'app, SOLO dopo lo sblocco admin: in Challenge diagnostics il contatore "N reports" di ogni squadra apre l'elenco dei suoi rapporti, e lì come in Reports & data c'è il pulsante "View PDF" (EN/FR/NL) che apre il PDF nel visualizzatore. Il codice delle edge function non è nel repo: per modificarle leggere la versione attiva con `get_edge_function` e ridistribuirla completa.
 - `vcbe_admin_config` e `vcbe_miss_log` hanno RLS attiva senza policy (accesso solo lato server). Non disattivarla.
-- DA FARE: cambiare la password admin in `vcbe_admin_config` (è stata leggibile pubblicamente fino al 27/09/2026, prima dell'attivazione della RLS).
+- Password admin cambiata il 05/10/2026 tramite migration (non annotarla qui). Per cambiarla di nuovo: `apply_migration` con UPDATE su `vcbe_admin_config` (execute_sql del connettore è in sola lettura).
 
 ## Controllo settimanale Video Referee (ogni domenica 22:00, ora di Bruxelles)
 - Cartella Drive "Challenge Video VB": https://drive.google.com/drive/folders/1RoziJRp4tE7SAlnnQ04AXq_x3uCGp_pe (proprietario cnogara25@gmail.com).
