@@ -20,7 +20,8 @@
 - `vcbe_admin_config` e `vcbe_miss_log` hanno RLS attiva senza policy (accesso solo lato server). Non disattivarla.
 - Password admin cambiata il 05/10/2026 tramite migration (non annotarla qui). Per cambiarla di nuovo: `apply_migration` con UPDATE su `vcbe_admin_config` (execute_sql del connettore è in sola lettura).
 
-## Controllo settimanale Video Referee (ogni domenica 22:00, ora di Bruxelles)
+## Controllo settimanale Video Referee (ogni LUNEDÌ 20:00, ora di Bruxelles, dal 19/10/2026; prima domenica 22:00)
+- Controlla la settimana lunedì–domenica PRECEDENTE (terminata il giorno prima): così gli arbitri delle gare della domenica sera hanno tempo fino al lunedì per inviare il modulo.
 - Cartella Drive "Challenge Video VB": https://drive.google.com/drive/folders/1RoziJRp4tE7SAlnnQ04AXq_x3uCGp_pe (proprietario cnogara25@gmail.com).
 - Ogni settimana contiene un PDF con i soli Video Referee che hanno arbitrato in quella settimana (es. "Video arbitri Liga - 2026-09-27.pdf", fonte VolleyAdmin2, serie LIGH/LIGD). Il file viene aggiornato o sostituito: l'ID cambia, va ritrovato ogni volta.
 - Il connettore Google Drive NON vede i file della cartella. Metodo funzionante (cartella/file condivisi via link):
