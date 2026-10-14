@@ -8,7 +8,7 @@
 - Deploy: GitHub Contents API PUT su `index.html`; Vercel si aggiorna da solo.
 
 ## Dati Supabase principali
-- `vcbe_referees`: elenco Video Referee (name, email, active). Non esiste registrazione individuale: l'arbitro si identifica tramite nome/email di questa tabella.
+- `vcbe_referees`: elenco Video Referee (name, email, active). Non esiste registrazione individuale: l'arbitro si identifica tramite nome/email di questa tabella. NOGARA CHRISTIAN = cnogara25@gmail.com (aggiunta il 14/10/2026; è anche l'indirizzo admin, utile per i test).
 - `vcbe_reports`: moduli di fine partita inviati dall'app (referee_name, match_date, host_team, league, created_at).
 - `vcbe_miss_log`: moduli mancanti (referee_name, week_start = lunedì della settimana, reminded_at).
 - Edge function `send-report` (v6, 27/09/2026): salva il modulo + PDF nel bucket privato `vcbe-reports`, invia il PDF a cnogara25@gmail.com e una copia separata all'arbitro (email da `vcbe_referees`, nome confrontato senza distinzione di maiuscole). Risponde con `pdf_url` (link firmato valido 7 giorni, mostrato nell'app come "Download PDF") e `referee_email_status` (`sent` / `no_email` / `blocked_test_mode` / `failed`); l'app mostra il messaggio corrispondente in EN/FR/NL.
@@ -26,6 +26,13 @@
 - Il connettore Google Drive NON vede i file della cartella. Metodo funzionante (cartella/file condivisi via link):
   - elenco: `curl -sSL "https://drive.google.com/embeddedfolderview?id=1RoziJRp4tE7SAlnnQ04AXq_x3uCGp_pe" | grep -oE 'file/d/[A-Za-z0-9_-]{20,}|flip-entry-title">[^<]*'`
   - download: `curl -sSL -o vr.pdf "https://drive.google.com/uc?export=download&id=<ID>"`, poi leggere il PDF.
-- Routine "Controllo settimanale Video Referee" (trig_01KD4SuUQaMEH7KEdAQKFPek) gira nella sessione Claude Code che l'ha creata, collegata a Drive/Gmail/Supabase.
+- Routine "Controllo settimanale Video Referee" (trig_01KD4SuUQaMEH7KEdAQKFPek) gira nella sessione Claude Code che l'ha creata (session_01Qa5XhTUwSyGsU1cP5bvZj1), collegata a Drive/Gmail/Supabase. Il prompt della routine si può modificare SOLO da quella sessione: da un'altra sessione `update_trigger` sul prompt viene rifiutato, bisogna mandare la richiesta a quella sessione.
 - Controllo: incrociare i nomi del PDF con `vcbe_referees`, verificare in `vcbe_reports` se hanno inviato il modulo per quella partita/settimana.
-- Azioni, tutte e tre: (a) riepilogo via email SOLO a cnogara25@gmail.com (mai a srlchrisa@gmail.com), oggetto con prefisso "[VideoReferees]" per il filtro Gmail che applica l'etichetta VideoReferees, (b) promemoria email trilingue EN/FR/NL a chi non ha inviato, (c) registrazione in `vcbe_miss_log` (una riga per arbitro per settimana, niente duplicati).
+- Calendario ufficiale pubblico VolleyAdmin (senza login), da usare come controllo incrociato del PDF:
+  - `curl -sSL "https://www.volleyadmin2.be/services/wedstrijden_xml.php?reeks=LIGH"` (uomini) e `...?reeks=LIGD` (donne). XML `<kalender><wedstrijd>` con nr, datum (gg/mm/aaaa), aanvangsuur, thuisploeg, bezoekersploeg, sporthal, uitslag, postponed.
+  - Le designazioni VIDEO ("Alle Aanduidingen") invece richiedono il login: i nomi arrivano solo dal PDF.
+  - Stagione 2026/27: Liga Dames (LIGD) dal 03/10/2026, Liga Heren (LIGH) dal 16/10/2026.
+  - 14/10/2026: il PDF della settimana 28/09–04/10 diceva "0 gare LIGD", ma il calendario ha 6 gare LIGD il 03/10. Il PDF può essere incompleto (filtro da verificare alla fonte); la routine ora segnala "WARNING: the designations PDF looks incomplete" quando PDF e calendario non coincidono.
+- Azioni, tutte e tre: (a) riepilogo via email SOLO a cnogara25@gmail.com (mai a srlchrisa@gmail.com), oggetto con prefisso "[VideoReferees]" per il filtro Gmail che applica l'etichetta VideoReferees, (b) promemoria email a chi non ha inviato, (c) registrazione in `vcbe_miss_log` (una riga per arbitro per settimana, niente duplicati; execute_sql è in sola lettura, quindi INSERT tramite `apply_migration`).
+- Lingua (decisione utente 14/10/2026): TUTTE le email (promemoria agli arbitri e riepilogo admin) SOLO in inglese, niente più EN/FR/NL. L'interfaccia dell'app resta trilingue. Le risposte in chat restano in italiano.
+- Promemoria inviati via Gmail (casella srlchrisa@gmail.com), quindi non dipendono dal blocco Resend. Vanno in HTML con un pulsante `<a href="https://video-challenge-be.vercel.app/">` più alternativa testo: con le email solo testo il link apriva l'"Avviso di reindirizzamento" di Google (google.com/url) invece dell'app. L'app in sé risponde 200 senza redirect. Modello: email "[TEST 2] Video Challenge BE – End-of-match report missing" del 14/10/2026 a cnogara25@gmail.com.
