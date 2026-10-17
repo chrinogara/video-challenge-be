@@ -1,4 +1,4 @@
-# Archivio automatico dei PDF su Google Drive
+# Servizio Apps Script: archivio PDF su Drive e promemoria agli arbitri
 
 Ogni modulo di fine partita inviato dall'app viene salvato in PDF dalla edge function
 `send-report` (bucket privato `vcbe-reports`). Per averne una copia anche su Drive, nella
@@ -52,3 +52,40 @@ Verifica rapida: aprendo l'URL `/exec` nel browser si deve vedere
   `send-report` (lato server, con un segreto condiviso), così non dipende dal browser
   dell'arbitro. Richiede una sessione con il connettore Supabase collegato al progetto
   CityLens.
+
+## Promemoria agli arbitri inviati da cnogara25@gmail.com (dal 17/10/2026)
+
+Il controllo settimanale del lunedì gira in una sessione Claude collegata alla casella
+srlchrisa. I promemoria agli arbitri devono però partire da **cnogara25@gmail.com**: per
+questo la routine non li spedisce più da sola, ma manda i dati allo stesso servizio Apps
+Script (azione `reminder`), che compone l'email in inglese con il pulsante verso l'app e la
+invia dall'account cnogara25 (`MailApp`, copia nella posta inviata di cnogara25, limite
+100 email al giorno).
+
+Attivazione (account cnogara25, nel progetto Apps Script esistente):
+1. **Impostazioni progetto** (ingranaggio a sinistra) → **Proprietà dello script** →
+   **Aggiungi proprietà dello script**: chiave `REMINDER_SECRET`, valore = il segreto
+   comunicato in chat (lo stesso che sta nel prompt della routine). Salvare.
+2. Nell'editor sostituire tutto il codice con la versione aggiornata di `docs/drive-hook.gs`
+   e salvare.
+3. Menu funzioni → `sendTestReminder` → **Esegui**: Google chiede l'autorizzazione
+   all'invio email (accettare). Arriva a cnogara25 un promemoria di prova con il riquadro
+   TEST, spedito da cnogara25 stesso.
+4. **Esegui il deployment → Gestisci deployment → matita → Versione: Nuova versione →
+   Esegui il deployment**. L'URL non cambia.
+
+Chiamata usata dalla routine (POST JSON all'URL `/exec`, `Content-Type: text/plain`,
+seguendo i redirect):
+
+```json
+{"action":"reminder","secret":"<REMINDER_SECRET>","to":"arbitro@example.com",
+ "referee_name":"Nome Cognome","week_start":"2026-10-05","total_missing":1,
+ "matches":[{"weekday":"Saturday","date":"10/10/2026","time":"20:30",
+             "home":"VC Oudegem","away":"Asterix AVO Beveren","series":"Liga Dames"}]}
+```
+
+Risposta: `{"ok":true,"to":…,"subject":…,"from":"cnogara25@gmail.com"}` oppure
+`{"ok":false,"error":…}` (`unauthorized` = segreto errato, `REMINDER_SECRET not set` =
+proprietà mancante). Con `"test":true` l'oggetto riceve il prefisso `[TEST]` e il riquadro
+giallo. Il testo dell'email vive solo nello script (`buildReminder`): per cambiarlo si
+modifica lì e si pubblica una nuova versione.
