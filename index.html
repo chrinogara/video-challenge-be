@@ -745,7 +745,7 @@ const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const FN=SB_URL+"/functions/v1";
 const H={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY};
 /* Drive archive: Apps Script web app run by cnogara25 that files each report PDF under "Challenge Video VB/<referee>" (docs/drive-hook.md). Empty string = disabled. */
-const DRIVE_HOOK_URL="";
+const DRIVE_HOOK_URL="https://script.google.com/macros/s/AKfycbxryPucgKXeouHxHC69RIYCFR13QESGwU5OD8kpg8iIP3eVMLPmoQtCTR7UPhRNkxgu/exec";
 function saveReportToDrive(p,j){
   if(!DRIVE_HOOK_URL||!j||!j.pdf_url)return;
   const body=JSON.stringify({pdf_url:j.pdf_url,referee_name:p.referee_name,match_date:p.match_date,host_team:p.host_team,league:p.league,report_id:j.id||j.report_id||null});
