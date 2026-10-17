@@ -22,6 +22,7 @@
 
 ## Controllo settimanale Video Referee (ogni LUNEDÌ 20:00, ora di Bruxelles, dal 19/10/2026; prima domenica 22:00)
 - Controlla la settimana lunedì–domenica PRECEDENTE (terminata il giorno prima): così gli arbitri delle gare della domenica sera hanno tempo fino al lunedì per inviare il modulo.
+- Dal 17/10/2026 (richiesta utente) la routine controlla anche la serie SPC oltre a LIGH/LIGD: i designati SPC del PDF ricevono il promemoria come gli altri. Il feed pubblico `reeks=SPC` è vuoto, quindi le gare SPC si conoscono solo dal PDF. Se il PDF segnala gare SPC con VIDEO senza elencare i nomi, il riepilogo mostra un WARNING. Il PDF settimanale è generato da un'ALTRA routine che NON è in questo account (`list_triggers` mostra solo il controllo del lunedì): probabilmente un'operazione pianificata di Cowork desktop o di un altro account; il suo filtro va cambiato lì per elencare anche i designati VIDEO delle gare SPC.
 - Cartella Drive "Challenge Video VB": https://drive.google.com/drive/folders/1RoziJRp4tE7SAlnnQ04AXq_x3uCGp_pe (proprietario cnogara25@gmail.com).
 - Ogni settimana contiene un PDF con i soli Video Referee che hanno arbitrato in quella settimana (es. "Video arbitri Liga - 2026-09-27.pdf", fonte VolleyAdmin2, serie LIGH/LIGD). Il file viene aggiornato o sostituito: l'ID cambia, va ritrovato ogni volta.
 - Il connettore Google Drive NON vede i file della cartella. Metodo funzionante (cartella/file condivisi via link):
