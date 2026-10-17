@@ -744,6 +744,13 @@ const SB_URL="https://apbusqbeneppepfkvklv.supabase.co";
 const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwYnVzcWJlbmVwcGVwZmt2a2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzNDI5MTcsImV4cCI6MjA5NDkxODkxN30.fRXGuqOrFIY0OAX7ZX2moe6RzG807vLM490FU1JTNnU";
 const FN=SB_URL+"/functions/v1";
 const H={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY};
+/* Drive archive: Apps Script web app run by cnogara25 that files each report PDF under "Challenge Video VB/<referee>" (docs/drive-hook.md). Empty string = disabled. */
+const DRIVE_HOOK_URL="https://script.google.com/macros/s/AKfycbxryPucgKXeouHxHC69RIYCFR13QESGwU5OD8kpg8iIP3eVMLPmoQtCTR7UPhRNkxgu/exec";
+function saveReportToDrive(p,j){
+  if(!DRIVE_HOOK_URL||!j||!j.pdf_url)return;
+  const body=JSON.stringify({pdf_url:j.pdf_url,referee_name:p.referee_name,match_date:p.match_date,host_team:p.host_team,league:p.league,report_id:j.id||j.report_id||null});
+  try{fetch(DRIVE_HOOK_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:body,keepalive:true}).then(r=>r.json()).then(x=>{if(!x||!x.ok)console.warn("drive hook",x);}).catch(e=>console.warn("drive hook",e));}catch(e){}
+}
 
 let REFS=["BAGUETTES BENJAMIN","BLAISE PECHEUR","BLYAERT GEERT","BONAMI EMANUEL","DIGIACOMO ARTURO","EMMA YVVAN","FREDERICKX WIM","GERDY GELEYN","HERBOTS PAUL","JASPER SIMON","MENSCHAERT STEPHAN","MESTDAGH MICHEL","NOGARA CHRISTIAN","PENNINCK XAVIER","PINTER PIERRE","POCKELE JOHAN","PORIAU ETIENNE","STEVENS RONNY","THUYS CHRIS","VAN DE VELDE DIRK","VIELVOYE THOMAS","WILLEMS FLORIAN","YVES CNUDDE","STEVE MELSENS"];
 let TEAMS={Men:["Caruur Volley GENT","Decospan Volley Team MENEN","Knack ROESELARE","Lindemans AALST","Tectum ACHEL","Thuismakers BRABO ANTWERP VT","VC Greenyard MAASEIK","VOLLEY GUIBERTIN","VOLLEY HAASRODE LEUVEN","WAREMME Volley"],Women:["Asterix AVO Beveren","CapitalatWork Tchalou Volley","Damesvolley DOK NOORD Gent","Darta Bevo Roeselare","E.S. Charleroi Volley","KwadrO Amigos Sint-Antonius Zoersel","NRG VC Geel","Servantes Volley Noorderkempen","Thuismakers Brabo Antwerp VT","VC Oudegem","VLAVO Saturnus Michelbeke"]};
@@ -867,6 +874,7 @@ genbtn.addEventListener("click",async()=>{
       else msg+=" "+t("sent_copy_blocked").replace("{email}",em);
       document.getElementById("okmsg").textContent=msg;
       const pb=document.getElementById("pdfbtn");if(j.pdf_url){pb.href=j.pdf_url;pb.style.display="";}else{pb.style.display="none";}
+      saveReportToDrive(p,j);
       document.getElementById("output").classList.add("show");
       document.getElementById("output").scrollIntoView({behavior:"smooth"});
       try{await loadReports();renderDiag();}catch(_){}
