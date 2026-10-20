@@ -81,8 +81,15 @@ seguendo i redirect):
 {"action":"reminder","secret":"<REMINDER_SECRET>","to":"arbitro@example.com",
  "referee_name":"Nome Cognome","week_start":"2026-10-05","total_missing":1,
  "matches":[{"weekday":"Saturday","date":"10/10/2026","time":"20:30",
-             "home":"VC Oudegem","away":"Asterix AVO Beveren","series":"Liga Dames"}]}
+             "home":"VC Oudegem","away":"Asterix AVO Beveren","series":"Liga Dames"}],
+ "cc":"cnogara25@gmail.com"}
 ```
+
+`cc` (facoltativo, dal 20/10/2026): l'indirizzo riceve in copia il promemoria. La routine lo
+manda sempre con `cnogara25@gmail.com`. Le versioni dello script precedenti ignorano il
+campo; perché la copia arrivi bisogna incollare la versione aggiornata di `drive-hook.gs`
+nel progetto Apps Script e pubblicarla (Esegui il deployment → Gestisci deployment →
+modifica → Versione: Nuova versione → Esegui il deployment), mantenendo lo stesso URL.
 
 Risposta: `{"ok":true,"to":…,"subject":…,"from":"cnogara25@gmail.com"}` oppure
 `{"ok":false,"error":…}` (`unauthorized` = segreto errato, `REMINDER_SECRET not set` =

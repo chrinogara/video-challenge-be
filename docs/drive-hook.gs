@@ -126,7 +126,8 @@ var APP_HOST = 'video-challenge-be.vercel.app';
  * { action:'reminder', secret:'…', to:'arbitro@…', referee_name:'Nome Cognome',
  *   week_start:'YYYY-MM-DD' (lunedì della settimana controllata), total_missing: N,
  *   matches:[{ weekday:'Saturday', date:'dd/mm/yyyy', time:'hh:mm', home:'…', away:'…',
- *              series:'Liga Heren' | 'Liga Dames' }], test:false }
+ *              series:'Liga Heren' | 'Liga Dames' }], test:false,
+ *   cc:'cnogara25@gmail.com' (facoltativo: copia del promemoria) }
  */
 function sendReminder(d) {
   var secret = PropertiesService.getScriptProperties().getProperty('REMINDER_SECRET');
@@ -139,9 +140,14 @@ function sendReminder(d) {
   var name = String(d.referee_name || '').replace(/\s+/g, ' ').trim() || 'Video Referee';
   var total = parseInt(d.total_missing, 10) || matches.length;
   var mail = buildReminder(name, weekLabels(d.week_start), matches, total, !!d.test);
+  // Copia facoltativa (dal 20/10/2026): l'admin riceve in copia ogni promemoria.
+  var cc = String(d.cc || '').trim();
+  if (cc && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cc)) return { ok: false, error: 'invalid cc' };
   if (MailApp.getRemainingDailyQuota() < 1) return { ok: false, error: 'daily email quota exhausted' };
-  MailApp.sendEmail({ to: to, subject: mail.subject, body: mail.text, htmlBody: mail.html, name: 'Video Challenge BE' });
-  return { ok: true, to: to, subject: mail.subject, from: Session.getEffectiveUser().getEmail() };
+  var msg = { to: to, subject: mail.subject, body: mail.text, htmlBody: mail.html, name: 'Video Challenge BE' };
+  if (cc && cc.toLowerCase() !== to.toLowerCase()) msg.cc = cc;
+  MailApp.sendEmail(msg);
+  return { ok: true, to: to, cc: msg.cc || null, subject: mail.subject, from: Session.getEffectiveUser().getEmail() };
 }
 
 function weekLabels(weekStart) {
