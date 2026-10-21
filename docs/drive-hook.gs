@@ -8,6 +8,9 @@
  *   Challenge Video VB / <NOME ARBITRO> / "<data> - <squadra di casa> - <NOME ARBITRO>.pdf"
  * creando la sottocartella dell'arbitro se non esiste ancora.
  *
+ * Terza funzione (dal 21/10/2026): azione "send", email generica da cnogara25 (vedi sendGeneric), usata
+ * dalla edge function vcbe-issue-alerts: avvisi sui problemi di sala e email urgente con PDF.
+ *
  * Seconda funzione (dal 17/10/2026): azione "reminder". Il controllo settimanale del lunedì
  * manda qui i dati dell'arbitro senza modulo e lo script invia il promemoria in inglese
  * DALL'INDIRIZZO cnogara25@gmail.com, con il pulsante verso l'app. Richiede il segreto
@@ -42,7 +45,7 @@ function doPost(e) {
   try {
     lock.waitLock(30000);
     var data = JSON.parse((e && e.postData && e.postData.contents) || '{}');
-    return jsonOut(data.action === 'reminder' ? sendReminder(data) : saveReport(data));
+    return jsonOut(data.action === 'reminder' ? sendReminder(data) : data.action === 'send' ? sendGeneric(data) : saveReport(data));
   } catch (err) {
     return jsonOut({ ok: false, error: String(err && err.message || err) });
   } finally {
@@ -148,6 +151,37 @@ function sendReminder(d) {
   if (cc && cc.toLowerCase() !== to.toLowerCase()) msg.cc = cc;
   MailApp.sendEmail(msg);
   return { ok: true, to: to, cc: msg.cc || null, subject: mail.subject, from: Session.getEffectiveUser().getEmail() };
+}
+
+/**
+ * Azione "send" (dal 21/10/2026): email generica inviata DA cnogara25@gmail.com. La usa la edge function
+ * `vcbe-issue-alerts` (avviso ai Video Referee designati dei problemi aperti nella sala, email URGENTE
+ * con PDF all'admin quando un problema è segnalato 3 volte). Stesso segreto REMINDER_SECRET.
+ * Payload: { action:'send', secret:'…', to:'…', cc:'…' (facoltativo), subject:'…', html:'…', text:'…',
+ *            attachments:[{ filename:'x.pdf', content_b64:'…', mime:'application/pdf' }] (facoltativo, max 3) }
+ */
+function sendGeneric(d) {
+  var secret = PropertiesService.getScriptProperties().getProperty('REMINDER_SECRET');
+  if (!secret) return { ok: false, error: 'REMINDER_SECRET not set in script properties' };
+  if (String(d.secret || '') !== secret) return { ok: false, error: 'unauthorized' };
+  var to = String(d.to || '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) return { ok: false, error: 'invalid recipient' };
+  var subject = String(d.subject || '').trim();
+  var html = String(d.html || '');
+  if (!subject || !html) return { ok: false, error: 'subject and html required' };
+  var cc = String(d.cc || '').trim();
+  if (cc && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cc)) return { ok: false, error: 'invalid cc' };
+  if (MailApp.getRemainingDailyQuota() < 1) return { ok: false, error: 'daily email quota exhausted' };
+  var msg = { to: to, subject: subject, htmlBody: html, body: String(d.text || html.replace(/<[^>]+>/g, ' ')), name: 'Video Challenge BE' };
+  if (cc && cc.toLowerCase() !== to.toLowerCase()) msg.cc = cc;
+  var atts = Array.isArray(d.attachments) ? d.attachments.slice(0, 3) : [];
+  if (atts.length) {
+    msg.attachments = atts.map(function (a) {
+      return Utilities.newBlob(Utilities.base64Decode(String(a.content_b64 || '')), String(a.mime || 'application/pdf'), sanitize(String(a.filename || 'document.pdf')));
+    });
+  }
+  MailApp.sendEmail(msg);
+  return { ok: true, to: to, cc: msg.cc || null, subject: subject, attachments: atts.length, from: Session.getEffectiveUser().getEmail() };
 }
 
 function weekLabels(weekStart) {

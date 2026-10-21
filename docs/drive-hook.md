@@ -96,3 +96,24 @@ Risposta: `{"ok":true,"to":…,"subject":…,"from":"cnogara25@gmail.com"}` oppu
 proprietà mancante). Con `"test":true` l'oggetto riceve il prefisso `[TEST]` e il riquadro
 giallo. Il testo dell'email vive solo nello script (`buildReminder`): per cambiarlo si
 modifica lì e si pubblica una nuova versione.
+
+## Azione `send`: email generica da cnogara25 (dal 21/10/2026)
+
+Usata dalla edge function `vcbe-issue-alerts` (problemi di sala segnalati dai Video Referee):
+avviso ai Video Referee designati nelle gare dei prossimi giorni e email URGENTE con PDF
+all'admin quando lo stesso problema è segnalato 3 volte. Stesso segreto `REMINDER_SECRET`;
+lato Supabase il valore va salvato come secret `DRIVE_HOOK_SECRET` della edge function
+(Dashboard → Edge Functions → Secrets). Finché il secret manca, la funzione ripiega su Resend
+(in modalità test consegna solo a cnogara25: l'admin riceve il testo con la nota
+«NOT delivered to …» da inoltrare a mano).
+
+```json
+{"action":"send","secret":"<REMINDER_SECRET>","to":"arbitro@example.com","cc":"cnogara25@gmail.com",
+ "subject":"…","html":"<div>…</div>","text":"…",
+ "attachments":[{"filename":"VC_URGENT_Club_2026-10-21.pdf","content_b64":"…","mime":"application/pdf"}]}
+```
+
+`cc` e `attachments` (max 3) sono facoltativi. Risposta: `{"ok":true,"to":…,"cc":…,"subject":…,"attachments":N,"from":"cnogara25@gmail.com"}`.
+Per attivarla: incollare la versione aggiornata di `docs/drive-hook.gs` nel progetto Apps Script e
+pubblicare una nuova versione (Esegui il deployment → Gestisci deployment → matita → Versione: Nuova
+versione → Esegui il deployment), stesso URL.
