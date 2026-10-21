@@ -62,6 +62,12 @@ Script (azione `reminder`), che compone l'email in inglese con il pulsante verso
 invia dall'account cnogara25 (`MailApp`, copia nella posta inviata di cnogara25, limite
 100 email al giorno).
 
+Dal 20/10/2026 (richiesta dell'admin) il testo contiene anche la scadenza: «The end-of-match
+report must be completed in the app by Monday evening (20:00) following the match. Please do
+so now.» Dopo ogni modifica di `buildReminder` nel file `docs/drive-hook.gs` il codice va
+incollato di nuovo nell'editor Apps Script e va pubblicata una **nuova versione** (punto 4
+qui sotto): finché non si pubblica, il servizio continua a spedire il testo vecchio.
+
 Attivazione (account cnogara25, nel progetto Apps Script esistente):
 1. **Impostazioni progetto** (ingranaggio a sinistra) → **Proprietà dello script** →
    **Aggiungi proprietà dello script**: chiave `REMINDER_SECRET`, valore = il segreto
