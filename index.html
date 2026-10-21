@@ -138,6 +138,15 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{font-family:var(--fd);font-weight:600;font-size:12.5px;padding:8px 13px;border:1.5px solid var(--line2);border-radius:30px;background:var(--surface);color:var(--ink);cursor:pointer;transition:.12s}
 .chip.on{background:var(--violet);border-color:var(--violet);color:#fff}
+/* previous problems at this venue (report form) */
+.pi-box{border:1.5px solid #F0C36D;background:#FFF8E6;border-radius:12px;padding:12px 14px}
+.pi-hint{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.pi-item{border-top:1px solid #F0DEB0;padding:10px 0}
+.pi-item:first-child{border-top:0;padding-top:4px}
+.pi-sum{font-family:var(--fd);font-weight:600;font-size:13.5px}
+.pi-meta{font-size:12px;color:var(--muted);font-weight:400}
+.pi-desc{font-size:13px;color:#444;white-space:pre-wrap;margin:4px 0 8px}
+.pi-item.err{outline:2px solid var(--bad);border-radius:8px;outline-offset:4px}
 .stars{display:flex;gap:7px;font-size:28px;color:var(--line2);cursor:pointer}
 .stars i{font-style:normal}
 .stars i.on{color:var(--warn)}
@@ -164,7 +173,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 .card input[type=text],.card input[type=url],.card input[type=email],.card input[type=file]{width:100%;box-sizing:border-box}
 .card h3{font-size:16px;margin-bottom:14px}
 .mrow{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:13.5px}
-.mrow .rm{border:none;background:transparent;color:var(--bad);font-size:20px;cursor:pointer;line-height:1}
+.mrow .rm{flex:none;border:none;background:transparent;color:var(--bad);font-size:20px;cursor:pointer;line-height:1}
+/* the text takes all free space: "View PDF" and the × always sit flush right, aligned from row to row */
+.mrow>span:first-child{flex:1 1 auto;min-width:0}
+.mrow .pdfb{min-width:84px;text-align:center}
 .mlist{margin-top:12px}
 #mng_err{color:var(--bad);font-size:13px;margin-top:8px}
 .gate{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
@@ -250,6 +262,15 @@ button.dgbadge::after{content:" \25BE"}
 .stat-row>span:first-child{min-width:0;flex:1;overflow-wrap:break-word;word-break:break-word}
 .miss-badge{background:#FEF2F2;color:#991B1B;font-weight:700;font-size:11px;padding:2px 8px;border-radius:20px;flex:0 0 auto;white-space:nowrap}
 .submitted-chip{display:inline-block;background:#F0FDF4;color:#166534;font-size:12px;padding:3px 10px;border-radius:20px;margin:2px}
+/* weekly check: week navigation and status tags */
+.wk-nav{display:flex;align-items:center;gap:8px}
+.wk-nav #week_label{flex:1;min-width:0;text-align:center}
+.wk-arrow{flex:none;width:32px;height:28px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer;font-size:12px}
+.wk-tag{display:inline-block;font-size:10.5px;font-weight:700;border-radius:20px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.wk-tag.late{background:#FFF7ED;color:#9A3412}
+.wk-tag.nd{background:#F1F5F9;color:#475569}
+.miss-badge.wait{background:#F1F5F9;color:#475569}
+.wk-sub{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
 .heroart{position:relative;margin:6px -20px -24px}
 .heroart img{display:block;width:100%;height:auto}
 .heroart::before{content:"";position:absolute;left:0;right:0;top:0;height:52%;background:linear-gradient(to bottom,#2563EB 0%,rgba(37,99,235,.82) 16%,rgba(37,99,235,0) 100%);pointer-events:none}
@@ -528,6 +549,9 @@ details.aadd .btn{width:100%;padding:9px 12px;font-size:13px;border-radius:10px}
           <div class="seg" id="seg_league"><button class="on" data-v="Men" data-i18n="o_men">Men</button><button data-v="Women" data-i18n="o_women">Women</button></div>
         </div>
         <div class="field"><label data-i18n="l_host">Host team</label><select id="f_team"></select></div>
+        <div class="field" id="pi_box" style="display:none"><label data-i18n="pi_title">Problem reported at this venue in the previous match</label>
+          <div class="pi-box"><div class="pi-hint" data-i18n="pi_hint">You received the details by email before the match. Please tell us whether it has been resolved.</div><div id="pi_list"></div></div>
+        </div>
       </fieldset>
       <fieldset class="fgroup" style="border:0;margin:0;padding:0">
         <legend data-i18n="g_check">Pre-game checklist</legend>
@@ -674,26 +698,39 @@ details.aadd .btn{width:100%;padding:9px 12px;font-size:13px;border-radius:10px}
             <!-- ── WEEKLY STATS ───────────────────────────────────── -->
             <div class="acol c4" id="col_week">
               <div class="acol-h"><span data-i18n="mweek">Weekly check &amp; reminders</span><i id="cnt_week">0</i></div>
-              <div class="acol-big"><span id="big_week">0</span><small data-i18n="adm_missing">missing this week</small></div>
+              <div class="acol-big"><span id="big_week">0</span><small data-i18n="adm_missing">reports missing</small></div>
               <div class="acard">
-                <div class="ahd" id="week_label">Week —</div>
+                <div class="ahd wk-nav"><button class="wk-arrow" onclick="loadWeeklyStats(-7)" aria-label="Previous week">&#9664;</button><span id="week_label">Week —</span><button class="wk-arrow" onclick="loadWeeklyStats(7)" aria-label="Next week">&#9654;</button></div>
                 <div class="btnrow">
-                  <button class="btn ghost" id="btn_load_stats" onclick="loadWeeklyStats()" data-i18n="wk_refresh">↻ Refresh</button>
+                  <button class="btn ghost" id="btn_load_stats" onclick="loadWeeklyStats(0)" data-i18n="wk_refresh">↻ Refresh</button>
                   <button class="btn" id="btn_send_reminders" onclick="sendReminders()" data-i18n="wk_send">✉ Send reminders now</button>
                 </div>
                 <div id="weekly_status"></div>
               </div>
               <div class="acard">
-                <div class="ahd" style="color:#166534">✅ <span data-i18n="wk_submitted">Submitted this week</span></div>
+                <div class="ahd" style="color:#166534">✅ <span data-i18n="wk_submitted">Reports for this week</span></div>
                 <div id="week_submitted"></div>
               </div>
               <div class="acard">
-                <div class="ahd bad">⚠ <span data-i18n="wk_missed">Not submitted (with email)</span></div>
+                <div class="ahd bad">⚠ <span data-i18n="wk_missed">Not submitted (designated)</span></div>
                 <div id="week_missed"></div>
               </div>
               <div class="acard">
                 <div class="ahd">📋 <span data-i18n="wk_log">All-time miss log</span></div>
                 <div id="week_misslog"></div>
+              </div>
+              <div class="acard" id="ci_card">
+                <div class="ahd bad">&#127967; <span data-i18n="ci_title">Club problems &amp; alerts</span></div>
+                <div class="btnrow">
+                  <button class="btn ghost" onclick="loadIssuePanel()" data-i18n="wk_refresh">&#8635; Refresh</button>
+                  <button class="btn ghost" id="ci_toggle" onclick="toggleIssueAlerts()">Automatic alerts: &hellip;</button>
+                  <button class="btn" onclick="sendIssueAlerts()" data-i18n="ci_send">&#9993; Send problem alerts now</button>
+                </div>
+                <div id="ci_status" style="font-size:12.5px;color:var(--muted);margin-top:8px"></div>
+                <div class="ahd" style="margin-top:10px"><span data-i18n="ci_open">Open problems</span></div>
+                <div id="ci_issues"></div>
+                <div class="ahd" style="margin-top:10px"><span data-i18n="ci_upcoming">Upcoming matches &middot; Video Referee</span></div>
+                <div id="ci_upcoming"></div>
               </div>
             </div>
 
@@ -755,11 +792,12 @@ function saveReportToDrive(p,j){
 let REFS=["BAGUETTES BENJAMIN","BLAISE PECHEUR","BLYAERT GEERT","BONAMI EMANUEL","DIGIACOMO ARTURO","EMMA YVVAN","FREDERICKX WIM","GERDY GELEYN","HERBOTS PAUL","JASPER SIMON","MENSCHAERT STEPHAN","MESTDAGH MICHEL","NOGARA CHRISTIAN","PENNINCK XAVIER","PINTER PIERRE","POCKELE JOHAN","PORIAU ETIENNE","STEVENS RONNY","THUYS CHRIS","VAN DE VELDE DIRK","VIELVOYE THOMAS","WILLEMS FLORIAN","YVES CNUDDE","STEVE MELSENS"];
 let TEAMS={Men:["Caruur Volley GENT","Decospan Volley Team MENEN","Knack ROESELARE","Lindemans AALST","Tectum ACHEL","Thuismakers BRABO ANTWERP VT","VC Greenyard MAASEIK","VOLLEY GUIBERTIN","VOLLEY HAASRODE LEUVEN","WAREMME Volley"],Women:["Asterix AVO Beveren","CapitalatWork Tchalou Volley","Damesvolley DOK NOORD Gent","Darta Bevo Roeselare","E.S. Charleroi Volley","KwadrO Amigos Sint-Antonius Zoersel","NRG VC Geel","Servantes Volley Noorderkempen","Thuismakers Brabo Antwerp VT","VC Oudegem","VLAVO Saturnus Michelbeke"]};
 let DOCS=[], VIDEOS=[], ADMIN_PW=null;
+var PREV_ISSUES=[]; /* open problems at the selected host team's venue (vcbe_open_issues_for_team) */
 
 const T={
- en:{brandsub:"Referee portal",tab_home:"Home",tab_lib:"Library",tab_rep:"Report",nav_docs:"Documents",nav_video:"Video & VAR",nav_report:"Report",hero_kick:"Belgian Volleyball · Season 2026/27",hero_h1:'<span class="be-y">Video</span> <span class="be-r">Challenge</span> refereeing, all in one place',hero_p:"Rules, video review and your post-match report — everything in one place, in your language. No account needed.",hero_cta1:"Fill the report",hero_cta2:"Browse documents",feat_label:"What's inside",feat_title:"Everything a Video Challenge referee needs",f1t:"Documents",f1d:"Download rules and guidelines as PDF.",f2t:"Video",f2d:"Watch clips and slide decks.",f3t:"Challenge report",f3d:"Fill the form; it becomes a PDF, emailed automatically.",f_open:"Open",doc_label:"Library",doc_title:"Documents & Video's",doc_sub:"Official rules, Video's situations.",tab_diag:"Diagnostics",dg_label:"Diagnostics",dg_title:"Challenge diagnostics",dg_sub:"Issues per team, collected from submitted reports.",dg_men:"Men",dg_women:"Women",dg_chart:"Teams with most issues",dg_reports:"reports",dg_clean:"No issues reported.",dg_empty:"No reports submitted yet.",dg_attention:"Attention",doc_view:"View",vid_view:"View",vid_dl:"Download",vw_open:"Open in new tab",mrep:"Reports & data",rep_hint:"Delete a single report (updates Diagnostics), or reset everything.",rep_reset_all:"Reset all data",ref_title:"👥 Referees &amp; emails",ref_hint:"Add or remove referees and set their email (used for reminders and report copies).",ph_rname:"Name (SURNAME FIRST NAME)",ph_remail:"Email (optional)",ref_add:"Add referee",ref_refresh:"↻ Load / refresh",ref_save:"Save",ref_del:"Delete",ref_del_confirm:"Delete this referee? Reports already submitted stay saved.",ref_err_name:"Enter a name.",ref_err_dup:"This referee already exists.",ref_added:"Referee added:",ref_err:"Error",rep_none:"No reports yet.",rep_confirm_all:"Delete ALL reports? This cannot be undone.",dg_reset:"Reset",dg_confirm_team:"Delete all reports for this team?",doc_dl:"Download",doc_empty:"No documents yet.",vid_label:"Video hub",vid_title:"Video & slides",vid_sub:"Training clips and slide decks.",vid_upt:"Upload a challenge clip",vid_ups:"Click to select a video",vid_empty:"No videos yet.",rep_label:"After the match",rep_title:"Video Challenge report",rep_sub:"To be completed at the end of each game. Just enter your name.",g_match:"Match",l_ref:'Challenge referee <span class="req">*</span>',ph_ref:"Type your name",l_date:"Match date",l_league:"League",o_men:"Men",o_women:"Women",l_host:"Host team",g_check:"Pre-game checklist",c1:"Arrived 1h30 before the match",c2:"TR on-site at the sports hall",c3:"Preliminary camera check",c4:"Tablets available",c5:"Headsets functioning properly",c6:"Official English terminology used",c7:"TR remained available during the game",c8:"Cooperation with scoreboard & broadcast",o_yes:"Yes",o_no:"No",o_op:"Operational",o_nop:"Non op.",o_good:"Good",o_suff:"Suff.",o_nsuff:"Not suff.",g_data:"Challenge data",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Team right",cnt_wrong:"Team wrong",c9:"At least one request by R1",g_issues:"Issues & feedback",l_issues:'Issues encountered <span class="req">*</span>',iss_none:"No problem",iss_sys:"System components",iss_bc:"Broadcast screen",iss_oth:"Other",iss_net:"Internet connection",iss_cam:"Camera check",l_sol:"Solutions found",ph_sol:"Describe briefly…",l_rate:"Experience rating",send_note:"When you submit, a PDF is generated and emailed to cnogara25@gmail.com and to your address on file.",btn_send:"Generate PDF & send",btn_sending:"Sending…",sent_ok:"Report sent and emailed to cnogara25@gmail.com.",sent_saved:"Report saved, but the email could not be sent.",sent_copy_ok:"A copy was also sent to your address ({email}).",sent_copy_blocked:"The copy to your address ({email}) could not be delivered. Download the PDF below.",sent_copy_none:"No email on file for your name: download the PDF below.",btn_pdf:"Download PDF",mweek:"Weekly check &amp; reminders",adm_back:"Back",adm_lock:"Lock",adm_missing:"missing this week",adm_refs:"referees",wk_refresh:"↻ Refresh",wk_send:"✉ Send reminders now",wk_submitted:"Submitted this week",wk_missed:"Not submitted (with email)",wk_log:"All-time miss log",wk_week:"Week",err_name:"Please enter the referee name.",err_send:"Could not send. Please try again.",btn_print:"Print / Save as PDF",btn_edit:"Back to form",mng_label:"Admin",mng_title:"Library management",mng_sub:"Add or remove documents and videos.",ph_code:"admin password",mng_unlock:"Unlock",mng_wrong:"Wrong password.",mdoc:"Documents",mvid:"Video & slides",ph_dtitle:"Document title",ph_dcat:"Category (e.g. Rules)",ph_durl:"Link (Google Drive, etc.)",d_hint:"Paste a link above (Google Drive…), or upload a PDF below.",ph_vtitle:"Video / slides title",ph_vsub:"Subtitle (e.g. Training · 8 clips)",ph_vurl:"Link (video or slides)",m_addd:"Add document",m_addv:"Add video / slides",v_hint:"Paste a YouTube link above, or upload a .pptx file below.",foot_tag:"Referee portal · 2026/27",foot_note:"Free access · EN · FR · NL",clip_ok:"Clip uploaded — thank you.",clip_bad:"Upload failed, please retry.",pv_title:"Video Challenge Report",pv_season:"Season 2026/27",pv_league:"League",pv_team:"Host team",pv_check:"Pre-game checklist",pv_data:"Challenge data",pv_total:"Total requests",pv_right:"Team right",pv_wrong:"Team wrong",pv_r1:"Request by R1",pv_issues:"Issues encountered",pv_sol:"Solutions found",pv_rate:"Experience rating",pv_none:"—",rep_pdf:"View PDF",rep_pdf_none:"No PDF available for this report.",rep_pdf_err:"Could not open the PDF."},
- fr:{brandsub:"Portail arbitres",tab_home:"Accueil",tab_lib:"Bibliothèque",tab_rep:"Rapport",nav_docs:"Documents",nav_video:"Vidéo & VAR",nav_report:"Rapport",hero_kick:"Volleyball belge · Saison 2026/27",hero_h1:'L\'arbitrage <span class="be-y">Video</span> <span class="be-r">Challenge</span>, tout au même endroit',hero_p:"Règlements, révision vidéo et rapport d'après-match — tout au même endroit, dans votre langue. Sans compte.",hero_cta1:"Remplir le rapport",hero_cta2:"Voir les documents",feat_label:"Au programme",feat_title:"Tout ce qu'un arbitre Video Challenge attend",f1t:"Documents",f1d:"Téléchargez règlements et directives en PDF.",f2t:"Vidéo",f2d:"Clips vidéo et présentations.",f3t:"Rapport de challenge",f3d:"Remplissez le formulaire ; il devient un PDF, envoyé automatiquement.",f_open:"Ouvrir",doc_label:"Bibliothèque",doc_title:"Documents & vidéos",doc_sub:"Règlements officiels, situations vidéo.",tab_diag:"Diagnostic",dg_label:"Diagnostic",dg_title:"Diagnostic challenge",dg_sub:"Problèmes par équipe, d'après les rapports envoyés.",dg_men:"Messieurs",dg_women:"Dames",dg_chart:"Équipes avec le plus de problèmes",dg_reports:"rapports",dg_clean:"Aucun problème signalé.",dg_empty:"Aucun rapport envoyé pour l'instant.",dg_attention:"Attention",doc_view:"Voir",vid_view:"Voir",vid_dl:"Télécharger",vw_open:"Ouvrir dans un onglet",mrep:"Rapports & données",rep_hint:"Supprimez un rapport (met à jour le Diagnostic), ou réinitialisez tout.",rep_reset_all:"Réinitialiser toutes les données",ref_title:"👥 Arbitres &amp; e-mails",ref_hint:"Ajoutez ou supprimez des arbitres et indiquez leur e-mail (rappels et copie du rapport).",ph_rname:"Nom (NOM PRÉNOM)",ph_remail:"E-mail (facultatif)",ref_add:"Ajouter l'arbitre",ref_refresh:"↻ Charger / actualiser",ref_save:"Enregistrer",ref_del:"Supprimer",ref_del_confirm:"Supprimer cet arbitre ? Les rapports déjà envoyés restent enregistrés.",ref_err_name:"Indiquez un nom.",ref_err_dup:"Cet arbitre existe déjà.",ref_added:"Arbitre ajouté :",ref_err:"Erreur",rep_none:"Aucun rapport.",rep_confirm_all:"Supprimer TOUS les rapports ? Action irréversible.",dg_reset:"Réinitialiser",dg_confirm_team:"Supprimer tous les rapports de cette équipe ?",doc_dl:"Télécharger",doc_empty:"Aucun document pour l'instant.",vid_label:"Espace vidéo",vid_title:"Vidéos & slides",vid_sub:"Clips de formation et présentations.",vid_upt:"Téléverser un clip de challenge",vid_ups:"Cliquez pour choisir une vidéo",vid_empty:"Aucune vidéo pour l'instant.",rep_label:"Après le match",rep_title:"Rapport Video Challenge",rep_sub:"À remplir à la fin de chaque match. Indiquez votre nom.",g_match:"Match",l_ref:'Arbitre challenge <span class="req">*</span>',ph_ref:"Tapez votre nom",l_date:"Date du match",l_league:"Division",o_men:"Messieurs",o_women:"Dames",l_host:"Équipe hôte",g_check:"Checklist d'avant-match",c1:"Arrivé 1h30 avant le match",c2:"TR présent dans la salle",c3:"Contrôle préalable des caméras",c4:"Tablettes disponibles",c5:"Casques fonctionnant correctement",c6:"Terminologie officielle anglaise utilisée",c7:"TR resté disponible pendant le match",c8:"Coopération marquoir & diffusion",o_yes:"Oui",o_no:"Non",o_op:"Opérationnel",o_nop:"Non op.",o_good:"Bonne",o_suff:"Suff.",o_nsuff:"Insuff.",g_data:"Données challenge",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Équipe correcte",cnt_wrong:"Équipe erronée",c9:"Au moins une demande par R1",g_issues:"Problèmes & avis",l_issues:'Problèmes rencontrés <span class="req">*</span>',iss_none:"Aucun problème",iss_sys:"Composants système",iss_bc:"Écran de diffusion",iss_oth:"Autre",iss_net:"Connexion internet",iss_cam:"Contrôle caméra",l_sol:"Solutions trouvées",ph_sol:"Décrivez brièvement…",l_rate:"Note d'expérience",send_note:"À l'envoi, un PDF est généré et envoyé à cnogara25@gmail.com et à votre adresse enregistrée.",btn_send:"Générer le PDF & envoyer",btn_sending:"Envoi…",sent_ok:"Rapport envoyé par e-mail à cnogara25@gmail.com.",sent_saved:"Rapport enregistré, mais l'e-mail n'a pas pu être envoyé.",sent_copy_ok:"Une copie a aussi été envoyée à votre adresse ({email}).",sent_copy_blocked:"La copie vers votre adresse ({email}) n'a pas pu être livrée. Téléchargez le PDF ci-dessous.",sent_copy_none:"Aucun e-mail connu pour votre nom : téléchargez le PDF ci-dessous.",btn_pdf:"Télécharger le PDF",mweek:"Contrôle hebdo &amp; rappels",adm_back:"Retour",adm_lock:"Verrouiller",adm_missing:"manquants cette semaine",adm_refs:"arbitres",wk_refresh:"↻ Actualiser",wk_send:"✉ Envoyer les rappels",wk_submitted:"Envoyés cette semaine",wk_missed:"Non envoyés (avec e-mail)",wk_log:"Historique des oublis",wk_week:"Semaine",err_name:"Veuillez indiquer le nom de l'arbitre.",err_send:"Envoi impossible. Réessayez.",btn_print:"Imprimer / PDF",btn_edit:"Retour au formulaire",mng_label:"Admin",mng_title:"Gestion de la bibliothèque",mng_sub:"Ajoutez ou supprimez documents et vidéos.",ph_code:"mot de passe admin",mng_unlock:"Déverrouiller",mng_wrong:"Mot de passe incorrect.",mdoc:"Documents",mvid:"Vidéos & slides",ph_dtitle:"Titre du document",ph_dcat:"Catégorie (ex. Règles)",ph_durl:"Lien (Google Drive, etc.)",d_hint:"Collez un lien ci-dessus (Google Drive…), ou téléversez un PDF ci-dessous.",ph_vtitle:"Titre vidéo / slides",ph_vsub:"Sous-titre (ex. Formation · 8 clips)",ph_vurl:"Lien (vidéo ou slides)",m_addd:"Ajouter le document",m_addv:"Ajouter vidéo / slides",v_hint:"Lien YouTube ci-dessus, ou téléversez un .pptx ci-dessous.",foot_tag:"Portail arbitres · 2026/27",foot_note:"Accès libre · EN · FR · NL",clip_ok:"Clip téléversé — merci.",clip_bad:"Échec du téléversement, réessayez.",pv_title:"Rapport Video Challenge",pv_season:"Saison 2026/27",pv_league:"Division",pv_team:"Équipe hôte",pv_check:"Checklist d'avant-match",pv_data:"Données challenge",pv_total:"Demandes totales",pv_right:"Équipe correcte",pv_wrong:"Équipe erronée",pv_r1:"Demande par R1",pv_issues:"Problèmes rencontrés",pv_sol:"Solutions trouvées",pv_rate:"Note d'expérience",pv_none:"—",rep_pdf:"Voir le PDF",rep_pdf_none:"Aucun PDF disponible pour ce rapport.",rep_pdf_err:"Impossible d'ouvrir le PDF."},
- nl:{brandsub:"Scheidsrechtersportaal",tab_home:"Home",tab_lib:"Bibliotheek",tab_rep:"Verslag",nav_docs:"Documenten",nav_video:"Video & VAR",nav_report:"Verslag",hero_kick:"Belgisch volleybal · Seizoen 2026/27",hero_h1:'<span class="be-y">Video</span> <span class="be-r">Challenge</span>-arbitrage, alles op één plek',hero_p:"Reglementen, videoreview en je verslag na de match — alles op één plek, in jouw taal. Geen account nodig.",hero_cta1:"Verslag invullen",hero_cta2:"Documenten bekijken",feat_label:"Wat erin zit",feat_title:"Alles wat een Video Challenge-scheidsrechter nodig heeft",f1t:"Documenten",f1d:"Download reglementen en richtlijnen als PDF.",f2t:"Video",f2d:"Bekijk clips en slides.",f3t:"Challenge-verslag",f3d:"Vul het formulier in; het wordt een PDF, automatisch gemaild.",f_open:"Openen",doc_label:"Bibliotheek",doc_title:"Documenten & video's",doc_sub:"Officiële reglementen, videosituaties.",tab_diag:"Diagnose",dg_label:"Diagnose",dg_title:"Challenge-diagnose",dg_sub:"Problemen per ploeg, op basis van ingediende verslagen.",dg_men:"Heren",dg_women:"Dames",dg_chart:"Ploegen met de meeste problemen",dg_reports:"verslagen",dg_clean:"Geen problemen gemeld.",dg_empty:"Nog geen verslagen ingediend.",dg_attention:"Aandacht",doc_view:"Bekijken",vid_view:"Bekijken",vid_dl:"Downloaden",vw_open:"Openen in nieuw tabblad",mrep:"Verslagen & gegevens",rep_hint:"Verwijder één verslag (werkt Diagnose bij), of reset alles.",rep_reset_all:"Alle gegevens wissen",ref_title:"👥 Scheidsrechters &amp; e-mails",ref_hint:"Voeg scheidsrechters toe of verwijder ze en vul hun e-mail in (herinneringen en kopie van het verslag).",ph_rname:"Naam (ACHTERNAAM VOORNAAM)",ph_remail:"E-mail (optioneel)",ref_add:"Scheidsrechter toevoegen",ref_refresh:"↻ Laden / vernieuwen",ref_save:"Opslaan",ref_del:"Verwijderen",ref_del_confirm:"Deze scheidsrechter verwijderen? Reeds ingediende verslagen blijven bewaard.",ref_err_name:"Vul een naam in.",ref_err_dup:"Deze scheidsrechter bestaat al.",ref_added:"Scheidsrechter toegevoegd:",ref_err:"Fout",rep_none:"Nog geen verslagen.",rep_confirm_all:"ALLE verslagen verwijderen? Kan niet ongedaan worden gemaakt.",dg_reset:"Wissen",dg_confirm_team:"Alle verslagen van deze ploeg verwijderen?",doc_dl:"Download",doc_empty:"Nog geen documenten.",vid_label:"Videohub",vid_title:"Video & slides",vid_sub:"Trainingsclips en presentaties.",vid_upt:"Upload een challengeclip",vid_ups:"Klik om een video te kiezen",vid_empty:"Nog geen video's.",rep_label:"Na de match",rep_title:"Video Challenge-verslag",rep_sub:"In te vullen na elke match. Vul gewoon je naam in.",g_match:"Match",l_ref:'Challenge-scheidsrechter <span class="req">*</span>',ph_ref:"Typ je naam",l_date:"Matchdatum",l_league:"Reeks",o_men:"Heren",o_women:"Dames",l_host:"Thuisploeg",g_check:"Checklist vóór de match",c1:"1u30 voor de match aangekomen",c2:"TR aanwezig in de zaal",c3:"Voorafgaande cameracontrole",c4:"Tablets beschikbaar",c5:"Headsets werken correct",c6:"Officiële Engelse terminologie gebruikt",c7:"TR bleef beschikbaar tijdens de match",c8:"Samenwerking scorebord & uitzending",o_yes:"Ja",o_no:"Nee",o_op:"Operationeel",o_nop:"Niet op.",o_good:"Goed",o_suff:"Voldoende",o_nsuff:"Onvold.",g_data:"Challenge-data",cnt_tot:'Totaal <span class="req">*</span>',cnt_right:"Ploeg correct",cnt_wrong:"Ploeg fout",c9:"Minstens één aanvraag door R1",g_issues:"Problemen & feedback",l_issues:'Ondervonden problemen <span class="req">*</span>',iss_none:"Geen probleem",iss_sys:"Systeemonderdelen",iss_bc:"Uitzendscherm",iss_oth:"Andere",iss_net:"Internetverbinding",iss_cam:"Cameracontrole",l_sol:"Gevonden oplossingen",ph_sol:"Beschrijf kort…",l_rate:"Ervaringsscore",send_note:"Bij verzenden wordt een PDF gemaakt en gemaild naar cnogara25@gmail.com en naar uw geregistreerde adres.",btn_send:"PDF maken & verzenden",btn_sending:"Verzenden…",sent_ok:"Verslag verzonden en gemaild naar cnogara25@gmail.com.",sent_saved:"Verslag opgeslagen, maar de e-mail kon niet worden verzonden.",sent_copy_ok:"Een kopie werd ook naar uw adres ({email}) gestuurd.",sent_copy_blocked:"De kopie naar uw adres ({email}) kon niet worden bezorgd. Download de PDF hieronder.",sent_copy_none:"Geen e-mailadres gekend voor uw naam: download de PDF hieronder.",btn_pdf:"PDF downloaden",mweek:"Weekcontrole &amp; herinneringen",adm_back:"Terug",adm_lock:"Vergrendelen",adm_missing:"ontbrekend deze week",adm_refs:"scheidsrechters",wk_refresh:"↻ Vernieuwen",wk_send:"✉ Herinneringen nu versturen",wk_submitted:"Ingediend deze week",wk_missed:"Niet ingediend (met e-mail)",wk_log:"Overzicht gemiste verslagen",wk_week:"Week",err_name:"Vul de naam van de scheidsrechter in.",err_send:"Verzenden mislukt. Probeer opnieuw.",btn_print:"Afdrukken / PDF",btn_edit:"Terug naar formulier",mng_label:"Admin",mng_title:"Bibliotheekbeheer",mng_sub:"Voeg documenten en video's toe of verwijder ze.",ph_code:"adminwachtwoord",mng_unlock:"Ontgrendelen",mng_wrong:"Verkeerd wachtwoord.",mdoc:"Documenten",mvid:"Video's & slides",ph_dtitle:"Documenttitel",ph_dcat:"Categorie (bv. Regels)",ph_durl:"Link (Google Drive, enz.)",d_hint:"Plak hierboven een link (Google Drive…), of upload hieronder een PDF.",ph_vtitle:"Titel video / slides",ph_vsub:"Ondertitel (bv. Training · 8 clips)",ph_vurl:"Link (video of slides)",m_addd:"Document toevoegen",m_addv:"Video / slides toevoegen",v_hint:"YouTube-link hierboven, of upload een .pptx hieronder.",foot_tag:"Scheidsrechtersportaal · 2026/27",foot_note:"Vrije toegang · EN · FR · NL",clip_ok:"Clip geüpload — bedankt.",clip_bad:"Upload mislukt, probeer opnieuw.",pv_title:"Video Challenge-verslag",pv_season:"Seizoen 2026/27",pv_league:"Reeks",pv_team:"Thuisploeg",pv_check:"Checklist vóór de match",pv_data:"Challenge-data",pv_total:"Totaal aanvragen",pv_right:"Ploeg correct",pv_wrong:"Ploeg fout",pv_r1:"Aanvraag door R1",pv_issues:"Ondervonden problemen",pv_sol:"Gevonden oplossingen",pv_rate:"Ervaringsscore",pv_none:"—",rep_pdf:"PDF bekijken",rep_pdf_none:"Geen PDF beschikbaar voor dit verslag.",rep_pdf_err:"De PDF kon niet worden geopend."}
+ en:{brandsub:"Referee portal",tab_home:"Home",tab_lib:"Library",tab_rep:"Report",nav_docs:"Documents",nav_video:"Video & VAR",nav_report:"Report",hero_kick:"Belgian Volleyball · Season 2026/27",hero_h1:'<span class="be-y">Video</span> <span class="be-r">Challenge</span> refereeing, all in one place',hero_p:"Rules, video review and your post-match report — everything in one place, in your language. No account needed.",hero_cta1:"Fill the report",hero_cta2:"Browse documents",feat_label:"What's inside",feat_title:"Everything a Video Challenge referee needs",f1t:"Documents",f1d:"Download rules and guidelines as PDF.",f2t:"Video",f2d:"Watch clips and slide decks.",f3t:"Challenge report",f3d:"Fill the form; it becomes a PDF, emailed automatically.",f_open:"Open",doc_label:"Library",doc_title:"Documents & Video's",doc_sub:"Official rules, Video's situations.",tab_diag:"Diagnostics",dg_label:"Diagnostics",dg_title:"Challenge diagnostics",dg_sub:"Issues per team, collected from submitted reports.",dg_men:"Men",dg_women:"Women",dg_chart:"Teams with most issues",dg_reports:"reports",dg_clean:"No issues reported.",dg_empty:"No reports submitted yet.",dg_attention:"Attention",doc_view:"View",vid_view:"View",vid_dl:"Download",vw_open:"Open in new tab",mrep:"Reports & data",rep_hint:"Delete a single report (updates Diagnostics), or reset everything.",rep_reset_all:"Reset all data",ref_title:"👥 Referees &amp; emails",ref_hint:"Add or remove referees and set their email (used for reminders and report copies).",ph_rname:"Name (SURNAME FIRST NAME)",ph_remail:"Email (optional)",ref_add:"Add referee",ref_refresh:"↻ Load / refresh",ref_save:"Save",ref_del:"Delete",ref_del_confirm:"Delete this referee? Reports already submitted stay saved.",ref_err_name:"Enter a name.",ref_err_dup:"This referee already exists.",ref_added:"Referee added:",ref_err:"Error",rep_none:"No reports yet.",rep_confirm_all:"Delete ALL reports? This cannot be undone.",dg_reset:"Reset",dg_confirm_team:"Delete all reports for this team?",doc_dl:"Download",doc_empty:"No documents yet.",vid_label:"Video hub",vid_title:"Video & slides",vid_sub:"Training clips and slide decks.",vid_upt:"Upload a challenge clip",vid_ups:"Click to select a video",vid_empty:"No videos yet.",rep_label:"After the match",rep_title:"Video Challenge report",rep_sub:"To be completed at the end of each game. Just enter your name.",g_match:"Match",l_ref:'Challenge referee <span class="req">*</span>',ph_ref:"Type your name",l_date:"Match date",l_league:"League",o_men:"Men",o_women:"Women",l_host:"Host team",g_check:"Pre-game checklist",c1:"Arrived 1h30 before the match",c2:"TR on-site at the sports hall",c3:"Preliminary camera check",c4:"Tablets available",c5:"Headsets functioning properly",c6:"Official English terminology used",c7:"TR remained available during the game",c8:"Cooperation with scoreboard & broadcast",o_yes:"Yes",o_no:"No",o_op:"Operational",o_nop:"Non op.",o_good:"Good",o_suff:"Suff.",o_nsuff:"Not suff.",g_data:"Challenge data",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Team right",cnt_wrong:"Team wrong",c9:"At least one request by R1",g_issues:"Issues & feedback",l_issues:'Issues encountered <span class="req">*</span>',iss_none:"No problem",iss_sys:"System components",iss_bc:"Broadcast screen",iss_oth:"Other",iss_net:"Internet connection",iss_cam:"Camera check",l_sol:"Solutions found",ph_sol:"Describe briefly…",l_rate:"Experience rating",send_note:"When you submit, a PDF is generated and emailed to cnogara25@gmail.com and to your address on file.",btn_send:"Generate PDF & send",btn_sending:"Sending…",sent_ok:"Report sent and emailed to cnogara25@gmail.com.",sent_saved:"Report saved, but the email could not be sent.",sent_copy_ok:"A copy was also sent to your address ({email}).",sent_copy_blocked:"The copy to your address ({email}) could not be delivered. Download the PDF below.",sent_copy_none:"No email on file for your name: download the PDF below.",btn_pdf:"Download PDF",mweek:"Weekly check &amp; reminders",adm_back:"Back",adm_lock:"Lock",adm_missing:"reports missing",adm_refs:"referees",wk_refresh:"↻ Refresh",wk_send:"✉ Send reminders now",wk_submitted:"Reports for this week",wk_missed:"Not submitted (designated)",wk_log:"All-time miss log",wk_week:"Week",err_name:"Please enter the referee name.",err_send:"Could not send. Please try again.",btn_print:"Print / Save as PDF",btn_edit:"Back to form",mng_label:"Admin",mng_title:"Library management",mng_sub:"Add or remove documents and videos.",ph_code:"admin password",mng_unlock:"Unlock",mng_wrong:"Wrong password.",mdoc:"Documents",mvid:"Video & slides",ph_dtitle:"Document title",ph_dcat:"Category (e.g. Rules)",ph_durl:"Link (Google Drive, etc.)",d_hint:"Paste a link above (Google Drive…), or upload a PDF below.",ph_vtitle:"Video / slides title",ph_vsub:"Subtitle (e.g. Training · 8 clips)",ph_vurl:"Link (video or slides)",m_addd:"Add document",m_addv:"Add video / slides",v_hint:"Paste a YouTube link above, or upload a .pptx file below.",foot_tag:"Referee portal · 2026/27",foot_note:"Free access · EN · FR · NL",clip_ok:"Clip uploaded — thank you.",clip_bad:"Upload failed, please retry.",pv_title:"Video Challenge Report",pv_season:"Season 2026/27",pv_league:"League",pv_team:"Host team",pv_check:"Pre-game checklist",pv_data:"Challenge data",pv_total:"Total requests",pv_right:"Team right",pv_wrong:"Team wrong",pv_r1:"Request by R1",pv_issues:"Issues encountered",pv_sol:"Solutions found",pv_rate:"Experience rating",pv_none:"—",rep_pdf:"View PDF",rep_pdf_none:"No PDF available for this report.",rep_pdf_err:"Could not open the PDF.",pi_title:"Problem reported at this venue in the previous match",pi_hint:"You received the details by email before the match. Please tell us whether it has been resolved.",pi_q:"Has this problem been resolved?",pi_reported:"reported by {name} on {date}, {team}",pi_times:"reported {n} times",pi_err:"Please answer Yes or No for each problem reported at this venue.",pv_prev:"Previous problems at this venue",pv_resolved:"Resolved",pv_still:"Still present",ci_title:"Club problems & alerts",ci_open:"Open problems",ci_none:"No open problem.",ci_resolve:"Mark resolved",ci_resolve_confirm:"Mark this problem as resolved?",ci_upcoming:"Upcoming matches · Video Referee",ci_send:"✉ Send problem alerts now",ci_send_confirm:"Send the problem alerts now to the Video Referees of the upcoming matches (only those not yet alerted)?",ci_preview:"Preview email",ci_auto_on:"Automatic alerts: ON",ci_auto_off:"Automatic alerts: OFF",ci_alerted:"alert sent",ci_pending:"to be alerted",ci_clear:"no open problem",ci_urgent:"URGENT sent",pi_row:"Problem reported on {date}: has it been resolved?",pi_row_n:"Problem {n} (reported on {date}): has it been resolved?",pv_prev_item:"Problem reported on {date}",wk_deadline_passed:"Deadline passed: Monday {date}",wk_deadline:"Deadline: Monday {date} evening",wk_counts:"Designated {d} · submitted {s} · late {l} · missing {m} · waiting {p} · not played yet {u}",wk_no_reports:"No report for this week.",wk_late:"late",wk_not_desig:"not in the loaded designations",wk_sent_on:"sent {date}",wk_missing_b:"missing",wk_waiting_b:"waiting",wk_no_desig:"No designation loaded for this week.",wk_all_ok:"✅ All designated Video Referees submitted their report.",wk_not_played:"No match played yet this week.",wk_no_email:"no email on file",wk_not_in_list:"not in the referee list",wk_no_misses:"No misses recorded.",wk_late_log:"Submitted after the reminder (not counted)",wk_week_of:"week {date}",wk_nobody:"Nobody to remind for this week.",wk_send_confirm:"Send a reminder from cnogara25@gmail.com now to: {names}?",wk_reminded:"reminded",wk_miss_n:"{n} missed"},
+ fr:{brandsub:"Portail arbitres",tab_home:"Accueil",tab_lib:"Bibliothèque",tab_rep:"Rapport",nav_docs:"Documents",nav_video:"Vidéo & VAR",nav_report:"Rapport",hero_kick:"Volleyball belge · Saison 2026/27",hero_h1:'L\'arbitrage <span class="be-y">Video</span> <span class="be-r">Challenge</span>, tout au même endroit',hero_p:"Règlements, révision vidéo et rapport d'après-match — tout au même endroit, dans votre langue. Sans compte.",hero_cta1:"Remplir le rapport",hero_cta2:"Voir les documents",feat_label:"Au programme",feat_title:"Tout ce qu'un arbitre Video Challenge attend",f1t:"Documents",f1d:"Téléchargez règlements et directives en PDF.",f2t:"Vidéo",f2d:"Clips vidéo et présentations.",f3t:"Rapport de challenge",f3d:"Remplissez le formulaire ; il devient un PDF, envoyé automatiquement.",f_open:"Ouvrir",doc_label:"Bibliothèque",doc_title:"Documents & vidéos",doc_sub:"Règlements officiels, situations vidéo.",tab_diag:"Diagnostic",dg_label:"Diagnostic",dg_title:"Diagnostic challenge",dg_sub:"Problèmes par équipe, d'après les rapports envoyés.",dg_men:"Messieurs",dg_women:"Dames",dg_chart:"Équipes avec le plus de problèmes",dg_reports:"rapports",dg_clean:"Aucun problème signalé.",dg_empty:"Aucun rapport envoyé pour l'instant.",dg_attention:"Attention",doc_view:"Voir",vid_view:"Voir",vid_dl:"Télécharger",vw_open:"Ouvrir dans un onglet",mrep:"Rapports & données",rep_hint:"Supprimez un rapport (met à jour le Diagnostic), ou réinitialisez tout.",rep_reset_all:"Réinitialiser toutes les données",ref_title:"👥 Arbitres &amp; e-mails",ref_hint:"Ajoutez ou supprimez des arbitres et indiquez leur e-mail (rappels et copie du rapport).",ph_rname:"Nom (NOM PRÉNOM)",ph_remail:"E-mail (facultatif)",ref_add:"Ajouter l'arbitre",ref_refresh:"↻ Charger / actualiser",ref_save:"Enregistrer",ref_del:"Supprimer",ref_del_confirm:"Supprimer cet arbitre ? Les rapports déjà envoyés restent enregistrés.",ref_err_name:"Indiquez un nom.",ref_err_dup:"Cet arbitre existe déjà.",ref_added:"Arbitre ajouté :",ref_err:"Erreur",rep_none:"Aucun rapport.",rep_confirm_all:"Supprimer TOUS les rapports ? Action irréversible.",dg_reset:"Réinitialiser",dg_confirm_team:"Supprimer tous les rapports de cette équipe ?",doc_dl:"Télécharger",doc_empty:"Aucun document pour l'instant.",vid_label:"Espace vidéo",vid_title:"Vidéos & slides",vid_sub:"Clips de formation et présentations.",vid_upt:"Téléverser un clip de challenge",vid_ups:"Cliquez pour choisir une vidéo",vid_empty:"Aucune vidéo pour l'instant.",rep_label:"Après le match",rep_title:"Rapport Video Challenge",rep_sub:"À remplir à la fin de chaque match. Indiquez votre nom.",g_match:"Match",l_ref:'Arbitre challenge <span class="req">*</span>',ph_ref:"Tapez votre nom",l_date:"Date du match",l_league:"Division",o_men:"Messieurs",o_women:"Dames",l_host:"Équipe hôte",g_check:"Checklist d'avant-match",c1:"Arrivé 1h30 avant le match",c2:"TR présent dans la salle",c3:"Contrôle préalable des caméras",c4:"Tablettes disponibles",c5:"Casques fonctionnant correctement",c6:"Terminologie officielle anglaise utilisée",c7:"TR resté disponible pendant le match",c8:"Coopération marquoir & diffusion",o_yes:"Oui",o_no:"Non",o_op:"Opérationnel",o_nop:"Non op.",o_good:"Bonne",o_suff:"Suff.",o_nsuff:"Insuff.",g_data:"Données challenge",cnt_tot:'Total <span class="req">*</span>',cnt_right:"Équipe correcte",cnt_wrong:"Équipe erronée",c9:"Au moins une demande par R1",g_issues:"Problèmes & avis",l_issues:'Problèmes rencontrés <span class="req">*</span>',iss_none:"Aucun problème",iss_sys:"Composants système",iss_bc:"Écran de diffusion",iss_oth:"Autre",iss_net:"Connexion internet",iss_cam:"Contrôle caméra",l_sol:"Solutions trouvées",ph_sol:"Décrivez brièvement…",l_rate:"Note d'expérience",send_note:"À l'envoi, un PDF est généré et envoyé à cnogara25@gmail.com et à votre adresse enregistrée.",btn_send:"Générer le PDF & envoyer",btn_sending:"Envoi…",sent_ok:"Rapport envoyé par e-mail à cnogara25@gmail.com.",sent_saved:"Rapport enregistré, mais l'e-mail n'a pas pu être envoyé.",sent_copy_ok:"Une copie a aussi été envoyée à votre adresse ({email}).",sent_copy_blocked:"La copie vers votre adresse ({email}) n'a pas pu être livrée. Téléchargez le PDF ci-dessous.",sent_copy_none:"Aucun e-mail connu pour votre nom : téléchargez le PDF ci-dessous.",btn_pdf:"Télécharger le PDF",mweek:"Contrôle hebdo &amp; rappels",adm_back:"Retour",adm_lock:"Verrouiller",adm_missing:"rapports manquants",adm_refs:"arbitres",wk_refresh:"↻ Actualiser",wk_send:"✉ Envoyer les rappels",wk_submitted:"Rapports de cette semaine",wk_missed:"Non envoyés (désignés)",wk_log:"Historique des oublis",wk_week:"Semaine",err_name:"Veuillez indiquer le nom de l'arbitre.",err_send:"Envoi impossible. Réessayez.",btn_print:"Imprimer / PDF",btn_edit:"Retour au formulaire",mng_label:"Admin",mng_title:"Gestion de la bibliothèque",mng_sub:"Ajoutez ou supprimez documents et vidéos.",ph_code:"mot de passe admin",mng_unlock:"Déverrouiller",mng_wrong:"Mot de passe incorrect.",mdoc:"Documents",mvid:"Vidéos & slides",ph_dtitle:"Titre du document",ph_dcat:"Catégorie (ex. Règles)",ph_durl:"Lien (Google Drive, etc.)",d_hint:"Collez un lien ci-dessus (Google Drive…), ou téléversez un PDF ci-dessous.",ph_vtitle:"Titre vidéo / slides",ph_vsub:"Sous-titre (ex. Formation · 8 clips)",ph_vurl:"Lien (vidéo ou slides)",m_addd:"Ajouter le document",m_addv:"Ajouter vidéo / slides",v_hint:"Lien YouTube ci-dessus, ou téléversez un .pptx ci-dessous.",foot_tag:"Portail arbitres · 2026/27",foot_note:"Accès libre · EN · FR · NL",clip_ok:"Clip téléversé — merci.",clip_bad:"Échec du téléversement, réessayez.",pv_title:"Rapport Video Challenge",pv_season:"Saison 2026/27",pv_league:"Division",pv_team:"Équipe hôte",pv_check:"Checklist d'avant-match",pv_data:"Données challenge",pv_total:"Demandes totales",pv_right:"Équipe correcte",pv_wrong:"Équipe erronée",pv_r1:"Demande par R1",pv_issues:"Problèmes rencontrés",pv_sol:"Solutions trouvées",pv_rate:"Note d'expérience",pv_none:"—",rep_pdf:"Voir le PDF",rep_pdf_none:"Aucun PDF disponible pour ce rapport.",rep_pdf_err:"Impossible d'ouvrir le PDF.",pi_title:"Problème signalé dans cette salle lors du match précédent",pi_hint:"Vous avez reçu les détails par e-mail avant le match. Indiquez s'il a été résolu.",pi_q:"Ce problème a-t-il été résolu ?",pi_reported:"signalé par {name} le {date}, {team}",pi_times:"signalé {n} fois",pi_err:"Répondez Oui ou Non pour chaque problème signalé dans cette salle.",pv_prev:"Problèmes précédents dans cette salle",pv_resolved:"Résolu",pv_still:"Toujours présent",ci_title:"Problèmes des clubs & alertes",ci_open:"Problèmes ouverts",ci_none:"Aucun problème ouvert.",ci_resolve:"Marquer résolu",ci_resolve_confirm:"Marquer ce problème comme résolu ?",ci_upcoming:"Prochains matchs · Video Referee",ci_send:"✉ Envoyer les alertes maintenant",ci_send_confirm:"Envoyer maintenant les alertes aux Video Referees des prochains matchs (seulement ceux pas encore avertis) ?",ci_preview:"Aperçu de l'e-mail",ci_auto_on:"Alertes automatiques : ON",ci_auto_off:"Alertes automatiques : OFF",ci_alerted:"alerte envoyée",ci_pending:"à alerter",ci_clear:"aucun problème ouvert",ci_urgent:"URGENT envoyé",pi_row:"Problème signalé le {date} : a-t-il été résolu ?",pi_row_n:"Problème {n} (signalé le {date}) : a-t-il été résolu ?",pv_prev_item:"Problème signalé le {date}",wk_deadline_passed:"Échéance dépassée : lundi {date}",wk_deadline:"Échéance : lundi {date} au soir",wk_counts:"Désignés {d} · envoyés {s} · en retard {l} · manquants {m} · en attente {p} · pas encore joués {u}",wk_no_reports:"Aucun rapport pour cette semaine.",wk_late:"en retard",wk_not_desig:"absent des désignations chargées",wk_sent_on:"envoyé le {date}",wk_missing_b:"manquant",wk_waiting_b:"en attente",wk_no_desig:"Aucune désignation chargée pour cette semaine.",wk_all_ok:"✅ Tous les Video Referees désignés ont envoyé leur rapport.",wk_not_played:"Aucun match encore joué cette semaine.",wk_no_email:"pas d'e-mail",wk_not_in_list:"absent de la liste des arbitres",wk_no_misses:"Aucun oubli enregistré.",wk_late_log:"Envoyés après le rappel (non comptés)",wk_week_of:"semaine du {date}",wk_nobody:"Personne à rappeler pour cette semaine.",wk_send_confirm:"Envoyer maintenant un rappel depuis cnogara25@gmail.com à : {names} ?",wk_reminded:"rappelé",wk_miss_n:"{n} oubli(s)"},
+ nl:{brandsub:"Scheidsrechtersportaal",tab_home:"Home",tab_lib:"Bibliotheek",tab_rep:"Verslag",nav_docs:"Documenten",nav_video:"Video & VAR",nav_report:"Verslag",hero_kick:"Belgisch volleybal · Seizoen 2026/27",hero_h1:'<span class="be-y">Video</span> <span class="be-r">Challenge</span>-arbitrage, alles op één plek',hero_p:"Reglementen, videoreview en je verslag na de match — alles op één plek, in jouw taal. Geen account nodig.",hero_cta1:"Verslag invullen",hero_cta2:"Documenten bekijken",feat_label:"Wat erin zit",feat_title:"Alles wat een Video Challenge-scheidsrechter nodig heeft",f1t:"Documenten",f1d:"Download reglementen en richtlijnen als PDF.",f2t:"Video",f2d:"Bekijk clips en slides.",f3t:"Challenge-verslag",f3d:"Vul het formulier in; het wordt een PDF, automatisch gemaild.",f_open:"Openen",doc_label:"Bibliotheek",doc_title:"Documenten & video's",doc_sub:"Officiële reglementen, videosituaties.",tab_diag:"Diagnose",dg_label:"Diagnose",dg_title:"Challenge-diagnose",dg_sub:"Problemen per ploeg, op basis van ingediende verslagen.",dg_men:"Heren",dg_women:"Dames",dg_chart:"Ploegen met de meeste problemen",dg_reports:"verslagen",dg_clean:"Geen problemen gemeld.",dg_empty:"Nog geen verslagen ingediend.",dg_attention:"Aandacht",doc_view:"Bekijken",vid_view:"Bekijken",vid_dl:"Downloaden",vw_open:"Openen in nieuw tabblad",mrep:"Verslagen & gegevens",rep_hint:"Verwijder één verslag (werkt Diagnose bij), of reset alles.",rep_reset_all:"Alle gegevens wissen",ref_title:"👥 Scheidsrechters &amp; e-mails",ref_hint:"Voeg scheidsrechters toe of verwijder ze en vul hun e-mail in (herinneringen en kopie van het verslag).",ph_rname:"Naam (ACHTERNAAM VOORNAAM)",ph_remail:"E-mail (optioneel)",ref_add:"Scheidsrechter toevoegen",ref_refresh:"↻ Laden / vernieuwen",ref_save:"Opslaan",ref_del:"Verwijderen",ref_del_confirm:"Deze scheidsrechter verwijderen? Reeds ingediende verslagen blijven bewaard.",ref_err_name:"Vul een naam in.",ref_err_dup:"Deze scheidsrechter bestaat al.",ref_added:"Scheidsrechter toegevoegd:",ref_err:"Fout",rep_none:"Nog geen verslagen.",rep_confirm_all:"ALLE verslagen verwijderen? Kan niet ongedaan worden gemaakt.",dg_reset:"Wissen",dg_confirm_team:"Alle verslagen van deze ploeg verwijderen?",doc_dl:"Download",doc_empty:"Nog geen documenten.",vid_label:"Videohub",vid_title:"Video & slides",vid_sub:"Trainingsclips en presentaties.",vid_upt:"Upload een challengeclip",vid_ups:"Klik om een video te kiezen",vid_empty:"Nog geen video's.",rep_label:"Na de match",rep_title:"Video Challenge-verslag",rep_sub:"In te vullen na elke match. Vul gewoon je naam in.",g_match:"Match",l_ref:'Challenge-scheidsrechter <span class="req">*</span>',ph_ref:"Typ je naam",l_date:"Matchdatum",l_league:"Reeks",o_men:"Heren",o_women:"Dames",l_host:"Thuisploeg",g_check:"Checklist vóór de match",c1:"1u30 voor de match aangekomen",c2:"TR aanwezig in de zaal",c3:"Voorafgaande cameracontrole",c4:"Tablets beschikbaar",c5:"Headsets werken correct",c6:"Officiële Engelse terminologie gebruikt",c7:"TR bleef beschikbaar tijdens de match",c8:"Samenwerking scorebord & uitzending",o_yes:"Ja",o_no:"Nee",o_op:"Operationeel",o_nop:"Niet op.",o_good:"Goed",o_suff:"Voldoende",o_nsuff:"Onvold.",g_data:"Challenge-data",cnt_tot:'Totaal <span class="req">*</span>',cnt_right:"Ploeg correct",cnt_wrong:"Ploeg fout",c9:"Minstens één aanvraag door R1",g_issues:"Problemen & feedback",l_issues:'Ondervonden problemen <span class="req">*</span>',iss_none:"Geen probleem",iss_sys:"Systeemonderdelen",iss_bc:"Uitzendscherm",iss_oth:"Andere",iss_net:"Internetverbinding",iss_cam:"Cameracontrole",l_sol:"Gevonden oplossingen",ph_sol:"Beschrijf kort…",l_rate:"Ervaringsscore",send_note:"Bij verzenden wordt een PDF gemaakt en gemaild naar cnogara25@gmail.com en naar uw geregistreerde adres.",btn_send:"PDF maken & verzenden",btn_sending:"Verzenden…",sent_ok:"Verslag verzonden en gemaild naar cnogara25@gmail.com.",sent_saved:"Verslag opgeslagen, maar de e-mail kon niet worden verzonden.",sent_copy_ok:"Een kopie werd ook naar uw adres ({email}) gestuurd.",sent_copy_blocked:"De kopie naar uw adres ({email}) kon niet worden bezorgd. Download de PDF hieronder.",sent_copy_none:"Geen e-mailadres gekend voor uw naam: download de PDF hieronder.",btn_pdf:"PDF downloaden",mweek:"Weekcontrole &amp; herinneringen",adm_back:"Terug",adm_lock:"Vergrendelen",adm_missing:"ontbrekende verslagen",adm_refs:"scheidsrechters",wk_refresh:"↻ Vernieuwen",wk_send:"✉ Herinneringen nu versturen",wk_submitted:"Verslagen van deze week",wk_missed:"Niet ingediend (aangeduid)",wk_log:"Overzicht gemiste verslagen",wk_week:"Week",err_name:"Vul de naam van de scheidsrechter in.",err_send:"Verzenden mislukt. Probeer opnieuw.",btn_print:"Afdrukken / PDF",btn_edit:"Terug naar formulier",mng_label:"Admin",mng_title:"Bibliotheekbeheer",mng_sub:"Voeg documenten en video's toe of verwijder ze.",ph_code:"adminwachtwoord",mng_unlock:"Ontgrendelen",mng_wrong:"Verkeerd wachtwoord.",mdoc:"Documenten",mvid:"Video's & slides",ph_dtitle:"Documenttitel",ph_dcat:"Categorie (bv. Regels)",ph_durl:"Link (Google Drive, enz.)",d_hint:"Plak hierboven een link (Google Drive…), of upload hieronder een PDF.",ph_vtitle:"Titel video / slides",ph_vsub:"Ondertitel (bv. Training · 8 clips)",ph_vurl:"Link (video of slides)",m_addd:"Document toevoegen",m_addv:"Video / slides toevoegen",v_hint:"YouTube-link hierboven, of upload een .pptx hieronder.",foot_tag:"Scheidsrechtersportaal · 2026/27",foot_note:"Vrije toegang · EN · FR · NL",clip_ok:"Clip geüpload — bedankt.",clip_bad:"Upload mislukt, probeer opnieuw.",pv_title:"Video Challenge-verslag",pv_season:"Seizoen 2026/27",pv_league:"Reeks",pv_team:"Thuisploeg",pv_check:"Checklist vóór de match",pv_data:"Challenge-data",pv_total:"Totaal aanvragen",pv_right:"Ploeg correct",pv_wrong:"Ploeg fout",pv_r1:"Aanvraag door R1",pv_issues:"Ondervonden problemen",pv_sol:"Gevonden oplossingen",pv_rate:"Ervaringsscore",pv_none:"—",rep_pdf:"PDF bekijken",rep_pdf_none:"Geen PDF beschikbaar voor dit verslag.",rep_pdf_err:"De PDF kon niet worden geopend.",pi_title:"Probleem gemeld in deze zaal bij de vorige wedstrijd",pi_hint:"U ontving de details per e-mail vóór de wedstrijd. Geef aan of het is opgelost.",pi_q:"Is dit probleem opgelost?",pi_reported:"gemeld door {name} op {date}, {team}",pi_times:"{n} keer gemeld",pi_err:"Beantwoord Ja of Nee voor elk probleem dat in deze zaal werd gemeld.",pv_prev:"Eerdere problemen in deze zaal",pv_resolved:"Opgelost",pv_still:"Nog aanwezig",ci_title:"Clubproblemen & meldingen",ci_open:"Open problemen",ci_none:"Geen open probleem.",ci_resolve:"Markeer opgelost",ci_resolve_confirm:"Dit probleem als opgelost markeren?",ci_upcoming:"Komende wedstrijden · Video Referee",ci_send:"✉ Meldingen nu versturen",ci_send_confirm:"De meldingen nu versturen naar de Video Referees van de komende wedstrijden (alleen wie nog niet verwittigd is)?",ci_preview:"Voorbeeld e-mail",ci_auto_on:"Automatische meldingen: AAN",ci_auto_off:"Automatische meldingen: UIT",ci_alerted:"melding verstuurd",ci_pending:"nog te melden",ci_clear:"geen open probleem",ci_urgent:"URGENT verstuurd",pi_row:"Probleem gemeld op {date}: is het opgelost?",pi_row_n:"Probleem {n} (gemeld op {date}): is het opgelost?",pv_prev_item:"Probleem gemeld op {date}",wk_deadline_passed:"Deadline verstreken: maandag {date}",wk_deadline:"Deadline: maandag {date} 's avonds",wk_counts:"Aangeduid {d} · ingediend {s} · te laat {l} · ontbrekend {m} · wachtend {p} · nog niet gespeeld {u}",wk_no_reports:"Geen verslag voor deze week.",wk_late:"te laat",wk_not_desig:"niet in de geladen aanduidingen",wk_sent_on:"ingediend op {date}",wk_missing_b:"ontbreekt",wk_waiting_b:"wachtend",wk_no_desig:"Geen aanduidingen geladen voor deze week.",wk_all_ok:"✅ Alle aangeduide Video Referees hebben hun verslag ingediend.",wk_not_played:"Nog geen wedstrijd gespeeld deze week.",wk_no_email:"geen e-mail",wk_not_in_list:"niet in de scheidsrechterslijst",wk_no_misses:"Geen gemiste verslagen.",wk_late_log:"Ingediend na de herinnering (niet geteld)",wk_week_of:"week van {date}",wk_nobody:"Niemand om te herinneren voor deze week.",wk_send_confirm:"Nu een herinnering vanaf cnogara25@gmail.com sturen naar: {names}?",wk_reminded:"herinnerd",wk_miss_n:"{n} gemist"}
 };
 
 let LANG="en";
@@ -768,6 +806,7 @@ function t(k){return T[LANG][k];}
 
 function setLang(l){
   LANG=l;document.documentElement.lang=l;
+  setTimeout(function(){if(typeof renderPrevIssues==="function"&&PREV_ISSUES.length)renderPrevIssues();},0);
   document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
   document.querySelectorAll("[data-i18n-ph]").forEach(el=>{const k=el.getAttribute("data-i18n-ph");if(T[l][k]!==undefined)el.placeholder=T[l][k];});
   document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.getAttribute("data-l")===l));
@@ -822,9 +861,36 @@ const refSel=document.getElementById("f_ref");
 function fillRefs(){refSel.innerHTML="";const ph=document.createElement("option");ph.value="";ph.setAttribute("data-i18n","ph_ref");ph.textContent=t("ph_ref");refSel.appendChild(ph);REFS.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;refSel.appendChild(o);});}
 const teamSel=document.getElementById("f_team");
 function fillTeams(lg){teamSel.innerHTML="";(TEAMS[lg]||[]).forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;teamSel.appendChild(o);});}
+/* ── Problems reported at this venue in previous matches (asked in the form, answered Yes/No) ── */
+async function rpc(name,args){const res=await fetch(SB_URL+"/rest/v1/rpc/"+name,{method:"POST",headers:Object.assign({"Content-Type":"application/json"},H),body:JSON.stringify(args||{})});if(!res.ok)throw new Error("rpc "+res.status);return res.json();}
+function fmtD(d){if(!d)return "";var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(d);return m?m[3]+"/"+m[2]+"/"+m[1]:d;}
+async function loadPrevIssues(){
+  const box=document.getElementById("pi_box"),list=document.getElementById("pi_list");if(!box||!list)return;
+  const team=teamSel.value;PREV_ISSUES=[];box.style.display="none";list.innerHTML="";
+  if(!team)return;
+  try{PREV_ISSUES=await rpc("vcbe_open_issues_for_team",{p_team:team});}catch(e){PREV_ISSUES=[];}
+  if(!Array.isArray(PREV_ISSUES)||!PREV_ISSUES.length){PREV_ISSUES=[];return;}
+  renderPrevIssues();box.style.display="";
+}
+function renderPrevIssues(){
+  const list=document.getElementById("pi_list");if(!list)return;
+  const prevAns={};list.querySelectorAll(".pi-item").forEach(function(it){var b=it.querySelector(".pi-seg button.on");if(b)prevAns[it.getAttribute("data-id")]=b.getAttribute("data-v");});
+  const many=PREV_ISSUES.length>1;
+  list.innerHTML=PREV_ISSUES.map(function(i,n){
+    var q=many?t("pi_row_n").replace("{n}",n+1).replace("{date}",fmtD(i.last_match_date)):t("pi_row").replace("{date}",fmtD(i.last_match_date));
+    return '<div class="pi-item" data-id="'+esc(i.id)+'"><div class="checkrow"><span>'+esc(q)+'</span><div class="seg pi-seg"><button data-v="Yes"'+(prevAns[i.id]==="Yes"?' class="on"':"")+'>'+t("o_yes")+'</button><button data-v="No"'+(prevAns[i.id]==="No"?' class="on"':"")+'>'+t("o_no")+'</button></div></div></div>';
+  }).join("");
+  list.querySelectorAll(".pi-seg").forEach(function(g){g.querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){g.querySelectorAll("button").forEach(function(x){x.classList.remove("on");});b.classList.add("on");g.closest(".pi-item").classList.remove("err");});});});
+}
+function prevIssueChecks(){ /* null = a question is still unanswered */
+  var out=[],ok=true;
+  document.querySelectorAll("#pi_list .pi-item").forEach(function(it){var b=it.querySelector(".pi-seg button.on");if(!b){ok=false;it.classList.add("err");return;}out.push({issue_id:it.getAttribute("data-id"),resolved:b.getAttribute("data-v")==="Yes"});});
+  return ok?out:null;
+}
+teamSel.addEventListener("change",loadPrevIssues);
 function fillCounts(){document.querySelectorAll("select.cnt").forEach(function(s){s.innerHTML="";for(var i=0;i<=50;i++){var o=document.createElement("option");o.value=i;o.textContent=i;s.appendChild(o);}});}
 let league="Men";
-document.querySelectorAll("#seg_league button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("#seg_league button").forEach(x=>x.classList.remove("on"));b.classList.add("on");league=b.getAttribute("data-v");fillTeams(league);}));
+document.querySelectorAll("#seg_league button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("#seg_league button").forEach(x=>x.classList.remove("on"));b.classList.add("on");league=b.getAttribute("data-v");fillTeams(league);loadPrevIssues();}));
 document.querySelectorAll('.seg[data-k]').forEach(g=>g.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");})));
 document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
   if(c.getAttribute("data-v")==="No problem"){document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");}
@@ -848,6 +914,7 @@ function renderPreview(p){
   h+='<div class="ptitle">'+t("pv_check")+'</div><table>'+cr+'</table>';
   h+='<div class="ptitle">'+t("pv_data")+'</div><table><tr><td class="k">'+t("pv_total")+'</td><td class="v">'+p.challenges_total+'</td></tr><tr><td class="k">'+t("pv_right")+'</td><td class="v">'+p.team_right+'</td></tr><tr><td class="k">'+t("pv_wrong")+'</td><td class="v">'+p.team_wrong+'</td></tr><tr><td class="k">'+t("pv_r1")+'</td><td class="v">'+yn(p.request_by_r1)+'</td></tr></table>';
   h+='<div class="ptitle">'+t("pv_issues")+'</div><table><tr><td class="k">'+esc(p.issues)+'</td><td class="v"></td></tr></table>';
+  if(p.prev_issue_checks&&p.prev_issue_checks.length){h+='<div class="ptitle">'+t("pv_prev")+'</div><table>'+p.prev_issue_checks.map(function(c){var i=(PREV_ISSUES||[]).find(function(x){return x.id===c.issue_id;});return '<tr><td class="k">'+esc(i?t("pv_prev_item").replace("{date}",fmtD(i.last_match_date)):c.issue_id)+'</td><td class="v" style="color:'+(c.resolved?"#166534":"#B42318")+'">'+(c.resolved?t("pv_resolved"):t("pv_still"))+'</td></tr>';}).join("")+'</table>';}
   h+='<div class="ptitle">'+t("pv_sol")+'</div><div style="font-size:14px;color:#333;margin-bottom:14px">'+esc(p.solutions||"-")+'</div>';
   h+='<div class="ptitle">'+t("pv_rate")+'</div><div style="font-size:18px;color:#C9881C">'+(p.rating?p.rating+" / 5":"-")+'</div>';
   document.getElementById("preview").innerHTML=h;
@@ -860,7 +927,9 @@ genbtn.addEventListener("click",async()=>{
   const ref=document.getElementById("f_ref");
   if(!name){ref.classList.add("err");status.className="bad";status.textContent=t("err_name");ref.focus();return;}
   ref.classList.remove("err");
-  const p={referee_name:name,match_date:document.getElementById("f_date").value||null,league:league,host_team:teamSel.value,arrive_1h30:segBool("arrive"),tr_onsite:segBool("tr_site"),cameras:segVal("cams"),tablets:segBool("tablets"),headsets:segBool("headsets"),english_terms:segBool("terms"),tr_available:segBool("tr_game"),cooperation:segVal("coop"),challenges_total:cntVal("total"),team_right:cntVal("right"),team_wrong:cntVal("wrong"),request_by_r1:segBool("r1"),issues:chipVal(),solutions:document.getElementById("f_sol").value.trim(),rating:rating,lang:LANG};
+  const pic=prevIssueChecks();
+  if(pic===null){status.className="bad";status.textContent=t("pi_err");try{document.getElementById("pi_box").scrollIntoView({behavior:"smooth",block:"center"});}catch(_){}return;}
+  const p={referee_name:name,match_date:document.getElementById("f_date").value||null,league:league,host_team:teamSel.value,arrive_1h30:segBool("arrive"),tr_onsite:segBool("tr_site"),cameras:segVal("cams"),tablets:segBool("tablets"),headsets:segBool("headsets"),english_terms:segBool("terms"),tr_available:segBool("tr_game"),cooperation:segVal("coop"),challenges_total:cntVal("total"),team_right:cntVal("right"),team_wrong:cntVal("wrong"),request_by_r1:segBool("r1"),issues:chipVal(),solutions:document.getElementById("f_sol").value.trim(),rating:rating,lang:LANG,prev_issue_checks:pic};
   genbtn.disabled=true;genbtn.textContent=t("btn_sending");status.className="";status.textContent="";
   try{
     const res=await fetch(FN+"/send-report",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});
@@ -878,6 +947,7 @@ genbtn.addEventListener("click",async()=>{
       document.getElementById("output").classList.add("show");
       document.getElementById("output").scrollIntoView({behavior:"smooth"});
       try{await loadReports();renderDiag();}catch(_){}
+      try{loadPrevIssues();}catch(_){}
     }else{status.className="bad";status.textContent=(j.error||t("err_send"));}
   }catch(e){status.className="bad";status.textContent=t("err_send");}
   finally{genbtn.disabled=false;genbtn.textContent=t("btn_send");}
@@ -900,7 +970,7 @@ document.getElementById("mng_unlock").addEventListener("click",async()=>{
   ADMIN_PW=code;
   try{
     const j=await adminCall("list",{});
-    if(j&&j.ok){admUnlocked(true);applyLists(j.documents,j.videos);loadAdminReports();loadWeeklyStats();loadRefereeEmails();}
+    if(j&&j.ok){admUnlocked(true);applyLists(j.documents,j.videos);loadAdminReports();loadWeeklyStats();loadRefereeEmails();loadIssuePanel();}
     else{ADMIN_PW=null;err.textContent=(j&&j.error?j.error:t("mng_wrong"));}
   }catch(e){ADMIN_PW=null;err.textContent=t("mng_wrong");}
 });
@@ -963,72 +1033,136 @@ document.getElementById("add_vid").addEventListener("click",async()=>{
 async function rest(path){const res=await fetch(SB_URL+"/rest/v1/"+path,{headers:H});if(!res.ok)throw new Error("rest "+res.status);return res.json();}
 
 /* ──────────────────── WEEKLY STATS ──────────────────── */
-async function loadWeeklyStats(){
-  const el=document.getElementById("weekly_status");
-  const sub=document.getElementById("week_submitted");
-  const mis=document.getElementById("week_missed");
-  const log=document.getElementById("week_misslog");
-  const wl=document.getElementById("week_label");
+var WK_WS=null, WK_DATA=null;
+function isoAdd(iso,n){var d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);}
+function dmy(iso){return fmtD(iso);}
+function dm(iso){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(iso||"");return m?m[3]+"/"+m[2]:(iso||"");}
+/* Weekly check: one week (Monday–Sunday, deadline the following Monday) based on the VIDEO designations.
+   delta: undefined = keep the shown week (default: last week), 0 = refresh, ±7 = previous / next week. */
+async function loadWeeklyStats(delta){
+  const el=document.getElementById("weekly_status"),sub=document.getElementById("week_submitted"),mis=document.getElementById("week_missed"),log=document.getElementById("week_misslog"),wl=document.getElementById("week_label");
   if(!el)return;
+  if(typeof delta==="number"&&delta!==0&&WK_WS)WK_WS=isoAdd(WK_WS,delta);
   el.textContent="Loading…";
   try{
-    const j=await adminCall("get_weekly_stats",{});
-    if(!j||j.error){el.textContent="Error: "+(j&&j.error||"failed");return;}
-    el.textContent="";
-    // week label
-    if(wl) wl.textContent=t("wk_week")+" "+j.week_start+" → "+j.week_end;
-    admCount("week",(j.missed_this_week||[]).length);
-    // submitted this week
+    const j=await adminCall("get_weekly_stats",WK_WS?{week_start:WK_WS}:{});
+    if(!j||j.error||!j.week_start){el.textContent="Error: "+(j&&j.error||"failed");return;}
+    WK_WS=j.week_start;WK_DATA=j;
+    if(wl)wl.textContent=t("wk_week")+" "+dm(j.week_start)+" – "+dmy(j.week_end);
+    admCount("week",(j.missing||[]).length);
+    const ms=j.matches||[];
+    const n=function(st){return ms.filter(function(x){return x.status===st;}).length;};
+    el.innerHTML=esc((j.deadline_passed?t("wk_deadline_passed"):t("wk_deadline")).replace("{date}",dmy(j.deadline)))+'<br>'+esc(t("wk_counts").replace("{d}",ms.length).replace("{s}",n("submitted")+n("late")).replace("{l}",n("late")).replace("{m}",n("missing")).replace("{p}",n("pending")).replace("{u}",n("upcoming")));
+    // reports for this week
     if(sub){
-      if(!j.reports_this_week||!j.reports_this_week.length){sub.innerHTML='<span style="color:var(--muted);font-size:13px">No reports this week.</span>';
-      }else{
-        sub.innerHTML=j.reports_this_week.map(function(r){
-          var d=r.created_at?new Date(r.created_at).toLocaleDateString("en-BE",{timeZone:"Europe/Brussels"}):"";
-          return '<span class="submitted-chip"><b>'+esc(r.referee_name)+'</b> · '+esc(r.league||"")+" · "+esc(r.host_team||"")+" · "+d+'</span>';
-        }).join("");
-      }
+      const reps=j.submitted||[];
+      sub.innerHTML=reps.length?reps.map(function(r){
+        return '<span class="submitted-chip"><b>'+esc(r.referee_name)+'</b> · '+esc(r.host_team||"")+' · '+esc(dm(r.match_date||""))
+          +'<span class="wk-sub">'+esc(t("wk_sent_on").replace("{date}",new Date(r.created_at).toLocaleDateString("en-GB",{timeZone:"Europe/Brussels"})))
+          +(r.late?'<span class="wk-tag late">'+esc(t("wk_late"))+'</span>':'')+(r.designated?'':'<span class="wk-tag nd">'+esc(t("wk_not_desig"))+'</span>')+'</span></span>';
+      }).join(""):'<span style="color:var(--muted);font-size:13px">'+esc(t("wk_no_reports"))+'</span>';
     }
-    // missed this week
+    // not submitted: designated referees whose match is played and whose report is missing
     if(mis){
-      if(!j.missed_this_week||!j.missed_this_week.length){mis.innerHTML='<span style="color:#166534;font-size:13px">✅ Everyone with an email submitted this week!</span>';
-      }else{
-        mis.innerHTML=j.missed_this_week.map(function(r){
-          return '<div class="stat-row"><span><b>'+esc(r.name)+'</b><br><span style="color:var(--muted);font-size:11px">'+esc(r.email||"")+'</span></span>'
-            +'<span class="miss-badge">'+r.miss_count+' miss'+(r.miss_count!==1?"es":"")+'</span></div>';
-        }).join("");
-      }
+      const row=function(g,wait){
+        const mt=g.matches.map(function(x){return esc(x.match_code)+' · '+esc(dm(x.match_date))+' · '+esc(x.home_team||"")+' – '+esc(x.away_team||"");}).join('<br>');
+        const who=g.email?esc(g.email):esc(g.in_list?t("wk_no_email"):t("wk_not_in_list"));
+        const badge=wait?'<span class="miss-badge wait">'+esc(t("wk_waiting_b"))+'</span>':'<span class="miss-badge">'+esc(t("wk_missing_b"))+(g.miss_count?' · '+esc(t("wk_miss_n").replace("{n}",g.miss_count)):'')+'</span>';
+        return '<div class="stat-row" style="align-items:flex-start"><span><b>'+esc(g.name)+'</b>'+(g.reminded?'<span class="wk-tag nd">'+esc(t("wk_reminded"))+'</span>':'')+'<span class="wk-sub">'+who+'</span><span class="wk-sub">'+mt+'</span></span>'+badge+'</div>';
+      };
+      const miss=j.missing||[],pend=j.pending||[];
+      if(miss.length||pend.length) mis.innerHTML=miss.map(function(g){return row(g,false);}).join("")+pend.map(function(g){return row(g,true);}).join("");
+      else if(!ms.length) mis.innerHTML='<span style="color:var(--muted);font-size:13px">'+esc(t("wk_no_desig"))+'</span>';
+      else if(n("upcoming")===ms.length) mis.innerHTML='<span style="color:var(--muted);font-size:13px">'+esc(t("wk_not_played"))+'</span>';
+      else mis.innerHTML='<span style="color:#166534;font-size:13px">'+esc(t("wk_all_ok"))+'</span>';
     }
-    // all-time miss log
+    // miss log: only real misses; reports sent after the reminder are listed apart and do not count
     if(log){
-      var mc=j.miss_counts||{};
-      var refs=Object.keys(mc).sort(function(a,b){return mc[b]-mc[a];});
-      if(!refs.length){log.innerHTML='<span style="color:var(--muted);font-size:13px">No misses recorded yet.</span>';
-      }else{
-        log.innerHTML=refs.map(function(n){
-          return '<div class="stat-row"><b>'+esc(n)+'</b><span class="miss-badge">'+mc[n]+' miss'+(mc[n]!==1?"es":"")+'</span></div>';
-        }).join("");
-      }
+      const mc=j.miss_counts||{};
+      const names=Object.keys(mc).sort(function(a,b){return mc[b]-mc[a];});
+      let h=names.length?names.map(function(nm){return '<div class="stat-row"><b>'+esc(nm)+'</b><span class="miss-badge">'+esc(t("wk_miss_n").replace("{n}",mc[nm]))+'</span></div>';}).join("")
+        :'<span style="color:#166534;font-size:13px">'+esc(t("wk_no_misses"))+'</span>';
+      const late=j.late_log||[];
+      if(late.length) h+='<div class="ahd" style="margin-top:10px;color:#166534">'+esc(t("wk_late_log"))+'</div>'+late.map(function(x){return '<div class="stat-row"><span><b>'+esc(x.referee_name)+'</b><span class="wk-sub">'+esc(t("wk_week_of").replace("{date}",dmy(x.week_start)))+' · '+esc(t("wk_sent_on").replace("{date}",new Date(x.submitted_at).toLocaleDateString("en-GB",{timeZone:"Europe/Brussels"})))+'</span></span><span class="miss-badge wait">✓</span></div>';}).join("");
+      log.innerHTML=h;
     }
   }catch(e){el.textContent="Error: "+e.message;}
 }
 
 async function sendReminders(){
-  const btn=document.getElementById("btn_send_reminders");
-  const el=document.getElementById("weekly_status");
+  const btn=document.getElementById("btn_send_reminders"),el=document.getElementById("weekly_status");
   if(!ADMIN_PW){el.textContent="Not logged in.";return;}
-  if(!confirm("Send reminder emails now to all referees who haven't submitted this week?"))return;
+  const j0=WK_DATA;if(!j0){loadWeeklyStats();return;}
+  const targets=(j0.missing||[]).concat(j0.pending||[]).filter(function(g){return g.email&&!g.reminded&&g.matches.some(function(x){return x.match_date<=j0.today;});});
+  if(!targets.length){alert(t("wk_nobody"));return;}
+  if(!confirm(t("wk_send_confirm").replace("{names}",targets.map(function(g){return g.name;}).join(", "))))return;
   if(btn)btn.disabled=true;
   el.textContent="Sending…";
   try{
-    const j=await adminCall("trigger_reminders",{});
+    const j=await adminCall("trigger_reminders",{week_start:j0.week_start,names:targets.map(function(g){return g.name;})});
     if(j&&j.error){el.textContent="Error: "+j.error;return;}
     var msg="✅ Sent: "+(j.sent||[]).length;
-    if((j.skipped||[]).length)msg+=" · Already reminded: "+(j.skipped||[]).length;
+    if((j.skipped||[]).length)msg+=" · Skipped: "+j.skipped.join(", ");
     if((j.failed||[]).length)msg+=" · Failed: "+j.failed.join(", ");
     el.textContent=msg;
-    loadWeeklyStats();
+    setTimeout(function(){loadWeeklyStats(0);},1500);
   }catch(e){el.textContent="Error: "+e.message;}
   finally{if(btn)btn.disabled=false;}
+}
+
+/* ──────────────────── CLUB PROBLEMS & ALERTS (edge function vcbe-issue-alerts) ──────────────────── */
+let CI_ENABLED=null;
+async function issueCall(action,payload){const res=await fetch(FN+"/vcbe-issue-alerts",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({password:ADMIN_PW,action:action},payload||{}))});return res.json();}
+async function loadIssuePanel(){
+  const st=document.getElementById("ci_status"),li=document.getElementById("ci_issues"),up=document.getElementById("ci_upcoming"),tg=document.getElementById("ci_toggle");
+  if(!st||!ADMIN_PW)return;
+  st.textContent="Loading…";
+  try{
+    const j=await issueCall("status",{days:14});
+    if(!j||j.error){st.textContent="Error: "+(j&&j.error||"failed");return;}
+    CI_ENABLED=!!j.enabled;
+    if(tg){tg.textContent=t(CI_ENABLED?"ci_auto_on":"ci_auto_off");tg.style.color=CI_ENABLED?"#166534":"#B42318";}
+    st.textContent=(j.last_alert_at?"Last alert: "+new Date(j.last_alert_at).toLocaleString("en-BE",{timeZone:"Europe/Brussels"})+" · ":"")+"Channel: "+(j.channel||"none");
+    if(li){
+      if(!j.issues||!j.issues.length){li.innerHTML='<span style="color:#166534;font-size:13px">'+t("ci_none")+'</span>';}
+      else li.innerHTML=j.issues.map(function(i){
+        var meta=t("pi_reported").replace("{name}",i.last_reported_by||"?").replace("{date}",fmtD(i.last_match_date)).replace("{team}",i.club_name||"");
+        return '<div class="stat-row" style="align-items:flex-start"><span><b>'+esc(i.club_name)+'</b> · '+esc(i.summary)+'<br><span style="color:var(--muted);font-size:11px">'+esc(meta)+(i.escalated_at?' · <b style="color:#B42318">'+t("ci_urgent")+'</b>':'')+'</span></span>'
+          +'<span style="display:flex;gap:6px;align-items:center;flex:none"><span class="miss-badge">'+i.times_reported+'×</span><button class="btn ghost" style="padding:5px 9px;font-size:12px" onclick="resolveIssue(\''+i.id+'\')">'+t("ci_resolve")+'</button></span></div>';
+      }).join("");
+    }
+    if(up){
+      if(!j.upcoming||!j.upcoming.length){up.innerHTML='<span style="color:var(--muted);font-size:13px">No upcoming designations.</span>';}
+      else up.innerHTML=j.upcoming.map(function(a){
+        var badge=a.open_issues?(a.pending?'<span class="miss-badge">'+a.open_issues+' · '+t("ci_pending")+'</span>':'<span class="miss-badge" style="background:#DCFCE7;color:#166534">'+a.open_issues+' · '+t("ci_alerted")+'</span>'):'<span style="color:#166534;font-size:11px">'+t("ci_clear")+'</span>';
+        var pv=a.open_issues?' · <a href="#" onclick="previewIssueAlert(\''+esc(a.match_code)+'\',\''+esc(a.match_date)+'\');return false">'+t("ci_preview")+'</a>':'';
+        return '<div class="stat-row" style="align-items:flex-start"><span>'+fmtD(a.match_date)+' '+esc(a.match_time||"")+' · '+esc(a.match_code)+'<br><b>'+esc(a.home_team||"")+'</b> – '+esc(a.away_team||"")+'<br><span style="color:var(--muted);font-size:11px">VIDEO: <b>'+esc(a.video_referee||"")+'</b>'+(a.referee_id?'':' ⚠ not in referee list')+pv+'</span></span>'+badge+'</div>';
+      }).join("");
+    }
+  }catch(e){st.textContent="Error: "+e.message;}
+}
+async function resolveIssue(id){if(!ADMIN_PW)return;if(!confirm(t("ci_resolve_confirm")))return;try{const j=await issueCall("close_issue",{id:id});if(j&&j.error)alert(j.error);}catch(e){alert(e.message);}loadIssuePanel();}
+async function toggleIssueAlerts(){if(!ADMIN_PW)return;try{await issueCall("set_enabled",{enabled:!CI_ENABLED});}catch(e){alert(e.message);}loadIssuePanel();}
+async function sendIssueAlerts(){
+  const st=document.getElementById("ci_status");if(!ADMIN_PW)return;
+  if(!confirm(t("ci_send_confirm")))return;
+  st.textContent="Sending…";
+  try{
+    const j=await issueCall("run",{force:true});
+    if(!j||j.error){st.textContent="Error: "+(j&&j.error||"failed");return;}
+    var a=j.alerts||[];
+    st.textContent="✅ "+a.filter(function(x){return x.status==="sent";}).length+" sent · "+a.filter(function(x){return x.status!=="sent";}).length+" not delivered · "+(j.skipped||[]).length+" already alerted · "+(j.escalations||[]).length+" urgent";
+  }catch(e){st.textContent="Error: "+e.message;}
+  loadIssuePanel();
+}
+async function previewIssueAlert(code,date){
+  if(!ADMIN_PW)return;
+  try{
+    const j=await issueCall("preview",{match_code:code,match_date:date,from:"2000-01-01",to:"2100-01-01"});
+    if(!j||!j.ok){alert(j&&j.error||"no preview");return;}
+    var w=window.open("","_blank");if(!w){alert("Popup blocked");return;}
+    w.document.write('<title>'+esc(j.subject)+'</title><div style="font:13px Arial;color:#666;margin:10px 0">To: '+esc(j.to||"(no email)")+' · Cc: '+esc(j.cc||"")+'<br>Subject: <b>'+esc(j.subject)+'</b></div><hr>'+j.html);w.document.close();
+  }catch(e){alert(e.message);}
 }
 
 /* ──────────────────── REFEREE EMAILS ──────────────────── */
@@ -1213,7 +1347,7 @@ async function init(){
   try{const d=await rest("vcbe_documents?select=*&published=eq.true&order=sort_order");DOCS=d.map(x=>({id:x.id,title:x.title,cat:x.category,size:x.size_label,url:x.external_url}));}catch(e){}
   try{const v=await rest("vcbe_videos?select=*&published=eq.true&order=sort_order");VIDEOS=v.map(x=>({id:x.id,title:x.title,sub:x.subtitle,url:x.url,dur:x.duration}));}catch(e){}
   await loadReports();
-  fillRefs();fillTeams(league);fillCounts();setLang("en");renderDiag();
+  fillRefs();fillTeams(league);fillCounts();setLang("en");renderDiag();loadPrevIssues();
 }
 init();
 </script>
