@@ -173,7 +173,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 .card input[type=text],.card input[type=url],.card input[type=email],.card input[type=file]{width:100%;box-sizing:border-box}
 .card h3{font-size:16px;margin-bottom:14px}
 .mrow{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:13.5px}
-.mrow .rm{border:none;background:transparent;color:var(--bad);font-size:20px;cursor:pointer;line-height:1}
+.mrow .rm{flex:none;border:none;background:transparent;color:var(--bad);font-size:20px;cursor:pointer;line-height:1}
+/* the text takes all free space: "View PDF" and the × always sit flush right, aligned from row to row */
+.mrow>span:first-child{flex:1 1 auto;min-width:0}
+.mrow .pdfb{min-width:84px;text-align:center}
 .mlist{margin-top:12px}
 #mng_err{color:var(--bad);font-size:13px;margin-top:8px}
 .gate{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
