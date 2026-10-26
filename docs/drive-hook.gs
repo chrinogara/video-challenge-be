@@ -212,13 +212,15 @@ function buildReminder(name, week, matches, total, isTest) {
   var intro = 'According to the official VolleyAdmin designations, you were the Video Referee for the following ' +
               (many ? 'matches' : 'match') + ' in the week of Monday ' + week.mondayShort + ' – Sunday ' + week.sunday + ':';
   var notYet = 'We have not yet received your end-of-match Video Challenge report for ' + (many ? 'these matches' : 'this match') + '.';
+  // Dal 20/10/2026 (richiesta dell'admin): scadenza esplicita.
+  var deadline = 'The end-of-match report must be completed in the app by Monday evening (20:00) following the match. Please do so now.';
   var closing = 'If you have already sent it, or you did not officiate ' + (many ? 'these matches' : 'this match') +
                 ', please reply to this email so we can correct our records.';
   var lines = matches.map(matchLine);
 
   var text = (isTest ? 'THIS IS A TEST MESSAGE – the match below is an example only, no action is needed.\n\n' : '') +
     'Dear ' + name + ',\n\n' + intro + '\n' + lines.map(function (l) { return '- ' + l; }).join('\n') + '\n\n' +
-    notYet + '\n\nPlease fill it in as soon as possible in the app: ' + APP_URL + '\n' +
+    notYet + '\n' + deadline + '\n\nPlease fill it in as soon as possible in the app: ' + APP_URL + '\n' +
     'If the link opens a blank page, copy it and paste it into your browser, or type ' + APP_HOST + ' in the address bar.\n\n' +
     'Total reports missing: ' + total + '\n\n' + closing + '\n\nThank you,\nVideo Challenge BE';
 
@@ -226,7 +228,7 @@ function buildReminder(name, week, matches, total, isTest) {
     (isTest ? '<div style="background:#fff3cd;border:1px solid #f0c36d;padding:10px 14px;border-radius:6px;margin-bottom:16px"><b>THIS IS A TEST MESSAGE</b> – the match below is an example only, no action is needed.</div>' : '') +
     '<p>Dear ' + esc(name) + ',</p><p>' + esc(intro) + '</p><ul>' +
     lines.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul>' +
-    '<p>' + esc(notYet) + '</p>' +
+    '<p>' + esc(notYet) + ' <b>' + esc(deadline) + '</b></p>' +
     '<p style="text-align:center;margin:26px 0"><a href="' + APP_URL + '" style="background:#1a73e8;color:#ffffff;text-decoration:none;font-weight:bold;padding:14px 26px;border-radius:8px;display:inline-block">Open the Video Challenge BE app</a></p>' +
     '<p style="font-size:13px;color:#555">If the button opens a blank page or does not work, press and hold it, choose Copy, and paste the link into your browser – or type <b>' + APP_HOST + '</b> in the address bar.</p>' +
     '<p><b>Total reports missing: ' + total + '</b></p>' +
