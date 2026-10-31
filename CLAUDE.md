@@ -93,8 +93,8 @@
 - TUTTE le email dell'app partono da cnogara25@gmail.com via Apps Script (`docs/drive-hook.gs`, azioni `send` con allegati base64 max 3 e un solo `cc`, niente bcc; e `reminder`), con Resend solo come ripiego. Limite MailApp ≈ 100 email/giorno.
   - `send-report` v12: la copia PDF all'arbitro e l'email admin passano da `sendMail` (Apps Script con PDF allegato → Resend); risposta con `email_detail: "gmail"`.
 - Promemoria automatici (nessun passaggio manuale, nulla dipende da Claude): `admin-write` v18 azione `auto_reminders` {mode friday|monday, dry_run, force_day, summary}.
-  - Venerdì 20:00 Bruxelles (pg_cron `vcbe-auto-reminders-friday`, `0 19 * * 5`): gare lun–mer della settimana corrente senza modulo; NON scrive in `vcbe_miss_log`.
-  - Lunedì 20:00 (`vcbe-auto-reminders-monday`, `0 19 * * 1`): settimana precedente (sab/dom + secondo promemoria per le gare infrasettimanali ancora mancanti), scrive `vcbe_miss_log`.
+  - Venerdì 20:00 (pg_cron job 5 `vcbe-auto-reminders-friday`): DISATTIVATO il 31/10/2026 su richiesta dell'utente (migration `vcbe_disable_friday_reminders_20261031`; definizione rimasta con active=false, non riattivare). Il promemoria modulo parte SOLO il lunedì successivo alla gara.
+  - Lunedì 20:00 (`vcbe-auto-reminders-monday`, `0 19 * * 1`): tutte le gare giocate nella settimana precedente lun–dom (anche le infrasettimanali) senza modulo, scrive `vcbe_miss_log`.
   - Anti-doppioni: tabella `vcbe_reminder_log` (referee_name, week_start, kind) unica. Riepilogo all'admin "[VideoReferees] Friday/Monday reminders …" con avviso se mancano designazioni.
   - La routine Claude trig_01KD4SuUQaMEH7KEdAQKFPek è DISATTIVATA (sostituita da quanto sopra).
 - Designazioni: metodo principale = l'utente carica ogni settimana l'export/PDF "Aanduidingen" nella sessione Claude, che lo salva con `upsert_assignments`. `vcbe-sync-assignments` v10 (job 2, `0 6 * * *`) tenta ogni giorno il caricamento automatico ma ancora NON funziona (la lista VolleyAdmin arriva via AJAX da endpoint sconosciuto); se per i prossimi 7 giorni non c'è nulla manda all'admin "[VideoReferees] Designations NOT loaded automatically". Non svuota mai una settimana.
@@ -111,7 +111,7 @@
 
 ## Avvisi pre-gara solo per gare future (24/10/2026, richiesta utente)
 - Incidente 24/10/2026: PINTER PIERRE ha inviato il modulo di LIGD-017 (24/10, E.S. Charleroi) la sera stessa segnalando un problema; il trigger `post_report` ha rilanciato `run`, che considerava le gare da OGGI, e gli ha mandato l'avviso del problema appena segnalato per la gara già giocata.
-- `vcbe-issue-alerts` v12: `run` (unico percorso che scrive agli arbitri prima della gara: pg_cron job 3 e rilancio dopo ogni modulo) considera solo le gare da DOMANI a +8 giorni, sia per l'avviso "problema" sia per "no known problem". Regola utente: l'avviso deve arrivare prima della gara, mai dopo. Non riportare la finestra a `today`.
+- `vcbe-issue-alerts` v12: `run` (unico percorso che scrive agli arbitri prima della gara: pg_cron job 3 e rilancio dopo ogni modulo) considera solo le gare da DOMANI a +2 giorni (v15, 31/10/2026, richiesta utente: avviso al massimo 2 giorni prima della gara, perché lo stato dei problemi sia aggiornato; costante `ALERT_DAYS_BEFORE`, anche il pulsante admin non può allargare la finestra; prima era +8), sia per l'avviso "problema" sia per "no known problem". Regola utente: l'avviso deve arrivare prima della gara, mai dopo. Non riportare la finestra a `today`.
 - Gli altri invii automatici non sono avvisi pre-gara: `auto_reminders` (promemoria modulo dopo la gara), `digest` e `vcbe-period-report` (solo admin), escalation (solo admin).
 
 ## Statistica «Team Right by first referee» (26/10/2026, richiesta utente)
