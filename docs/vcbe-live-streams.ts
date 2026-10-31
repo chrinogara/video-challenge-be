@@ -30,7 +30,7 @@ const startOf = (d: string, t: string) => { const [y, m, dd] = d.split('-').map(
 const iso = (ts: number) => new Date(ts).toISOString().slice(0, 10);
 
 const STOP = new Set(['volley', 'volleybal', 'volleyball', 'damesvolley', 'vc', 'vbc', 'vt', 'sab', 'diving', 'bao', 'avo', 'team', 'the', 'de', 'les', 'cup', 'tv', 'friendly', 'women', 'men']);
-const words = (s: string) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+const words = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
   .replace(/\[[^\]]*\]/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean);
 const keyWords = (team: string) => words(team).filter((w) => w.length >= 3 && !STOP.has(w));
 
