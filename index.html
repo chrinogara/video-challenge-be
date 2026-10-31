@@ -477,6 +477,7 @@ details.tr-more summary{cursor:pointer;font-weight:700;font-size:12.5px}
 .wm-ls .pl svg{width:11px;height:11px;margin-left:2px}
 .wm-ls.on{background:#DC2626}.wm-ls.on .pl{background:#fff}.wm-ls.on .pl svg{fill:#DC2626}
 .wm-ls:hover{filter:brightness(1.12)}
+a.wm-ls{text-decoration:none;color:#fff}
 .ls-view{position:fixed;inset:0;z-index:9999;background:#000;display:flex;flex-direction:column}
 .ls-view[hidden]{display:none}
 .ls-bar{display:flex;align-items:center;gap:8px;padding:8px 10px;padding-top:max(8px,env(safe-area-inset-top));background:#07192F;color:#fff;flex:none}
@@ -1021,7 +1022,8 @@ async function loadStreams(){
 }
 function wmStreamHtml(r,st){
   var k=(r.match_code||"")+"|"+(r.match_date||"");if(!WM.streams[k])return "";
-  return '<div><button type="button" class="wm-ls'+(st==="live"?" on":"")+'" data-k="'+esc(k)+'" onclick="openStream(this.dataset.k)"><span class="pl"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6 4l15 8-15 8z"/></svg></span>'+esc(t("wm_ls"))+'</button></div>';
+  /* live streams need a (free) login on watch.lottovolleyleague.be: phones block that login inside an embedded frame, so the stream opens in the browser */
+  return '<div><a class="wm-ls'+(st==="live"?" on":"")+'" href="'+esc(LS_BASE+WM.streams[k])+'" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6 4l15 8-15 8z"/></svg></span>'+esc(t("wm_ls"))+'</a></div>';
 }
 function openStream(k){
   var u=WM.streams[k],v=document.getElementById("ls_view");if(!u||!v)return;
