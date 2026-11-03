@@ -40,6 +40,21 @@ Verifica rapida: aprendo l'URL `/exec` nel browser si deve vedere
 - Il salvataggio su Drive non blocca mai l'invio del modulo: se fallisce, il PDF resta
   comunque nel bucket e si recupera dall'area admin dell'app ("View PDF").
 
+## Moduli raggruppati per Host team (dal 03/11/2026)
+
+Struttura: **Challenge Video VB / NOME ARBITRO / SQUADRA DI CASA / `AAAA-MM-GG - Squadra di casa - NOME ARBITRO.pdf`**.
+
+- I nuovi moduli vanno da soli nella sottocartella della squadra di casa (creata se manca;
+  nomi confrontati senza distinzione di maiuscole). L'app non cambia: manda già `host_team`.
+- I moduli già presenti si spostano una volta con la funzione `organizeByHostTeam`
+  (menu funzioni → `organizeByHostTeam` → **Esegui**). Legge la squadra dal nome del file;
+  i file con un nome diverso restano nella cartella dell'arbitro e sono elencati nel log
+  (Esecuzioni). Si può rieseguire senza danni.
+- Procedura completa (account cnogara25): incollare il nuovo `docs/drive-hook.gs` al posto
+  del vecchio codice e salvare → eseguire `organizeByHostTeam` (alla prima volta Google può
+  chiedere di nuovo l'autorizzazione Drive) → **Esegui il deployment → Gestisci deployment →
+  matita → Versione: Nuova versione → Esegui il deployment** (l'URL non cambia).
+
 ## Manutenzione
 
 - Modifiche al codice: dopo aver incollato la nuova versione, **Distribuisci → Gestisci

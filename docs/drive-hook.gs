@@ -5,8 +5,10 @@
  * l'app (index.html, funzione saveReportToDrive) manda qui un POST JSON con
  * il link firmato del PDF appena creato da `send-report`; lo script scarica il
  * PDF e lo salva in Drive dentro:
- *   Challenge Video VB / <NOME ARBITRO> / "<data> - <squadra di casa> - <NOME ARBITRO>.pdf"
- * creando la sottocartella dell'arbitro se non esiste ancora.
+ *   Challenge Video VB / <NOME ARBITRO> / <SQUADRA DI CASA> / "<data> - <squadra di casa> - <NOME ARBITRO>.pdf"
+ * creando la sottocartella dell'arbitro e quella della squadra di casa (Host team) se non esistono.
+ * Dal 03/11/2026 i moduli di ogni arbitro sono raggruppati per Host team: la funzione
+ * organizeByHostTeam() sposta nelle sottocartelle i PDF già presenti nella cartella dell'arbitro.
  *
  * Terza funzione (dal 21/10/2026): azione "send", email generica da cnogara25 (vedi sendGeneric), usata
  * dalla edge function vcbe-issue-alerts: avvisi sui problemi di sala e email urgente con PDF.
@@ -18,6 +20,8 @@
  * script): chiave REMINDER_SECRET. Il valore sta nel prompt della routine, non nel repo.
  *
  * Funzioni da eseguire a mano dall'editor (menu "Esegui"):
+ *   organizeByHostTeam()       sposta i PDF già archiviati nella sottocartella dell'Host team
+ *                              (dal nome del file "data - squadra di casa - arbitro.pdf"); si può rieseguire
  *   createRefereeFolders()     crea le sottocartelle per tutti gli arbitri attivi (vcbe_referees)
  *   migrateFromLegacyFolder()  copia i PDF già archiviati il 17/10/2026 nella cartella
  *                              "Challenge Video VB - Rapporti arbitri (PDF)" del Drive di srlchrisa
@@ -63,10 +67,12 @@ function saveReport(d) {
 
   // Chiave univoca del rapporto = percorso del file nel bucket (senza token).
   var key = decodeURIComponent(pdfUrl.substring(ALLOWED_PDF_PREFIX.length).split('?')[0]);
-  var folder = getRefereeFolder(referee);
+  var refFolder = getRefereeFolder(referee);
 
-  var dup = findFileByDescription(folder, key);
-  if (dup) return { ok: true, duplicate: true, file_id: dup.getId(), folder: folder.getName() };
+  var dup = findFileByDescriptionDeep(refFolder, key);
+  if (dup) return { ok: true, duplicate: true, file_id: dup.getId(), folder: refFolder.getName() };
+  var host = String(d.host_team || '').replace(/\s+/g, ' ').trim();
+  var folder = getHostFolder(refFolder, host);
 
   var res = UrlFetchApp.fetch(pdfUrl, { muteHttpExceptions: true, followRedirects: true });
   if (res.getResponseCode() !== 200) return { ok: false, error: 'download failed ' + res.getResponseCode() };
@@ -83,10 +89,52 @@ function saveReport(d) {
   var blob = Utilities.newBlob(bytes, 'application/pdf', name);
   var file = folder.createFile(blob);
   file.setDescription(key);
-  return { ok: true, file_id: file.getId(), name: name, folder: folder.getName() };
+  return { ok: true, file_id: file.getId(), name: name, folder: refFolder.getName(), host_folder: host ? folder.getName() : null };
 }
 
 /* ---------- Manutenzione (da eseguire a mano) ---------- */
+
+/**
+ * Raggruppa per Host team i moduli già archiviati (03/11/2026). Per ogni cartella arbitro sposta
+ * ogni PDF che sta direttamente nella cartella nella sottocartella della squadra di casa, letta dal
+ * nome del file "AAAA-MM-GG - Squadra di casa - NOME ARBITRO.pdf". I file con nome diverso restano
+ * dove sono e vengono elencati nel log. Si può rieseguire: i file già spostati non vengono toccati.
+ */
+function organizeByHostTeam() {
+  var root = DriveApp.getFolderById(ROOT_FOLDER_ID);
+  var refs = root.getFolders(), moved = 0, left = [], perTeam = {};
+  while (refs.hasNext()) {
+    var ref = refs.next();
+    var files = ref.getFiles();
+    while (files.hasNext()) {
+      var f = files.next();
+      if (f.getMimeType() !== MimeType.PDF) continue;
+      var host = hostFromFileName(f.getName(), ref.getName());
+      if (!host) { left.push(ref.getName() + ' / ' + f.getName()); continue; }
+      var dest = getHostFolder(ref, host);
+      f.moveTo(dest);
+      moved++;
+      var k = ref.getName() + ' / ' + dest.getName();
+      perTeam[k] = (perTeam[k] || 0) + 1;
+    }
+  }
+  Logger.log('Spostati ' + moved + ' moduli.');
+  Object.keys(perTeam).sort().forEach(function (k) { Logger.log('  ' + k + ': ' + perTeam[k]); });
+  Logger.log(left.length ? 'Lasciati nella cartella arbitro (nome non riconosciuto): ' + left.join(' | ') : 'Nessun file lasciato fuori.');
+}
+
+/** "2026-10-21 - Tectum ACHEL - HERBOTS PAUL (2).pdf" -> "Tectum ACHEL" (null se il nome non ha questa forma). */
+function hostFromFileName(name, referee) {
+  var m = /^(\d{4}-\d{2}-\d{2}) - (.+)\.pdf$/i.exec(String(name || ''));
+  if (!m) return null;
+  var rest = m[2].replace(/ \(\d+\)$/, '');
+  var i = rest.lastIndexOf(' - ');
+  if (i <= 0) return null;
+  var host = rest.substring(0, i).trim();
+  if (referee && normalizeName(rest.substring(i + 3)) !== normalizeName(referee)) return null;
+  if (!host || host.toLowerCase() === 'match') return null;
+  return host;
+}
 
 function createRefereeFolders() {
   var res = UrlFetchApp.fetch(SB_URL + '/rest/v1/vcbe_referees?select=name&active=eq.true&order=sort_order',
@@ -107,11 +155,13 @@ function migrateFromLegacyFolder() {
   while (subs.hasNext()) {
     var src = subs.next();
     var referee = normalizeName(src.getName());
-    var dest = getRefereeFolder(referee);
+    var refDest = getRefereeFolder(referee);
     var files = src.getFilesByType(MimeType.PDF);
     while (files.hasNext()) {
       var f = files.next();
-      if (dest.getFilesByName(f.getName()).hasNext() || findFileByDescription(dest, 'legacy:' + f.getId())) { skipped++; continue; }
+      if (findFileByDescriptionDeep(refDest, 'legacy:' + f.getId())) { skipped++; continue; }
+      var dest = getHostFolder(refDest, hostFromFileName(f.getName(), referee));
+      if (dest.getFilesByName(f.getName()).hasNext()) { skipped++; continue; }
       f.makeCopy(f.getName(), dest).setDescription('legacy:' + f.getId());
       copied++;
     }
@@ -264,6 +314,22 @@ function findSubfolder(parent, name) {
 function getRefereeFolder(referee) {
   var root = DriveApp.getFolderById(ROOT_FOLDER_ID);
   return findSubfolder(root, referee) || root.createFolder(referee);
+}
+
+/** Sottocartella della squadra di casa dentro la cartella dell'arbitro (senza Host team: la cartella dell'arbitro). */
+function getHostFolder(refFolder, host) {
+  var name = sanitize(String(host || ''));
+  if (!name) return refFolder;
+  return findSubfolder(refFolder, name) || refFolder.createFolder(name);
+}
+
+/** Cerca il rapporto nella cartella dell'arbitro e nelle sue sottocartelle Host team. */
+function findFileByDescriptionDeep(refFolder, key) {
+  var f = findFileByDescription(refFolder, key);
+  if (f) return f;
+  var subs = refFolder.getFolders();
+  while (subs.hasNext()) { f = findFileByDescription(subs.next(), key); if (f) return f; }
+  return null;
 }
 
 function findFileByDescription(folder, key) {
