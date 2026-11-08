@@ -265,7 +265,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 .psrc .btn{flex:1 1 140px;text-align:center;cursor:pointer;margin:0}
 .vhide{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none}
 .pfold{border:2px dashed transparent;border-radius:12px;padding:4px;margin-bottom:6px;transition:background .12s,border-color .12s}
-.pfold-h{display:flex;justify-content:space-between;align-items:center;font-family:var(--fd);font-weight:700;font-size:13px;color:#fff;padding:4px 6px}
+.pfold-h{display:flex;width:100%;justify-content:space-between;align-items:center;font-family:var(--fd);font-weight:700;font-size:13.5px;color:#fff;padding:10px 10px;background:rgba(255,255,255,.1);border:0;border-radius:10px;cursor:pointer;text-align:left}
+.pfold.pf-empty .pfold-h{cursor:default}
+.pfold-h .pchev{display:inline-block;width:14px;transition:transform .15s;font-weight:400}
+.pfold.open .pfold-h .pchev{transform:rotate(90deg)}
+.pfold.open .pfold-h{background:rgba(255,255,255,.2)}
+.pfold-list{padding:8px 0 2px 10px}
 .pfold-h i{font-style:normal;background:#E0287A;color:#fff;border-radius:999px;min-width:24px;height:24px;line-height:24px;text-align:center;padding:0 7px;font-size:12.5px;font-weight:800}
 .pfold.pf-empty .pfold-h i{background:rgba(255,255,255,.25)}
 .pfold.pf-empty .pfold-h{opacity:.6;font-weight:600}
@@ -1252,9 +1257,9 @@ const T={
 Object.assign(T.en,{new_tag:'New',wn_title:'New in the Library',wn_go:"See what's new",wn_doc1:'new document',wn_docn:'new documents',wn_vid1:'new video / slides',wn_vidn:'new videos / slides',wn_pho1:'new photo',wn_phon:'new photos'});
 Object.assign(T.fr,{new_tag:'Nouveau',wn_title:'Nouveau dans la bibliothèque',wn_go:'Voir les nouveautés',wn_doc1:'nouveau document',wn_docn:'nouveaux documents',wn_vid1:'nouvelle vidéo / présentation',wn_vidn:'nouvelles vidéos / présentations',wn_pho1:'nouvelle photo',wn_phon:'nouvelles photos'});
 Object.assign(T.nl,{new_tag:'Nieuw',wn_title:'Nieuw in de bibliotheek',wn_go:'Bekijk wat nieuw is',wn_doc1:'nieuw document',wn_docn:'nieuwe documenten',wn_vid1:'nieuwe video / presentatie',wn_vidn:'nieuwe video\'s / presentaties',wn_pho1:'nieuwe foto',wn_phon:'nieuwe foto\'s'});
-Object.assign(T.en,{p_team:"Team folder",p_general:"General",p_other:"Other",p_all_teams:"All teams",p_count:"{n} photo(s)",p_folder_empty:"No photos for this team yet.",p_move:"Move to another team folder",p_drag:"Drag to another folder",p_drop_here:"Drop the photo on a team folder",p_lib_drag:"Admin: press and hold a photo, then drag it onto a team folder in the panel that appears.",p_cam:"Take photo",p_album:"Choose from album",p_cam_ok:"Photo saved in the folder {f}. Use ✎ to change its title.",p_drag_hint:"To move a photo: press and hold it (or grab ⠿) and drag it onto a team folder, here or in the panel that appears at the bottom. You can also use the menu under the title."});
-Object.assign(T.fr,{p_team:"Dossier de l'équipe",p_general:"Général",p_other:"Autres",p_all_teams:"Toutes les équipes",p_count:"{n} photo(s)",p_folder_empty:"Pas encore de photos pour cette équipe.",p_move:"Déplacer vers le dossier d'une autre équipe",p_drag:"Glisser vers un autre dossier",p_drop_here:"Déposez la photo sur le dossier d'une équipe",p_lib_drag:"Admin : appuyez longuement sur une photo, puis faites-la glisser sur le dossier d'une équipe dans le panneau qui apparaît.",p_cam:"Prendre une photo",p_album:"Choisir dans l'album",p_cam_ok:"Photo enregistrée dans le dossier {f}. Utilisez ✎ pour changer son titre.",p_drag_hint:"Pour déplacer une photo : appuyez longuement dessus (ou prenez ⠿) et faites-la glisser sur le dossier d'une équipe, ici ou dans le panneau qui apparaît en bas. Vous pouvez aussi utiliser le menu sous le titre."});
-Object.assign(T.nl,{p_team:"Map van de ploeg",p_general:"Algemeen",p_other:"Andere",p_all_teams:"Alle ploegen",p_count:"{n} foto('s)",p_folder_empty:"Nog geen foto's voor deze ploeg.",p_move:"Naar de map van een andere ploeg verplaatsen",p_drag:"Naar een andere map slepen",p_drop_here:"Laat de foto los op de map van een ploeg",p_lib_drag:"Admin: houd een foto ingedrukt en sleep ze naar de map van een ploeg in het paneel dat verschijnt.",p_cam:"Foto maken",p_album:"Kiezen uit album",p_cam_ok:"Foto opgeslagen in de map {f}. Gebruik ✎ om de titel te wijzigen.",p_drag_hint:"Een foto verplaatsen: houd ze ingedrukt (of neem ⠿) en sleep ze naar de map van een ploeg, hier of in het paneel dat onderaan verschijnt. Je kunt ook het menu onder de titel gebruiken."});
+Object.assign(T.en,{p_team:"Team folder",p_general:"General",p_other:"Other",p_all_teams:"All teams",p_count:"{n} photo(s)",p_folder_empty:"No photos for this team yet.",p_move:"Move to another team folder",p_drag:"Drag to another folder",p_drop_here:"Drop the photo on a team folder",p_lib_drag:"Admin: press and hold a photo, then drag it onto a team folder in the panel that appears.",p_cam:"Take photo",p_album:"Choose from album",p_cam_ok:"Photo saved in the folder {f}. Use ✎ to change its title.",p_drag_hint:"Tap a folder to see its photos. To move a photo: press and hold it (or grab ⠿) and drag it onto a team folder, here or in the panel that appears at the bottom. You can also use the menu under the title."});
+Object.assign(T.fr,{p_team:"Dossier de l'équipe",p_general:"Général",p_other:"Autres",p_all_teams:"Toutes les équipes",p_count:"{n} photo(s)",p_folder_empty:"Pas encore de photos pour cette équipe.",p_move:"Déplacer vers le dossier d'une autre équipe",p_drag:"Glisser vers un autre dossier",p_drop_here:"Déposez la photo sur le dossier d'une équipe",p_lib_drag:"Admin : appuyez longuement sur une photo, puis faites-la glisser sur le dossier d'une équipe dans le panneau qui apparaît.",p_cam:"Prendre une photo",p_album:"Choisir dans l'album",p_cam_ok:"Photo enregistrée dans le dossier {f}. Utilisez ✎ pour changer son titre.",p_drag_hint:"Touchez un dossier pour voir ses photos. Pour déplacer une photo : appuyez longuement dessus (ou prenez ⠿) et faites-la glisser sur le dossier d'une équipe, ici ou dans le panneau qui apparaît en bas. Vous pouvez aussi utiliser le menu sous le titre."});
+Object.assign(T.nl,{p_team:"Map van de ploeg",p_general:"Algemeen",p_other:"Andere",p_all_teams:"Alle ploegen",p_count:"{n} foto('s)",p_folder_empty:"Nog geen foto's voor deze ploeg.",p_move:"Naar de map van een andere ploeg verplaatsen",p_drag:"Naar een andere map slepen",p_drop_here:"Laat de foto los op de map van een ploeg",p_lib_drag:"Admin: houd een foto ingedrukt en sleep ze naar de map van een ploeg in het paneel dat verschijnt.",p_cam:"Foto maken",p_album:"Kiezen uit album",p_cam_ok:"Foto opgeslagen in de map {f}. Gebruik ✎ om de titel te wijzigen.",p_drag_hint:"Tik op een map om de foto's te zien. Een foto verplaatsen: houd ze ingedrukt (of neem ⠿) en sleep ze naar de map van een ploeg, hier of in het paneel dat onderaan verschijnt. Je kunt ook het menu onder de titel gebruiken."});
 Object.assign(T.en,{wm_ls:'Live streaming',wm_ls_back:'Matches of the week',wm_ls_ext:'New tab',wm_ls_src:'Live streaming · watch.lottovolleyleague.be',wm_sc_live:'Live score',wm_sc_final:'Final',wm_sc_src:'Live scores: livescore.volleyadmin2.be (updated every minute)',wm_btn:"Matches of the week",wm_label:"Designations",wm_title:"Matches with a Video Referee",wm_sub:"All matches with a designated Video Referee, week by week. The list updates when new weeks are loaded.",wm_this:"This week",wm_next:"Next week",wm_week:"Week",wm_prev:"Previous weeks",wm_n:"{n} matches",wm_n1:"1 match",wm_live_n:"{n} live now",wm_live:"Live",wm_ended:"Ended",wm_men:"Men",wm_women:"Women",wm_h_series:"Series",wm_h_gender:"M / W",wm_h_day:"Day",wm_h_time:"Start",wm_h_teams:"Teams (home – away)",wm_h_vr:"Video Referee",wm_none:"No designations loaded yet.",wm_none_week:"No match with a Video Referee loaded for this week yet.",wm_loading:"Loading…",wm_err:"Could not load the matches. Please try again later."});
 Object.assign(T.fr,{wm_ls:'Live streaming',wm_ls_back:'Matchs de la semaine',wm_ls_ext:'Nouvel onglet',wm_ls_src:'Live streaming · watch.lottovolleyleague.be',wm_sc_live:'Score en direct',wm_sc_final:'Final',wm_sc_src:'Scores en direct : livescore.volleyadmin2.be (mis à jour chaque minute)',wm_btn:"Matchs de la semaine",wm_label:"Désignations",wm_title:"Matchs avec Video Referee",wm_sub:"Tous les matchs avec un Video Referee désigné, semaine par semaine. La liste se met à jour quand de nouvelles semaines sont chargées.",wm_this:"Cette semaine",wm_next:"Semaine prochaine",wm_week:"Semaine",wm_prev:"Semaines précédentes",wm_n:"{n} matchs",wm_n1:"1 match",wm_live_n:"{n} en cours",wm_live:"En cours",wm_ended:"Terminé",wm_men:"Hommes",wm_women:"Femmes",wm_h_series:"Série",wm_h_gender:"H / F",wm_h_day:"Jour",wm_h_time:"Début",wm_h_teams:"Équipes (domicile – visiteurs)",wm_h_vr:"Video Referee",wm_none:"Aucune désignation chargée pour l'instant.",wm_none_week:"Aucun match avec Video Referee chargé pour cette semaine.",wm_loading:"Chargement…",wm_err:"Impossible de charger les matchs. Réessayez plus tard."});
 Object.assign(T.nl,{wm_ls:'Livestream',wm_ls_back:'Wedstrijden van de week',wm_ls_ext:'Nieuw tabblad',wm_ls_src:'Livestream · watch.lottovolleyleague.be',wm_sc_live:'Live score',wm_sc_final:'Einde',wm_sc_src:'Live scores: livescore.volleyadmin2.be (elke minuut bijgewerkt)',wm_btn:"Wedstrijden van de week",wm_label:"Aanduidingen",wm_title:"Wedstrijden met Video Referee",wm_sub:"Alle wedstrijden met een aangeduide Video Referee, week per week. De lijst wordt bijgewerkt wanneer nieuwe weken geladen worden.",wm_this:"Deze week",wm_next:"Volgende week",wm_week:"Week",wm_prev:"Vorige weken",wm_n:"{n} wedstrijden",wm_n1:"1 wedstrijd",wm_live_n:"{n} nu bezig",wm_live:"Bezig",wm_ended:"Afgelopen",wm_men:"Heren",wm_women:"Dames",wm_h_series:"Reeks",wm_h_gender:"H / D",wm_h_day:"Dag",wm_h_time:"Aanvang",wm_h_teams:"Ploegen (thuis – bezoekers)",wm_h_vr:"Video Referee",wm_none:"Nog geen aanduidingen geladen.",wm_none_week:"Nog geen wedstrijd met Video Referee geladen voor deze week.",wm_loading:"Laden…",wm_err:"De wedstrijden konden niet geladen worden. Probeer later opnieuw."});
@@ -1554,6 +1559,7 @@ function shrinkImage(file){return new Promise(function(res){
   img.onerror=function(){URL.revokeObjectURL(url);res({blob:file,name:file.name,type:file.type||"image/jpeg"});};
   img.src=url;});}
 function blobToB64(b){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=rej;r.readAsDataURL(b);});}
+var PH_OPEN={};
 function renderMngPhotos(){admCount("photos",PHOTOS.length);const el=document.getElementById("mng_pholist");if(!el)return;el.innerHTML="";
   /* 08/11/2026: admin list split into team folders; a photo is moved by dragging its handle (mouse or finger) onto another folder, or with the menu. */
   if(PHOTOS.length){var hint=document.createElement("div");hint.className="hint pdhint";hint.textContent=t("p_drag_hint");el.appendChild(hint);}
@@ -1561,8 +1567,10 @@ function renderMngPhotos(){admCount("photos",PHOTOS.length);const el=document.ge
   folders.forEach(function(team){
     var ps=PHOTOS.filter(function(p){return (p.team||"")===team;});
     var f=document.createElement("div");f.className="pfold"+(ps.length?"":" pf-empty");f.setAttribute("data-team",team);
-    f.innerHTML='<div class="pfold-h"><span>&#128193; '+esc(phTeamName(team))+'</span><i>'+ps.length+'</i></div>';
-    ps.forEach(function(p){f.appendChild(mngPhotoRow(p));});
+    var open=!!PH_OPEN[team]&&ps.length>0;if(open)f.classList.add("open");
+    f.innerHTML='<button type="button" class="pfold-h" aria-expanded="'+open+'"><span><b class="pchev">&#9656;</b> &#128193; '+esc(phTeamName(team))+'</span><i>'+ps.length+'</i></button>';
+    f.querySelector(".pfold-h").addEventListener("click",function(){if(!ps.length)return;PH_OPEN[team]=!PH_OPEN[team];renderMngPhotos();});
+    if(open){var box=document.createElement("div");box.className="pfold-list";ps.forEach(function(p){box.appendChild(mngPhotoRow(p));});f.appendChild(box);}
     el.appendChild(f);});
 }
 function mngPhotoRow(p){const i=PHOTOS.indexOf(p);const r=document.createElement("div");r.className="mrow";r.innerHTML='<span style="display:flex;align-items:center;min-width:0"><span class="pdrag" title="'+esc(t("p_drag"))+'" aria-label="'+esc(t("p_drag"))+'">&#10303;</span><img class="pthumb" src="'+esc(p.url)+'" alt=""><span style="min-width:0"><b>'+esc(p.title||"—")+'</b><span class="sub">'+esc((""+(p.created_at||"")).slice(0,10))+'</span><select class="pteam" title="'+esc(t("p_move"))+'"></select></span></span><span style="display:flex;gap:6px;flex:none"><button class="rm" data-ren="1" title="'+esc(t("p_rename"))+'">&#9998;</button><button class="rm" data-del="1">&times;</button></span>';r.querySelector(".pthumb").addEventListener("click",function(){openLightbox(i,PHOTOS);});
@@ -1587,7 +1595,7 @@ function phDropPanel(cur){var d=document.getElementById("ph_drop");if(!d){d=docu
   d.classList.add("show");return d;}
 function phDragInit(el,p,handle){
   var st=null;
-  var cleanup=function(){if(!st)return;clearTimeout(st.timer);el.removeEventListener("pointermove",mv);el.removeEventListener("pointerup",up);el.removeEventListener("pointercancel",up);
+  var cleanup=function(){if(!st)return;clearTimeout(st.timer);window.removeEventListener("pointermove",mv);window.removeEventListener("pointerup",up);window.removeEventListener("pointercancel",up);
     if(st.on){PH_DRAGGING=false;if(st.sc)cancelAnimationFrame(st.sc);if(st.g)st.g.remove();el.classList.remove("dragging");document.body.classList.remove("phdrag");var d=document.getElementById("ph_drop");if(d)d.classList.remove("show");if(st.over)st.over.classList.remove("over");}
     st=null;};
   var start=function(x,y){st.on=true;PH_DRAGGING=true;try{el.setPointerCapture(st.id);}catch(e){}
@@ -1598,7 +1606,7 @@ function phDragInit(el,p,handle){
   var hit=function(x,y){st.g.style.display="none";var e=document.elementFromPoint(x,y);st.g.style.display="";var f=e&&e.closest?e.closest(".pfold"):null;
     if(f!==st.over){if(st.over)st.over.classList.remove("over");st.over=f;if(f&&f.getAttribute("data-team")!==(p.team||""))f.classList.add("over");}};
   var auto=function(){if(!st||!st.on)return;var y=st.y,H=window.innerHeight,pan=document.getElementById("ph_drop"),top=pan?pan.getBoundingClientRect().top:H,d=y<70?-14:(y>top-40&&y<top?14:0);if(d)window.scrollBy(0,d);st.sc=d?requestAnimationFrame(auto):null;};
-  var mv=function(ev){if(!st)return;var dx=ev.clientX-st.x0,dy=ev.clientY-st.y0,dist=Math.sqrt(dx*dx+dy*dy);
+  var mv=function(ev){if(!st||ev.pointerId!==st.id)return;var dx=ev.clientX-st.x0,dy=ev.clientY-st.y0,dist=Math.sqrt(dx*dx+dy*dy);
     if(!st.on){if(st.mouse&&dist>6)start(ev.clientX,ev.clientY);else{if(dist>10)cleanup();return;}}
     ev.preventDefault();st.y=ev.clientY;place(ev.clientX,ev.clientY);hit(ev.clientX,ev.clientY);if(!st.sc)st.sc=requestAnimationFrame(auto);};
   var up=function(ev){if(!st)return;var was=st.on,tgt=st.over;cleanup();
@@ -1608,7 +1616,7 @@ function phDragInit(el,p,handle){
     if(e.target.closest&&e.target.closest("button:not(.ph),select,input,a"))return;
     var onHandle=handle&&(e.target===handle||handle.contains(e.target));
     st={id:e.pointerId,x0:e.clientX,y0:e.clientY,y:e.clientY,mouse:e.pointerType==="mouse",on:false};
-    el.addEventListener("pointermove",mv);el.addEventListener("pointerup",up);el.addEventListener("pointercancel",up);
+    window.addEventListener("pointermove",mv);window.addEventListener("pointerup",up);window.addEventListener("pointercancel",up);
     if(onHandle){e.preventDefault();start(e.clientX,e.clientY);}
     else if(!st.mouse){st.timer=setTimeout(function(){if(st&&!st.on)start(st.x0,st.y0);},350);}
   });
@@ -1863,7 +1871,7 @@ document.getElementById("p_cam").addEventListener("change",async function(){
   st.style.color="var(--muted)";st.textContent=t("p_uploading").replace("{i}",1).replace("{n}",1);
   try{const im=await shrinkImage(f);
     const j=await photoCall("add",{title:title,team:team,file_base64:await blobToB64(im.blob),file_name:im.name,content_type:im.type||"image/jpeg",width:im.w||null,height:im.h||null});
-    if(j&&j.ok){await loadAdminPhotos();st.style.color="var(--ok)";st.textContent=t("p_cam_ok").replace("{f}",phTeamName(team));}
+    if(j&&j.ok){PH_OPEN[team]=true;await loadAdminPhotos();st.style.color="var(--ok)";st.textContent=t("p_cam_ok").replace("{f}",phTeamName(team));}
     else{P_SEL.push({file:f,title:title});renderPhotoSel();st.style.color="var(--bad)";st.textContent=t("p_fail").replace("{list}",title+(j&&j.error?" ("+j.error+")":""));}
   }catch(e){P_SEL.push({file:f,title:title});renderPhotoSel();st.style.color="var(--bad)";st.textContent=t("p_fail").replace("{list}",title);}
 });
@@ -1882,7 +1890,7 @@ document.getElementById("add_pho").addEventListener("click",async function(){
   for(let i=0;i<list.length;i++){const it=list[i];
     st.style.color="var(--muted)";st.textContent=t("p_uploading").replace("{i}",i+1).replace("{n}",list.length);
     try{const im=await shrinkImage(it.file);
-      const j=await photoCall("add",{title:it.title.trim(),team:document.getElementById("p_team").value,file_base64:await blobToB64(im.blob),file_name:im.name,content_type:im.type||"image/jpeg",width:im.w||null,height:im.h||null});
+      PH_OPEN[document.getElementById("p_team").value]=true;const j=await photoCall("add",{title:it.title.trim(),team:document.getElementById("p_team").value,file_base64:await blobToB64(im.blob),file_name:im.name,content_type:im.type||"image/jpeg",width:im.w||null,height:im.h||null});
       if(j&&j.ok)ok++;else{bad.push(it.title.trim()+(j&&j.error?" ("+j.error+")":""));left.push(it);}
     }catch(e){bad.push(it.title.trim());left.push(it);}
   }
