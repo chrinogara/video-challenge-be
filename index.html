@@ -656,6 +656,14 @@ a.wm-ls{text-decoration:none;color:#fff}
  .row2{grid-template-columns:1fr}
 }
 .doc .meta .newbadge,.vid .vbody .newbadge{color:#fff;font-size:10px}.doc .meta .tag{color:var(--lime-d);font-size:10.5px}
+
+/* Library opened from a Home tile: only that section */
+#page-library[data-only] .lib-board{grid-template-columns:1fr!important}
+#page-library[data-only="col_libdocs"] .acol:not(#col_libdocs),
+#page-library[data-only="col_libvids"] .acol:not(#col_libvids),
+#page-library[data-only="col_libphotos"] .acol:not(#col_libphotos){display:none}
+#page-library[data-only] .acol-h{cursor:default}
+#page-library[data-only] .acol-h::after{display:none}
 </style>
 </head>
 <body>
@@ -712,17 +720,17 @@ a.wm-ls{text-decoration:none;color:#fff}
     </div>
     <div class="block" style="margin-top:22px">
       <div class="tiles">
-        <div class="tile" onclick="go('library')">
+        <div class="tile" onclick="openLib('col_libdocs')">
           <div class="ic" style="background:var(--violet-50);color:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
           <span class="cntnew tilenew" id="nb_docs" hidden></span><h3 data-i18n="f1t">Documents</h3><p data-i18n="f1d">Download rules and guidelines as PDF.</p>
           <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
         </div>
-        <div class="tile" onclick="go('library')">
+        <div class="tile" onclick="openLib('col_libvids')">
           <div class="ic" style="background:var(--lime-50);color:var(--lime-d)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
           <span class="cntnew tilenew" id="nb_vids" hidden></span><h3 data-i18n="f2t">Video</h3><p data-i18n="f2d">Watch clips and slide decks.</p>
           <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
         </div>
-        <div class="tile" onclick="go('library');setTimeout(function(){admJump('col_libphotos')},80)">
+        <div class="tile" onclick="openLib('col_libphotos')">
           <div class="ic" style="background:#FCE7F3;color:#DB2777"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 8"/></svg></div>
           <span class="cntnew tilenew" id="nb_photos" hidden></span><h3 data-i18n="f4t">Photos</h3><p data-i18n="f4d">View photos of halls and equipment.</p>
           <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
@@ -2233,7 +2241,7 @@ init();
   document.querySelectorAll('.acol').forEach(function(c){
     c.classList.add('collapsed');
     var h=c.querySelector('.acol-h');
-    if(h)h.addEventListener('click',function(){if(c.closest('#manage')){admClose();return;}c.classList.toggle('collapsed');});
+    if(h)h.addEventListener('click',function(){if(c.closest('#manage')){admClose();return;}if(c.closest('#page-library[data-only]'))return;c.classList.toggle('collapsed');});
   });
 })();
 /* Admin dashboard: overview tiles (grouped) + one detail section open at a time. */
@@ -2277,10 +2285,18 @@ var HM_WIDE=window.matchMedia?window.matchMedia('(min-width:760px)'):null;
 function syncAdmBody(){var home=document.body.classList.contains('hm');document.body.classList.toggle('adm',!home||!!(HM_WIDE&&HM_WIDE.matches));}
 if(HM_WIDE){try{HM_WIDE.addEventListener('change',syncAdmBody);}catch(e){HM_WIDE.addListener(syncAdmBody);}}
 document.body.classList.add('hm');syncAdmBody();
+/* Home tiles: open the Library showing only one section (Documents, Video or Photos). */
+function openLib(id){
+  go('library');
+  var lb=document.getElementById('page-library');if(!lb)return;
+  lb.setAttribute('data-only',id);
+  var el=document.getElementById(id);if(el)el.classList.remove('collapsed');
+}
 function go(p){
   document.querySelectorAll('.page').forEach(function(s){s.classList.toggle('active',s.dataset.page===p);});
   document.querySelectorAll('.tab,.adm-rail button[data-go]').forEach(function(b){b.classList.toggle('on',b.dataset.go===p);});
   document.body.classList.toggle('hm',p==='home');syncAdmBody();
+  var lb=document.getElementById('page-library');if(lb)lb.removeAttribute('data-only');
   if(p==='diag'&&typeof renderDiag==='function'){renderDiag();if(typeof loadIssueStatus==='function')loadIssueStatus().then(renderDiag);}
   if(p==='matches'&&typeof loadWeekMatches==='function')loadWeekMatches();
   if(p==='library'&&typeof markLibrarySeen==='function'){openNewColumns();markLibrarySeen();}
