@@ -1361,23 +1361,20 @@ function setLang(l){
   if(typeof renderWeekMatches==="function")renderWeekMatches();
 }
 
-/* "What's new" in the Library. In the lists an item shows NEW (and sits on top) for NEW_DAYS days after upload.
-   The Home alert counts only recent items added after this device last opened the Library
-   (localStorage vcbe_seen = {docs,vids,photos} timestamps). SEEN0 is a snapshot taken at load, so the NEW tags stay
-   visible during the visit in which the user opens the Library, while the Home badges disappear. */
+/* "What's new" in the Library. Every item is NEW (tag, top of the list, banner pill, Home alert and red counts)
+   from its upload until exactly 1 calendar month later, then it turns normal by itself; newer items keep NEW. */
 const NEW_DAYS=30;
 const SEEN_KEY="vcbe_seen";
 function seenRead(){try{var o=JSON.parse(localStorage.getItem(SEEN_KEY)||"null");return (o&&typeof o==="object")?o:{};}catch(e){return {};}}
 var SEEN0=seenRead();
 function tsOf(x){var t=x?new Date(x).getTime():NaN;return isNaN(t)?0:t;}
-/* NEW tag in the lists: any item uploaded in the last NEW_DAYS days (it turns normal by itself after 1 month). */
-function isRecent(createdAt){var t=tsOf(createdAt);return !!t&&t>Date.now()-NEW_DAYS*24*60*60*1000;}
+/* NEW until the same day and time of the following month (e.g. 08/11 14:00 -> 08/12 14:00). */
+function newUntil(createdAt){var t=tsOf(createdAt);if(!t)return 0;var d=new Date(t);d.setMonth(d.getMonth()+1);return d.getTime();}
+function isRecent(createdAt){var u=newUntil(createdAt);return !!u&&Date.now()<u;}
 /* Home alert/counters: recent items this device has not seen yet in the Library. */
-function isNewItem(createdAt,sec,seen){
-  if(!isRecent(createdAt))return false;
-  var s=(seen||SEEN0)[sec];
-  return typeof s!=="number"||tsOf(createdAt)>s;
-}
+/* User rule 08/11/2026: one rule everywhere. Home alert, red counts, banners and tags all show an item
+   until exactly 1 calendar month after its upload, whether or not this device opened the Library. */
+function isNewItem(createdAt){return isRecent(createdAt);}
 /* Recent items first (newest on top), then the usual order. Sorts in place so indexes stay valid. */
 function sortNewFirst(arr){
   if(!arr||!arr.sort)return arr;
@@ -1405,6 +1402,7 @@ function markLibrarySeen(){
   try{localStorage.setItem(SEEN_KEY,JSON.stringify(o));}catch(e){}
   renderWhatsNew();
 }
+document.addEventListener("visibilitychange",function(){if(!document.hidden)renderWhatsNew();});
 function renderWhatsNew(){
   var n=newCounts(seenRead()),tot=n.docs+n.vids+n.photos;
   var setB=function(id,k){var b=document.getElementById(id);if(!b)return;b.textContent=k>99?"99+":k;b.hidden=!k;};
