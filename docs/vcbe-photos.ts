@@ -4,6 +4,8 @@
 //   add    {title, file_base64, content_type, file_name, width?, height?} -> upload to public bucket vcbe-photos + row in vcbe_photos
 //   delete {id}                            -> removes row and file
 //   rename {id, title}                     -> changes the title
+//   set_team {id, team}                    -> moves the photo to a team folder (team empty = General)
+// 08/11/2026 (v2): column team = team folder (name as in vcbe_teams, NULL = General); add accepts team.
 // The public app reads vcbe_photos directly with the anon key (published = true).
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const CORS={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"*","Access-Control-Allow-Methods":"POST,OPTIONS"};
@@ -11,6 +13,7 @@ const SB_URL=Deno.env.get('SUPABASE_URL')!;
 const SB_KEY=(Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')||Deno.env.get('SUPABASE_SECRET_KEYS')||'');
 const BUCKET='vcbe-photos';
 const OK_TYPES=['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif'];
+const teamOf=(v:any)=>{const t=String(v??'').trim().slice(0,120);return t||null;};
 const json=(o:any,status=200)=>new Response(JSON.stringify(o),{status,headers:{...CORS,'Content-Type':'application/json'}});
 
 Deno.serve(async(req)=>{
@@ -42,7 +45,7 @@ Deno.serve(async(req)=>{
     if(up.error)return json({error:'upload_failed: '+up.error.message});
     const{data:pub}=sb.storage.from(BUCKET).getPublicUrl(path);
     const w=Number(body.width)||null,h=Number(body.height)||null;
-    const{data,error}=await sb.from('vcbe_photos').insert({title,url:pub.publicUrl,storage_path:path,width:w,height:h}).select().single();
+    const{data,error}=await sb.from('vcbe_photos').insert({title,team:teamOf(body.team),url:pub.publicUrl,storage_path:path,width:w,height:h}).select().single();
     if(error){await sb.storage.from(BUCKET).remove([path]);return json({error:'save_failed: '+error.message});}
     return json({ok:true,photo:data});
   }
@@ -50,6 +53,11 @@ Deno.serve(async(req)=>{
     const title=String(body.title||'').trim();
     if(!body.id||!title)return json({error:'id_and_title_required'});
     const{data,error}=await sb.from('vcbe_photos').update({title}).eq('id',body.id).select().single();
+    return json(error?{error:error.message}:{ok:true,photo:data});
+  }
+  if(action==='set_team'){
+    if(!body.id)return json({error:'id_required'});
+    const{data,error}=await sb.from('vcbe_photos').update({team:teamOf(body.team)}).eq('id',body.id).select().single();
     return json(error?{error:error.message}:{ok:true,photo:data});
   }
   if(action==='delete'){
