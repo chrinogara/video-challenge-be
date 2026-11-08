@@ -1472,6 +1472,7 @@ document.getElementById("add_doc").addEventListener("click",async()=>{
   else if(url){payload.external_url=url;payload.size_label="Link";}
   const j=await adminCall("add_document",payload);
   if(j.ok){document.getElementById("d_title").value="";document.getElementById("d_cat").value="";document.getElementById("d_url").value="";document.getElementById("d_file").value="";const l=await adminCall("list",{});if(l.ok)applyLists(l.documents,l.videos);}
+  else alert(t("adm_error")+": "+((j&&j.error)||""));
 });
 document.getElementById("add_vid").addEventListener("click",async()=>{
   const title=document.getElementById("v_title").value.trim();const sub=document.getElementById("v_sub").value.trim();const url=document.getElementById("v_url").value.trim();const f=document.getElementById("v_file").files[0];
