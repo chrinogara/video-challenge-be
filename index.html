@@ -662,8 +662,9 @@ a.wm-ls{text-decoration:none;color:#fff}
 #page-library[data-only="col_libdocs"] .acol:not(#col_libdocs),
 #page-library[data-only="col_libvids"] .acol:not(#col_libvids),
 #page-library[data-only="col_libphotos"] .acol:not(#col_libphotos){display:none}
-#page-library[data-only] .acol-h{cursor:default}
-#page-library[data-only] .acol-h::after{display:none}
+.acol-h .hlbl{display:inline-flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}
+.hnew{background:#EF4444;color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.hnew[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -787,18 +788,18 @@ a.wm-ls{text-decoration:none;color:#fff}
         </div>
         <div class="adm-board lib-board">
           <div class="acol c1" id="col_libdocs">
-            <div class="acol-h"><span data-i18n="mdoc">Documents</span><i id="cnt_libdocs">0</i></div>
+            <div class="acol-h"><span class="hlbl"><span data-i18n="mdoc">Documents</span><b class="hnew" id="hn_libdocs" hidden></b></span><i id="cnt_libdocs">0</i></div>
             <div class="acol-big"><span id="big_libdocs">0</span><small data-i18n="mdoc">Documents</small></div>
             <div class="doclist" id="doclist"></div>
           </div>
           <div class="acol c2" id="col_libvids">
-            <div class="acol-h"><span data-i18n="vid_title">Video &amp; slides</span><i id="cnt_libvids">0</i></div>
+            <div class="acol-h"><span class="hlbl"><span data-i18n="vid_title">Video &amp; slides</span><b class="hnew" id="hn_libvids" hidden></b></span><i id="cnt_libvids">0</i></div>
             <div class="acol-big"><span id="big_libvids">0</span><small data-i18n="mvid">Videos</small></div>
             <div class="vidgrid" id="vidgrid"></div>
             <div id="clipstatus" style="margin-top:12px;font-size:14px;color:#fff"></div>
           </div>
           <div class="acol cph" id="col_libphotos">
-            <div class="acol-h"><span data-i18n="mpho">Photos</span><i id="cnt_libphotos">0</i></div>
+            <div class="acol-h"><span class="hlbl"><span data-i18n="mpho">Photos</span><b class="hnew" id="hn_libphotos" hidden></b></span><i id="cnt_libphotos">0</i></div>
             <div class="acol-big"><span id="big_libphotos">0</span><small data-i18n="mpho">Photos</small></div>
             <div class="phgrid" id="phgrid"></div>
           </div>
@@ -1371,6 +1372,8 @@ function sortNewFirst(arr){
     return idx.get(a)-idx.get(b);});
   return arr;
 }
+/* "N New" pill in a Library section banner (30-day rule, same as the item tags). */
+function setHeadNew(id,arr){var b=document.getElementById(id);if(!b)return;var n=(arr||[]).filter(function(x){return isRecent(x.created_at);}).length;b.hidden=!n;b.textContent=n?(t("new_tag")+" · "+n):"";}
 function newBadge(){return '<span class="newbadge">'+t("new_tag")+'</span>';}
 function newCounts(seen){
   var c=function(arr,sec){return (arr||[]).filter(function(x){return isNewItem(x.created_at,sec,seen);}).length;};
@@ -1385,13 +1388,6 @@ function markLibrarySeen(){
   });
   try{localStorage.setItem(SEEN_KEY,JSON.stringify(o));}catch(e){}
   renderWhatsNew();
-}
-/* Open the Library columns that contain new items (they start collapsed). */
-function openNewColumns(){
-  var n=newCounts(SEEN0);
-  [["docs","col_libdocs"],["vids","col_libvids"],["photos","col_libphotos"]].forEach(function(p){
-    if(n[p[0]]){var el=document.getElementById(p[1]);if(el)el.classList.remove("collapsed");}
-  });
 }
 function renderWhatsNew(){
   var n=newCounts(seenRead()),tot=n.docs+n.vids+n.photos;
@@ -1413,7 +1409,7 @@ function renderWhatsNew(){
   bn.hidden=false;
 }
 const DOC_SVG='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>';
-function renderDocs(){admCount("libdocs",DOCS.length);
+function renderDocs(){admCount("libdocs",DOCS.length);setHeadNew("hn_libdocs",DOCS);
   const el=document.getElementById("doclist");el.innerHTML="";
   if(!DOCS.length){el.innerHTML='<div class="empty">'+t("doc_empty")+'</div>';return;}
   sortNewFirst(DOCS);
@@ -1428,7 +1424,7 @@ function renderDocs(){admCount("libdocs",DOCS.length);
 function isSlide(u){if(!u)return false;u=(""+u).toLowerCase();return u.endsWith(".ppt")||u.endsWith(".pptx")||u.endsWith(".key")||u.indexOf("slides")>-1||u.indexOf("presentation")>-1||u.indexOf("powerpoint")>-1||u.indexOf("sway")>-1;}
 const PLAY_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 const SLIDE_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg>';
-function renderVideos(){admCount("libvids",VIDEOS.length);
+function renderVideos(){admCount("libvids",VIDEOS.length);setHeadNew("hn_libvids",VIDEOS);
   const el=document.getElementById("vidgrid");if(!el)return;el.innerHTML="";
   if(!VIDEOS.length){el.innerHTML='<div class="empty">'+t("vid_empty")+'</div>';return;}
   sortNewFirst(VIDEOS);
@@ -1442,7 +1438,7 @@ function renderVideos(){admCount("libvids",VIDEOS.length);
 }
 
 /* ── PHOTOS ── */
-function renderPhotos(){admCount("libphotos",PHOTOS.length);
+function renderPhotos(){admCount("libphotos",PHOTOS.length);setHeadNew("hn_libphotos",PHOTOS);
   const el=document.getElementById("phgrid");if(!el)return;el.innerHTML="";
   if(!PHOTOS.length){el.innerHTML='<div class="empty">'+t("pho_empty")+'</div>';return;}
   sortNewFirst(PHOTOS);
@@ -2241,7 +2237,7 @@ init();
   document.querySelectorAll('.acol').forEach(function(c){
     c.classList.add('collapsed');
     var h=c.querySelector('.acol-h');
-    if(h)h.addEventListener('click',function(){if(c.closest('#manage')){admClose();return;}if(c.closest('#page-library[data-only]'))return;c.classList.toggle('collapsed');});
+    if(h)h.addEventListener('click',function(){if(c.closest('#manage')){admClose();return;}c.classList.toggle('collapsed');});
   });
 })();
 /* Admin dashboard: overview tiles (grouped) + one detail section open at a time. */
@@ -2290,7 +2286,6 @@ function openLib(id){
   go('library');
   var lb=document.getElementById('page-library');if(!lb)return;
   lb.setAttribute('data-only',id);
-  var el=document.getElementById(id);if(el)el.classList.remove('collapsed');
 }
 function go(p){
   document.querySelectorAll('.page').forEach(function(s){s.classList.toggle('active',s.dataset.page===p);});
@@ -2299,7 +2294,7 @@ function go(p){
   var lb=document.getElementById('page-library');if(lb)lb.removeAttribute('data-only');
   if(p==='diag'&&typeof renderDiag==='function'){renderDiag();if(typeof loadIssueStatus==='function')loadIssueStatus().then(renderDiag);}
   if(p==='matches'&&typeof loadWeekMatches==='function')loadWeekMatches();
-  if(p==='library'&&typeof markLibrarySeen==='function'){openNewColumns();markLibrarySeen();}
+  if(p==='library'){document.querySelectorAll('#page-library .acol').forEach(function(c){c.classList.add('collapsed');});if(typeof markLibrarySeen==='function')markLibrarySeen();}
   try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
 }
 </script>
