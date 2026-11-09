@@ -716,6 +716,9 @@ a.wm-ls{text-decoration:none;color:#fff}
 .hnew[hidden]{display:none}
 /* ── Drive (09/11/2026) ─────────────────────────────────────────── */
 .dv-view[hidden]{display:none!important}
+#page-drive [hidden],.dv-nav [hidden],.dv-sheet [hidden]{display:none!important}
+#page-drive .btn svg{width:18px;height:18px;flex:none}
+#page-drive .btn{gap:8px}
 .dv-wrap{display:flex;flex-direction:column;gap:14px;max-width:760px}
 .dv-hero{background:var(--violet);color:#fff;border-radius:20px;padding:22px 20px;position:relative;overflow:hidden}
 .dv-hero::after{content:"";position:absolute;right:-34px;top:-30px;width:140px;height:140px;border-radius:50%;background:#4F8BF0;opacity:.5}
@@ -886,7 +889,7 @@ body.dv-navon{overflow:hidden}
 .dva-set{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px;font-weight:600}
 .dva-set:first-of-type{border-top:0}
 .dva-set span{flex:1}
-.dva-set select{min-height:38px;border:1.5px solid var(--line2);border-radius:10px;padding:0 8px;font-weight:700}
+.dva-set select{min-height:38px;border:1.5px solid var(--line2);border-radius:10px;padding:0 8px;font-weight:700;width:auto!important;min-width:96px;flex:none}
 .dva-ev{font-size:12.5px;color:#55516E;padding:4px 0}
 </style>
 </head>
@@ -1546,7 +1549,7 @@ body.dv-navon{overflow:hidden}
   <button type="button" class="dv-fab mut" id="dv_mute" onclick="dvToggleMute()" aria-label="Mute voice"></button>
   <button type="button" class="dv-fab ctr" onclick="dvRecenter()" aria-label="Recenter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
   <div class="dv-fab spd" aria-label="Speed"><b id="dv_spd">–</b><small>km/h</small></div>
-  <button type="button" class="dv-fab rep" onclick="dvOpenSheet('dv_sh_report')" aria-label="Report on the road"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+  <button type="button" class="dv-fab rep" onclick="dvOpenSheet('dv_sh_report')" aria-label="Report on the road"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H9l-5 4z"/><path d="M12 7.5v4"/><path d="M12 13.8h.01"/></svg></button>
   <div class="dv-bot"><button type="button" class="end" onclick="if(confirm(dvT('dv_end_q')))dvStopNav()" data-i18n="dv_end">End</button><button type="button" class="mid" onclick="dvOpenMenu()"><b id="dv_eta_t">–</b><small id="dv_eta_s"></small><i id="dv_eta_i"></i></button><button type="button" class="up" onclick="dvOpenMenu()" aria-label="Drive menu"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button></div>
 </div>
 <div id="dv_sh_report" class="dv-sheet" hidden onclick="if(event.target===this)dvCloseSheets()"><div class="in" role="dialog" aria-modal="true" aria-labelledby="dv_rep_h">
@@ -3351,6 +3354,7 @@ function dvNavUpdate(){
   dvGet("dv_eta_t").textContent=dvHM(eta);dvGet("dv_eta_s").textContent=dvDur(remS/60)+" · "+dvFmtDist(rem);
   var st=dvGet("dv_eta_i"),tgt=DV.target&&DV.target.match?dvRecArrive(DV.target.match):null;
   if(DV.plan&&DV.plan.mode==="arrive"&&DV.plan.date&&DV.plan.time)tgt=dvAt(DV.plan.date,DV.plan.time);
+  if(tgt&&Math.abs(tgt.getTime()-eta.getTime())>6*3600000)tgt=null;
   if(tgt){var diff=Math.round((tgt.getTime()-eta.getTime())/60000);st.textContent=diff>=0?dvT("dv_early",{n:diff,t:dvHM(tgt)}):dvT("dv_lateby",{n:-diff,t:dvHM(tgt)});st.style.color=diff>=0?"var(--lime-d)":"var(--bad)";}else st.textContent="";
   var ms=dvGet("dv_m_eta");if(ms)ms.textContent=dvHM(eta)+" · "+dvDur(remS/60)+" · "+dvFmtDist(rem);
 }
