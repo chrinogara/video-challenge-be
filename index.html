@@ -3033,11 +3033,22 @@ async function dvOpen(){
     if(!t){dvShow("login");return;}
     DV.token=t;dvShow("loading");
     var j=await dvCall("me");
-    if(j&&j.ok){DV.name=j.name;DV.matches=j.matches||[];dvRenderHome();dvShow("home");}
+    if(j&&j.ok){DV.name=j.name;DV.matches=j.matches||[];dvRenderHome();dvShow("home");dvFixCoords();}
     else dvShow("login");
   }else if(DV.view==="home"){dvRefreshMe();}
 }
-async function dvRefreshMe(){var j=await dvCall("me");if(j&&j.ok){DV.name=j.name;DV.matches=j.matches||[];dvRenderHome();}}
+async function dvRefreshMe(){var j=await dvCall("me");if(j&&j.ok){DV.name=j.name;DV.matches=j.matches||[];dvRenderHome();dvFixCoords();}}
+/* matches whose address could not be located: use the league venue with the same postcode (+ same street) */
+async function dvFixCoords(){
+  var miss=DV.matches.filter(function(m){return m.lat==null;});if(!miss.length)return;
+  if(!DV.venues){try{var j=await dvCall("venues");DV.venues=(j&&j.venues)||[];}catch(e){return;}}
+  function pc(a){var m=String(a||"").match(/\b(\d{4})\b/);return m?m[1]:"";}
+  function st(a){return String(a||"").toLowerCase().replace(/[^a-z\u00e0-\u00ff ]/g," ").trim().split(/\s+/)[0]||"";}
+  miss.forEach(function(m){var p=pc(m.address),s1=st(m.address);if(!p)return;
+    var c=DV.venues.filter(function(v){return v.lat!=null&&pc(v.address)===p;});
+    var best=c.filter(function(v){return st(v.address)===s1;})[0]||(c.length===1?c[0]:null);
+    if(best){m.lat=best.lat;m.lng=best.lng;}});
+}
 function dvFillNames(){
   var s=dvGet("dv_name");if(!s||!REFS||!REFS.length)return;var cur=s.value;
   s.innerHTML='<option value="">'+esc(dvT("dv_choose"))+'</option>'+REFS.map(function(n){return '<option value="'+esc(n)+'">'+esc(n)+'</option>';}).join("");
@@ -3053,7 +3064,7 @@ async function dvLogin(){
   var b=dvGet("dv_login_btn");b.disabled=true;var old=b.innerHTML;b.innerHTML='<span class="dv-spin"></span>'+esc(dvT("dv_signing"));
   try{
     var j=await dvCall("login",{name:name,code:code,keep:DV.keep});
-    if(j.ok){dvSaveToken(j.token,DV.keep);try{localStorage.setItem("vcbe_drive_name",name);}catch(e){}dvGet("dv_code").value="";DV.name=j.name;dvShow("loading");var m=await dvCall("me");DV.matches=(m&&m.matches)||[];dvRenderHome();dvShow("home");}
+    if(j.ok){dvSaveToken(j.token,DV.keep);try{localStorage.setItem("vcbe_drive_name",name);}catch(e){}dvGet("dv_code").value="";DV.name=j.name;dvShow("loading");var m=await dvCall("me");DV.matches=(m&&m.matches)||[];dvRenderHome();dvShow("home");dvFixCoords();}
     else{var r=j.reason;dvLoginErr(r==="wrong"?dvT("dv_e_wrong",{n:j.left}):r==="locked"?dvT("dv_e_locked",{n:j.minutes||15}):r==="inactive"?dvT("dv_e_inactive"):r==="no_code"?dvT("dv_e_nocode"):r==="no_name"?dvT("dv_e_name"):dvT("dv_e_net"));}
   }catch(e){dvLoginErr(dvT("dv_e_net"));}
   b.disabled=false;b.innerHTML=old;
