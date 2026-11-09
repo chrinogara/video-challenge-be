@@ -719,6 +719,35 @@ a.wm-ls{text-decoration:none;color:#fff}
 #page-drive [hidden],.dv-nav [hidden],.dv-sheet [hidden]{display:none!important}
 #page-drive .btn svg{width:18px;height:18px;flex:none}
 #page-drive .btn{gap:8px}
+/* Drive on phones (09/11/2026, screenshot iPhone): inputs inside the card, compact header, room above the tab bar */
+#page-drive .dv-wrap{padding-bottom:24px}
+#page-drive .btn.ghost{background:#fff}
+#page-drive .btn.ghost:hover{background:var(--violet-50)}
+#page-drive .dv-actions.card{display:flex;gap:10px;flex-wrap:wrap}
+#page-drive .dv-row>.grow,#page-drive .dv-row>*{min-width:0}
+#page-drive .dv-dt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+#page-drive .dv-dt>div{min-width:0}
+#page-drive input[type=date].dv-in,#page-drive input[type=time].dv-in{-webkit-appearance:none;appearance:none;display:block;width:100%;max-width:100%;min-width:0;height:50px;min-height:50px;line-height:normal;text-align:left;padding:0 12px;font-variant-numeric:tabular-nums}
+#page-drive input[type=date]::-webkit-date-and-time-value,#page-drive input[type=time]::-webkit-date-and-time-value{text-align:left;margin:0;min-height:1.4em}
+#page-drive select.dv-in{-webkit-appearance:menulist;appearance:auto}
+@media(max-width:599px){
+ #page-drive .adm-main{gap:10px}
+ #page-drive .adm-top{padding:8px 10px;gap:8px;flex-wrap:nowrap;align-items:center}
+ #page-drive .adm-top .ttl{order:2;flex:1 1 auto;min-width:0}
+ #page-drive .adm-top .seclabel,#page-drive .adm-top .secsub{display:none}
+ #page-drive .adm-top .sectitle{font-size:17px;margin:0;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #page-drive .adm-top .adm-back{order:1;width:40px;height:40px;padding:0;justify-content:center;flex:none}
+ #page-drive .adm-top .adm-back span{display:none}
+ #page-drive .card{padding:14px}
+ #page-drive .dv-hero{padding:18px 16px}
+ #page-drive .dv-hero h3{font-size:21px}
+ #page-drive .dv-chips .chip{padding:8px 11px}
+ #page-drive .dv-result{gap:10px;padding:12px}
+ #page-drive .dv-result .big{min-width:70px}
+ #page-drive .dv-result .big b{font-size:25px}
+ #page-drive .dv-result .det{padding-left:10px}
+ #page-drive .dv-actions .btn{flex:1 1 0;min-width:0;padding:11px 10px}
+}
 .dv-wrap{display:flex;flex-direction:column;gap:14px;max-width:760px}
 .dv-hero{background:var(--violet);color:#fff;border-radius:20px;padding:22px 20px;position:relative;overflow:hidden}
 .dv-hero::after{content:"";position:absolute;right:-34px;top:-30px;width:140px;height:140px;border-radius:50%;background:#4F8BF0;opacity:.5}
@@ -1226,9 +1255,9 @@ body.dv-navon{overflow:hidden}
             <div class="card dv-form">
               <h3 style="margin:0" data-i18n="dv_q_time">What time do you want to arrive?</h3>
               <div class="dv-seg" id="dv_pmode" role="tablist"><button type="button" data-m="arrive" class="on" onclick="dvPlanMode('arrive')" data-i18n="dv_arrive_by">Arrive by</button><button type="button" data-m="leave" onclick="dvPlanMode('leave')" data-i18n="dv_leave_at">Leave at</button></div>
-              <div class="dv-row" style="align-items:flex-end">
-                <div class="grow"><label class="dv-lbl" for="dv_date" data-i18n="dv_day">Day</label><input id="dv_date" class="dv-in" type="date" onchange="dvTimes()"></div>
-                <div class="grow"><label class="dv-lbl" for="dv_time" id="dv_tlabel">Arrive by</label><input id="dv_time" class="dv-in" type="time" step="300" onchange="dvPlanMode(DV.plan.mode,true);dvTimes()"></div>
+              <div class="dv-dt">
+                <div><label class="dv-lbl" for="dv_date" data-i18n="dv_day">Day</label><input id="dv_date" class="dv-in" type="date" onchange="dvTimes()"></div>
+                <div><label class="dv-lbl" for="dv_time" id="dv_tlabel">Arrive by</label><input id="dv_time" class="dv-in" type="time" step="300" onchange="dvPlanMode(DV.plan.mode,true);dvTimes()"></div>
               </div>
               <div class="dv-chips" id="dv_tchips"></div>
               <p class="dv-note" id="dv_phint"></p>
@@ -1252,7 +1281,7 @@ body.dv-navon{overflow:hidden}
               <div class="dv-row"><span class="grow"><b style="font-size:14.5px;display:block" data-i18n="dv_remind">Tell me when to leave</b><small class="dv-note" data-i18n="dv_remind_s">Notification 15 minutes before and at departure time, while the app is open.</small></span><button type="button" id="dv_rem" class="dv-sw" role="switch" aria-checked="false" aria-label="Tell me when to leave" onclick="dvToggleRemind()"></button></div>
               <button type="button" class="btn ghost" onclick="dvIcs()" data-i18n="dv_ics">Add to my calendar (with reminder)</button>
             </div>
-            <div class="dv-actions"><button type="button" class="btn ghost" onclick="dvSavePlan()" data-i18n="dv_save">Save planned drive</button><button type="button" class="btn" id="dv_seeroutes" onclick="dvSeeRoutes()" disabled data-i18n="dv_routes_b">See routes</button></div>
+            <div class="dv-actions card"><button type="button" class="btn ghost" onclick="dvSavePlan()" data-i18n="dv_save">Save planned drive</button><button type="button" class="btn" id="dv_seeroutes" onclick="dvSeeRoutes()" disabled data-i18n="dv_routes_b">See routes</button></div>
           </div>
 
           <!-- routes -->
@@ -1260,7 +1289,7 @@ body.dv-navon{overflow:hidden}
             <div class="dv-map" id="dv_rmap"></div>
             <div id="dv_rlist" style="display:flex;flex-direction:column;gap:10px"></div>
             <p class="dv-note" id="dv_rnote" hidden data-i18n="dv_rnote">The backup route service could not apply your route options.</p>
-            <div class="dv-actions"><button type="button" class="btn" style="min-height:54px;font-size:16px" onclick="dvStartNav()"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8z"/></svg> <span data-i18n="dv_start">Start drive</span></button></div>
+            <div class="dv-actions card"><button type="button" class="btn" style="min-height:54px;font-size:16px" onclick="dvStartNav()"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8z"/></svg> <span data-i18n="dv_start">Start drive</span></button></div>
             <div class="dv-ext"><a id="dv_waze" href="#" target="_blank" rel="noopener" data-i18n="dv_waze">Open in Waze</a><a id="dv_gmaps" href="#" target="_blank" rel="noopener" data-i18n="dv_gmaps">Open in Google Maps</a></div>
             <p class="dv-note" data-i18n="dv_traffic_note">Drive times are calculated without live traffic: check the traffic with the reports of the other referees.</p>
           </div>
