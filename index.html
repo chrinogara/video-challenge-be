@@ -730,23 +730,52 @@ a.wm-ls{text-decoration:none;color:#fff}
 #page-drive input[type=date].dv-in,#page-drive input[type=time].dv-in{-webkit-appearance:none;appearance:none;display:block;width:100%;max-width:100%;min-width:0;height:50px;min-height:50px;line-height:normal;text-align:left;padding:0 12px;font-variant-numeric:tabular-nums}
 #page-drive input[type=date]::-webkit-date-and-time-value,#page-drive input[type=time]::-webkit-date-and-time-value{text-align:left;margin:0;min-height:1.4em}
 #page-drive select.dv-in{-webkit-appearance:menulist;appearance:auto}
-@media(max-width:599px){
- #page-drive .adm-main{gap:10px}
- #page-drive .adm-top{padding:8px 10px;gap:8px;flex-wrap:nowrap;align-items:center}
+/* Drive layout (10/11/2026, screenshot iPhone): cards spaced inside each view, one compact login card, slim header on phones */
+.dv-view{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dv-login{display:flex;flex-direction:column;gap:16px}
+.dv-intro{display:flex;align-items:center;gap:12px}
+.dv-intro p{margin:0;font-size:14px;line-height:1.45;color:#55516E}
+.dv-intro .dv-lock{background:var(--violet-50);color:var(--violet);width:42px;height:42px;border-radius:12px;flex:none}
+.dv-intro .dv-lock svg{width:21px;height:21px}
+.dv-keep{font-weight:600;font-size:14px;line-height:1.3}
+#page-drive .btn.dv-big{min-height:52px;font-size:16px}
+.dv-reqbox{display:flex;flex-direction:column;gap:10px;border-top:1px dashed var(--line2);padding-top:14px}
+.dv-reqbox .dv-note{font-size:12.5px;line-height:1.45}
+.dv-go{display:flex;flex-direction:column;gap:12px}
+.dv-go .dv-note{font-size:12.5px;line-height:1.45}
+.dv-go .dv-ext{margin:0}
+@media(max-width:760px){
+ #page-drive{padding-top:6px}
+ #page-drive .adm-main{gap:10px;padding-top:4px}
+ #page-drive .dv-wrap{gap:10px}
+ #page-drive .dv-view{gap:10px}
+ #page-drive .adm-top{background:transparent;box-shadow:none;border-radius:0;padding:0 2px;gap:10px;flex-wrap:nowrap;align-items:center;min-height:38px}
  #page-drive .adm-top .ttl{order:2;flex:1 1 auto;min-width:0}
  #page-drive .adm-top .seclabel,#page-drive .adm-top .secsub{display:none}
- #page-drive .adm-top .sectitle{font-size:17px;margin:0;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- #page-drive .adm-top .adm-back{order:1;width:40px;height:40px;padding:0;justify-content:center;flex:none}
+ #page-drive .adm-top .sectitle{font-size:18px;margin:0;line-height:1.2;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #page-drive .adm-top .adm-back{order:1;width:36px;height:36px;padding:0;justify-content:center;flex:none;border:0;border-radius:11px;background:rgba(255,255,255,.16);color:#fff}
+ #page-drive .adm-top .adm-back:hover{background:rgba(255,255,255,.26)}
+ #page-drive .adm-top .adm-back svg{width:19px;height:19px}
  #page-drive .adm-top .adm-back span{display:none}
- #page-drive .card{padding:14px}
- #page-drive .dv-hero{padding:18px 16px}
- #page-drive .dv-hero h3{font-size:21px}
+ #page-drive .card{padding:14px;border-radius:16px}
+ #page-drive .dv-form{gap:12px}
+ #page-drive .dv-login{gap:14px}
+ #page-drive .dv-in{min-height:46px}
+ #page-drive .dv-code{font-size:20px}
  #page-drive .dv-chips .chip{padding:8px 11px}
  #page-drive .dv-result{gap:10px;padding:12px}
  #page-drive .dv-result .big{min-width:70px}
  #page-drive .dv-result .big b{font-size:25px}
  #page-drive .dv-result .det{padding-left:10px}
  #page-drive .dv-actions .btn{flex:1 1 0;min-width:0;padding:11px 10px}
+ #page-drive .dv-me{gap:10px}
+ #page-drive .dv-me .btn{padding:8px 12px;min-height:38px;font-size:13.5px}
+ #page-drive .dv-av{width:40px;height:40px}
+ #page-drive .card.dv-match{padding:0}
+ #page-drive .dv-match .in{padding:14px;gap:5px}
+ #page-drive .dv-ask{padding:12px 14px;gap:9px}
+ #page-drive .dv-ask b{font-size:15px;line-height:1.3}
+ #page-drive .dv-li{padding:10px 0;min-height:52px}
 }
 .dv-wrap{display:flex;flex-direction:column;gap:14px;max-width:760px}
 .dv-hero{background:var(--violet);color:#fff;border-radius:20px;padding:22px 20px;position:relative;overflow:hidden}
@@ -1210,22 +1239,20 @@ body.dv-navon{overflow:hidden}
 
           <!-- sign in -->
           <div class="dv-view" data-v="login">
-            <div class="dv-hero">
-              <span class="dv-lock"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
-              <h3 data-i18n="dv_hero_t">Drive <em>access</em></h3>
-              <p data-i18n="dv_hero_s">Sign in with your name and your personal code to see your next match and plan the drive to the sports hall.</p>
-            </div>
-            <div class="card dv-form">
-              <div><label class="dv-lbl" for="dv_name" data-i18n="dv_l_name">Name</label><select id="dv_name" class="dv-in"></select></div>
-              <div><label class="dv-lbl" for="dv_code" data-i18n="dv_l_code">Personal code</label><input id="dv_code" class="dv-in dv-code" type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="••••" onkeydown="if(event.key==='Enter')dvLogin()"></div>
-              <div class="dv-row"><span class="grow" style="font-weight:600;font-size:14px" data-i18n="dv_keep">Keep me signed in on this phone</span><button type="button" id="dv_keep" class="dv-sw" role="switch" aria-checked="true" aria-label="Keep me signed in on this phone" onclick="dvToggleKeep()"></button></div>
-              <div class="dv-err" id="dv_lerr" role="alert" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg><span id="dv_lerr_t"></span></div>
-              <button type="button" class="btn" id="dv_login_btn" style="min-height:52px;font-size:16px" onclick="dvLogin()" data-i18n="dv_signin">Sign in</button>
-            </div>
-            <div class="card dv-form">
-              <p class="dv-note" data-i18n="dv_req_s">No code yet, or you forgot it? Choose your name above and ask for access: the coordinator receives your request by email.</p>
-              <button type="button" class="btn ghost" id="dv_req" onclick="dvRequest()" data-i18n="dv_req_b">Request access</button>
-              <div id="dv_req_msg" role="status" style="font-size:13.5px;font-weight:600"></div>
+            <div class="card dv-login">
+              <div class="dv-intro"><span class="dv-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><p data-i18n="dv_hero_s">Sign in with your name and your personal code to see your next match and plan the drive to the sports hall.</p></div>
+              <div class="dv-form">
+                <div><label class="dv-lbl" for="dv_name" data-i18n="dv_l_name">Name</label><select id="dv_name" class="dv-in"></select></div>
+                <div><label class="dv-lbl" for="dv_code" data-i18n="dv_l_code">Personal code</label><input id="dv_code" class="dv-in dv-code" type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="••••" onkeydown="if(event.key==='Enter')dvLogin()"></div>
+                <div class="dv-row"><span class="grow dv-keep" data-i18n="dv_keep">Keep me signed in on this phone</span><button type="button" id="dv_keep" class="dv-sw" role="switch" aria-checked="true" aria-label="Keep me signed in on this phone" onclick="dvToggleKeep()"></button></div>
+                <div class="dv-err" id="dv_lerr" role="alert" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg><span id="dv_lerr_t"></span></div>
+                <button type="button" class="btn dv-big" id="dv_login_btn" onclick="dvLogin()" data-i18n="dv_signin">Sign in</button>
+              </div>
+              <div class="dv-reqbox">
+                <p class="dv-note" data-i18n="dv_req_s">No code yet, or you forgot it? Choose your name above and ask for access: the coordinator receives your request by email.</p>
+                <button type="button" class="btn ghost" id="dv_req" onclick="dvRequest()" data-i18n="dv_req_b">Request access</button>
+                <div id="dv_req_msg" role="status" style="font-size:13.5px;font-weight:600"></div>
+              </div>
             </div>
           </div>
 
@@ -1288,10 +1315,12 @@ body.dv-navon{overflow:hidden}
           <div class="dv-view" data-v="routes" hidden>
             <div class="dv-map" id="dv_rmap"></div>
             <div id="dv_rlist" style="display:flex;flex-direction:column;gap:10px"></div>
-            <p class="dv-note" id="dv_rnote" hidden data-i18n="dv_rnote">The backup route service could not apply your route options.</p>
-            <div class="dv-actions card"><button type="button" class="btn" style="min-height:54px;font-size:16px" onclick="dvStartNav()"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8z"/></svg> <span data-i18n="dv_start">Start drive</span></button></div>
-            <div class="dv-ext"><a id="dv_waze" href="#" target="_blank" rel="noopener" data-i18n="dv_waze">Open in Waze</a><a id="dv_gmaps" href="#" target="_blank" rel="noopener" data-i18n="dv_gmaps">Open in Google Maps</a></div>
-            <p class="dv-note" data-i18n="dv_traffic_note">Drive times are calculated without live traffic: check the traffic with the reports of the other referees.</p>
+            <div class="card dv-go">
+              <button type="button" class="btn dv-big" onclick="dvStartNav()"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8z"/></svg> <span data-i18n="dv_start">Start drive</span></button>
+              <div class="dv-ext"><a id="dv_waze" href="#" target="_blank" rel="noopener" data-i18n="dv_waze">Open in Waze</a><a id="dv_gmaps" href="#" target="_blank" rel="noopener" data-i18n="dv_gmaps">Open in Google Maps</a></div>
+              <p class="dv-note" id="dv_rnote" hidden data-i18n="dv_rnote">The backup route service could not apply your route options.</p>
+              <p class="dv-note" data-i18n="dv_traffic_note">Drive times are calculated without live traffic: check the traffic with the reports of the other referees.</p>
+            </div>
           </div>
 
           <!-- arrived -->
