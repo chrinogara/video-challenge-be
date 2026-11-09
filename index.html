@@ -3396,13 +3396,24 @@ async function dvSendReport(kind){
   if(!pos){try{var g=await dvGeo(8000);pos={lat:g.lat,lng:g.lng};}catch(e){dvToast(dvT("dv_nogps"));return;}}
   try{var j=await dvCall("report",{kind:kind,lat:pos.lat,lng:pos.lng});dvToast(j.ok?dvT("dv_rep_ok"):dvT("dv_e_net"));if(j.ok)dvLoadReports();}catch(e){dvToast(dvT("dv_e_net"));}
 }
+/* stops by category near the current position: Overpass API (OpenStreetMap) from the browser */
+async function dvOverpass(tag,lat,lng){
+  var k={parking:'["amenity"="parking"]["access"!="private"]',fuel:'["amenity"="fuel"]',cafe:'["amenity"~"^(cafe|fast_food)$"]'}[tag];if(!k)return [];
+  var q='[out:json][timeout:20];nwr'+k+'(around:6000,'+lat+','+lng+');out center 40;';
+  var res=await fetch("https://overpass-api.de/api/interpreter",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"data="+encodeURIComponent(q)});
+  var j=await res.json();
+  return (j.elements||[]).map(function(e){var la=e.lat!=null?e.lat:(e.center||{}).lat,lo=e.lon!=null?e.lon:(e.center||{}).lon,t=e.tags||{};
+    var addr=[[t["addr:street"],t["addr:housenumber"]].filter(Boolean).join(" "),t["addr:city"]].filter(Boolean).join(", ");
+    return {name:t.name||t.brand||t.operator||dvT(tag==="parking"?"dv_s_park":tag==="fuel"?"dv_s_fuel":"dv_s_cafe"),label:addr,lat:la,lng:lo,km:Math.round(dvM([lat,lng],[la,lo])/100)/10};})
+    .filter(function(r){return r.lat!=null;}).sort(function(a,b){return a.km-b.km;}).slice(0,6);
+}
 /* in-drive menu */
 function dvOpenMenu(){dvNavUpdate();dvGet("dv_m_dest").textContent=DV.target?DV.target.name+" · "+(DV.target.address||""):"";dvGet("dv_sres").innerHTML="";dvOpenSheet("dv_sh_menu");}
 async function dvStopSearch(tag){
   var N=DV.nav,out=dvGet("dv_sres"),q=tag?"":(dvGet("dv_sq").value||"").trim();if(!tag&&q.length<3){dvGet("dv_sq").focus();return;}
   var c=N&&N.last?N.last:(N?{lat:N.pts[0][0],lng:N.pts[0][1]}:null);
   out.innerHTML='<div class="dv-note"><span class="dv-spin"></span>'+esc(dvT("dv_searching"))+'</div>';
-  try{var j=await dvCall("search",c?{q:q,tag:tag||"",lat:c.lat,lng:c.lng}:{q:q,tag:tag||""});DV._stops=(j&&j.results)||[];}catch(e){DV._stops=[];}
+  try{if(tag&&c)DV._stops=await dvOverpass(tag,c.lat,c.lng);else{var j=await dvCall("search",c?{q:q,lat:c.lat,lng:c.lng}:{q:q});DV._stops=(j&&j.results)||[];}}catch(e){DV._stops=[];}
   out.innerHTML=DV._stops.length?DV._stops.map(function(r,i){return '<button class="dv-li" onclick="dvAddStop('+i+')"><span class="ic">'+dvIcon(tag==="parking"?"park":tag==="fuel"?"fuel":tag==="cafe"?"cafe":"pin")+'</span><span class="tx"><b>'+esc(r.name||dvT("dv_place"))+'</b><small>'+esc(r.label)+(r.km!=null?' · '+r.km+' km':'')+'</small></span>'+dvIcon("chev","chev")+'</button>';}).join(""):'<div class="dv-note">'+esc(dvT("dv_none"))+'</div>';
 }
 function dvAddStop(i){var r=(DV._stops||[])[i],N=DV.nav;if(!r||!N)return;N.via={lat:r.lat,lng:r.lng,name:r.name};dvCloseSheets();dvToast(dvT("dv_stop_added",{v:r.name||dvT("dv_place")}));dvReroute();}
