@@ -924,6 +924,66 @@ a.wm-ls{text-decoration:none;color:#fff}
 .dv-toast[hidden]{display:none}
 .dv-me-pin{width:30px;height:30px;border-radius:50%;background:var(--violet);border:4px solid #fff;box-shadow:0 2px 8px rgba(21,19,43,.35);display:flex;align-items:center;justify-content:center}
 .dv-me-pin svg{width:14px;height:14px}
+/* Drive v3 (10/11/2026): compass, radio, badges, teams, referees on the road, messages */
+.dv-me-pin svg{transition:transform .25s linear}
+.dv-fab.cmp,.dv-fab.rad{right:14px;width:48px;height:48px;background:#fff;color:var(--ink);border-width:0}
+.dv-fab.cmp{top:calc(262px + env(safe-area-inset-top))}
+.dv-fab.cmp svg{width:24px;height:24px;transition:transform .2s}
+.dv-fab.cmp.hu{box-shadow:0 0 0 3px var(--violet),0 3px 12px rgba(21,19,43,.25)}
+.dv-fab.rad{left:14px;top:calc(150px + env(safe-area-inset-top));width:44px;height:44px}
+.dv-fab.rad svg{width:21px;height:21px}
+.dv-fab.rad.on{background:#DC2626;color:#fff;animation:dvrad 1.6s ease-in-out infinite}
+@keyframes dvrad{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.5)}50%{box-shadow:0 0 0 8px rgba(220,38,38,0)}}
+.dv-sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.dv-agrid.two{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:-6px}
+.dv-agrid button{position:relative}
+.dv-badge{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:#DC2626;color:#fff;font:700 11.5px/20px var(--fd);text-align:center;flex:none}
+.dv-badge[hidden]{display:none}
+.dv-bot .up{position:relative}
+.dv-bot .up .dv-badge,.dv-agrid .dv-badge{position:absolute;top:4px;right:6px}
+.dv-badge.in{display:inline-block;vertical-align:1px;margin-left:4px}
+.dv-ic-ref{background:#FEF3C7!important;color:#92400E!important}
+.dv-homec{display:flex;flex-direction:column;gap:10px}
+.dv-homec.empty{border:2px dashed var(--violet);background:var(--violet-50)}
+.dv-homec .dv-row .btn{flex:1}
+.dv-ppl{position:fixed;inset:0;z-index:340;background:var(--bg,#F4F4F8);display:flex;flex-direction:column;font-family:var(--fb);color:var(--ink);padding-top:env(safe-area-inset-top)}
+.dv-ppl[hidden]{display:none}
+.dv-ppl-top{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-bottom:1px solid var(--line)}
+.dv-ppl-top h3{margin:0;font-size:18px;font-family:var(--fd);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dv-ppl .dv-tabs{margin:10px 14px 0}
+.dv-ppl-body{flex:1;overflow:auto;padding:12px 14px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
+.dv-ppl-body[hidden]{display:none}
+.dv-pmap{height:42vh;min-height:220px;border-radius:16px;overflow:hidden}
+.dv-share{background:#fff;border-radius:14px;padding:12px 14px;gap:12px;align-items:center}
+.dv-share small{display:block;margin-top:2px}
+.dv-pp-pin{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(21,19,43,.35);display:flex;align-items:center;justify-content:center;font:800 11px var(--fd);color:#fff;background:#2563EB}
+.dv-pp-pin.arr{background:#16A34A}.dv-pp-pin.me{background:var(--violet)}
+.dv-st{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;margin-right:6px;background:#DBEAFE;color:#1D4ED8}
+.dv-st.arr{background:#DCFCE7;color:#15803D}
+.dv-li .acts{display:flex;gap:6px;flex:none}
+.dv-li .acts .btn{padding:8px 10px;font-size:12.5px}
+#dv_convs .dv-li .tx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62vw;display:block}
+.dv-chat{flex:1;display:flex;flex-direction:column;min-height:0;background:#ECE9F5}
+.dv-chat[hidden]{display:none}
+.dv-chat-list{flex:1;overflow:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:6px}
+.dv-msg{max-width:80%;align-self:flex-start;background:#fff;border-radius:16px 16px 16px 4px;padding:8px 11px;box-shadow:0 1px 2px rgba(0,0,0,.08);font-size:15px;line-height:1.35;word-wrap:break-word;overflow-wrap:anywhere}
+.dv-msg.mine{align-self:flex-end;background:#DCF2C4;border-radius:16px 16px 4px 16px}
+.dv-msg .who{font-size:12px;font-weight:800;color:var(--violet-d);margin-bottom:2px}
+.dv-msg .at{font-size:10.5px;color:var(--muted);text-align:right;margin-top:3px}
+.dv-msg img{display:block;max-width:100%;max-height:300px;border-radius:10px;cursor:pointer}
+.dv-msg audio{display:block;width:230px;max-width:100%;height:40px}
+.dv-msg.pending{opacity:.6}
+.dv-day{align-self:center;font-size:11.5px;font-weight:700;color:var(--muted);background:rgba(255,255,255,.7);border-radius:999px;padding:3px 10px;margin:6px 0}
+.dv-compose{display:flex;align-items:flex-end;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line)}
+.dv-compose textarea{flex:1;min-width:0;resize:none;max-height:120px;border:1.5px solid var(--line2);border-radius:20px;padding:10px 14px;font:15px/1.3 var(--fb);color:var(--ink);background:#fff}
+.dv-cbtn{width:44px;height:44px;border-radius:50%;border:0;background:var(--violet-50);color:var(--violet-d);display:flex;align-items:center;justify-content:center;flex:none;cursor:pointer;position:relative}
+.dv-cbtn svg{width:22px;height:22px}
+.dv-cbtn.send{background:var(--violet);color:#fff}
+.dv-cbtn.mic.on{background:#DC2626;color:#fff}
+.dv-cbtn[hidden]{display:none}
+.dv-rec{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#FEF2F2;color:#991B1B;font-size:13.5px}
+.dv-rec[hidden]{display:none}
+.dv-rec .dot{width:10px;height:10px;border-radius:50%;background:#DC2626;animation:dvrad 1s infinite}
 .dv-dest-pin{width:30px;height:38px}
 .dv-rep-pin{width:30px;height:30px;border-radius:9px;border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(21,19,43,.3);background:var(--k);color:#fff}
 .dv-rep-pin svg{width:17px;height:17px}
@@ -1263,10 +1323,12 @@ body.dv-navon{overflow:hidden}
           <!-- signed in -->
           <div class="dv-view" data-v="home" hidden>
             <div class="card dv-me"><span class="dv-av" id="dv_av"></span><span class="grow" style="flex:1;min-width:0"><b id="dv_myname"></b><small data-i18n="dv_signed">Video Referee · signed in</small></span><button type="button" class="btn ghost" onclick="dvLogout()" data-i18n="dv_signout">Sign out</button></div>
+            <div id="dv_homecard"></div>
             <div id="dv_next"></div>
             <div class="card" id="dv_more_card" hidden><div class="dv-k" style="margin-bottom:4px" data-i18n="dv_more">Your next designations</div><div class="dv-list" id="dv_more"></div></div>
             <div class="card"><div class="dv-list">
               <button type="button" class="dv-li" onclick="dvVenues()"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/></svg></span><span class="tx"><b data-i18n="dv_allv">All venues</b><small data-i18n="dv_allv_s">Men and women league teams, 2026–2027</small></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+              <button type="button" class="dv-li" onclick="dvPplOpen('live')"><span class="ic dv-ic-ref"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.6"/><path d="M8 21l1.2-7.5L7 11l2.5-3h5L17 11l-2.2 2.5L16 21"/><path d="M9.5 8l2.5 3 2.5-3"/><path d="M18 3.5l2.5 1.5"/></svg></span><span class="tx"><b data-i18n="dv_refs_t">Referees</b><small id="dv_ppl_sum"></small></span><span class="dv-badge" id="dv_unread_h" hidden></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
               <div class="dv-li" style="cursor:default"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3L2 6"/><path d="M19 3l3 3"/></svg></span><span class="tx"><b data-i18n="dv_planned">Planned drives</b><small id="dv_plans_n"></small></span></div>
             </div><div class="dv-list" id="dv_plans"></div></div>
           </div>
@@ -1298,6 +1360,7 @@ body.dv-navon{overflow:hidden}
                 <div id="dv_fromedit" hidden style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
                   <div class="dv-row"><input id="dv_fromq" class="dv-in grow" type="search" data-i18n-ph="dv_fromq" placeholder="Address or town" onkeydown="if(event.key==='Enter')dvFromSearch()"><button type="button" class="btn" onclick="dvFromSearch()" data-i18n="dv_search">Search</button></div>
                   <button type="button" class="btn ghost" onclick="dvUseGps()" data-i18n="dv_use_gps">Use my current position</button>
+                  <button type="button" class="btn ghost" id="dv_fromhome" onclick="dvFromHome()" hidden data-i18n="dv_home_from">Start from home</button>
                   <div class="dv-list" id="dv_fromres"></div>
                 </div>
               </div>
@@ -1610,9 +1673,11 @@ body.dv-navon{overflow:hidden}
   <div class="dv-alert" id="dv_alert" hidden role="status"><span class="ico" id="dv_al_ic"></span><span class="tx"><b id="dv_al_t"></b><small id="dv_al_s"></small></span><span class="bt"><button type="button" onclick="dvVote(true)" data-i18n="dv_still">Still there</button><button type="button" onclick="dvVote(false)" data-i18n="dv_gone">Not there</button></span></div>
   <button type="button" class="dv-fab mut" id="dv_mute" onclick="dvToggleMute()" aria-label="Mute voice"></button>
   <button type="button" class="dv-fab ctr" onclick="dvRecenter()" aria-label="Recenter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
+  <button type="button" class="dv-fab cmp" id="dv_cmp" onclick="dvCompass()" aria-label="North up / heading up"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l4 10h-8z" fill="#DC2626"/><path d="M12 22l-4-10h8z" fill="#94A3B8"/></svg></button>
+  <button type="button" class="dv-fab rad" id="dv_radio" onclick="dvRadio()" aria-label="Traffic radio" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="2.5"/><path d="M7 9l10-5"/><circle cx="15.5" cy="15" r="2.6"/><path d="M6.5 13.5h3M6.5 16.5h3"/></svg></button>
   <div class="dv-fab spd" aria-label="Speed"><b id="dv_spd">–</b><small>km/h</small></div>
   <button type="button" class="dv-fab rep" onclick="dvOpenSheet('dv_sh_report')" aria-label="Report on the road"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H9l-5 4z"/><path d="M12 7.5v4"/><path d="M12 13.8h.01"/></svg></button>
-  <div class="dv-bot"><button type="button" class="end" onclick="if(confirm(dvT('dv_end_q')))dvStopNav()" data-i18n="dv_end">End</button><button type="button" class="mid" onclick="dvOpenMenu()"><b id="dv_eta_t">–</b><small id="dv_eta_s"></small><i id="dv_eta_i"></i></button><button type="button" class="up" onclick="dvOpenMenu()" aria-label="Drive menu"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button></div>
+  <div class="dv-bot"><button type="button" class="end" onclick="if(confirm(dvT('dv_end_q')))dvStopNav()" data-i18n="dv_end">End</button><button type="button" class="mid" onclick="dvOpenMenu()"><b id="dv_eta_t">–</b><small id="dv_eta_s"></small><i id="dv_eta_i"></i></button><button type="button" class="up" onclick="dvOpenMenu()" aria-label="Drive menu"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg><span class="dv-badge" id="dv_unread_n" hidden></span></button></div>
 </div>
 <div id="dv_sh_report" class="dv-sheet" hidden onclick="if(event.target===this)dvCloseSheets()"><div class="in" role="dialog" aria-modal="true" aria-labelledby="dv_rep_h">
   <div class="hd"><h3 id="dv_rep_h" data-i18n="dv_rep_q">What do you see?</h3><button type="button" class="dv-x" onclick="dvCloseSheets()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
@@ -1633,19 +1698,54 @@ body.dv-navon{overflow:hidden}
     <div class="dv-sgrid">
       <button type="button" onclick="dvStopSearch('parking')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg><span data-i18n="dv_s_park">Parking</span></button>
       <button type="button" onclick="dvStopSearch('fuel')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M3 21h12M6 8h6"/><path d="M14 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/></svg><span data-i18n="dv_s_fuel">Fuel</span></button>
+      <button type="button" onclick="dvStopSearch('charging')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="11" height="17" rx="2"/><path d="M9.5 8l-2.5 4.5h3L7.5 17"/><path d="M14 10h2.5a2 2 0 0 1 2 2v4a1.5 1.5 0 0 0 3 0V9l-2.5-2.5"/></svg><span data-i18n="dv_s_charge">Charging</span></button>
       <button type="button" onclick="dvStopSearch('cafe')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h12v5a6 6 0 0 1-12 0z"/><path d="M17 9h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v2M11 3v2M14 3v2"/></svg><span data-i18n="dv_s_cafe">Coffee</span></button>
-      <button type="button" onclick="document.getElementById('dv_sq').focus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span data-i18n="dv_search">Search</span></button>
+      <button type="button" onclick="dvStopSearch('restaurant')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10"/><path d="M17 21V3c-2 1-3.5 3.5-3.5 7h3.5"/></svg><span data-i18n="dv_s_food">Restaurant</span></button>
+      <button type="button" onclick="document.getElementById('dv_sq').focus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span data-i18n="dv_search">Search</span></button>
     </div>
     <div class="dv-row" style="margin-top:8px"><input id="dv_sq" class="dv-in grow" type="search" data-i18n-ph="dv_sq" placeholder="Search a place" onkeydown="if(event.key==='Enter')dvStopSearch('')"><button type="button" class="btn" onclick="dvStopSearch('')" data-i18n="dv_search">Search</button></div>
     <div class="dv-list" id="dv_sres"></div>
   </div>
   <div class="dv-agrid">
     <button type="button" onclick="dvMenuRoutes()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 21V11a4 4 0 0 1 4-4h8"/><path d="M15 4l3 3-3 3"/></svg><span data-i18n="dv_m_routes">Routes</span></button>
-    <button type="button" onclick="dvShare()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg><span data-i18n="dv_m_share">Share drive</span></button>
+    <button type="button" onclick="dvGoHome()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span data-i18n="dv_home">Home</span></button>
     <button type="button" onclick="dvOverview()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18c3-8 6-12 9-6s5 2 7-6"/><circle cx="4" cy="18" r="1.5"/><circle cx="20" cy="6" r="1.5"/></svg><span data-i18n="dv_m_over">Overview</span></button>
+  </div>
+  <div class="dv-agrid two">
+    <button type="button" onclick="dvTeamsOpen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V9l9-5 9 5v12"/><path d="M8 21v-6h8v6"/><path d="M3 9h18"/></svg><span data-i18n="dv_m_teams">Teams</span></button>
+    <button type="button" onclick="dvPplOpen('live')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.6"/><path d="M8 21l1.2-7.5L7 11l2.5-3h5L17 11l-2.2 2.5L16 21"/><path d="M9.5 8l2.5 3 2.5-3"/><path d="M18 3.5l2.5 1.5"/></svg><span data-i18n="dv_m_refs">Referees</span><span class="dv-badge" id="dv_unread_m" hidden></span></button>
   </div>
   <div class="dv-actions"><button type="button" class="btn danger" onclick="if(confirm(dvT('dv_end_q')))dvStopNav()" data-i18n="dv_stop">Stop</button><button type="button" class="btn" onclick="dvCloseSheets()" data-i18n="dv_resume">Resume</button></div>
 </div></div>
+<div id="dv_sh_teams" class="dv-sheet" hidden onclick="if(event.target===this)dvCloseSheets()"><div class="in" role="dialog" aria-modal="true" aria-labelledby="dv_teams_h">
+  <div class="hd"><h3 id="dv_teams_h" data-i18n="dv_teams_t">Drive to another sports hall</h3><button type="button" class="dv-x" onclick="dvCloseSheets()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
+  <div class="dv-tabs" id="dv_ttabs" role="tablist"><button type="button" data-g="M" class="on" onclick="dvTeamsTab('M')" data-i18n="dv_men">Men's league</button><button type="button" data-g="F" onclick="dvTeamsTab('F')" data-i18n="dv_women">Women's league</button></div>
+  <div class="dv-list" id="dv_tlist"></div>
+</div></div>
+<div id="dv_sh_home" class="dv-sheet" hidden onclick="if(event.target===this)dvCloseSheets()"><div class="in" role="dialog" aria-modal="true" aria-labelledby="dv_home_h">
+  <div class="hd"><h3 id="dv_home_h" data-i18n="dv_home_t">Your home address</h3><button type="button" class="dv-x" onclick="dvCloseSheets()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
+  <p class="dv-note" data-i18n="dv_home_priv">Only you can see it.</p>
+  <div class="dv-row"><input id="dv_hq" class="dv-in grow" type="search" autocomplete="street-address" data-i18n-ph="dv_home_q" placeholder="Street, number and town" onkeydown="if(event.key==='Enter')dvHomeSearch()"><button type="button" class="btn" onclick="dvHomeSearch()" data-i18n="dv_search">Search</button></div>
+  <button type="button" class="btn ghost" onclick="dvHomeGps(this)" data-i18n="dv_home_gps">I'm at home now: use my position</button>
+  <div class="dv-list" id="dv_hres"></div>
+</div></div>
+<div id="dv_ppl" class="dv-ppl" hidden role="dialog" aria-modal="true" aria-labelledby="dv_ppl_h">
+  <div class="dv-ppl-top"><button type="button" class="dv-x" onclick="dvPplBack()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><h3 id="dv_ppl_h" data-i18n="dv_refs_t">Referees</h3><span style="flex:1"></span></div>
+  <div class="dv-tabs" id="dv_ptabs" role="tablist"><button type="button" data-t="live" class="on" onclick="dvPplTab('live')" data-i18n="dv_refs_live">On the road</button><button type="button" data-t="msg" onclick="dvPplTab('msg')"><span data-i18n="dv_refs_msg">Messages</span> <span class="dv-badge in" id="dv_unread_t" hidden></span></button></div>
+  <div class="dv-ppl-body" id="dv_p_live">
+    <div class="dv-map dv-pmap" id="dv_pmap"></div>
+    <div class="dv-list" id="dv_plist"></div>
+    <div class="dv-row dv-share"><span class="grow"><b data-i18n="dv_share_pos">Share my position while driving</b><small class="dv-note" data-i18n="dv_share_pos_s"></small></span><button type="button" id="dv_sharepos" class="dv-sw" role="switch" aria-checked="true" onclick="dvToggleSharePos()" aria-label="Share my position"><span></span></button></div>
+  </div>
+  <div class="dv-ppl-body" id="dv_p_msg" hidden>
+    <div id="dv_convs"></div>
+  </div>
+  <div class="dv-chat" id="dv_chat" hidden>
+    <div class="dv-chat-list" id="dv_chat_list"></div>
+    <div class="dv-rec" id="dv_rec" hidden><span class="dot"></span><b id="dv_rec_t">0:00</b><span class="grow" data-i18n="dv_msg_rec">Recording… tap to send</span><button type="button" class="btn ghost" onclick="dvRecStop(false)" data-i18n="dv_msg_cancel">Cancel</button></div>
+    <div class="dv-compose"><label class="dv-cbtn" aria-label="Photo"><input type="file" accept="image/*" id="dv_cphoto" class="vhide" onchange="dvChatPhoto(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2.5"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6l1.5-2h4l1.5 2"/></svg></label><textarea id="dv_cin" rows="1" data-i18n-ph="dv_msg_ph" placeholder="Message" oninput="dvChatInput()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();dvChatSend();}"></textarea><button type="button" class="dv-cbtn mic" id="dv_cmic" onclick="dvRecToggle()" aria-label="Voice message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button><button type="button" class="dv-cbtn send" id="dv_csend" onclick="dvChatSend()" aria-label="Send" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></button></div>
+  </div>
+</div>
 <div id="dv_toast" class="dv-toast" hidden role="status"></div>
 
 <nav class="tabbar">
@@ -1940,6 +2040,28 @@ dva_st_on:"Actief",dva_st_off:"Niet actief",dva_st_none:"Geen code",dva_st_lock:
 dva_last:"Laatst aangemeld {d} {t}",dva_never:"Nooit aangemeld",dva_noev:"Nog geen activiteit.",dva_len_err:"De code moet 4 tot 8 cijfers hebben.",dva_saved:"Opgeslagen.",dva_on_ok:"Toegang aangezet.",dva_off_ok:"Toegang uitgezet.",dva_unlocked:"Gedeblokkeerd.",
 dva_signout_q:"Deze scheidsrechter afmelden op al zijn telefoons?",dva_email_q:"De code per e-mail naar deze scheidsrechter sturen (vanaf cnogara25, kopie naar u)?",dva_email_ok:"Code per e-mail verstuurd.",dva_genall_q:"Een code aanmaken voor elke scheidsrechter zonder code? De nieuwe codes blijven Uit tot u ze aanzet.",dva_require_q:"Zonder code kan iedereen met de link van de app Drive openen door een naam te kiezen. Doorgaan?",
 dva_ev_login:"aangemeld",dva_ev_arrived:"aangekomen",dva_ev_plan:"rit gepland",dva_ev_drive_start:"rit gestart",dva_ev_drive_end:"rit beëindigd",dva_ev_share:"rit gedeeld",dva_ev_locked:"geblokkeerd na foute codes",dva_ev_code_email:"code gemaild",dva_ev_access_request:"toegang aangevraagd"});
+/* Drive v3 (10/11/2026): home address, points of interest, teams, referees on the road, messages, traffic radio */
+Object.assign(T.en,{dv_home_t:"Your home address",dv_home_s:"Set it once: you can start from home or drive home with one tap.",dv_home_set:"Set my home address",dv_home_chg:"Change",dv_home_go:"Drive home",dv_home_del:"Remove",dv_home_q:"Street, number and town",dv_home_gps:"I'm at home now: use my position",dv_home_saved:"Home address saved.",dv_home_none:"Set your home address first (Drive, top of the page).",dv_home_from:"Start from home",dv_home:"Home",dv_home_name:"Home",dv_home_goq:"Drive home now?",dv_home_arr:"You are home. Drive ended.",dv_home_priv:"Only you can see it.",
+dv_s_charge:"Charging",dv_s_food:"Restaurant",dv_poi_busy:"The map service is busy. Try again in a moment.",dv_poi_ahead:"Near you and along the route",
+dv_m_teams:"Teams",dv_m_refs:"Referees",dv_teams_t:"Drive to another sports hall",dv_teams_q:"Drive to {v} instead?",dv_dest_changed:"New destination: {v}",dv_nocoord_v:"This sports hall could not be located on the map.",
+dv_refs_t:"Referees",dv_refs_live:"On the road",dv_refs_msg:"Messages",dv_refs_none:"No referee is driving with the app right now.",dv_driving:"Driving",dv_arrived_s:"Arrived",dv_to:"to {v}",dv_eta_at:"arrival {t}",dv_since:"since {t}",dv_near:"near {z}",dv_you:"you",dv_upd:"updated {n} min ago",dv_upd0:"updated just now",
+dv_share_pos:"Share my position while driving",dv_share_pos_s:"Only referees signed in to Drive see it, rounded to about 1 km. It disappears when you end the drive.",dv_refs_note:"Positions are shown only during a drive (and 4 hours after arrival), rounded to about 1 km.",
+dv_msg_all:"All referees",dv_msg_all_s:"Group chat of the Video Referees",dv_msg_new:"New message",dv_msg_pick:"Choose a referee",dv_msg_ph:"Message",dv_msg_send:"Send",dv_msg_photo:"Photo",dv_msg_audio:"Voice message",dv_msg_rec:"Recording… tap to send",dv_msg_cancel:"Cancel",dv_msg_empty:"No messages yet. Say hello!",dv_msg_nomic:"The microphone is not available.",dv_msg_err:"Not sent. Check your connection.",dv_msg_photo_l:"Photo",dv_msg_audio_l:"Voice message",dv_msg_write:"Message",dv_msg_older:"Older messages",dv_msg_sending:"Sending…",
+dv_radio:"Traffic radio",dv_radio_on:"Traffic radio on: {s}",dv_radio_off:"Traffic radio off",dv_radio_err:"The radio could not be started."});
+Object.assign(T.fr,{dv_home_t:"Votre adresse de domicile",dv_home_s:"À indiquer une seule fois : vous pourrez partir de chez vous ou rentrer en un geste.",dv_home_set:"Indiquer mon domicile",dv_home_chg:"Modifier",dv_home_go:"Rentrer à la maison",dv_home_del:"Supprimer",dv_home_q:"Rue, numéro et commune",dv_home_gps:"Je suis chez moi : utiliser ma position",dv_home_saved:"Adresse du domicile enregistrée.",dv_home_none:"Indiquez d'abord votre domicile (Drive, en haut de la page).",dv_home_from:"Partir de chez moi",dv_home:"Maison",dv_home_name:"Maison",dv_home_goq:"Rentrer à la maison maintenant ?",dv_home_arr:"Vous êtes chez vous. Trajet terminé.",dv_home_priv:"Vous seul pouvez la voir.",
+dv_s_charge:"Recharge",dv_s_food:"Restaurant",dv_poi_busy:"Le service de cartes est surchargé. Réessayez dans un instant.",dv_poi_ahead:"Près de vous et sur le trajet",
+dv_m_teams:"Équipes",dv_m_refs:"Arbitres",dv_teams_t:"Aller vers une autre salle",dv_teams_q:"Aller plutôt vers {v} ?",dv_dest_changed:"Nouvelle destination : {v}",dv_nocoord_v:"Cette salle n'a pas pu être localisée sur la carte.",
+dv_refs_t:"Arbitres",dv_refs_live:"En route",dv_refs_msg:"Messages",dv_refs_none:"Aucun arbitre ne roule avec l'app en ce moment.",dv_driving:"En route",dv_arrived_s:"Arrivé",dv_to:"vers {v}",dv_eta_at:"arrivée {t}",dv_since:"depuis {t}",dv_near:"près de {z}",dv_you:"vous",dv_upd:"mis à jour il y a {n} min",dv_upd0:"mis à jour à l'instant",
+dv_share_pos:"Partager ma position pendant le trajet",dv_share_pos_s:"Visible uniquement par les arbitres connectés à Drive, arrondie à environ 1 km. Elle disparaît à la fin du trajet.",dv_refs_note:"Les positions ne sont visibles que pendant un trajet (et 4 heures après l'arrivée), arrondies à environ 1 km.",
+dv_msg_all:"Tous les arbitres",dv_msg_all_s:"Discussion de groupe des Video Referees",dv_msg_new:"Nouveau message",dv_msg_pick:"Choisissez un arbitre",dv_msg_ph:"Message",dv_msg_send:"Envoyer",dv_msg_photo:"Photo",dv_msg_audio:"Message vocal",dv_msg_rec:"Enregistrement… touchez pour envoyer",dv_msg_cancel:"Annuler",dv_msg_empty:"Pas encore de messages. Dites bonjour !",dv_msg_nomic:"Le micro n'est pas disponible.",dv_msg_err:"Non envoyé. Vérifiez votre connexion.",dv_msg_photo_l:"Photo",dv_msg_audio_l:"Message vocal",dv_msg_write:"Message",dv_msg_older:"Messages précédents",dv_msg_sending:"Envoi…",
+dv_radio:"Radio trafic",dv_radio_on:"Radio trafic activée : {s}",dv_radio_off:"Radio trafic coupée",dv_radio_err:"La radio n'a pas pu démarrer."});
+Object.assign(T.nl,{dv_home_t:"Je thuisadres",dv_home_s:"Eén keer instellen: dan vertrek je van thuis of rij je met één tik naar huis.",dv_home_set:"Mijn thuisadres instellen",dv_home_chg:"Wijzigen",dv_home_go:"Naar huis rijden",dv_home_del:"Verwijderen",dv_home_q:"Straat, nummer en gemeente",dv_home_gps:"Ik ben nu thuis: mijn positie gebruiken",dv_home_saved:"Thuisadres opgeslagen.",dv_home_none:"Stel eerst je thuisadres in (Drive, bovenaan de pagina).",dv_home_from:"Vertrekken van thuis",dv_home:"Thuis",dv_home_name:"Thuis",dv_home_goq:"Nu naar huis rijden?",dv_home_arr:"Je bent thuis. Rit beëindigd.",dv_home_priv:"Alleen jij ziet het.",
+dv_s_charge:"Laadpaal",dv_s_food:"Restaurant",dv_poi_busy:"De kaartdienst is overbelast. Probeer het zo meteen opnieuw.",dv_poi_ahead:"In de buurt en langs de route",
+dv_m_teams:"Ploegen",dv_m_refs:"Scheidsrechters",dv_teams_t:"Naar een andere sporthal rijden",dv_teams_q:"In plaats daarvan naar {v} rijden?",dv_dest_changed:"Nieuwe bestemming: {v}",dv_nocoord_v:"Deze sporthal kon niet op de kaart gevonden worden.",
+dv_refs_t:"Scheidsrechters",dv_refs_live:"Onderweg",dv_refs_msg:"Berichten",dv_refs_none:"Er rijdt nu geen scheidsrechter met de app.",dv_driving:"Onderweg",dv_arrived_s:"Aangekomen",dv_to:"naar {v}",dv_eta_at:"aankomst {t}",dv_since:"sinds {t}",dv_near:"bij {z}",dv_you:"jij",dv_upd:"{n} min geleden bijgewerkt",dv_upd0:"net bijgewerkt",
+dv_share_pos:"Mijn positie delen tijdens de rit",dv_share_pos_s:"Alleen zichtbaar voor scheidsrechters die in Drive zijn aangemeld, afgerond op ongeveer 1 km. Verdwijnt als je de rit beëindigt.",dv_refs_note:"Posities zijn alleen zichtbaar tijdens een rit (en 4 uur na aankomst), afgerond op ongeveer 1 km.",
+dv_msg_all:"Alle scheidsrechters",dv_msg_all_s:"Groepsgesprek van de Video Referees",dv_msg_new:"Nieuw bericht",dv_msg_pick:"Kies een scheidsrechter",dv_msg_ph:"Bericht",dv_msg_send:"Versturen",dv_msg_photo:"Foto",dv_msg_audio:"Spraakbericht",dv_msg_rec:"Opnemen… tik om te versturen",dv_msg_cancel:"Annuleren",dv_msg_empty:"Nog geen berichten. Zeg hallo!",dv_msg_nomic:"De microfoon is niet beschikbaar.",dv_msg_err:"Niet verstuurd. Controleer je verbinding.",dv_msg_photo_l:"Foto",dv_msg_audio_l:"Spraakbericht",dv_msg_write:"Bericht",dv_msg_older:"Oudere berichten",dv_msg_sending:"Versturen…",
+dv_radio:"Verkeersradio",dv_radio_on:"Verkeersradio aan: {s}",dv_radio_off:"Verkeersradio uit",dv_radio_err:"De radio kon niet starten."});
 function t(k){return T[LANG][k];}
 
 function setLang(l){
@@ -3095,11 +3217,11 @@ async function dvOpen(){
     if(!t){dvShow("login");return;}
     DV.token=t;dvShow("loading");
     var j=await dvCall("me");
-    if(j&&j.ok){DV.name=j.name;DV.matches=j.matches||[];dvRenderHome();dvShow("home");dvFixCoords();}
+    if(j&&j.ok){DV.name=j.name;DV.myId=j.id;DV.home=j.home||null;DV.matches=j.matches||[];dvRenderHome();dvShow("home");dvFixCoords();dvUnreadPoll();}
     else dvShow("login");
   }else if(DV.view==="home"){dvRefreshMe();}
 }
-async function dvRefreshMe(){var j=await dvCall("me");if(j&&j.ok){DV.name=j.name;DV.matches=j.matches||[];dvRenderHome();dvFixCoords();}}
+async function dvRefreshMe(){var j=await dvCall("me");if(j&&j.ok){DV.name=j.name;DV.myId=j.id;DV.home=j.home||null;DV.matches=j.matches||[];dvRenderHome();dvFixCoords();dvUnreadPoll();}}
 /* matches whose address could not be located: use the league venue with the same postcode (+ same street) */
 async function dvFixCoords(){
   var miss=DV.matches.filter(function(m){return m.lat==null;});if(!miss.length)return;
@@ -3148,7 +3270,7 @@ async function dvLogout(){try{await dvCall("logout");}catch(e){}dvForget();dvSho
 function dvLaterKey(m){return "vcbe_dv_later_"+m.match_code+"_"+m.match_date;}
 function dvRecArrive(m){var k=dvAt(m.match_date,m.match_time);return new Date(k.getTime()-DV_ARRIVE_BEFORE*60000);}
 function dvRenderHome(){
-  dvGet("dv_av").textContent=dvInitials(DV.name);dvGet("dv_myname").textContent=DV.name||"";
+  dvGet("dv_av").textContent=dvInitials(DV.name);dvGet("dv_myname").textContent=DV.name||"";dvRenderHomeCard();
   var box=dvGet("dv_next"),m=DV.matches[0];
   if(!m){box.innerHTML='<div class="card" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 18px"><span class="dv-lock" style="background:var(--bg);color:var(--muted)">'+dvIcon("cal")+'</span><b style="font-family:var(--fd);font-size:16px">'+esc(dvT("dv_nomatch"))+'</b><p class="dv-note">'+esc(dvT("dv_nomatch_s"))+'</p><button class="btn" onclick="dvVenues()">'+esc(dvT("dv_choose_venue"))+'</button></div>';}
   else{
@@ -3226,7 +3348,7 @@ async function dvEnsureOrigin(force){
   try{var p=await dvGeo();DV.origin={kind:"gps",lat:p.lat,lng:p.lng,label:dvT("dv_mypos")};f.textContent=DV.origin.label;}
   catch(e){DV.origin=null;f.textContent=dvT("dv_nogps");dvFromEdit(true);}
 }
-function dvFromEdit(open){var b=dvGet("dv_fromedit");b.hidden=!open;if(open)setTimeout(function(){dvGet("dv_fromq").focus();},50);}
+function dvFromEdit(open){var b=dvGet("dv_fromedit");b.hidden=!open;var fh=dvGet("dv_fromhome");if(fh)fh.hidden=!DV.home;if(open)setTimeout(function(){dvGet("dv_fromq").focus();},50);}
 async function dvFromSearch(){
   var q=(dvGet("dv_fromq").value||"").trim(),out=dvGet("dv_fromres");if(q.length<3){out.innerHTML="";return;}
   out.innerHTML='<div class="dv-note"><span class="dv-spin"></span>'+esc(dvT("dv_searching"))+'</div>';
@@ -3313,7 +3435,10 @@ function dvLeaflet(){
   if(dvLeaflet._p)return dvLeaflet._p;
   dvLeaflet._p=new Promise(function(res,rej){
     var c=document.createElement("link");c.rel="stylesheet";c.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";document.head.appendChild(c);
-    var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";s.onload=function(){res();};s.onerror=function(){dvLeaflet._p=null;rej(new Error("leaflet"));};document.head.appendChild(s);});
+    var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";
+    /* leaflet-rotate: two-finger rotation of the drive map (like Waze); if it does not load the map still works without rotation */
+    s.onload=function(){var r=document.createElement("script");r.src="https://cdn.jsdelivr.net/npm/leaflet-rotate@0.2.8/dist/leaflet-rotate-src.js";r.onload=function(){res();};r.onerror=function(){res();};document.head.appendChild(r);};
+    s.onerror=function(){dvLeaflet._p=null;rej(new Error("leaflet"));};document.head.appendChild(s);});
   return dvLeaflet._p;
 }
 function dvTiles(map){L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}).addTo(map);}
@@ -3370,23 +3495,24 @@ async function dvStartNav(){
   try{await dvLeaflet();}catch(e){dvToast(dvT("dv_nomap"));return;}
   var ov=dvGet("dv_nav");ov.hidden=false;document.body.classList.add("dv-navon");
   var N=DV.nav={follow:true,muted:DV.muted,via:null,alerted:{},reports:[],repLayer:null,startedAt:Date.now(),last:null};
-  if(!DV.nmap){DV.nmap=L.map("dv_nmap",{zoomControl:false,attributionControl:true});dvTiles(DV.nmap);DV.nmap.on("dragstart",function(){if(DV.nav)DV.nav.follow=false;});}
-  N.map=DV.nmap;setTimeout(function(){N.map.invalidateSize();},50);
-  dvSetRoute(r);N.map.fitBounds(N.line.getBounds(),{padding:[30,30]});
+  if(!DV.nmap)dvMakeNavMap();
+  N.map=DV.nmap;N.headUp=true;N.zoom=16;setTimeout(function(){N.map.invalidateSize();},50);
+  dvSetRoute(r);N.map.fitBounds(N.line.getBounds(),{padding:[30,30],animate:false});N.zoom=16;dvCmpUpdate();
   N.me=L.marker(N.pts[0],{icon:dvMeIcon(),zIndexOffset:1000}).addTo(N.map);
   dvGet("dv_mute").innerHTML=dvIcon(DV.muted?"mute":"sound");
   dvNavUpdate();
   var first=r.maneuvers[0];if(first)dvSpeak(first.pre||first.text);
   try{if(navigator.wakeLock)N.wake=await navigator.wakeLock.request("screen");}catch(e){}
   if(navigator.geolocation)N.watch=navigator.geolocation.watchPosition(dvOnFix,function(){dvGet("dv_then").textContent=dvT("dv_gps_lost");},{enableHighAccuracy:true,maximumAge:1000,timeout:20000});
-  dvLoadReports();N.repTimer=setInterval(dvLoadReports,60000);
+  dvLoadReports();N.repTimer=setInterval(dvLoadReports,60000);N.pingTimer=setInterval(function(){dvLivePing(true);},45000);
   dvCall("event",{kind:"drive_start",match_code:DV.target&&DV.target.match?DV.target.match.match_code:null,venue:DV.target?DV.target.name:null});
   document.addEventListener("visibilitychange",dvReWake);
 }
 async function dvReWake(){var N=DV.nav;if(N&&document.visibilityState==="visible"&&navigator.wakeLock){try{N.wake=await navigator.wakeLock.request("screen");}catch(e){}}}
 function dvStopNav(){
   var N=DV.nav;if(!N)return;
-  if(N.watch!=null)navigator.geolocation.clearWatch(N.watch);clearInterval(N.repTimer);
+  if(N.watch!=null)navigator.geolocation.clearWatch(N.watch);clearInterval(N.repTimer);clearInterval(N.pingTimer);dvRadioStop();
+  try{if(N.map.setBearing)N.map.setBearing(0);}catch(e){}
   try{if(N.wake)N.wake.release();}catch(e){}try{speechSynthesis.cancel();}catch(e){}
   document.removeEventListener("visibilitychange",dvReWake);
   if(N.me)N.map.removeLayer(N.me);if(N.repLayer)N.map.removeLayer(N.repLayer);
@@ -3395,7 +3521,13 @@ function dvStopNav(){
 }
 function dvOnFix(p){
   var N=DV.nav;if(!N)return;var pos=[p.coords.latitude,p.coords.longitude];N.last={lat:pos[0],lng:pos[1],acc:p.coords.accuracy||30};
-  N.me.setLatLng(pos);if(N.follow)N.map.setView(pos,Math.max(N.map.getZoom()||16,16),{animate:true});
+  N.me.setLatLng(pos);
+  /* heading: from the GPS when moving, else from the last two fixes */
+  var hd=p.coords.heading;if(!(hd!=null&&isFinite(hd)&&(p.coords.speed||0)>1.5)){if(N.prev&&dvM([N.prev.lat,N.prev.lng],pos)>12){var r0=Math.PI/180,y=Math.sin((pos[1]-N.prev.lng)*r0)*Math.cos(pos[0]*r0),x=Math.cos(N.prev.lat*r0)*Math.sin(pos[0]*r0)-Math.sin(N.prev.lat*r0)*Math.cos(pos[0]*r0)*Math.cos((pos[1]-N.prev.lng)*r0);hd=(Math.atan2(y,x)/r0+360)%360;}else hd=null;}
+  if(!N.prev||dvM([N.prev.lat,N.prev.lng],pos)>12)N.prev={lat:pos[0],lng:pos[1]};
+  if(hd!=null)N.heading=hd;
+  if(N.follow){if(N.headUp&&N.heading!=null&&N.map.setBearing&&!N.gest)N.map.setBearing(-N.heading);N.map.setView(pos,N.zoom||16,{animate:true});}
+  dvMeArrow();
   var sp=p.coords.speed;dvGet("dv_spd").textContent=(sp!=null&&sp>=0)?Math.round(sp*3.6):"–";
   /* nearest segment */
   var best=N.idx,bd=1e9,bt=0,from=Math.max(0,N.idx-30),to=Math.min(N.pts.length-1,N.idx+600);
@@ -3405,7 +3537,7 @@ function dvOnFix(p){
   if(bd>tol){N.off++;}else{N.off=0;N.idx=best;N.along=N.cum[best]+bt*(N.cum[best+1]-N.cum[best]);}
   if(N.off>=3&&(!N.lastRe||Date.now()-N.lastRe>20000)){dvReroute();}
   if(N.via&&dvM(pos,[N.via.lat,N.via.lng])<70){N.via=null;dvToast(dvT("dv_stop_reached"));}
-  dvNavUpdate();dvCheckReports(pos);
+  dvNavUpdate();dvCheckReports(pos);dvLivePing(false);
   var rem=N.total-(N.along||0),dest=N.pts[N.pts.length-1];
   if(!N.via&&(dvM(pos,dest)<70||(rem<120&&N.idx>=N.pts.length-3)))dvArrive();
 }
@@ -3427,6 +3559,7 @@ function dvNavUpdate(){
   dvGet("dv_eta_t").textContent=dvHM(eta);dvGet("dv_eta_s").textContent=dvDur(remS/60)+" · "+dvFmtDist(rem);
   var st=dvGet("dv_eta_i"),tgt=DV.target&&DV.target.match?dvRecArrive(DV.target.match):null;
   if(DV.plan&&DV.plan.mode==="arrive"&&DV.plan.date&&DV.plan.time)tgt=dvAt(DV.plan.date,DV.plan.time);
+  if(DV.target&&(DV.target.kind==="home"||DV.target.changed))tgt=null;N.eta=eta;
   if(tgt&&Math.abs(tgt.getTime()-eta.getTime())>6*3600000)tgt=null;
   if(tgt){var diff=Math.round((tgt.getTime()-eta.getTime())/60000);st.textContent=diff>=0?dvT("dv_early",{n:diff,t:dvHM(tgt)}):dvT("dv_lateby",{n:-diff,t:dvHM(tgt)});st.style.color=diff>=0?"var(--lime-d)":"var(--bad)";}else st.textContent="";
   var ms=dvGet("dv_m_eta");if(ms)ms.textContent=dvHM(eta)+" · "+dvDur(remS/60)+" · "+dvFmtDist(rem);
@@ -3436,8 +3569,10 @@ async function dvReroute(){
   var t=DV.target,body={from:{lat:N.last.lat,lng:N.last.lng},to:{lat:t.lat,lng:t.lng},avoid:DV.plan.avoid,lang:LANG};if(N.via)body.via={lat:N.via.lat,lng:N.via.lng};
   try{var j=await dvCall("route",body);if(j.ok&&j.routes&&j.routes[0]&&DV.nav){dvSetRoute(j.routes[0]);dvNavUpdate();}}catch(e){}
 }
-function dvArrive(){var N=DV.nav;if(!N||N.arrived)return;N.arrived=true;dvSpeak(dvT("dv_arrived_v",{v:DV.target?DV.target.name:""}));var last=N.last;dvStopNav();dvShowArrived(last);}
-function dvRecenter(){var N=DV.nav;if(!N)return;N.follow=true;if(N.last)N.map.setView([N.last.lat,N.last.lng],17);}
+function dvArrive(){var N=DV.nav;if(!N||N.arrived)return;N.arrived=true;
+  if(DV.target&&DV.target.kind==="home"){dvSpeak(dvT("dv_home_arr"));dvStopNav();dvToast(dvT("dv_home_arr"),5000);if(!dvGet("page-drive").classList.contains("active"))go("drive");dvShow("home");return;}
+  dvSpeak(dvT("dv_arrived_v",{v:DV.target?DV.target.name:""}));var last=N.last;dvStopNav();dvShowArrived(last);}
+function dvRecenter(){var N=DV.nav;if(!N)return;N.follow=true;N.zoom=17;if(N.headUp&&N.heading!=null&&N.map.setBearing)N.map.setBearing(-N.heading);if(N.last)N.map.setView([N.last.lat,N.last.lng],17);dvCmpUpdate();}
 function dvToggleMute(){DV.muted=!DV.muted;dvGet("dv_mute").innerHTML=dvIcon(DV.muted?"mute":"sound");dvGet("dv_mute").setAttribute("aria-label",dvT(DV.muted?"dv_unmute":"dv_mute"));if(DV.muted)try{speechSynthesis.cancel();}catch(e){}}
 /* reports */
 async function dvLoadReports(){
@@ -3463,22 +3598,11 @@ function dvShowAlert(r,ahead){
 }
 function dvVote(still){var el=dvGet("dv_alert"),id=el.getAttribute("data-id");el.hidden=true;if(id)dvCall("report_vote",{id:id,still:!!still});dvToast(dvT("dv_thanks"));}
 function dvOpenSheet(id){dvCloseSheets();dvGet(id).hidden=false;}
-function dvCloseSheets(){["dv_sh_report","dv_sh_menu"].forEach(function(i){var e=dvGet(i);if(e)e.hidden=true;});}
+function dvCloseSheets(){["dv_sh_report","dv_sh_menu","dv_sh_teams","dv_sh_home"].forEach(function(i){var e=dvGet(i);if(e)e.hidden=true;});}
 async function dvSendReport(kind){
   var N=DV.nav,pos=N&&N.last;dvCloseSheets();
   if(!pos){try{var g=await dvGeo(8000);pos={lat:g.lat,lng:g.lng};}catch(e){dvToast(dvT("dv_nogps"));return;}}
   try{var j=await dvCall("report",{kind:kind,lat:pos.lat,lng:pos.lng});dvToast(j.ok?dvT("dv_rep_ok"):dvT("dv_e_net"));if(j.ok)dvLoadReports();}catch(e){dvToast(dvT("dv_e_net"));}
-}
-/* stops by category near the current position: Overpass API (OpenStreetMap) from the browser */
-async function dvOverpass(tag,lat,lng){
-  var k={parking:'["amenity"="parking"]["access"!="private"]',fuel:'["amenity"="fuel"]',cafe:'["amenity"~"^(cafe|fast_food)$"]'}[tag];if(!k)return [];
-  var q='[out:json][timeout:20];nwr'+k+'(around:6000,'+lat+','+lng+');out center 40;';
-  var res=await fetch("https://overpass-api.de/api/interpreter",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"data="+encodeURIComponent(q)});
-  var j=await res.json();
-  return (j.elements||[]).map(function(e){var la=e.lat!=null?e.lat:(e.center||{}).lat,lo=e.lon!=null?e.lon:(e.center||{}).lon,t=e.tags||{};
-    var addr=[[t["addr:street"],t["addr:housenumber"]].filter(Boolean).join(" "),t["addr:city"]].filter(Boolean).join(", ");
-    return {name:t.name||t.brand||t.operator||dvT(tag==="parking"?"dv_s_park":tag==="fuel"?"dv_s_fuel":"dv_s_cafe"),label:addr,lat:la,lng:lo,km:Math.round(dvM([lat,lng],[la,lo])/100)/10};})
-    .filter(function(r){return r.lat!=null;}).sort(function(a,b){return a.km-b.km;}).slice(0,6);
 }
 /* in-drive menu */
 function dvOpenMenu(){dvNavUpdate();dvGet("dv_m_dest").textContent=DV.target?DV.target.name+" · "+(DV.target.address||""):"";dvGet("dv_sres").innerHTML="";dvOpenSheet("dv_sh_menu");}
@@ -3486,8 +3610,11 @@ async function dvStopSearch(tag){
   var N=DV.nav,out=dvGet("dv_sres"),q=tag?"":(dvGet("dv_sq").value||"").trim();if(!tag&&q.length<3){dvGet("dv_sq").focus();return;}
   var c=N&&N.last?N.last:(N?{lat:N.pts[0][0],lng:N.pts[0][1]}:null);
   out.innerHTML='<div class="dv-note"><span class="dv-spin"></span>'+esc(dvT("dv_searching"))+'</div>';
-  try{if(tag&&c)DV._stops=await dvOverpass(tag,c.lat,c.lng);else{var j=await dvCall("search",c?{q:q,lat:c.lat,lng:c.lng}:{q:q});DV._stops=(j&&j.results)||[];}}catch(e){DV._stops=[];}
-  out.innerHTML=DV._stops.length?DV._stops.map(function(r,i){return '<button class="dv-li" onclick="dvAddStop('+i+')"><span class="ic">'+dvIcon(tag==="parking"?"park":tag==="fuel"?"fuel":tag==="cafe"?"cafe":"pin")+'</span><span class="tx"><b>'+esc(r.name||dvT("dv_place"))+'</b><small>'+esc(r.label)+(r.km!=null?' · '+r.km+' km':'')+'</small></span>'+dvIcon("chev","chev")+'</button>';}).join(""):'<div class="dv-note">'+esc(dvT("dv_none"))+'</div>';
+  var failed=false;
+  /* 10/11/2026: categories are searched by the server (several OpenStreetMap servers + cache), around you and ~10 km ahead on the route */
+  try{if(tag&&c){var j0=await dvCall("poi",{kind:tag,points:dvPoiPoints(c)});failed=!j0||!j0.ok;DV._stops=(j0&&j0.results)||[];}else{var j=await dvCall("search",c?{q:q,lat:c.lat,lng:c.lng}:{q:q});DV._stops=(j&&j.results)||[];}}catch(e){DV._stops=[];failed=true;}
+  var KN={parking:"dv_s_park",fuel:"dv_s_fuel",charging:"dv_s_charge",cafe:"dv_s_cafe",restaurant:"dv_s_food"};
+  out.innerHTML=DV._stops.length?(tag?'<div class="dv-note">'+esc(dvT("dv_poi_ahead"))+'</div>':'')+DV._stops.map(function(r,i){return '<button class="dv-li" onclick="dvAddStop('+i+')"><span class="ic">'+dvIcon(DV_POI_IC[tag]||"pin")+'</span><span class="tx"><b>'+esc(r.name||dvT(KN[tag]||"dv_place"))+'</b><small>'+esc(r.label||"")+(r.km!=null?(r.label?' · ':'')+r.km+' km':'')+'</small></span>'+dvIcon("chev","chev")+'</button>';}).join(""):'<div class="dv-note">'+esc(dvT(failed?"dv_poi_busy":"dv_none"))+'</div>';
 }
 function dvAddStop(i){var r=(DV._stops||[])[i],N=DV.nav;if(!r||!N)return;N.via={lat:r.lat,lng:r.lng,name:r.name};dvCloseSheets();dvToast(dvT("dv_stop_added",{v:r.name||dvT("dv_place")}));dvReroute();}
 function dvOverview(){var N=DV.nav;if(!N)return;dvCloseSheets();N.follow=false;N.map.fitBounds(N.line.getBounds(),{padding:[40,40]});}
@@ -3519,6 +3646,216 @@ async function dvSavePark(){var pos=DV.arrPos;try{var g=await dvGeo(10000);pos={
   if(!pos){dvToast(dvT("dv_nogps"));return;}try{localStorage.setItem("vcbe_dv_parking",JSON.stringify({lat:pos.lat,lng:pos.lng,at:Date.now(),v:(DV.target||{}).name||""}));}catch(e){}dvRenderPark();dvToast(dvT("dv_park_saved"));}
 function dvRenderPark(){var p=null;try{p=JSON.parse(localStorage.getItem("vcbe_dv_parking")||"null");}catch(e){}var a=dvGet("dv_park_open");
   if(p&&p.lat&&Date.now()-p.at<24*3600000){a.hidden=false;a.href="https://www.google.com/maps/search/?api=1&query="+p.lat+"%2C"+p.lng;}else a.hidden=true;}
+/* ===== Drive v3 (10/11/2026, richiesta utente) =====
+   1) mappa di guida: pinch-zoom e rotazione a due dita (leaflet-rotate), bussola nord / direzione di marcia
+   2) indirizzo di casa (vcbe_drive_home): in Drive home, partenza da casa, bottone «Home» nel menu di guida
+   3) tappe per categoria dal server (poi), + ricarica auto e ristoranti; «Teams» per cambiare palestra;
+      «Referees» = arbitri in viaggio / arrivati (vcbe_drive_live) + messaggi (testo, foto, audio)
+   4) radio del traffico senza lasciare la navigazione */
+Object.assign(DV_SVG,{
+  charge:'<rect x="3" y="4" width="11" height="17" rx="2"/><path d="M9.5 8l-2.5 4.5h3L7.5 17"/><path d="M14 10h2.5a2 2 0 0 1 2 2v4a1.5 1.5 0 0 0 3 0V9l-2.5-2.5"/>',
+  food:'<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10"/><path d="M17 21V3c-2 1-3.5 3.5-3.5 7h3.5"/>',
+  home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+  hall:'<path d="M3 21V9l9-5 9 5v12"/><path d="M8 21v-6h8v6"/><path d="M3 9h18"/>',
+  msg:'<path d="M4 5h16v11H9l-5 4z"/>',users:'<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/>'});
+var DV_POI_IC={parking:"park",fuel:"fuel",charging:"charge",cafe:"cafe",restaurant:"food"};
+
+/* ---------- 1) map: zoom + rotation ---------- */
+function dvMakeNavMap(){
+  var rot=!!(L.Map&&L.Map.prototype.setBearing);
+  var opt={zoomControl:false,attributionControl:true,touchZoom:true,bounceAtZoomLimits:false};
+  if(rot){opt.rotate=true;opt.touchRotate=true;opt.rotateControl=false;opt.bearing=0;opt.shiftKeyRotate=true;}
+  DV.nmap=L.map("dv_nmap",opt);dvTiles(DV.nmap);
+  DV.nmap.on("dragstart",function(){if(DV.nav&&!DV.nav.gest)DV.nav.follow=false;});
+  DV.nmap.on("zoomend",function(){var N=DV.nav;if(N&&N.follow&&N.userZ)N.zoom=DV.nmap.getZoom();});
+  DV.nmap.on("rotate",function(){dvCmpUpdate();dvMeArrow();});
+  var el=DV.nmap.getContainer();
+  el.addEventListener("touchstart",function(e){var N=DV.nav;if(!N)return;if(e.touches.length>=2){N.gest=true;N.userZ=true;N.b0=DV.nmap.getBearing?DV.nmap.getBearing():0;}},{passive:true});
+  el.addEventListener("touchend",function(e){var N=DV.nav;if(!N||!N.gest||e.touches.length)return;N.gest=false;
+    if(DV.nmap.getBearing){var d=Math.abs(((DV.nmap.getBearing()-N.b0)+540)%360-180);if(d>4){N.headUp=false;dvCmpUpdate();}}
+    N.zoom=DV.nmap.getZoom();setTimeout(function(){if(DV.nav)DV.nav.userZ=false;},400);},{passive:true});
+  el.addEventListener("wheel",function(){if(DV.nav){DV.nav.userZ=true;clearTimeout(dvMakeNavMap._w);dvMakeNavMap._w=setTimeout(function(){if(DV.nav){DV.nav.zoom=DV.nmap.getZoom();DV.nav.userZ=false;}},500);}},{passive:true});
+}
+function dvBearing(){var m=DV.nmap;return m&&m.getBearing?m.getBearing():0;}
+function dvCmpUpdate(){var b=dvGet("dv_cmp");if(!b)return;var N=DV.nav;b.hidden=!(DV.nmap&&DV.nmap.setBearing);
+  var sv=b.querySelector("svg");if(sv)sv.style.transform="rotate("+dvBearing()+"deg)";b.classList.toggle("hu",!!(N&&N.headUp));}
+function dvCompass(){var N=DV.nav,m=DV.nmap;if(!N||!m||!m.setBearing)return;
+  if(N.headUp||Math.abs(dvBearing())>1&&Math.abs(dvBearing()-360)>1){N.headUp=false;m.setBearing(0);}
+  else{N.headUp=true;N.follow=true;if(N.heading!=null)m.setBearing(-N.heading);if(N.last)m.setView([N.last.lat,N.last.lng],N.zoom||16);}
+  dvCmpUpdate();dvMeArrow();}
+function dvMeArrow(){var N=DV.nav;if(!N||!N.me)return;var el=N.me.getElement&&N.me.getElement();if(!el)return;var sv=el.querySelector("svg");if(sv)sv.style.transform="rotate("+((N.heading||0)+dvBearing())+"deg)";}
+
+/* ---------- 2) home address ---------- */
+function dvRenderHomeCard(){
+  var box=dvGet("dv_homecard");if(!box)return;var h=DV.home;
+  if(!h){box.innerHTML='<div class="card dv-homec empty"><div class="dv-row"><span class="dv-lock" style="background:#fff;color:var(--violet-d)">'+dvIcon("home")+'</span><span class="grow" style="flex:1;min-width:0"><b style="font-family:var(--fd);font-size:16px;display:block">'+esc(dvT("dv_home_t"))+'</b><small class="dv-note">'+esc(dvT("dv_home_s"))+'</small></span></div><button type="button" class="btn" onclick="dvHomeEdit()">'+dvIcon("home")+' '+esc(dvT("dv_home_set"))+'</button></div>';return;}
+  box.innerHTML='<div class="card dv-homec"><div class="dv-row"><span class="dv-lock" style="background:var(--violet-50);color:var(--violet-d)">'+dvIcon("home")+'</span><span class="grow" style="flex:1;min-width:0"><small class="dv-k">'+esc(dvT("dv_home_t"))+'</small><b style="display:block;font-size:14.5px">'+esc(h.label)+'</b></span></div><div class="dv-row"><button type="button" class="btn" onclick="dvPlanHome()">'+dvIcon("nav")+' '+esc(dvT("dv_home_go"))+'</button><button type="button" class="btn ghost" onclick="dvHomeEdit()">'+esc(dvT("dv_home_chg"))+'</button></div></div>';
+}
+function dvHomeEdit(){dvGet("dv_hres").innerHTML="";dvGet("dv_hq").value=DV.home?DV.home.label:"";dvOpenSheet("dv_sh_home");setTimeout(function(){try{dvGet("dv_hq").focus();}catch(e){}},80);}
+async function dvHomeSearch(){
+  var q=(dvGet("dv_hq").value||"").trim(),out=dvGet("dv_hres");if(q.length<3){dvGet("dv_hq").focus();return;}
+  out.innerHTML='<div class="dv-note"><span class="dv-spin"></span>'+esc(dvT("dv_searching"))+'</div>';
+  var j=await dvCall("search",{q:q});DV._homeRes=(j&&j.results)||[];
+  out.innerHTML=DV._homeRes.length?DV._homeRes.map(function(r,i){return '<button class="dv-li" onclick="dvHomePick('+i+')"><span class="ic">'+dvIcon("home")+'</span><span class="tx"><b>'+esc(r.name)+'</b><small>'+esc(r.label)+'</small></span></button>';}).join(""):'<div class="dv-note">'+esc(dvT("dv_none"))+'</div>';
+}
+async function dvHomeSave(label,lat,lng){
+  var j=await dvCall("home_set",{label:label,lat:lat,lng:lng});
+  if(j&&j.ok){DV.home=j.home;dvCloseSheets();dvRenderHomeCard();dvToast(dvT("dv_home_saved"));if(DV._homeThen){var f=DV._homeThen;DV._homeThen=null;f();}}else dvToast(dvT("dv_e_net"));
+}
+function dvHomePick(i){var r=(DV._homeRes||[])[i];if(!r)return;var lab=r.label&&r.label.indexOf(r.name)===0?r.label:[r.name,r.label].filter(Boolean).join(", ");dvHomeSave(lab.slice(0,160),r.lat,r.lng);}
+async function dvHomeGps(b){b.disabled=true;try{var p=await dvGeo(12000);var j=await dvCall("reverse",{lat:p.lat,lng:p.lng});dvHomeSave((j&&j.label)||dvT("dv_mypos"),p.lat,p.lng);}catch(e){dvToast(dvT("dv_nogps"));}b.disabled=false;}
+function dvHomeTarget(){return {kind:"home",name:dvT("dv_home_name"),address:DV.home.label,lat:DV.home.lat,lng:DV.home.lng,match:null};}
+function dvPlanHome(){if(!DV.home){dvHomeEdit();return;}DV.target=dvHomeTarget();var d=new Date(Date.now()+5*60000);d.setMinutes(Math.ceil(d.getMinutes()/5)*5,0,0);DV.plan.mode="leave";DV.plan.date=dvISO(d);DV.plan.time=dvHM(d);dvOpenPlan();}
+function dvFromHome(){if(!DV.home)return;DV.origin={kind:"manual",lat:DV.home.lat,lng:DV.home.lng,label:dvT("dv_home_name")+" · "+DV.home.label};dvGet("dv_from").textContent=DV.origin.label;dvFromEdit(false);dvCompute();}
+/* in-drive «Home»: change the destination to home and recalculate */
+function dvGoHome(){
+  if(!DV.home){dvCloseSheets();DV._homeThen=function(){dvGoHome();};dvHomeEdit();return;}
+  if(!confirm(dvT("dv_home_goq")))return;
+  dvCloseSheets();dvChangeDest(dvHomeTarget());
+}
+function dvChangeDest(t){var N=DV.nav;DV.target=t;t.changed=true;if(N){N.via=null;N.arrived=false;}dvToast(dvT("dv_dest_changed",{v:t.kind==="home"?dvT("dv_home_name"):t.name}));if(N)dvReroute();}
+
+/* ---------- 3a) points of interest: around you and ~10 km ahead on the route ---------- */
+function dvPoiPoints(c){var pts=[{lat:c.lat,lng:c.lng}],N=DV.nav;
+  if(N&&N.cum&&N.pts){var a=(N.along||0)+10000;for(var i=N.idx||0;i<N.cum.length;i++){if(N.cum[i]>=a){pts.push({lat:N.pts[i][0],lng:N.pts[i][1]});break;}}}
+  return pts;}
+
+/* ---------- 3b) teams: choose another sports hall ---------- */
+async function dvTeamsOpen(){dvOpenSheet("dv_sh_teams");if(!DV.venues){dvGet("dv_tlist").innerHTML='<div class="dv-note"><span class="dv-spin"></span>'+esc(dvT("dv_loading"))+'</div>';try{var j=await dvCall("venues");DV.venues=(j&&j.venues)||[];}catch(e){DV.venues=null;}}dvTeamsTab(DV.tTab||"M");}
+function dvTeamsTab(g){DV.tTab=g;document.querySelectorAll("#dv_ttabs button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-g")===g);});
+  var all=DV.venues||[],list=all.filter(function(v){return v.gender===g;});
+  dvGet("dv_tlist").innerHTML=list.length?list.map(function(v){var idx=all.indexOf(v);return '<button class="dv-li" onclick="dvTeamPick('+idx+')"><span class="ic">'+esc(dvInitials(v.team))+'</span><span class="tx"><b>'+esc(v.team)+'</b><i>'+esc(v.venue)+'</i><small>'+esc(v.address)+'</small></span>'+dvIcon("chev","chev")+'</button>';}).join(""):'<div class="dv-note">'+esc(dvT("dv_none"))+'</div>';}
+function dvTeamPick(idx){var v=(DV.venues||[])[idx];if(!v)return;if(v.lat==null){dvToast(dvT("dv_nocoord_v"));return;}
+  if(!confirm(dvT("dv_teams_q",{v:v.team+" · "+v.venue})))return;dvCloseSheets();
+  dvChangeDest({kind:"venue",name:v.venue,address:v.address,lat:v.lat,lng:v.lng,match:null,team:v.team});}
+
+/* ---------- 3c) live positions (only while driving, only if the referee agrees) ---------- */
+function dvSharePos(){try{return localStorage.getItem("vcbe_dv_sharepos")!=="0";}catch(e){return true;}}
+function dvToggleSharePos(){var on=!dvSharePos();try{localStorage.setItem("vcbe_dv_sharepos",on?"1":"0");}catch(e){}dvGet("dv_sharepos").setAttribute("aria-checked",on?"true":"false");if(!on)dvCall("live_stop");else dvLivePing(true);}
+function dvLivePing(force){var N=DV.nav;if(!N||!N.last||!dvSharePos())return;var now=Date.now();
+  if(!force&&N.lastPing&&now-N.lastPing<30000&&(!N.lastPingPos||dvM([N.lastPingPos.lat,N.lastPingPos.lng],[N.last.lat,N.last.lng])<500))return;
+  if(N.lastPing&&now-N.lastPing<15000)return;
+  N.lastPing=now;N.lastPingPos={lat:N.last.lat,lng:N.last.lng};
+  var sp=parseFloat(dvGet("dv_spd").textContent);
+  dvCall("live_ping",{lat:N.last.lat,lng:N.last.lng,heading:N.heading,speed:isFinite(sp)?sp:null,venue:DV.target?(DV.target.kind==="home"?null:(DV.target.team?DV.target.team+" · ":"")+DV.target.name):null,eta:N.eta?N.eta.toISOString():null}).catch(function(){});}
+
+var DVP={tab:"live",conv:null,timer:null,chatTimer:null,msgs:[],convs:null,refs:[]};
+function dvPplOpen(tab){dvCloseSheets();var o=dvGet("dv_ppl");o.hidden=false;document.body.classList.add("dv-navon");
+  dvGet("dv_sharepos").setAttribute("aria-checked",dvSharePos()?"true":"false");
+  try{history.pushState({dvppl:1},"");}catch(e){}
+  dvPplTab(tab||"live");}
+function dvPplClose(){var o=dvGet("dv_ppl");if(o.hidden)return;o.hidden=true;clearInterval(DVP.timer);clearInterval(DVP.chatTimer);dvRecStop(false);DVP.conv=null;dvGet("dv_chat").hidden=true;
+  if(!DV.nav)document.body.classList.remove("dv-navon");}
+function dvPplBack(){if(DVP.conv){dvChatClose();return;}try{if(history.state&&history.state.dvppl){history.back();return;}}catch(e){}dvPplClose();}
+window.addEventListener("popstate",function(){if(!dvGet("dv_ppl")||dvGet("dv_ppl").hidden)return;if(DVP.conv){dvChatClose();try{history.pushState({dvppl:1},"");}catch(e){}return;}dvPplClose();});
+function dvPplTab(t){DVP.tab=t;document.querySelectorAll("#dv_ptabs button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-t")===t);});
+  dvGet("dv_p_live").hidden=t!=="live";dvGet("dv_p_msg").hidden=t!=="msg";dvGet("dv_ptabs").hidden=false;dvGet("dv_chat").hidden=true;DVP.conv=null;
+  dvGet("dv_ppl_h").textContent=dvT("dv_refs_t");clearInterval(DVP.timer);clearInterval(DVP.chatTimer);
+  if(t==="live"){dvLiveLoad();DVP.timer=setInterval(dvLiveLoad,20000);}else{dvConvsLoad();DVP.timer=setInterval(dvConvsLoad,15000);}}
+function dvAgo(iso){var n=Math.max(0,Math.round((Date.now()-new Date(iso).getTime())/60000));return n<1?dvT("dv_upd0"):dvT("dv_upd",{n:n});}
+async function dvLiveLoad(){
+  var j;try{j=await dvCall("live_list");}catch(e){return;}if(!j||!j.ok)return;var L0=j.live||[];DVP.live=L0;
+  var drv=L0.filter(function(r){return r.status==="driving";}).length,arr=L0.length-drv;
+  var sum=dvGet("dv_ppl_sum");if(sum)sum.textContent=L0.length?(drv+" · "+dvT("dv_driving").toLowerCase()+(arr?" · "+arr+" "+dvT("dv_arrived_s").toLowerCase():"")):"";
+  dvGet("dv_plist").innerHTML=L0.length?L0.map(function(r){var a=r.status==="arrived";
+    var line=a?dvT("dv_arrived_s")+(r.venue?" · "+r.venue:"")+(r.since?" · "+dvT("dv_since",{t:dvHM(new Date(r.since))}):""):[r.zone?dvT("dv_near",{z:r.zone}):"",r.venue?dvT("dv_to",{v:r.venue}):"",r.eta?dvT("dv_eta_at",{t:dvHM(new Date(r.eta))}):""].filter(Boolean).join(" · ");
+    return '<div class="dv-li" style="cursor:default"><span class="ic" style="background:'+(a?"#DCFCE7;color:#15803D":"#DBEAFE;color:#1D4ED8")+'">'+esc(dvInitials(r.name))+'</span><span class="tx"><b>'+esc(r.name)+(r.me?' ('+esc(dvT("dv_you"))+')':'')+'</b><small><span class="dv-st'+(a?' arr':'')+'">'+esc(a?dvT("dv_arrived_s"):dvT("dv_driving"))+'</span>'+esc(line)+'</small><small>'+esc(dvAgo(r.updated_at))+(r.speed!=null&&!a?' · '+r.speed+' km/h':'')+'</small></span>'+(r.me?'':'<span class="acts"><button type="button" class="btn ghost" onclick="dvChatOpen(\''+r.id+'\')" aria-label="'+esc(dvT("dv_msg_write"))+'">'+dvIcon("msg")+'</button></span>')+'</div>';}).join(""):'<div class="dv-note" style="padding:8px 2px">'+esc(dvT("dv_refs_none"))+'</div>';
+  dvGet("dv_plist").insertAdjacentHTML("beforeend",'<p class="dv-note">'+esc(dvT("dv_refs_note"))+'</p>');
+  try{await dvLeaflet();}catch(e){return;}
+  if(!DVP.map){DVP.map=L.map("dv_pmap",{zoomControl:true,attributionControl:true});dvTiles(DVP.map);DVP.map.setView([50.65,4.5],8);}
+  setTimeout(function(){DVP.map.invalidateSize();},60);
+  if(DVP.layer)DVP.map.removeLayer(DVP.layer);
+  var ms=L0.filter(function(r){return r.lat!=null;}).map(function(r){return L.marker([r.lat,r.lng],{icon:L.divIcon({className:"",iconSize:[34,34],iconAnchor:[17,17],html:'<div class="dv-pp-pin'+(r.me?' me':r.status==="arrived"?' arr':'')+'">'+esc(dvInitials(r.name))+'</div>'})}).bindTooltip(r.name+(r.zone?" · "+r.zone:""));});
+  DVP.layer=L.layerGroup(ms).addTo(DVP.map);
+  if(ms.length&&!DVP.fitted){DVP.fitted=true;var b=L.latLngBounds(ms.map(function(m){return m.getLatLng();}));DVP.map.fitBounds(b.pad(0.3),{maxZoom:11});}
+}
+
+/* ---------- 3d) messages ---------- */
+function dvSeenKey(c){return "vcbe_dv_seen_"+c;}
+function dvSeen(c){try{return localStorage.getItem(dvSeenKey(c))||"";}catch(e){return "";}}
+function dvSetSeen(c,iso){try{if(iso&&iso>dvSeen(c))localStorage.setItem(dvSeenKey(c),iso);}catch(e){}}
+function dvUnreadCount(convs){return (convs||[]).filter(function(c){return c.last_in&&c.last_in>dvSeen(c.id);}).length;}
+function dvUnreadShow(n){["dv_unread_h","dv_unread_n","dv_unread_m","dv_unread_t"].forEach(function(id){var e=dvGet(id);if(e){e.hidden=!n;e.textContent=n>9?"9+":String(n);}});}
+async function dvUnreadPoll(){clearTimeout(dvUnreadPoll._t);if(!DV.token)return;
+  try{var j=await dvCall("chat_convs");if(j&&j.ok){DVP.convs=j.convs;DVP.refs=j.referees||[];dvUnreadShow(dvUnreadCount(j.convs));}}catch(e){}
+  var vis=document.visibilityState==="visible"&&(DV.nav||(dvGet("page-drive")&&dvGet("page-drive").classList.contains("active")));
+  dvUnreadPoll._t=setTimeout(dvUnreadPoll,vis?30000:120000);}
+function dvRefName(id){var r=(DVP.refs||[]).filter(function(x){return x.id===id;})[0];if(r)return r.name;var c=(DVP.convs||[]).filter(function(x){return x.id===id;})[0];return c?c.name:"";}
+async function dvConvsLoad(){
+  var j;try{j=await dvCall("chat_convs");}catch(e){return;}if(!j||!j.ok)return;DVP.convs=j.convs;DVP.refs=j.referees||[];dvUnreadShow(dvUnreadCount(j.convs));
+  var html=j.convs.map(function(c){var un=c.last_in&&c.last_in>dvSeen(c.id),l=c.last;
+    var pv=l?((c.group&&!l.mine?l.from.split(" ").slice(-1)[0]+": ":(l.mine?dvT("dv_you")+": ":""))+(l.kind==="photo"?"📷 "+dvT("dv_msg_photo_l"):l.kind==="audio"?"🎤 "+dvT("dv_msg_audio_l"):l.body)):(c.group?dvT("dv_msg_all_s"):"");
+    return '<button type="button" class="dv-li" onclick="dvChatOpen(\''+c.id+'\')"><span class="ic"'+(c.group?' style="background:#FEF3C7;color:#92400E"':'')+'>'+(c.group?dvIcon("users"):esc(dvInitials(c.name)))+'</span><span class="tx"><b>'+esc(c.group?dvT("dv_msg_all"):c.name)+'</b><small'+(un?' style="color:var(--ink);font-weight:700"':'')+'>'+esc(pv)+'</small></span>'+(c.last_at?'<small class="dv-note" style="flex:none">'+esc(dvShortTime(c.last_at))+'</small>':'')+(un?'<span class="dv-badge">•</span>':'')+'</button>';}).join("");
+  html+='<div class="card" style="margin-top:12px"><span class="dv-lbl" data-i18n="dv_msg_new">'+esc(dvT("dv_msg_new"))+'</span><select class="dv-in" onchange="if(this.value)dvChatOpen(this.value)"><option value="">'+esc(dvT("dv_msg_pick"))+'</option>'+DVP.refs.map(function(r){return '<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>';}).join("")+'</select></div>';
+  dvGet("dv_convs").innerHTML='<div class="card" style="padding:4px 14px">'+html.replace('<div class="card" style="margin-top:12px">','</div><div class="card" style="margin-top:12px">');
+}
+function dvShortTime(iso){var d=new Date(iso),n=new Date();if(d.toDateString()===n.toDateString())return dvHM(d);try{return new Intl.DateTimeFormat(dvLoc(),{day:"numeric",month:"short"}).format(d);}catch(e){return dvISO(d);}}
+async function dvChatOpen(conv){
+  if(dvGet("dv_ppl").hidden)dvPplOpen("msg");
+  clearInterval(DVP.timer);clearInterval(DVP.chatTimer);DVP.conv=conv;DVP.msgs=[];
+  dvGet("dv_p_live").hidden=true;dvGet("dv_p_msg").hidden=true;dvGet("dv_ptabs").hidden=true;dvGet("dv_chat").hidden=false;
+  dvGet("dv_ppl_h").textContent=conv==="all"?dvT("dv_msg_all"):(dvRefName(conv)||dvT("dv_refs_msg"));
+  dvGet("dv_chat_list").innerHTML='<div class="dv-note" style="align-self:center"><span class="dv-spin"></span></div>';
+  dvChatInput();await dvChatLoad(true);DVP.chatTimer=setInterval(function(){dvChatLoad(false);},4000);}
+function dvChatClose(){clearInterval(DVP.chatTimer);dvRecStop(false);DVP.conv=null;dvPplTab("msg");}
+async function dvChatLoad(first){var c=DVP.conv;if(!c)return;var last=DVP.msgs.length?DVP.msgs[DVP.msgs.length-1].at:null;
+  var j;try{j=await dvCall("chat_list",first||!last?{conv:c}:{conv:c,after:last});}catch(e){return;}if(!j||!j.ok||DVP.conv!==c)return;
+  var add=(j.messages||[]).filter(function(m){return !DVP.msgs.some(function(x){return x.id===m.id;});});
+  if(first){DVP.msgs=j.messages||[];}else if(add.length){DVP.msgs=DVP.msgs.filter(function(x){return !x.tmp;}).concat(add);}else return;
+  dvChatRender();var lastIn=DVP.msgs.filter(function(m){return !m.mine;}).slice(-1)[0];if(lastIn)dvSetSeen(c,lastIn.at);
+  if(DVP.convs){dvUnreadShow(dvUnreadCount(DVP.convs));}}
+function dvChatRender(){var box=dvGet("dv_chat_list"),near=box.scrollHeight-box.scrollTop-box.clientHeight<120,prevDay="";
+  box.innerHTML=DVP.msgs.length?DVP.msgs.map(function(m){var d=new Date(m.at),day=d.toDateString(),h="";
+    if(day!==prevDay){prevDay=day;try{h+='<div class="dv-day">'+esc(new Intl.DateTimeFormat(dvLoc(),{weekday:"long",day:"numeric",month:"long"}).format(d))+'</div>';}catch(e){}}
+    var body=m.kind==="photo"?(m.url?'<img src="'+esc(m.url)+'" alt="'+esc(dvT("dv_msg_photo_l"))+'" loading="lazy" onclick="window.open(this.src,\'_blank\')">':esc(dvT("dv_msg_photo_l"))):m.kind==="audio"?(m.url?'<audio controls preload="none" src="'+esc(m.url)+'"></audio>':esc(dvT("dv_msg_audio_l"))):esc(m.body||"").replace(/\n/g,"<br>");
+    return h+'<div class="dv-msg'+(m.mine?' mine':'')+(m.tmp?' pending':'')+'">'+(DVP.conv==="all"&&!m.mine?'<div class="who">'+esc(m.name)+'</div>':'')+body+'<div class="at">'+(m.tmp?esc(dvT("dv_msg_sending")):dvHM(d))+'</div></div>';}).join(""):'<div class="dv-note" style="align-self:center;margin-top:30px">'+esc(dvT("dv_msg_empty"))+'</div>';
+  if(near||!box._init){box._init=true;box.scrollTop=box.scrollHeight;}
+  box.querySelectorAll("img").forEach(function(i){i.addEventListener("load",function(){if(near)box.scrollTop=box.scrollHeight;},{once:true});});}
+function dvChatInput(){var t=dvGet("dv_cin"),has=!!(t.value||"").trim();dvGet("dv_csend").hidden=!has;dvGet("dv_cmic").hidden=has;t.style.height="auto";t.style.height=Math.min(120,t.scrollHeight)+"px";}
+async function dvChatPost(payload,tmp){var c=DVP.conv;if(!c)return;tmp.tmp=true;tmp.id="tmp"+Date.now();tmp.mine=true;tmp.at=new Date().toISOString();DVP.msgs.push(tmp);dvChatRender();dvGet("dv_chat_list").scrollTop=1e9;
+  var j=null;try{j=await dvCall("chat_send",Object.assign({conv:c},payload));}catch(e){}
+  DVP.msgs=DVP.msgs.filter(function(x){return x!==tmp;});
+  if(!j||!j.ok){dvChatRender();dvToast(dvT("dv_msg_err")+(j&&j.error&&!/^bad/.test(j.error)?" ("+j.error+")":""),4500);return false;}
+  await dvChatLoad(false);if(!DVP.msgs.some(function(x){return x.id===j.id;}))await dvChatLoad(true);return true;}
+async function dvChatSend(){var t=dvGet("dv_cin"),v=(t.value||"").trim();if(!v)return;t.value="";dvChatInput();var ok=await dvChatPost({kind:"text",body:v},{kind:"text",body:v});if(ok===false){t.value=v;dvChatInput();}}
+function dvB64(blob){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(String(r.result).split(",")[1]||"");};r.onerror=rej;r.readAsDataURL(blob);});}
+async function dvChatPhoto(inp){var f=inp.files&&inp.files[0];inp.value="";if(!f)return;
+  try{var img=await new Promise(function(res,rej){var u=URL.createObjectURL(f),i=new Image();i.onload=function(){res(i);};i.onerror=rej;i.src=u;});
+    var k=Math.min(1,1600/Math.max(img.naturalWidth,img.naturalHeight)),cv=document.createElement("canvas");cv.width=Math.round(img.naturalWidth*k);cv.height=Math.round(img.naturalHeight*k);cv.getContext("2d").drawImage(img,0,0,cv.width,cv.height);
+    var blob=await new Promise(function(res){cv.toBlob(res,"image/jpeg",0.82);});var b64=await dvB64(blob);
+    await dvChatPost({kind:"photo",file_base64:b64,content_type:"image/jpeg"},{kind:"photo",url:URL.createObjectURL(blob)});
+  }catch(e){dvToast(dvT("dv_msg_err"));}}
+var DVR=null;
+function dvRecMime(){var c=["audio/mp4","audio/webm;codecs=opus","audio/webm","audio/ogg"];for(var i=0;i<c.length;i++){try{if(window.MediaRecorder&&MediaRecorder.isTypeSupported(c[i]))return c[i];}catch(e){}}return "";}
+async function dvRecToggle(){if(DVR){dvRecStop(true);return;}
+  if(!navigator.mediaDevices||!window.MediaRecorder){dvToast(dvT("dv_msg_nomic"));return;}
+  try{var st=await navigator.mediaDevices.getUserMedia({audio:true});}catch(e){dvToast(dvT("dv_msg_nomic"));return;}
+  var mt=dvRecMime(),mr;try{mr=mt?new MediaRecorder(st,{mimeType:mt}):new MediaRecorder(st);}catch(e){st.getTracks().forEach(function(t){t.stop();});dvToast(dvT("dv_msg_nomic"));return;}
+  DVR={mr:mr,st:st,chunks:[],t0:Date.now(),send:false};mr.ondataavailable=function(e){if(e.data&&e.data.size)DVR.chunks.push(e.data);};
+  mr.onstop=async function(){var R=DVR;DVR=null;R.st.getTracks().forEach(function(t){t.stop();});clearInterval(R.tick);dvGet("dv_rec").hidden=true;dvGet("dv_cmic").classList.remove("on");
+    if(!R.send||!R.chunks.length)return;var type=(R.mr.mimeType||mt||"audio/webm").split(";")[0];var blob=new Blob(R.chunks,{type:type});var dur=(Date.now()-R.t0)/1000;if(dur<0.8)return;
+    var b64=await dvB64(blob);await dvChatPost({kind:"audio",file_base64:b64,content_type:type,duration:dur},{kind:"audio",url:URL.createObjectURL(blob)});};
+  mr.start(1000);dvGet("dv_rec").hidden=false;dvGet("dv_cmic").classList.add("on");
+  DVR.tick=setInterval(function(){if(!DVR)return;var s=Math.round((Date.now()-DVR.t0)/1000);dvGet("dv_rec_t").textContent=Math.floor(s/60)+":"+dvPad(s%60);if(s>=120)dvRecStop(true);},500);}
+function dvRecStop(send){if(!DVR)return;DVR.send=!!send;try{DVR.mr.stop();}catch(e){}}
+
+/* ---------- 4) traffic radio: plays in the background, no player on screen ---------- */
+var DV_RADIOS={viva:{n:"Viva+ (RTBF)",u:"https://radios.rtbf.be/vivaplus-128.mp3"},ant:{n:"Radio 2 Antwerpen",u:"https://icecast.vrtcdn.be/ra2ant-high.mp3"},ovl:{n:"Radio 2 Oost-Vlaanderen",u:"https://icecast.vrtcdn.be/ra2ovl-high.mp3"},wvl:{n:"Radio 2 West-Vlaanderen",u:"https://icecast.vrtcdn.be/ra2wvl-high.mp3"},vlb:{n:"Radio 2 Vlaams-Brabant",u:"https://icecast.vrtcdn.be/ra2vlb-high.mp3"},lim:{n:"Radio 2 Limburg",u:"https://icecast.vrtcdn.be/ra2lim-high.mp3"}};
+function dvRadioPick(){var N=DV.nav,p=N&&N.last?N.last:(DV.target&&DV.target.lat!=null?{lat:DV.target.lat,lng:DV.target.lng}:null);
+  /* French: Viva+ (RTBF); Dutch: Radio 2 of the province; English: by position (south of the language border = Viva+) */
+  if(LANG==="fr")return "viva";
+  if(p&&LANG!=="nl"&&(p.lat<50.74||(p.lat<50.79&&p.lng>4.3&&p.lng<4.45)))return "viva";
+  if(!p)return LANG==="nl"?"vlb":"viva";
+  var C={ant:[51.22,4.40],ovl:[51.05,3.72],wvl:[51.05,3.05],vlb:[50.88,4.70],lim:[50.95,5.35]},best="vlb",bd=1e9;
+  Object.keys(C).forEach(function(k){var d=dvM([p.lat,p.lng],C[k]);if(d<bd){bd=d;best=k;}});return best;}
+function dvRadio(){var b=dvGet("dv_radio");
+  if(DV.radio&&!DV.radio.paused){dvRadioStop();return;}
+  var k=dvRadioPick(),st=DV_RADIOS[k];var a=DV.radio||(DV.radio=new Audio());a.preload="none";a.src=st.u;a.setAttribute("playsinline","");
+  a.onerror=function(){if(k!=="viva"&&a.src.indexOf("vrtcdn")>0){a.src=DV_RADIOS.viva.u;a.play().catch(function(){});}else{dvRadioStop();dvToast(dvT("dv_radio_err"));}};
+  var pr=a.play();b.classList.add("on");b.setAttribute("aria-pressed","true");b.setAttribute("aria-label",dvT("dv_radio_on",{s:st.n}));b.title=st.n;
+  if(pr&&pr.catch)pr.catch(function(){dvRadioStop();dvToast(dvT("dv_radio_err"));});
+  try{if("mediaSession" in navigator)navigator.mediaSession.metadata=new MediaMetadata({title:st.n,artist:"VC Referee · "+dvT("dv_radio")});}catch(e){}}
+function dvRadioStop(){var b=dvGet("dv_radio");if(DV.radio){try{DV.radio.pause();DV.radio.removeAttribute("src");DV.radio.load();}catch(e){}}if(b){b.classList.remove("on");b.setAttribute("aria-pressed","false");b.setAttribute("aria-label",dvT("dv_radio"));}}
 /* boot: reminders of planned drives while the app is open */
 try{dvScheduleReminders();}catch(e){}
 
