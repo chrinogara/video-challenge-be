@@ -932,6 +932,9 @@ a.wm-ls{text-decoration:none;color:#fff}
 .dv-fab.cmp.hu{box-shadow:0 0 0 3px var(--violet),0 3px 12px rgba(21,19,43,.25)}
 .dv-fab.rad{left:14px;top:calc(150px + env(safe-area-inset-top));width:44px;height:44px}
 .dv-fab.rad svg{width:21px;height:21px}
+.dv-li.rad-on{background:var(--lime-50)}
+.dv-li.rad-on .ic{background:#DC2626;color:#fff}
+.dv-rgrp{font-family:var(--fd);font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:10px 2px 2px}
 .dv-fab.rad.on{background:#DC2626;color:#fff;animation:dvrad 1.6s ease-in-out infinite}
 @keyframes dvrad{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.5)}50%{box-shadow:0 0 0 8px rgba(220,38,38,0)}}
 .dv-sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -1676,7 +1679,7 @@ body.dv-navon{overflow:hidden}
   <button type="button" class="dv-fab mut" id="dv_mute" onclick="dvToggleMute()" aria-label="Mute voice"></button>
   <button type="button" class="dv-fab ctr" onclick="dvRecenter()" aria-label="Recenter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
   <button type="button" class="dv-fab cmp" id="dv_cmp" onclick="dvCompass()" aria-label="North up / heading up"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l4 10h-8z" fill="#DC2626"/><path d="M12 22l-4-10h8z" fill="#94A3B8"/></svg></button>
-  <button type="button" class="dv-fab rad" id="dv_radio" onclick="dvRadio()" aria-label="Traffic radio" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="2.5"/><path d="M7 9l10-5"/><circle cx="15.5" cy="15" r="2.6"/><path d="M6.5 13.5h3M6.5 16.5h3"/></svg></button>
+  <button type="button" class="dv-fab rad" id="dv_radio" onclick="dvRadio()" aria-label="Radio" aria-haspopup="dialog" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="2.5"/><path d="M7 9l10-5"/><circle cx="15.5" cy="15" r="2.6"/><path d="M6.5 13.5h3M6.5 16.5h3"/></svg></button>
   <div class="dv-fab spd" aria-label="Speed"><b id="dv_spd">–</b><small>km/h</small></div>
   <button type="button" class="dv-fab rep" onclick="dvOpenSheet('dv_sh_report')" aria-label="Report on the road"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H9l-5 4z"/><path d="M12 7.5v4"/><path d="M12 13.8h.01"/></svg></button>
   <div class="dv-bot"><button type="button" class="end" onclick="if(confirm(dvT('dv_end_q')))dvStopNav()" data-i18n="dv_end">End</button><button type="button" class="mid" onclick="dvOpenMenu()"><b id="dv_eta_t">–</b><small id="dv_eta_s"></small><i id="dv_eta_i"></i></button><button type="button" class="up" onclick="dvOpenMenu()" aria-label="Drive menu"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg><span class="dv-badge" id="dv_unread_n" hidden></span></button></div>
@@ -1723,6 +1726,12 @@ body.dv-navon{overflow:hidden}
   <div class="hd"><h3 id="dv_teams_h" data-i18n="dv_teams_t">Drive to another sports hall</h3><button type="button" class="dv-x" onclick="dvCloseSheets()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
   <div class="dv-tabs" id="dv_ttabs" role="tablist"><button type="button" data-g="M" class="on" onclick="dvTeamsTab('M')" data-i18n="dv_men">Men's league</button><button type="button" data-g="F" onclick="dvTeamsTab('F')" data-i18n="dv_women">Women's league</button></div>
   <div class="dv-list" id="dv_tlist"></div>
+</div></div>
+<div id="dv_sh_radio" class="dv-sheet" hidden onclick="if(event.target===this)dvCloseSheets()"><div class="in" role="dialog" aria-modal="true" aria-labelledby="dv_radio_h">
+  <div class="hd"><h3 id="dv_radio_h" data-i18n="dv_radio_t">Radio</h3><button type="button" class="dv-x" onclick="dvCloseSheets()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
+  <button type="button" class="btn danger" id="dv_radio_stop" onclick="dvRadioStop();dvCloseSheets()" hidden data-i18n="dv_radio_stop">Stop the radio</button>
+  <div id="dv_radlist"></div>
+  <p class="dv-note" data-i18n="dv_radio_note">The radio plays in the background: the navigation stays on screen.</p>
 </div></div>
 <div id="dv_sh_home" class="dv-sheet" hidden onclick="if(event.target===this)dvCloseSheets()"><div class="in" role="dialog" aria-modal="true" aria-labelledby="dv_home_h">
   <div class="hd"><h3 id="dv_home_h" data-i18n="dv_home_t">Your home address</h3><button type="button" class="dv-x" onclick="dvCloseSheets()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
@@ -2049,21 +2058,21 @@ dv_m_teams:"Teams",dv_m_refs:"Referees",dv_teams_t:"Drive to another sports hall
 dv_refs_t:"Referees",dv_refs_live:"On the road",dv_refs_msg:"Messages",dv_refs_none:"No referee is driving with the app right now.",dv_driving:"Driving",dv_arrived_s:"Arrived",dv_to:"to {v}",dv_eta_at:"arrival {t}",dv_since:"since {t}",dv_near:"near {z}",dv_you:"you",dv_upd:"updated {n} min ago",dv_upd0:"updated just now",
 dv_share_pos:"Share my position while driving",dv_share_pos_s:"Only referees signed in to Drive see it, rounded to about 1 km. It disappears when you end the drive.",dv_refs_note:"Positions are shown only during a drive (and 4 hours after arrival), rounded to about 1 km.",
 dv_msg_all:"All referees",dv_msg_all_s:"Group chat of the Video Referees",dv_msg_new:"New message",dv_msg_pick:"Choose a referee",dv_msg_ph:"Message",dv_msg_send:"Send",dv_msg_photo:"Photo",dv_msg_audio:"Voice message",dv_msg_rec:"Recording… tap to send",dv_msg_cancel:"Cancel",dv_msg_empty:"No messages yet. Say hello!",dv_msg_nomic:"The microphone is not available.",dv_msg_err:"Not sent. Check your connection.",dv_msg_photo_l:"Photo",dv_msg_audio_l:"Voice message",dv_msg_write:"Message",dv_msg_older:"Older messages",dv_msg_sending:"Sending…",
-dv_radio:"Traffic radio",dv_radio_on:"Traffic radio on: {s}",dv_radio_off:"Traffic radio off",dv_radio_err:"The radio could not be started."});
+dv_radio:"Radio",dv_radio_on:"Radio on: {s}",dv_radio_off:"Radio off",dv_radio_err:"The radio could not be started.",dv_radio_t:"Radio",dv_radio_traffic:"Traffic news – Belgium",dv_radio_traffic_s:"Local traffic radio, chosen from your position",dv_radio_news:"News radio by language",dv_radio_stop:"Stop the radio",dv_radio_now:"Playing",dv_radio_note:"The radio plays in the background: the navigation stays on screen."});
 Object.assign(T.fr,{dv_home_t:"Votre adresse de domicile",dv_home_s:"À indiquer une seule fois : vous pourrez partir de chez vous ou rentrer en un geste.",dv_home_set:"Indiquer mon domicile",dv_home_chg:"Modifier",dv_home_go:"Rentrer à la maison",dv_home_del:"Supprimer",dv_home_q:"Rue, numéro et commune",dv_home_gps:"Je suis chez moi : utiliser ma position",dv_home_saved:"Adresse du domicile enregistrée.",dv_home_none:"Indiquez d'abord votre domicile (Drive, en haut de la page).",dv_home_from:"Partir de chez moi",dv_home:"Maison",dv_home_name:"Maison",dv_home_goq:"Rentrer à la maison maintenant ?",dv_home_arr:"Vous êtes chez vous. Trajet terminé.",dv_home_priv:"Vous seul pouvez la voir.",
 dv_s_charge:"Recharge",dv_s_food:"Restaurant",dv_poi_busy:"Le service de cartes est surchargé. Réessayez dans un instant.",dv_poi_ahead:"Près de vous et sur le trajet",
 dv_m_teams:"Équipes",dv_m_refs:"Arbitres",dv_teams_t:"Aller vers une autre salle",dv_teams_q:"Aller plutôt vers {v} ?",dv_dest_changed:"Nouvelle destination : {v}",dv_nocoord_v:"Cette salle n'a pas pu être localisée sur la carte.",
 dv_refs_t:"Arbitres",dv_refs_live:"En route",dv_refs_msg:"Messages",dv_refs_none:"Aucun arbitre ne roule avec l'app en ce moment.",dv_driving:"En route",dv_arrived_s:"Arrivé",dv_to:"vers {v}",dv_eta_at:"arrivée {t}",dv_since:"depuis {t}",dv_near:"près de {z}",dv_you:"vous",dv_upd:"mis à jour il y a {n} min",dv_upd0:"mis à jour à l'instant",
 dv_share_pos:"Partager ma position pendant le trajet",dv_share_pos_s:"Visible uniquement par les arbitres connectés à Drive, arrondie à environ 1 km. Elle disparaît à la fin du trajet.",dv_refs_note:"Les positions ne sont visibles que pendant un trajet (et 4 heures après l'arrivée), arrondies à environ 1 km.",
 dv_msg_all:"Tous les arbitres",dv_msg_all_s:"Discussion de groupe des Video Referees",dv_msg_new:"Nouveau message",dv_msg_pick:"Choisissez un arbitre",dv_msg_ph:"Message",dv_msg_send:"Envoyer",dv_msg_photo:"Photo",dv_msg_audio:"Message vocal",dv_msg_rec:"Enregistrement… touchez pour envoyer",dv_msg_cancel:"Annuler",dv_msg_empty:"Pas encore de messages. Dites bonjour !",dv_msg_nomic:"Le micro n'est pas disponible.",dv_msg_err:"Non envoyé. Vérifiez votre connexion.",dv_msg_photo_l:"Photo",dv_msg_audio_l:"Message vocal",dv_msg_write:"Message",dv_msg_older:"Messages précédents",dv_msg_sending:"Envoi…",
-dv_radio:"Radio trafic",dv_radio_on:"Radio trafic activée : {s}",dv_radio_off:"Radio trafic coupée",dv_radio_err:"La radio n'a pas pu démarrer."});
+dv_radio:"Radio",dv_radio_on:"Radio activée : {s}",dv_radio_off:"Radio coupée",dv_radio_err:"La radio n'a pas pu démarrer.",dv_radio_t:"Radio",dv_radio_traffic:"Infos trafic – Belgique",dv_radio_traffic_s:"Radio trafic locale, choisie selon votre position",dv_radio_news:"Radio d'information par langue",dv_radio_stop:"Arrêter la radio",dv_radio_now:"En cours",dv_radio_note:"La radio joue en arrière-plan : la navigation reste à l'écran."});
 Object.assign(T.nl,{dv_home_t:"Je thuisadres",dv_home_s:"Eén keer instellen: dan vertrek je van thuis of rij je met één tik naar huis.",dv_home_set:"Mijn thuisadres instellen",dv_home_chg:"Wijzigen",dv_home_go:"Naar huis rijden",dv_home_del:"Verwijderen",dv_home_q:"Straat, nummer en gemeente",dv_home_gps:"Ik ben nu thuis: mijn positie gebruiken",dv_home_saved:"Thuisadres opgeslagen.",dv_home_none:"Stel eerst je thuisadres in (Drive, bovenaan de pagina).",dv_home_from:"Vertrekken van thuis",dv_home:"Thuis",dv_home_name:"Thuis",dv_home_goq:"Nu naar huis rijden?",dv_home_arr:"Je bent thuis. Rit beëindigd.",dv_home_priv:"Alleen jij ziet het.",
 dv_s_charge:"Laadpaal",dv_s_food:"Restaurant",dv_poi_busy:"De kaartdienst is overbelast. Probeer het zo meteen opnieuw.",dv_poi_ahead:"In de buurt en langs de route",
 dv_m_teams:"Ploegen",dv_m_refs:"Scheidsrechters",dv_teams_t:"Naar een andere sporthal rijden",dv_teams_q:"In plaats daarvan naar {v} rijden?",dv_dest_changed:"Nieuwe bestemming: {v}",dv_nocoord_v:"Deze sporthal kon niet op de kaart gevonden worden.",
 dv_refs_t:"Scheidsrechters",dv_refs_live:"Onderweg",dv_refs_msg:"Berichten",dv_refs_none:"Er rijdt nu geen scheidsrechter met de app.",dv_driving:"Onderweg",dv_arrived_s:"Aangekomen",dv_to:"naar {v}",dv_eta_at:"aankomst {t}",dv_since:"sinds {t}",dv_near:"bij {z}",dv_you:"jij",dv_upd:"{n} min geleden bijgewerkt",dv_upd0:"net bijgewerkt",
 dv_share_pos:"Mijn positie delen tijdens de rit",dv_share_pos_s:"Alleen zichtbaar voor scheidsrechters die in Drive zijn aangemeld, afgerond op ongeveer 1 km. Verdwijnt als je de rit beëindigt.",dv_refs_note:"Posities zijn alleen zichtbaar tijdens een rit (en 4 uur na aankomst), afgerond op ongeveer 1 km.",
 dv_msg_all:"Alle scheidsrechters",dv_msg_all_s:"Groepsgesprek van de Video Referees",dv_msg_new:"Nieuw bericht",dv_msg_pick:"Kies een scheidsrechter",dv_msg_ph:"Bericht",dv_msg_send:"Versturen",dv_msg_photo:"Foto",dv_msg_audio:"Spraakbericht",dv_msg_rec:"Opnemen… tik om te versturen",dv_msg_cancel:"Annuleren",dv_msg_empty:"Nog geen berichten. Zeg hallo!",dv_msg_nomic:"De microfoon is niet beschikbaar.",dv_msg_err:"Niet verstuurd. Controleer je verbinding.",dv_msg_photo_l:"Foto",dv_msg_audio_l:"Spraakbericht",dv_msg_write:"Bericht",dv_msg_older:"Oudere berichten",dv_msg_sending:"Versturen…",
-dv_radio:"Verkeersradio",dv_radio_on:"Verkeersradio aan: {s}",dv_radio_off:"Verkeersradio uit",dv_radio_err:"De radio kon niet starten."});
+dv_radio:"Radio",dv_radio_on:"Radio aan: {s}",dv_radio_off:"Radio uit",dv_radio_err:"De radio kon niet starten.",dv_radio_t:"Radio",dv_radio_traffic:"Verkeersinfo – België",dv_radio_traffic_s:"Lokale verkeersradio, gekozen volgens je positie",dv_radio_news:"Nieuwsradio per taal",dv_radio_stop:"Radio stoppen",dv_radio_now:"Speelt",dv_radio_note:"De radio speelt op de achtergrond: de navigatie blijft op het scherm."});
 function t(k){return T[LANG][k];}
 
 function setLang(l){
@@ -3600,7 +3609,7 @@ function dvShowAlert(r,ahead){
 }
 function dvVote(still){var el=dvGet("dv_alert"),id=el.getAttribute("data-id");el.hidden=true;if(id)dvCall("report_vote",{id:id,still:!!still});dvToast(dvT("dv_thanks"));}
 function dvOpenSheet(id){dvCloseSheets();dvGet(id).hidden=false;}
-function dvCloseSheets(){["dv_sh_report","dv_sh_menu","dv_sh_teams","dv_sh_home"].forEach(function(i){var e=dvGet(i);if(e)e.hidden=true;});}
+function dvCloseSheets(){["dv_sh_report","dv_sh_menu","dv_sh_teams","dv_sh_home","dv_sh_radio"].forEach(function(i){var e=dvGet(i);if(e)e.hidden=true;});}
 async function dvSendReport(kind){
   var N=DV.nav,pos=N&&N.last;dvCloseSheets();
   if(!pos){try{var g=await dvGeo(8000);pos={lat:g.lat,lng:g.lng};}catch(e){dvToast(dvT("dv_nogps"));return;}}
@@ -3850,10 +3859,29 @@ function dvRadioPick(){var N=DV.nav,p=N&&N.last?N.last:(DV.target&&DV.target.lat
   if(!p)return LANG==="nl"?"vlb":"viva";
   var C={ant:[51.22,4.40],ovl:[51.05,3.72],wvl:[51.05,3.05],vlb:[50.88,4.70],lim:[50.95,5.35]},best="vlb",bd=1e9;
   Object.keys(C).forEach(function(k){var d=dvM([p.lat,p.lng],C[k]);if(d<bd){bd=d;best=k;}});return best;}
-function dvRadio(){var b=dvGet("dv_radio");
-  if(DV.radio&&!DV.radio.paused){dvRadioStop();return;}
-  var k=dvRadioPick(),st=DV_RADIOS[k];var a=DV.radio||(DV.radio=new Audio());a.preload="none";a.src=st.u;a.setAttribute("playsinline","");
-  a.onerror=function(){if(k!=="viva"&&a.src.indexOf("vrtcdn")>0){a.src=DV_RADIOS.viva.u;a.play().catch(function(){});}else{dvRadioStop();dvToast(dvT("dv_radio_err"));}};
+/* News radios: the main news station of each country, grouped by language (MP3 streams, checked 10/11/2026) */
+var DV_NEWS=[
+ {l:"English",s:[{k:"bbcws",d:"United Kingdom",n:"BBC World Service",c:"UK",u:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"}]},
+ {l:"Français",s:[{k:"laprem",d:"Belgique",n:"La Première (RTBF)",c:"BE",u:"https://radios.rtbf.be/laprem1ere-128.mp3"},{k:"finfo",d:"France",n:"franceinfo",c:"FR",u:"https://icecast.radiofrance.fr/franceinfo-midfi.mp3"},{k:"rts1",d:"Suisse",n:"La 1ère (RTS)",c:"CH",u:"https://stream.srg-ssr.ch/m/la-1ere/mp3_128"}]},
+ {l:"Nederlands",s:[{k:"vrt1",d:"België",n:"Radio 1 (VRT)",c:"BE",u:"https://icecast.vrtcdn.be/radio1-high.mp3"},{k:"npo1",d:"Nederland",n:"NPO Radio 1",c:"NL",u:"https://icecast.omroep.nl/radio1-bb-mp3"}]},
+ {l:"Deutsch",s:[{k:"dlf",d:"Deutschland",n:"Deutschlandfunk",c:"DE",u:"https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3"},{k:"srf4",d:"Schweiz",n:"SRF 4 News",c:"CH",u:"https://stream.srg-ssr.ch/m/drs4news/mp3_128"}]},
+ {l:"Lëtzebuergesch",s:[{k:"rtllu",d:"Lëtzebuerg",n:"RTL Radio Lëtzebuerg",c:"LU",u:"https://shoutcast.rtl.lu/rtl"}]},
+ {l:"Italiano",s:[{k:"rai1",d:"Italia",n:"Rai Radio 1",c:"IT",u:"https://icestreaming.rai.it/1.mp3"}]},
+ {l:"Español",s:[{k:"ser",d:"España",n:"Cadena SER",c:"ES",u:"https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3"}]},
+ {l:"Português",s:[{k:"tsf",d:"Portugal",n:"TSF Rádio Notícias",c:"PT",u:"https://tsfdirecto.tsf.pt/tsfdirecto.mp3"}]}];
+function dvNewsSt(k){for(var i=0;i<DV_NEWS.length;i++)for(var j=0;j<DV_NEWS[i].s.length;j++)if(DV_NEWS[i].s[j].k===k)return DV_NEWS[i].s[j];return null;}
+function dvRadioOn(){return !!(DV.radio&&!DV.radio.paused&&DV.radio.getAttribute("src"));}
+/* Tap on the radio button: chooser sheet over the navigation (the map stays underneath) */
+function dvRadio(){var cur=dvRadioOn()?DV.radioKey:null,ic='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="2.5"/><path d="M7 9l10-5"/><circle cx="15.5" cy="15" r="2.6"/></svg>';
+  function row(k,ico,t,sub){var on=cur===k;return '<button type="button" class="dv-li'+(on?' rad-on':'')+'" onclick="dvRadioPlay(\''+k+'\')" aria-pressed="'+on+'"><span class="ic">'+ico+'</span><span class="tx"><b>'+esc(t)+'</b><small>'+esc(on?dvT("dv_radio_now")+" · "+sub:sub)+'</small></span></button>';}
+  var h='<div class="dv-list">'+row("traffic",ic,dvT("dv_radio_traffic"),dvT("dv_radio_traffic_s"))+'</div><div class="dv-rgrp">'+esc(dvT("dv_radio_news"))+'</div>';
+  DV_NEWS.forEach(function(g){h+='<div class="dv-rgrp" style="margin-top:6px;text-transform:none;letter-spacing:0">'+esc(g.l)+'</div><div class="dv-list">'+g.s.map(function(st){return row(st.k,esc(st.c),st.n,st.d);}).join("")+'</div>';});
+  dvGet("dv_radlist").innerHTML=h;dvGet("dv_radio_stop").hidden=!cur;dvOpenSheet("dv_sh_radio");}
+function dvRadioPlay(key){var b=dvGet("dv_radio");dvCloseSheets();
+  if(dvRadioOn()&&DV.radioKey===key)return;
+  var st,tk=null;if(key==="traffic"){tk=dvRadioPick();st=DV_RADIOS[tk];}else st=dvNewsSt(key);if(!st)return;
+  var a=DV.radio||(DV.radio=new Audio());a.preload="none";a.setAttribute("playsinline","");a.src=st.u;DV.radioKey=key;
+  a.onerror=function(){if(tk&&tk!=="viva"&&a.src.indexOf("vrtcdn")>0){a.src=DV_RADIOS.viva.u;a.play().catch(function(){});}else{dvRadioStop();dvToast(dvT("dv_radio_err"));}};
   var pr=a.play();b.classList.add("on");b.setAttribute("aria-pressed","true");b.setAttribute("aria-label",dvT("dv_radio_on",{s:st.n}));b.title=st.n;
   if(pr&&pr.catch)pr.catch(function(){dvRadioStop();dvToast(dvT("dv_radio_err"));});
   try{if("mediaSession" in navigator)navigator.mediaSession.metadata=new MediaMetadata({title:st.n,artist:"VC Referee · "+dvT("dv_radio")});}catch(e){}}
