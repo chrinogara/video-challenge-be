@@ -1,4 +1,4 @@
-// vcbe-drive - Video Challenge BE (v1, 09/11/2026, richiesta utente)
+// vcbe-drive - Video Challenge BE (v1, 09/11/2026, richiesta utente; v3 10/11/2026: casa, punti di interesse, arbitri in viaggio, messaggi)
 // Sezione «Drive» dell'app: accesso con nome + codice personale, prossime gare del Video Referee con la sala,
 // percorsi (Valhalla FOSSGIS, ripiego OSRM FOSSGIS), ricerca luoghi (Nominatim), segnalazioni stradali tra arbitri,
 // arrivo in sala, e azioni admin per i codici (password admin di vcbe_admin_config).
@@ -7,6 +7,11 @@
 // Azioni pubbliche: login {name, code, keep}, me {token}, logout {token}, venues {token}, route {token, from, to, via?, avoid?, lang},
 //   search {token, q?, tag? parking|fuel|cafe, lat?, lng?} (Photon, ripiego Nominatim), request_access {name, note?}, reports {token, lat, lng, km?}, report {token, kind, lat, lng}, report_vote {token, id, still},
 //   arrived {token, match_code?, match_date?, venue?, lat?, lng?}, event {token, kind, detail?}
+// v3 (10/11/2026, richiesta utente): home_set {label, lat, lng} / home_clear (indirizzo di casa, anche in «me»),
+//   poi {kind parking|fuel|charging|cafe|restaurant, points:[{lat,lng}]} (Overpass con più server in gara + cache vcbe_poi_cache, ripiego Photon),
+//   live_ping {lat, lng, heading?, speed?, venue?, eta?} / live_stop / live_list (arbitri in viaggio o arrivati, posizione arrotondata ~1 km + zona),
+//   reverse {lat, lng} → {label} (Photon), chat_convs / chat_list {conv: "all" | referee_id, before?} / chat_send {conv, kind text|photo|audio, body?, file_base64?, content_type?, duration?}
+//   Tabelle vcbe_drive_home, vcbe_drive_live, vcbe_drive_messages, vcbe_poi_cache; bucket privato vcbe-drive-chat. Migration vcbe_drive_home_live_chat_20261110.
 // Azioni admin (password): adm_list, adm_set {referee_id, code?, active?}, adm_unlock {referee_id}, adm_generate_missing,
 //   adm_settings {...}, adm_email_code {referee_id}, adm_signout {referee_id}, adm_geocode_venues {force?}, adm_dismiss_request {referee_id}
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -68,7 +73,7 @@ let lastNom = 0;
 async function nominatim(q: string, extra = ""): Promise<any[]> {
   const wait = 1100 - (Date.now() - lastNom); if (wait > 0) await sleep(wait);
   lastNom = Date.now();
-  const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=0&q=${encodeURIComponent(q)}${extra}`, { headers: { "User-Agent": UA, "Accept-Language": "en" } });
+  const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2${q ? "&addressdetails=0&q=" + encodeURIComponent(q) : ""}${extra}`, { headers: { "User-Agent": UA, "Accept-Language": "en" } });
   if (!r.ok) return [];
   try { return await r.json(); } catch (_) { return []; }
 }
@@ -100,6 +105,77 @@ function splitVenue(v: string) {
   return { city, name, address };
 }
 const cleanAddr = (a: string) => a.replace(/\([^)]*\)/g, " ").replace(/\s+,/g, ",").replace(/\s+/g, " ").trim();
+
+
+// ---------- points of interest (v3) ----------
+// Prima la ricerca dei punti partiva dal browser verso overpass-api.de: quando il server è saturo (502 «All query workers are busy»)
+// o lento, la richiesta falliva e l'app mostrava «Nothing found». Ora: più server Overpass in gara + Nominatim in parallelo, cache 6 h.
+const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
+const POI: Record<string, { q: string; photon: string[]; word: string; amenity: string }> = {
+  parking: { q: '["amenity"="parking"]["access"!~"^(private|no|customers)$"]', photon: ["amenity:parking"], word: "parking", amenity: "parking" },
+  fuel: { q: '["amenity"="fuel"]', photon: ["amenity:fuel"], word: "fuel", amenity: "fuel" },
+  charging: { q: '["amenity"="charging_station"]["access"!~"^(private|no)$"]', photon: ["amenity:charging_station"], word: "charging station", amenity: "charging_station" },
+  cafe: { q: '["amenity"~"^(cafe|fast_food)$"]', photon: ["amenity:cafe", "amenity:fast_food"], word: "cafe", amenity: "cafe" },
+  restaurant: { q: '["amenity"="restaurant"]', photon: ["amenity:restaurant"], word: "restaurant", amenity: "restaurant" },
+};
+async function overpassRace(query: string, ms = 14000): Promise<any[] | null> {
+  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), ms);
+  try {
+    return await Promise.any(OVERPASS.map(async (u) => {
+      const r = await fetch(u, { method: "POST", signal: ctl.signal, headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": UA }, body: "data=" + encodeURIComponent(query) });
+      if (!r.ok) throw new Error("http " + r.status);
+      const j = await r.json(); if (!j || !Array.isArray(j.elements)) throw new Error("bad");
+      return j.elements;
+    }));
+  } catch (_) { return null; } finally { clearTimeout(timer); ctl.abort(); }
+}
+function poiLabel(t: any) { return [[t["addr:street"], t["addr:housenumber"]].filter(Boolean).join(" "), [t["addr:postcode"], t["addr:city"]].filter(Boolean).join(" ")].filter(Boolean).join(", "); }
+async function poiSearch(sb: any, kind: string, pts: { lat: number; lng: number }[]) {
+  const def = POI[kind]; if (!def || !pts.length) return { results: [], source: "none" };
+  const key = kind + ":" + pts.map(p => p.lat.toFixed(2) + "," + p.lng.toFixed(2)).join("|");
+  const { data: c } = await sb.from("vcbe_poi_cache").select("results,created_at").eq("key", key).maybeSingle();
+  if (c && Date.now() - new Date(c.created_at).getTime() < 6 * 3600000) return { results: c.results, source: "cache" };
+  const radius = kind === "parking" ? 2500 : kind === "charging" ? 8000 : 6000;
+  const q = `[out:json][timeout:12];(${pts.map(p => `nwr${def.q}(around:${radius},${p.lat},${p.lng});`).join("")});out center tags 80;`;
+  // Overpass (più server in gara) e Nominatim in parallelo: verificato il 10/11/2026 che i server Overpass pubblici
+  // rispondono spesso 502/504 o vanno in timeout, mentre Nominatim (amenity=… nel riquadro attorno al punto) risponde.
+  const nomP = (async () => {
+    const res: any[] = [];
+    for (const p of pts.slice(0, 2)) {
+      const dl = radius / 111000, dg = dl / Math.cos(p.lat * Math.PI / 180);
+      const n = await nominatim("", `&amenity=${encodeURIComponent(def.amenity)}&viewbox=${(p.lng - dg).toFixed(4)},${(p.lat + dl).toFixed(4)},${(p.lng + dg).toFixed(4)},${(p.lat - dl).toFixed(4)}&bounded=1&limit=25&addressdetails=1`);
+      for (const x of n || []) { const a = x.address || {}; res.push({ name: String(x.name || "").slice(0, 80), label: [[a.road, a.house_number].filter(Boolean).join(" "), [a.postcode, a.village || a.town || a.city || a.municipality].filter(Boolean).join(" ")].filter(Boolean).join(", ").slice(0, 160), lat: Number(x.lat), lng: Number(x.lon) }); }
+    }
+    return res;
+  })().catch(() => [] as any[]);
+  let out: any[] = []; let source = "overpass";
+  const els = await overpassRace(q, 9000);
+  if (els && els.length) {
+    out = els.map((e: any) => { const la = e.lat ?? e.center?.lat, lo = e.lon ?? e.center?.lon, t = e.tags || {};
+      const extra: string[] = [];
+      if (kind === "charging") { const kw = t["socket:type2_combo:output"] || t["socket:chademo:output"] || t["socket:type2:output"] || t["maxpower"]; if (kw) extra.push(String(kw)); if (t.capacity) extra.push(t.capacity + "×"); }
+      if (kind === "parking" && t.fee) extra.push(t.fee === "no" ? "free" : "paid");
+      return { name: String(t.name || t.brand || t.operator || "").slice(0, 80), label: [poiLabel(t), extra.join(" · ")].filter(Boolean).join(" · ").slice(0, 160), lat: la, lng: lo, brand: t.brand || "" }; })
+      .filter((r: any) => Number.isFinite(r.lat));
+  }
+  if (!out.length) { source = "nominatim"; out = (await nomP).filter((r: any) => Number.isFinite(r.lat)); }
+  const seen = new Set<string>();
+  out = out.filter((r: any) => { const k = r.lat.toFixed(4) + "," + r.lng.toFixed(4); if (seen.has(k)) return false; seen.add(k); return true; });
+  out.forEach((r: any) => { r.km = Math.round(Math.min(...pts.map(p => hav(p.lat, p.lng, r.lat, r.lng))) * 10) / 10; });
+  out.sort((a: any, b: any) => a.km - b.km); out = out.slice(0, 12);
+  if (out.length) await sb.from("vcbe_poi_cache").upsert({ key, results: out, created_at: new Date().toISOString() });
+  return { results: out, source };
+}
+async function reverseZone(lat: number, lng: number): Promise<string> {
+  try {
+    const r = await fetch(`https://photon.komoot.io/reverse?lat=${lat}&lon=${lng}&limit=1&lang=en`, { headers: { "User-Agent": UA } });
+    if (!r.ok) return ""; const j = await r.json(); const p = (j.features || [])[0]?.properties || {};
+    return [p.city || p.town || p.village || p.district || p.locality || p.county, p.state && p.countrycode !== "BE" ? p.state : ""].filter(Boolean).join(", ").slice(0, 80);
+  } catch (_) { return ""; }
+}
+const CHAT_BUCKET = "vcbe-drive-chat";
+const CHAT_TYPES: Record<string, string> = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "audio/mp4": "m4a", "audio/x-m4a": "m4a", "audio/aac": "aac", "audio/mpeg": "mp3", "audio/webm": "webm", "audio/ogg": "ogg", "audio/wav": "wav" };
+function b64bytes(b: string): Uint8Array { const s = atob(b.replace(/^data:[^,]*,/, "")); const a = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) a[i] = s.charCodeAt(i); return a; }
 
 // ---------- routing ----------
 const LANGS: Record<string, string> = { en: "en-US", fr: "fr-FR", nl: "nl-NL" };
@@ -379,7 +455,8 @@ Deno.serve(async (req) => {
       const g = v.address ? await geocode(sb, [cleanAddr(v.address) + ", Belgium", (v.name ? v.name + ", " : "") + v.city + ", Belgium"]) : null;
       out.push({ ...m, venue_name: v.name, venue_city: v.city, address: v.address, lat: g?.lat ?? null, lng: g?.lng ?? null });
     }
-    return json({ ok: true, name: me.name, matches: out, settings: { session_days: S.session_days } });
+    const { data: home } = await sb.from("vcbe_drive_home").select("label,lat,lng").eq("referee_id", me.id).maybeSingle();
+    return json({ ok: true, id: me.id, name: me.name, matches: out, home: home || null, settings: { session_days: S.session_days } });
   }
 
   if (action === "venues") {
@@ -446,6 +523,7 @@ Deno.serve(async (req) => {
   if (action === "arrived") {
     const venue = String(body.venue || "").slice(0, 200);
     await sb.from("vcbe_drive_events").insert({ referee_id: me.id, kind: "arrived", match_code: body.match_code ? String(body.match_code).slice(0, 20) : null, match_date: /^\d{4}-\d{2}-\d{2}$/.test(String(body.match_date || "")) ? body.match_date : null, venue, detail: okPt(body) ? { lat: num(body.lat), lng: num(body.lng) } : null });
+    await sb.from("vcbe_drive_live").upsert({ referee_id: me.id, status: "arrived", venue: venue || null, eta: null, updated_at: new Date().toISOString(), ...(okPt(body) ? { lat: num(body.lat), lng: num(body.lng) } : {}) });
     const time = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Brussels", hour: "2-digit", minute: "2-digit" }).format(new Date());
     const subject = `[VideoReferees] Arrived – ${me.name} at ${venue || "the venue"}${body.match_code ? " (" + body.match_code + ")" : ""}`;
     const text = `${me.name} has arrived at ${venue || "the venue"} at ${time}${body.match_code ? " for match " + body.match_code : ""}.\n\nSent from the Drive section of Video Challenge BE.`;
@@ -457,8 +535,121 @@ Deno.serve(async (req) => {
   if (action === "event") {
     const kind = String(body.kind || "").slice(0, 30);
     if (!["drive_start", "drive_end", "share", "plan"].includes(kind)) return json({ ok: true });
+    if (kind === "drive_end") await sb.from("vcbe_drive_live").delete().eq("referee_id", me.id).eq("status", "driving");
     await sb.from("vcbe_drive_events").insert({ referee_id: me.id, kind, match_code: body.match_code ? String(body.match_code).slice(0, 20) : null, venue: body.venue ? String(body.venue).slice(0, 200) : null });
     return json({ ok: true });
+  }
+
+  // ================= v3 (10/11/2026) =================
+  if (action === "home_set") {
+    const label = String(body.label || "").replace(/\s+/g, " ").trim().slice(0, 160);
+    if (!label || !okPt(body)) return json({ ok: false, error: "bad home" }, 400);
+    await sb.from("vcbe_drive_home").upsert({ referee_id: me.id, label, lat: num(body.lat), lng: num(body.lng), updated_at: new Date().toISOString() });
+    return json({ ok: true, home: { label, lat: num(body.lat), lng: num(body.lng) } });
+  }
+  if (action === "reverse") {
+    if (!okPt(body)) return json({ ok: false }, 400);
+    try {
+      const r = await fetch(`https://photon.komoot.io/reverse?lat=${num(body.lat)}&lon=${num(body.lng)}&limit=1&lang=en`, { headers: { "User-Agent": UA } });
+      const j = r.ok ? await r.json() : {}; const p = (j.features || [])[0]?.properties || {};
+      const label = [[p.street, p.housenumber].filter(Boolean).join(" ") || p.name, [p.postcode, p.city || p.town || p.village || p.district].filter(Boolean).join(" ")].filter(Boolean).join(", ");
+      return json({ ok: true, label: label.slice(0, 160) });
+    } catch (_) { return json({ ok: true, label: "" }); }
+  }
+  if (action === "home_clear") { await sb.from("vcbe_drive_home").delete().eq("referee_id", me.id); return json({ ok: true }); }
+
+  if (action === "poi") {
+    const kind = String(body.kind || "");
+    const pts = (Array.isArray(body.points) ? body.points : [body]).filter(okPt).slice(0, 3).map((p: any) => ({ lat: num(p.lat), lng: num(p.lng) }));
+    if (!POI[kind] || !pts.length) return json({ ok: false, error: "bad poi" }, 400);
+    const r = await poiSearch(sb, kind, pts);
+    return json({ ok: true, ...r });
+  }
+
+  if (action === "live_ping") {
+    if (!okPt(body)) return json({ ok: false }, 400);
+    const la = num(body.lat), lo = num(body.lng);
+    const { data: cur } = await sb.from("vcbe_drive_live").select("status,zone,zone_lat,zone_lng,started_at,updated_at").eq("referee_id", me.id).maybeSingle();
+    let zone = cur?.zone || "", zla = cur?.zone_lat, zlo = cur?.zone_lng;
+    if (!zone || zla == null || hav(la, lo, zla, zlo) > 3) { const z = await reverseZone(la, lo); if (z) { zone = z; zla = la; zlo = lo; } }
+    const fresh = !cur || cur.status !== "driving" || Date.now() - new Date(cur.updated_at).getTime() > 30 * 60000;
+    const eta = body.eta && !isNaN(Date.parse(body.eta)) ? new Date(body.eta).toISOString() : null;
+    await sb.from("vcbe_drive_live").upsert({ referee_id: me.id, status: "driving", lat: la, lng: lo, heading: Number.isFinite(num(body.heading)) ? num(body.heading) : null, speed: Number.isFinite(num(body.speed)) ? num(body.speed) : null,
+      venue: body.venue ? String(body.venue).slice(0, 200) : null, eta, zone: zone || null, zone_lat: zla ?? null, zone_lng: zlo ?? null, started_at: fresh ? new Date().toISOString() : cur!.started_at, updated_at: new Date().toISOString() });
+    return json({ ok: true, zone });
+  }
+  if (action === "live_stop") { await sb.from("vcbe_drive_live").delete().eq("referee_id", me.id).eq("status", "driving"); return json({ ok: true }); }
+  if (action === "live_list") {
+    const { data: rows } = await sb.from("vcbe_drive_live").select("referee_id,status,lat,lng,heading,speed,venue,eta,zone,started_at,updated_at").gt("updated_at", new Date(Date.now() - 5 * 3600000).toISOString());
+    const ids = (rows || []).map((r: any) => r.referee_id);
+    const { data: refs } = ids.length ? await sb.from("vcbe_referees").select("id,name").in("id", ids) : { data: [] };
+    const nm: Record<string, string> = {}; (refs || []).forEach((r: any) => nm[r.id] = r.name);
+    const now = Date.now();
+    const list = (rows || []).filter((r: any) => r.status === "arrived" ? now - new Date(r.updated_at).getTime() < 4 * 3600000 : now - new Date(r.updated_at).getTime() < 15 * 60000)
+      .map((r: any) => ({ id: r.referee_id, name: nm[r.referee_id] || "", me: r.referee_id === me.id, status: r.status,
+        lat: r.lat != null ? Math.round(r.lat * 100) / 100 : null, lng: r.lng != null ? Math.round(r.lng * 100) / 100 : null,
+        speed: r.status === "driving" && r.speed != null ? Math.round(r.speed) : null, venue: r.venue, eta: r.eta, zone: r.zone, since: r.status === "arrived" ? r.updated_at : r.started_at, updated_at: r.updated_at }))
+      .sort((a: any, b: any) => (a.status === b.status ? 0 : a.status === "driving" ? -1 : 1) || a.name.localeCompare(b.name));
+    return json({ ok: true, live: list });
+  }
+
+  if (action === "chat_convs") {
+    const { data: refs } = await sb.from("vcbe_referees").select("id,name").eq("active", true).order("name");
+    const { data: grp } = await sb.from("vcbe_drive_messages").select("id,sender_id,kind,body,created_at").is("to_id", null).order("created_at", { ascending: false }).limit(1);
+    const { data: dms } = await sb.from("vcbe_drive_messages").select("id,sender_id,to_id,kind,body,created_at").or(`sender_id.eq.${me.id},to_id.eq.${me.id}`).not("to_id", "is", null).order("created_at", { ascending: false }).limit(500);
+    const nm: Record<string, string> = {}; (refs || []).forEach((r: any) => nm[r.id] = r.name);
+    const conv: Record<string, any> = {};
+    for (const m of dms || []) { const other = m.sender_id === me.id ? m.to_id : m.sender_id; if (!conv[other]) conv[other] = { id: other, name: nm[other] || "", last: m, last_at: m.created_at }; if (m.sender_id !== me.id) conv[other].last_in = conv[other].last_in || m.created_at; }
+    const g = (grp || [])[0];
+    const prev = (m: any) => m ? { kind: m.kind, body: m.kind === "text" ? String(m.body || "").slice(0, 90) : "", from: nm[m.sender_id] || "", mine: m.sender_id === me.id } : null;
+    // per i non letti: ultimo messaggio ricevuto (non mio) del gruppo
+    const { data: gin } = await sb.from("vcbe_drive_messages").select("created_at").is("to_id", null).neq("sender_id", me.id).order("created_at", { ascending: false }).limit(1);
+    return json({ ok: true, me: me.id,
+      convs: [{ id: "all", group: true, last: prev(g), last_at: g?.created_at || null, last_in: gin?.[0]?.created_at || null },
+        ...Object.values(conv).map((c: any) => ({ id: c.id, name: c.name, last: prev(c.last), last_at: c.last_at, last_in: c.last_in || null }))],
+      referees: (refs || []).filter((r: any) => r.id !== me.id).map((r: any) => ({ id: r.id, name: r.name })) });
+  }
+  if (action === "chat_list") {
+    const conv = String(body.conv || "all");
+    let q = sb.from("vcbe_drive_messages").select("id,sender_id,to_id,kind,body,media_path,media_type,duration_s,created_at").order("created_at", { ascending: false }).limit(60);
+    if (conv === "all") q = q.is("to_id", null);
+    else if (/^[0-9a-f-]{36}$/.test(conv)) q = q.or(`and(sender_id.eq.${me.id},to_id.eq.${conv}),and(sender_id.eq.${conv},to_id.eq.${me.id})`);
+    else return json({ ok: false, error: "bad conv" }, 400);
+    if (body.before && !isNaN(Date.parse(body.before))) q = q.lt("created_at", new Date(body.before).toISOString());
+    if (body.after && !isNaN(Date.parse(body.after))) q = q.gt("created_at", new Date(body.after).toISOString());
+    const { data: ms, error } = await q; if (error) return json({ ok: false, error: error.message }, 500);
+    const ids = [...new Set((ms || []).map((m: any) => m.sender_id))];
+    const { data: refs } = ids.length ? await sb.from("vcbe_referees").select("id,name").in("id", ids) : { data: [] };
+    const nm: Record<string, string> = {}; (refs || []).forEach((r: any) => nm[r.id] = r.name);
+    const paths = (ms || []).filter((m: any) => m.media_path).map((m: any) => m.media_path);
+    const urls: Record<string, string> = {};
+    if (paths.length) { const { data: su } = await sb.storage.from(CHAT_BUCKET).createSignedUrls(paths, 3600); (su || []).forEach((u: any) => { if (u.signedUrl) urls[u.path] = u.signedUrl; }); }
+    const out = (ms || []).reverse().map((m: any) => ({ id: m.id, from: m.sender_id, name: nm[m.sender_id] || "", mine: m.sender_id === me.id, kind: m.kind, body: m.body, url: m.media_path ? urls[m.media_path] || null : null, type: m.media_type, duration: m.duration_s, at: m.created_at }));
+    return json({ ok: true, messages: out });
+  }
+  if (action === "chat_send") {
+    const conv = String(body.conv || "all"); const kind = String(body.kind || "text");
+    if (!["text", "photo", "audio"].includes(kind)) return json({ ok: false, error: "bad kind" }, 400);
+    let to: string | null = null;
+    if (conv !== "all") { if (!/^[0-9a-f-]{36}$/.test(conv) || conv === me.id) return json({ ok: false, error: "bad conv" }, 400);
+      const { data: r } = await sb.from("vcbe_referees").select("id").eq("id", conv).eq("active", true).maybeSingle(); if (!r) return json({ ok: false, error: "bad conv" }, 400); to = conv; }
+    const text = String(body.body || "").slice(0, 2000).trim();
+    let path: string | null = null, type: string | null = null;
+    if (kind === "text") { if (!text) return json({ ok: false, error: "empty" }, 400); }
+    else {
+      type = String(body.content_type || "").split(";")[0].trim().toLowerCase();
+      if (kind === "photo" && !type.startsWith("image/")) return json({ ok: false, error: "bad type" }, 400);
+      if (kind === "audio" && !type.startsWith("audio/")) return json({ ok: false, error: "bad type" }, 400);
+      const ext = CHAT_TYPES[type]; if (!ext) return json({ ok: false, error: "type not allowed: " + type }, 400);
+      const bytes = b64bytes(String(body.file_base64 || "")); if (!bytes.length || bytes.length > 8 * 1024 * 1024) return json({ ok: false, error: "file too large" }, 400);
+      path = `${to ? "dm" : "all"}/${new Date().toISOString().slice(0, 10)}/${me.id.slice(0, 8)}-${randHex(8)}.${ext}`;
+      const up = await sb.storage.from(CHAT_BUCKET).upload(path, bytes, { contentType: type, upsert: false });
+      if (up.error) return json({ ok: false, error: up.error.message }, 500);
+    }
+    const dur = Number.isFinite(num(body.duration)) ? Math.min(600, Math.max(0, num(body.duration))) : null;
+    const { data, error } = await sb.from("vcbe_drive_messages").insert({ sender_id: me.id, to_id: to, kind, body: text || null, media_path: path, media_type: type, duration_s: kind === "audio" ? dur : null }).select("id,created_at").single();
+    if (error) return json({ ok: false, error: error.message }, 500);
+    return json({ ok: true, id: data.id, at: data.created_at });
   }
 
   return json({ error: "unknown action" }, 400);
