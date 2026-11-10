@@ -943,7 +943,7 @@ a.wm-ls{text-decoration:none;color:#fff}
 .dv-bot .up .dv-badge,.dv-agrid .dv-badge{position:absolute;top:4px;right:6px}
 .dv-badge.in{display:inline-block;vertical-align:1px;margin-left:4px}
 .dv-ic-ref{background:#FEF3C7!important;color:#92400E!important}
-.dv-homec{display:flex;flex-direction:column;gap:10px}
+.dv-homec{display:flex;flex-direction:column;gap:10px;text-align:left}
 .dv-homec.empty{border:2px dashed var(--violet);background:var(--violet-50)}
 .dv-homec .dv-row .btn{flex:1}
 .dv-ppl{position:fixed;inset:0;z-index:340;background:var(--bg,#F4F4F8);display:flex;flex-direction:column;font-family:var(--fb);color:var(--ink);padding-top:env(safe-area-inset-top)}
@@ -951,6 +951,7 @@ a.wm-ls{text-decoration:none;color:#fff}
 .dv-ppl-top{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-bottom:1px solid var(--line)}
 .dv-ppl-top h3{margin:0;font-size:18px;font-family:var(--fd);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dv-ppl .dv-tabs{margin:10px 14px 0}
+.dv-ppl .dv-tabs[hidden]{display:none}
 .dv-ppl-body{flex:1;overflow:auto;padding:12px 14px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
 .dv-ppl-body[hidden]{display:none}
 .dv-pmap{height:42vh;min-height:220px;border-radius:16px;overflow:hidden}
@@ -961,7 +962,8 @@ a.wm-ls{text-decoration:none;color:#fff}
 .dv-st{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;margin-right:6px;background:#DBEAFE;color:#1D4ED8}
 .dv-st.arr{background:#DCFCE7;color:#15803D}
 .dv-li .acts{display:flex;gap:6px;flex:none}
-.dv-li .acts .btn{padding:8px 10px;font-size:12.5px}
+.dv-li .acts .btn{padding:8px 10px;font-size:12.5px;min-width:44px;min-height:40px}
+.dv-li .acts .btn svg{width:20px;height:20px}
 #dv_convs .dv-li .tx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62vw;display:block}
 .dv-chat{flex:1;display:flex;flex-direction:column;min-height:0;background:#ECE9F5}
 .dv-chat[hidden]{display:none}
@@ -3437,7 +3439,7 @@ function dvLeaflet(){
     var c=document.createElement("link");c.rel="stylesheet";c.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";document.head.appendChild(c);
     var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";
     /* leaflet-rotate: two-finger rotation of the drive map (like Waze); if it does not load the map still works without rotation */
-    s.onload=function(){var r=document.createElement("script");r.src="https://cdn.jsdelivr.net/npm/leaflet-rotate@0.2.8/dist/leaflet-rotate-src.js";r.onload=function(){res();};r.onerror=function(){res();};document.head.appendChild(r);};
+    s.onload=function(){var r=document.createElement("script");r.src="https://cdn.jsdelivr.net/npm/leaflet-rotate@0.2.8/dist/leaflet-rotate-src.js";r.onload=function(){try{L.Map.mergeOptions({rotateControl:false});}catch(e){}res();};r.onerror=function(){res();};document.head.appendChild(r);};
     s.onerror=function(){dvLeaflet._p=null;rej(new Error("leaflet"));};document.head.appendChild(s);});
   return dvLeaflet._p;
 }
@@ -3758,7 +3760,7 @@ async function dvLiveLoad(){
   var drv=L0.filter(function(r){return r.status==="driving";}).length,arr=L0.length-drv;
   var sum=dvGet("dv_ppl_sum");if(sum)sum.textContent=L0.length?(drv+" · "+dvT("dv_driving").toLowerCase()+(arr?" · "+arr+" "+dvT("dv_arrived_s").toLowerCase():"")):"";
   dvGet("dv_plist").innerHTML=L0.length?L0.map(function(r){var a=r.status==="arrived";
-    var line=a?dvT("dv_arrived_s")+(r.venue?" · "+r.venue:"")+(r.since?" · "+dvT("dv_since",{t:dvHM(new Date(r.since))}):""):[r.zone?dvT("dv_near",{z:r.zone}):"",r.venue?dvT("dv_to",{v:r.venue}):"",r.eta?dvT("dv_eta_at",{t:dvHM(new Date(r.eta))}):""].filter(Boolean).join(" · ");
+    var line=a?[r.venue||"",r.since?dvT("dv_since",{t:dvHM(new Date(r.since))}):""].filter(Boolean).join(" · "):[r.zone?dvT("dv_near",{z:r.zone}):"",r.venue?dvT("dv_to",{v:r.venue}):"",r.eta?dvT("dv_eta_at",{t:dvHM(new Date(r.eta))}):""].filter(Boolean).join(" · ");
     return '<div class="dv-li" style="cursor:default"><span class="ic" style="background:'+(a?"#DCFCE7;color:#15803D":"#DBEAFE;color:#1D4ED8")+'">'+esc(dvInitials(r.name))+'</span><span class="tx"><b>'+esc(r.name)+(r.me?' ('+esc(dvT("dv_you"))+')':'')+'</b><small><span class="dv-st'+(a?' arr':'')+'">'+esc(a?dvT("dv_arrived_s"):dvT("dv_driving"))+'</span>'+esc(line)+'</small><small>'+esc(dvAgo(r.updated_at))+(r.speed!=null&&!a?' · '+r.speed+' km/h':'')+'</small></span>'+(r.me?'':'<span class="acts"><button type="button" class="btn ghost" onclick="dvChatOpen(\''+r.id+'\')" aria-label="'+esc(dvT("dv_msg_write"))+'">'+dvIcon("msg")+'</button></span>')+'</div>';}).join(""):'<div class="dv-note" style="padding:8px 2px">'+esc(dvT("dv_refs_none"))+'</div>';
   dvGet("dv_plist").insertAdjacentHTML("beforeend",'<p class="dv-note">'+esc(dvT("dv_refs_note"))+'</p>');
   try{await dvLeaflet();}catch(e){return;}

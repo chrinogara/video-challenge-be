@@ -73,7 +73,7 @@ let lastNom = 0;
 async function nominatim(q: string, extra = ""): Promise<any[]> {
   const wait = 1100 - (Date.now() - lastNom); if (wait > 0) await sleep(wait);
   lastNom = Date.now();
-  const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=0&q=${encodeURIComponent(q)}${extra}`, { headers: { "User-Agent": UA, "Accept-Language": "en" } });
+  const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2${q ? "&addressdetails=0&q=" + encodeURIComponent(q) : ""}${extra}`, { headers: { "User-Agent": UA, "Accept-Language": "en" } });
   if (!r.ok) return [];
   try { return await r.json(); } catch (_) { return []; }
 }
@@ -109,14 +109,14 @@ const cleanAddr = (a: string) => a.replace(/\([^)]*\)/g, " ").replace(/\s+,/g, "
 
 // ---------- points of interest (v3) ----------
 // Prima la ricerca dei punti partiva dal browser verso overpass-api.de: quando il server è saturo (502 «All query workers are busy»)
-// o lento, la richiesta falliva e l'app mostrava «Nothing found». Ora: più server Overpass in gara, cache 6 h, ripiego Photon.
+// o lento, la richiesta falliva e l'app mostrava «Nothing found». Ora: più server Overpass in gara + Nominatim in parallelo, cache 6 h.
 const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
-const POI: Record<string, { q: string; photon: string[]; word: string }> = {
-  parking: { q: '["amenity"="parking"]["access"!~"^(private|no|customers)$"]', photon: ["amenity:parking"], word: "parking" },
-  fuel: { q: '["amenity"="fuel"]', photon: ["amenity:fuel"], word: "fuel" },
-  charging: { q: '["amenity"="charging_station"]["access"!~"^(private|no)$"]', photon: ["amenity:charging_station"], word: "charging station" },
-  cafe: { q: '["amenity"~"^(cafe|fast_food)$"]', photon: ["amenity:cafe", "amenity:fast_food"], word: "cafe" },
-  restaurant: { q: '["amenity"="restaurant"]', photon: ["amenity:restaurant"], word: "restaurant" },
+const POI: Record<string, { q: string; photon: string[]; word: string; amenity: string }> = {
+  parking: { q: '["amenity"="parking"]["access"!~"^(private|no|customers)$"]', photon: ["amenity:parking"], word: "parking", amenity: "parking" },
+  fuel: { q: '["amenity"="fuel"]', photon: ["amenity:fuel"], word: "fuel", amenity: "fuel" },
+  charging: { q: '["amenity"="charging_station"]["access"!~"^(private|no)$"]', photon: ["amenity:charging_station"], word: "charging station", amenity: "charging_station" },
+  cafe: { q: '["amenity"~"^(cafe|fast_food)$"]', photon: ["amenity:cafe", "amenity:fast_food"], word: "cafe", amenity: "cafe" },
+  restaurant: { q: '["amenity"="restaurant"]', photon: ["amenity:restaurant"], word: "restaurant", amenity: "restaurant" },
 };
 async function overpassRace(query: string, ms = 14000): Promise<any[] | null> {
   const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), ms);
@@ -137,25 +137,28 @@ async function poiSearch(sb: any, kind: string, pts: { lat: number; lng: number 
   if (c && Date.now() - new Date(c.created_at).getTime() < 6 * 3600000) return { results: c.results, source: "cache" };
   const radius = kind === "parking" ? 2500 : kind === "charging" ? 8000 : 6000;
   const q = `[out:json][timeout:12];(${pts.map(p => `nwr${def.q}(around:${radius},${p.lat},${p.lng});`).join("")});out center tags 80;`;
+  // Overpass (più server in gara) e Nominatim in parallelo: verificato il 10/11/2026 che i server Overpass pubblici
+  // rispondono spesso 502/504 o vanno in timeout, mentre Nominatim (amenity=… nel riquadro attorno al punto) risponde.
+  const nomP = (async () => {
+    const res: any[] = [];
+    for (const p of pts.slice(0, 2)) {
+      const dl = radius / 111000, dg = dl / Math.cos(p.lat * Math.PI / 180);
+      const n = await nominatim("", `&amenity=${encodeURIComponent(def.amenity)}&viewbox=${(p.lng - dg).toFixed(4)},${(p.lat + dl).toFixed(4)},${(p.lng + dg).toFixed(4)},${(p.lat - dl).toFixed(4)}&bounded=1&limit=25&addressdetails=1`);
+      for (const x of n || []) { const a = x.address || {}; res.push({ name: String(x.name || "").slice(0, 80), label: [[a.road, a.house_number].filter(Boolean).join(" "), [a.postcode, a.village || a.town || a.city || a.municipality].filter(Boolean).join(" ")].filter(Boolean).join(", ").slice(0, 160), lat: Number(x.lat), lng: Number(x.lon) }); }
+    }
+    return res;
+  })().catch(() => [] as any[]);
   let out: any[] = []; let source = "overpass";
-  const els = await overpassRace(q);
-  if (els) {
+  const els = await overpassRace(q, 9000);
+  if (els && els.length) {
     out = els.map((e: any) => { const la = e.lat ?? e.center?.lat, lo = e.lon ?? e.center?.lon, t = e.tags || {};
       const extra: string[] = [];
       if (kind === "charging") { const kw = t["socket:type2_combo:output"] || t["socket:chademo:output"] || t["socket:type2:output"] || t["maxpower"]; if (kw) extra.push(String(kw)); if (t.capacity) extra.push(t.capacity + "×"); }
       if (kind === "parking" && t.fee) extra.push(t.fee === "no" ? "free" : "paid");
       return { name: String(t.name || t.brand || t.operator || "").slice(0, 80), label: [poiLabel(t), extra.join(" · ")].filter(Boolean).join(" · ").slice(0, 160), lat: la, lng: lo, brand: t.brand || "" }; })
       .filter((r: any) => Number.isFinite(r.lat));
-  } else {
-    source = "photon";
-    for (const p of pts.slice(0, 2)) {
-      const d = 0.08; const bbox = `&bbox=${(p.lng - d * 1.6).toFixed(4)},${(p.lat - d).toFixed(4)},${(p.lng + d * 1.6).toFixed(4)},${(p.lat + d).toFixed(4)}`;
-      for (const tag of def.photon) {
-        const r = await photon(def.word, `&limit=15&lat=${p.lat}&lon=${p.lng}&osm_tag=${encodeURIComponent(tag)}${bbox}`);
-        r.filter((x: any) => Number.isFinite(x.lat)).forEach((x: any) => out.push({ name: String(x.name || "").slice(0, 80), label: String(x.display_name || "").slice(0, 160), lat: x.lat, lng: x.lon }));
-      }
-    }
   }
+  if (!out.length) { source = "nominatim"; out = (await nomP).filter((r: any) => Number.isFinite(r.lat)); }
   const seen = new Set<string>();
   out = out.filter((r: any) => { const k = r.lat.toFixed(4) + "," + r.lng.toFixed(4); if (seen.has(k)) return false; seen.add(k); return true; });
   out.forEach((r: any) => { r.km = Math.round(Math.min(...pts.map(p => hav(p.lat, p.lng, r.lat, r.lng))) * 10) / 10; });
