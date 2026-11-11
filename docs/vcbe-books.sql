@@ -49,12 +49,15 @@ on conflict (id) do nothing;
 
 -- Libro di prova (PDF e copertina nel repo, serviti da Vercel con indirizzo relativo).
 insert into public.vcbe_books (title, author, category, description, language, publisher, released, pages, size_bytes, file_url, cover_url)
-select 'Official Beach Volleyball Rules 2025-2028', 'FIVB', 'Rules',
-  'The official rules of Beach Volleyball for 2025-2028, approved by the 39th FIVB World Congress 2024 and implemented in all competitions from 1 January 2025.',
-  'English', 'Fédération Internationale de Volleyball', '2025', 72, 5265949,
-  'docs/books/fivb-beach-volleyball-rules-2025-2028.pdf', 'docs/books/fivb-beach-volleyball-rules-2025-2028.jpg'
-where not exists (select 1 from public.vcbe_books where file_url = 'docs/books/fivb-beach-volleyball-rules-2025-2028.pdf');
+select 'Official Volleyball Rules 2025-2028', 'FIVB', 'Rules',
+  'The official rules of Volleyball for 2025-2028, approved by the 39th FIVB World Congress 2024 and implemented in all competitions beginning after 1 January 2025.',
+  'English', 'Fédération Internationale de Volleyball', '2025', 89, 5178252,
+  'docs/books/fivb-volleyball-rules-2025-2028.pdf', 'docs/books/fivb-volleyball-rules-2025-2028.jpg'
+where not exists (select 1 from public.vcbe_books where file_url = 'docs/books/fivb-volleyball-rules-2025-2028.pdf');
 
 -- 11/11/2026 (migration vcbe_books_source_link_20261111): link alla fonte mostrato sotto la descrizione.
 alter table public.vcbe_books add column if not exists source_url text;
 alter table public.vcbe_books add column if not exists source_label text;
+
+-- 11/11/2026 (migration vcbe_books_replace_with_volleyball_rules_20261111): su richiesta dell'utente il libro di prova
+-- «Official Beach Volleyball Rules 2025-2028» è stato sostituito (stessa riga) da «Official Volleyball Rules 2025-2028» (FIVB, 89 pagine).
