@@ -1533,6 +1533,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
 .pg-face i{display:block;width:66px;height:66px;margin:0 auto 6px;border-radius:50%;background:#fff center/72% no-repeat;box-shadow:inset 0 0 0 1px #DADCE0}
 .pg-face i.ini{display:grid;place-items:center;background:var(--pgn);color:#fff;font-style:normal;font-weight:800;font-size:22px}
 .pg-face span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (orientation:portrait){.pg-faces{flex-direction:column;gap:2px;overflow:visible;padding:4px 16px 8px}.pg-face{width:auto;display:flex;align-items:center;gap:14px;text-align:left;font-size:15px;font-weight:500;padding:6px 0;border-bottom:1px solid #EEF0F2}.pg-face:last-child{border-bottom:0}.pg-face i{width:48px;height:48px;margin:0;flex:0 0 48px}.pg-face i.ini{font-size:17px}.pg-face span{-webkit-line-clamp:1}}
 .pg-recent{display:flex;flex-wrap:wrap;gap:8px;padding:4px 16px}
 .pg-recent button{padding:7px 13px;border-radius:999px;background:var(--pgl);font-size:13px}
 /* viewer */
@@ -5383,7 +5384,7 @@ Object.assign(T.nl,{pg_brand:"Challenge Referees",pg_photos:"Foto's",pg_coll:"Co
   pg_f_orig:"Origineel",pg_f_vivid:"Levendig",pg_f_warm:"Warm",pg_f_cool:"Koel",pg_f_bw:"Z/W",pg_f_vint:"Vintage",pg_f_drama:"Dramatisch",pg_rot_l:"Links draaien",pg_rot_r:"Rechts draaien",pg_flip:"Spiegelen",
   pg_adm_only:"Admin",pg_open:"Foto's openen",pg_cancel:"Annuleren",pg_ok:"OK",pg_saved_album:"Kopie opgeslagen in {f}"});
 
-var PG={open:false,tab:"photos",album:null,seg:"all",q:"",sel:null,vlist:[],vi:0,st:null,z:{s:1,x:0,y:0},ed:null,story:null,layers:[]};
+var PG={open:false,tab:"coll",album:null,seg:"all",q:"",sel:null,vlist:[],vi:0,st:null,z:{s:1,x:0,y:0},ed:null,story:null,layers:[]};
 function pgG(id){return document.getElementById(id);}
 function pgT(k,o){var s=(T[LANG]&&T[LANG][k]!==undefined)?T[LANG][k]:(T.en[k]!==undefined?T.en[k]:k);if(o)Object.keys(o).forEach(function(x){s=s.split("{"+x+"}").join(o[x]);});return s;}
 function pgLoc(){return LANG==="fr"?"fr-BE":LANG==="nl"?"nl-BE":"en-GB";}
@@ -5429,8 +5430,8 @@ function pgBusy(on){var b=pgG("pg_prog");if(b)b.hidden=!on;}
 /* ---------- open / close / back ---------- */
 function pgOpen(opt){var el=pgG("pg");if(!el)return;if(!PG.st)pgLoadSt();opt=opt||{};
   if(!PG.open){PG.open=true;el.hidden=false;document.documentElement.style.overflow="hidden";try{history.pushState({pg:1},"");}catch(e){}}
-  PG.sel=null;PG.tab=opt.tab||"photos";PG.album=opt.album!==undefined?opt.album:null;
-  if(!pgG("pg_n_photos"))pgG("pg_nav").innerHTML=[["photos","photos","pg_photos"],["coll","coll","pg_coll"],["search","search","pg_search"]].map(function(x){return '<button type="button" id="pg_n_'+x[0]+'" onclick="pgTab(\''+x[0]+'\')">'+pgI(x[1])+'<span data-k="'+x[2]+'"></span></button>';}).join("");
+  PG.sel=null;PG.tab=opt.tab||"coll";PG.album=opt.album!==undefined?opt.album:null;
+  if(!pgG("pg_n_photos"))pgG("pg_nav").innerHTML=[["coll","coll","pg_coll"],["photos","photos","pg_photos"],["search","search","pg_search"]].map(function(x){return '<button type="button" id="pg_n_'+x[0]+'" onclick="pgTab(\''+x[0]+'\')">'+pgI(x[1])+'<span data-k="'+x[2]+'"></span></button>';}).join("");
   pgRender();if(opt.photo){var p=pgBy(opt.photo);if(p){var l=pgAll();pgView(l,l.indexOf(p));}}}
 function pgHide(){PG.open=false;pgStoryStop();pgG("pg").hidden=true;pgG("pg_vw").hidden=true;pgG("pg_ed").hidden=true;pgG("pg_sheet").hidden=true;document.documentElement.style.overflow="";}
 function pgExit(){pgHide();try{if(history.state&&history.state.pg)history.back();}catch(e){}}
