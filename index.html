@@ -5819,6 +5819,8 @@ function stDevice(){var w=Math.min(screen.width||innerWidth,screen.height||inner
 function stToken(){try{return (typeof DV!=="undefined"&&DV.token)||localStorage.getItem("vcbe_drive_token")||sessionStorage.getItem("vcbe_drive_token")||null;}catch(e){return null;}}
 function stSend(){
   clearTimeout(ST.t);ST.t=null;
+  /* automated browsers (link previews, deploy checks) are not visitors */
+  try{if(navigator.webdriver)return;}catch(e){}
   var b={action:"ping",vid:ST.vid,sid:ST.sid,page:ST.page,views:ST.q.views,acts:ST.q.acts,errs:ST.q.errs,lang:(typeof LANG!=="undefined"?LANG:null),device:stDevice(),token:stToken()};
   ST.q={views:[],acts:[],errs:[]};
   try{ST._f.call(window,FN+"/vcbe-stats",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b),keepalive:true}).catch(function(){});}catch(e){}
