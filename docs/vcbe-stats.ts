@@ -1,6 +1,9 @@
 // Edge function vcbe-stats (11/11/2026, richiesta utente): visite dell'app e presenze in tempo reale.
 // Pubblica (verify_jwt false). Dati raccolti SOLO anonimi: id casuale del browser (localStorage), id della visita,
-// sezione aperta, tipo di dispositivo (phone/tablet/desktop), lingua dell'app. Nessun IP, nessun user agent.
+// sezione aperta, tipo di dispositivo (phone/tablet/desktop), lingua dell'app. Nessun user agent.
+// v4 (11/11/2026, seconda richiesta utente): paese, regione e città ricavati dall'IP (header cf-connecting-ip) una volta
+// per visita con un servizio di geolocalizzazione gratuito (ipwho.is, ripieghi ipapi.co e api.country.is).
+// L'IP NON viene salvato da nessuna parte: si salvano solo paese/regione/città.
 // Il nome compare solo per gli arbitri collegati a Drive: il token di Drive viene confrontato (hash SHA-256)
 // con vcbe_drive_sessions, come in vcbe-drive.
 // Azioni:
@@ -28,6 +31,43 @@ async function refereeOf(token: unknown): Promise<string | null> {
   const { data } = await sb.from("vcbe_drive_sessions").select("referee_id,expires_at").eq("token_hash", await sha256(t)).maybeSingle();
   if (!data || new Date(data.expires_at).getTime() < Date.now()) return null;
   return data.referee_id || null;
+}
+type Geo = { country: string | null; country_name: string | null; region: string | null; city: string | null };
+const GEO_CACHE = new Map<string, Geo>();
+const NOGEO: Geo = { country: null, country_name: null, region: null, city: null };
+const clip = (v: unknown, n = 60) => { const t = String(v ?? "").trim(); return t ? t.slice(0, n) : null; };
+async function getJson(url: string): Promise<any> {
+  const r = await fetch(url, { signal: AbortSignal.timeout(2500), headers: { accept: "application/json" } });
+  if (!r.ok) throw new Error(String(r.status));
+  return await r.json();
+}
+function clientIp(req: Request): string {
+  const ip = req.headers.get("cf-connecting-ip") || req.headers.get("sb-forwarded-for") || (req.headers.get("x-forwarded-for") || "").split(",")[0];
+  return String(ip || "").trim();
+}
+function isPrivate(ip: string) {
+  return !ip || /^(10\.|127\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|169\.254\.|::1$|f[cd]|fe80)/i.test(ip);
+}
+async function geoOf(ip: string): Promise<Geo> {
+  if (isPrivate(ip) || !/^[0-9a-f:.]{3,45}$/i.test(ip)) return NOGEO;
+  const hit = GEO_CACHE.get(ip); if (hit) return hit;
+  let g: Geo = NOGEO;
+  try {
+    const j = await getJson(`https://ipwho.is/${ip}?fields=success,country,country_code,region,city`);
+    if (j && j.success !== false && j.country_code) g = { country: String(j.country_code).slice(0, 2).toUpperCase(), country_name: clip(j.country), region: clip(j.region), city: clip(j.city) };
+  } catch { /* next */ }
+  if (!g.country) try {
+    const j = await getJson(`https://ipapi.co/${ip}/json/`);
+    if (j && !j.error && j.country_code) g = { country: String(j.country_code).slice(0, 2).toUpperCase(), country_name: clip(j.country_name), region: clip(j.region), city: clip(j.city) };
+  } catch { /* next */ }
+  if (!g.country) try {
+    const j = await getJson(`https://api.country.is/${ip}`);
+    if (j && j.country) g = { country: String(j.country).slice(0, 2).toUpperCase(), country_name: null, region: null, city: null };
+  } catch { /* none */ }
+  if (g.country && !g.country_name) { try { g = { ...g, country_name: new Intl.DisplayNames(["en"], { type: "region" }).of(g.country) || null }; } catch { /* */ } }
+  if (GEO_CACHE.size > 1000) GEO_CACHE.clear();
+  if (g.country) GEO_CACHE.set(ip, g);
+  return g;
 }
 const list = (v: unknown, re: RegExp | null, max: number, len: number) =>
   (Array.isArray(v) ? v : []).slice(0, max).map((x) => String(x ?? "").trim().slice(0, len)).filter((x) => x && (!re || re.test(x)));
@@ -69,27 +109,30 @@ Deno.serve(async (req) => {
   const ref = await refereeOf(body.token);
   const now = new Date().toISOString();
 
-  const { data: pres } = await sb.from("vcbe_app_presence").select("session_id").eq("session_id", sid).maybeSingle();
+  const { data: pres } = await sb.from("vcbe_app_presence").select("session_id,country,country_name,region,city").eq("session_id", sid).maybeSingle();
+  // paese/città: una sola ricerca per visita; l'IP resta in memoria solo per questa richiesta
+  const geo: Geo = pres?.country ? { country: pres.country, country_name: pres.country_name, region: pres.region, city: pres.city } : await geoOf(clientIp(req));
   const { data: vis } = await sb.from("vcbe_app_visitors").select("visitor_id,sessions,referee_id").eq("visitor_id", vid).maybeSingle();
   if (!vis) {
-    await sb.from("vcbe_app_visitors").insert({ visitor_id: vid, first_seen: now, last_seen: now, referee_id: ref, device, lang, sessions: 1 });
+    await sb.from("vcbe_app_visitors").insert({ visitor_id: vid, first_seen: now, last_seen: now, referee_id: ref, device, lang, sessions: 1, ...geo });
   } else {
     const up: Record<string, unknown> = { last_seen: now };
     if (ref) up.referee_id = ref;
     if (device) up.device = device;
     if (lang) up.lang = lang;
     if (!pres) up.sessions = (vis.sessions || 0) + 1;
+    if (geo.country) Object.assign(up, geo);
     await sb.from("vcbe_app_visitors").update(up).eq("visitor_id", vid);
   }
   const rid = ref || vis?.referee_id || null;
-  if (pres) await sb.from("vcbe_app_presence").update({ last_seen: now, page, referee_id: rid, device, lang }).eq("session_id", sid);
-  else await sb.from("vcbe_app_presence").insert({ session_id: sid, visitor_id: vid, referee_id: rid, page, device, lang, started_at: now, last_seen: now });
+  if (pres) await sb.from("vcbe_app_presence").update({ last_seen: now, page, referee_id: rid, device, lang, ...(geo.country ? geo : {}) }).eq("session_id", sid);
+  else await sb.from("vcbe_app_presence").insert({ session_id: sid, visitor_id: vid, referee_id: rid, page, device, lang, started_at: now, last_seen: now, ...geo });
 
   const ev = [
     ...list(body.views, NAME, 20, 48).map((name) => ({ kind: "view", name })),
     ...list(body.acts, NAME, 20, 48).map((name) => ({ kind: "action", name })),
     ...list(body.errs, null, 5, 160).map((name) => ({ kind: "error", name })),
-  ].map((e) => ({ ...e, visitor_id: vid, session_id: sid, referee_id: rid, created_at: now }));
+  ].map((e) => ({ ...e, visitor_id: vid, session_id: sid, referee_id: rid, created_at: now, ...geo }));
   if (ev.length) await sb.from("vcbe_app_events").insert(ev);
 
   if (Math.random() < 0.05) await sb.from("vcbe_app_presence").delete().lt("last_seen", new Date(Date.now() - 86400000).toISOString());
