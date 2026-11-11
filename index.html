@@ -3760,6 +3760,8 @@ function openLib(id){PH_TEAM=null;
   go('library');
   var lb=document.getElementById('page-library');if(!lb)return;
   lb.setAttribute('data-only',id);
+  /* Video & slides opens straight on the video screen (player on top), not on the collapsed column */
+  if(id==='col_libvids'){var c=document.getElementById(id);if(c)c.classList.remove('collapsed');if(typeof renderVideos==='function')renderVideos();try{window.scrollTo(0,0);}catch(e){}}
 }
 function go(p){
   if(p==='books'){if(typeof bkOpen==='function')bkOpen();return;}
