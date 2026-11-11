@@ -60,7 +60,8 @@ begin
     'live', coalesce((select jsonb_agg(jsonb_build_object(
         'sid', right(p.session_id,6), 'vid', right(p.visitor_id,4), 'name', rf.name, 'page', p.page,
         'device', p.device, 'lang', p.lang, 'started_at', p.started_at, 'last_seen', p.last_seen,
-        'new', (v.first_seen >= now() - interval '1 hour'))
+        'new', (v.first_seen >= now() - interval '1 hour'),
+        'country', p.country, 'country_name', p.country_name, 'city', p.city, 'region', p.region)
         order by p.started_at)
       from vcbe_app_presence p left join vcbe_referees rf on rf.id = p.referee_id
       left join vcbe_app_visitors v on v.visitor_id = p.visitor_id
@@ -100,9 +101,21 @@ begin
     'langs', coalesce((select jsonb_object_agg(coalesce(lang,'?'), n) from (
         select v.lang, count(*) n from vcbe_app_visitors v
         where v.visitor_id in (select distinct visitor_id from vcbe_app_events where created_at >= pfrom) group by 1) s), '{}'::jsonb),
+    'countries', coalesce((select jsonb_agg(jsonb_build_object('code', c, 'name', nm, 'visitors', u, 'views', n) order by u desc, n desc)
+      from (select coalesce(country,'?') c, max(country_name) nm, count(distinct visitor_id) u, count(*) filter (where kind='view') n
+            from vcbe_app_events where created_at >= pfrom group by 1) s), '[]'::jsonb),
+    'cities', coalesce((select jsonb_agg(jsonb_build_object('city', city, 'region', rg, 'country', c, 'visitors', u) order by u desc, city)
+      from (select city, max(region) rg, max(country) c, count(distinct visitor_id) u
+            from vcbe_app_events where created_at >= pfrom and city is not null group by city, country order by 4 desc, 1 limit 30) s), '[]'::jsonb),
     'referees', coalesce((select jsonb_agg(jsonb_build_object('name', rf.name, 'views', s.n, 'last', s.l) order by s.l desc)
       from (select referee_id, count(*) n, max(created_at) l from vcbe_app_events
             where referee_id is not null and created_at >= pfrom group by 1) s join vcbe_referees rf on rf.id = s.referee_id), '[]'::jsonb)
   ) into r;
   return r;
 end $$;
+
+-- 11/11/2026 (seconda richiesta utente): paese e città dei visitatori, ricavati dall'IP nella edge function.
+-- L'IP NON viene salvato: si salvano solo paese (codice ISO + nome), regione e città. Migration vcbe_app_stats_geo_20261111.
+alter table public.vcbe_app_presence add column if not exists country text, add column if not exists country_name text, add column if not exists region text, add column if not exists city text;
+alter table public.vcbe_app_visitors add column if not exists country text, add column if not exists country_name text, add column if not exists region text, add column if not exists city text;
+alter table public.vcbe_app_events add column if not exists country text, add column if not exists country_name text, add column if not exists region text, add column if not exists city text;
