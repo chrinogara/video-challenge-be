@@ -1018,6 +1018,300 @@ body.dv-navon{overflow:hidden}
 .dva-set span{flex:1}
 .dva-set select{min-height:38px;border:1.5px solid var(--line2);border-radius:10px;padding:0 8px;font-weight:700;width:auto!important;min-width:96px;flex:none}
 .dva-ev{font-size:12.5px;color:#55516E;padding:4px 0}
+/* ── Instachallenge (11/11/2026, richiesta utente) ───────────────────────── */
+.ic{position:fixed;inset:0;z-index:300;background:#0B1020;display:flex;justify-content:center;font-family:var(--fb);color:#111}
+.ic[hidden]{display:none}
+.ic-app{position:relative;width:100%;max-width:480px;height:100%;background:#fff;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.35)}
+.ic-ico{display:block;width:40px;height:40px}
+.ic-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.ic-v{display:flex;flex-direction:column;flex:1;min-height:0}
+.ic-v[hidden]{display:none}
+.ic-top{display:flex;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;min-height:52px;flex:none;background:#fff;border-bottom:1px solid #f0f0f3}
+.ic-top.flat{border-bottom:none}
+.ic-top h1{font-size:17px;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0}
+.ic-top .c{text-align:center}
+.ic-ib{width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center;background:none;border:none;color:#111;cursor:pointer;border-radius:50%;position:relative;padding:0}
+.ic-ib:active{background:#f2f2f5}
+.ic-ib svg{width:26px;height:26px}
+.ic-ib .bd{position:absolute;top:5px;right:4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#E11D48;color:#fff;font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.ic-ib .bd[hidden]{display:none}
+.ic-word{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;font-weight:800;font-size:21px;letter-spacing:-.02em;background:linear-gradient(90deg,#E11D48,#2563EB);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none}
+.ic-word svg{width:24px;height:24px}
+.ic-link{background:none;border:none;color:#2563EB;font-weight:700;font-size:15px;cursor:pointer;padding:8px;font-family:inherit}
+.ic-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:46px;border-radius:24px;border:none;background:#2563EB;color:#fff;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;padding:0 18px}
+.ic-btn:disabled{opacity:.55}
+.ic-btn.ghost{background:#fff;color:#111;border:1px solid #d5d5dd}
+.ic-btn.sm{min-height:34px;border-radius:9px;font-size:13.5px;width:auto;padding:0 14px}
+.ic-btn.gray{background:#EFEFF4;color:#111}
+.ic-body{padding:22px 18px 18px;display:flex;flex-direction:column;gap:14px;flex:1}
+.ic-body h2{font-size:24px;font-weight:800;letter-spacing:-.01em}
+.ic-body p.s{margin:-6px 0 0;color:#444;font-size:14.5px;line-height:1.45}
+.ic-foot{padding:12px 18px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px;flex:none}
+.ic-field{position:relative;border:1px solid #d5d5dd;border-radius:14px;padding:8px 44px 8px 14px;background:#fff}
+.ic-field:focus-within{border-color:#2563EB}
+.ic-field label{display:block;font-size:12px;color:#777}
+.ic-field input,.ic-field select,.ic-field textarea{display:block;width:100%;border:none;outline:none;font:inherit;font-size:16px;background:transparent;padding:2px 0;color:#111;resize:none}
+.ic-field .ok{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:24px;height:24px;color:#0E9F6E}
+.ic-field .ok.bad{color:#E11D48}
+.ic-err{color:#E11D48;font-size:13.5px;font-weight:600}
+.ic-err[hidden]{display:none}
+.ic-spin{width:20px;height:20px;border:2.5px solid rgba(0,0,0,.15);border-top-color:#2563EB;border-radius:50%;animation:icspin .8s linear infinite;display:inline-block;flex:none}
+.ic-btn .ic-spin{border-color:rgba(255,255,255,.4);border-top-color:#fff}
+@keyframes icspin{to{transform:rotate(360deg)}}
+.ic-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:20px}
+/* splash */
+.ic-splash{position:absolute;inset:0;z-index:30;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ic-splash[hidden]{display:none}
+.ic-splash .ic-ico{width:78px;height:78px;animation:icpop .5s ease-out}
+.ic-splash .from{position:absolute;bottom:calc(36px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:#777;line-height:1.3}
+.ic-splash .from b{display:block;font-size:16px;background:linear-gradient(90deg,#E11D48,#2563EB);-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes icpop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+/* welcome collage */
+.ic-collage{position:relative;width:230px;height:250px;margin:6px auto 4px}
+.ic-collage .t{position:absolute;width:118px;height:190px;border-radius:16px;background:#ddd center/cover no-repeat;box-shadow:0 10px 30px rgba(0,0,0,.18);border:3px solid #fff}
+.ic-collage .t1{left:0;top:30px;transform:rotate(-9deg);background-image:linear-gradient(160deg,#E11D48,#9F1239)}
+.ic-collage .t2{left:56px;top:0;z-index:2;background-image:linear-gradient(160deg,#2563EB,#1E3A8A)}
+.ic-collage .t3{right:0;top:36px;transform:rotate(9deg);background-image:linear-gradient(160deg,#F59E0B,#E11D48)}
+.ic-collage .t span{position:absolute;left:8px;bottom:8px;right:8px;background:rgba(255,255,255,.9);border-radius:10px;height:14px}
+.ic-collage .h{position:absolute;z-index:3;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.ic-collage .h1{left:-8px;top:120px;background:#E11D48}.ic-collage .h2{right:-6px;top:6px;background:#2563EB}
+/* avatars */
+.ic-av{width:32px;height:32px;border-radius:50%;flex:none;background:#E9E9F0 center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-weight:800;color:#555;font-size:12px;overflow:hidden}
+.ic-av img{width:100%;height:100%;object-fit:cover}
+.ic-nav[hidden],#ic_pic_done[hidden]{display:none!important}
+.ic-ring{display:inline-flex;padding:2.5px;border-radius:50%;background:conic-gradient(from 200deg,#E11D48,#F97316,#E11D48,#7C3AED,#2563EB,#E11D48);flex:none}
+.ic-ring.seen{background:#d5d5dd}
+.ic-ring>.ic-av{border:2.5px solid #fff}
+/* stories row */
+.ic-stories{display:flex;gap:12px;overflow-x:auto;padding:10px 12px 12px;scrollbar-width:none;border-bottom:1px solid #f0f0f3}
+.ic-stories::-webkit-scrollbar{display:none}
+.ic-st{display:flex;flex-direction:column;align-items:center;gap:4px;width:74px;flex:none;background:none;border:none;cursor:pointer;padding:0;font-family:inherit}
+.ic-st .ic-av{width:64px;height:64px;font-size:18px}
+.ic-st .ic-ring{padding:3px}
+.ic-st span.n{font-size:11.5px;color:#222;max-width:74px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ic-st .plus{position:absolute;right:-1px;bottom:-1px;width:22px;height:22px;border-radius:50%;background:#2563EB;color:#fff;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;line-height:1}
+.ic-st .wr{position:relative}
+/* suggestions card row */
+.ic-sug{padding:12px 0 14px;border-bottom:1px solid #f0f0f3}
+.ic-sug .hd{display:flex;align-items:center;justify-content:space-between;padding:0 12px 8px;font-weight:700;font-size:14.5px}
+.ic-sug .row{display:flex;gap:10px;overflow-x:auto;padding:0 12px;scrollbar-width:none}
+.ic-sug .row::-webkit-scrollbar{display:none}
+.ic-card{position:relative;flex:none;width:156px;border:1px solid #ececf2;border-radius:12px;padding:16px 10px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.ic-card .ic-av{width:84px;height:84px;font-size:26px}
+.ic-card b{font-size:13.5px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ic-card small{font-size:12px;color:#777;min-height:16px}
+.ic-card .x{position:absolute;top:4px;right:4px;width:26px;height:26px;border:none;background:none;color:#777;cursor:pointer;font-size:18px}
+.ic-card .ic-btn{width:100%;min-height:32px;border-radius:9px;font-size:13.5px}
+.ic-card.find svg{width:84px;height:84px;color:#E11D48}
+/* post */
+.ic-post{border-bottom:1px solid #f0f0f3;padding-bottom:6px}
+.ic-ph{display:flex;align-items:center;gap:10px;padding:8px 6px 8px 12px}
+.ic-ph .who{flex:1;min-width:0;line-height:1.2;cursor:pointer}
+.ic-ph .who b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ic-ph .who small{font-size:12px;color:#666}
+.ic-media{position:relative;background:#000;user-select:none;-webkit-user-select:none}
+.ic-car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;aspect-ratio:4/5;max-height:70vh}
+.ic-car::-webkit-scrollbar{display:none}
+.ic-car>div{flex:0 0 100%;scroll-snap-align:center;position:relative;display:flex;align-items:center;justify-content:center;background:#000}
+.ic-car img,.ic-car video{width:100%;height:100%;object-fit:cover;display:block}
+.ic-car.fit img,.ic-car.fit video{object-fit:contain}
+.ic-cnt{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);color:#fff;border-radius:12px;padding:2px 9px;font-size:12px;font-weight:700;z-index:2}
+.ic-dots{display:flex;justify-content:center;gap:4px;padding:7px 0 0;height:13px}
+.ic-dots i{width:6px;height:6px;border-radius:50%;background:#cfcfd8}
+.ic-dots i.on{background:#2563EB}
+.ic-mute{position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;display:flex;align-items:center;justify-content:center;z-index:2;cursor:pointer}
+.ic-mute svg{width:16px;height:16px}
+.ic-again{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);z-index:3}
+.ic-again[hidden]{display:none}
+.ic-again button{background:rgba(255,255,255,.95);border:none;border-radius:20px;padding:9px 16px;font-weight:700;font-family:inherit;display:flex;gap:6px;align-items:center;cursor:pointer}
+.ic-heart{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;color:#fff;z-index:4;pointer-events:none;filter:drop-shadow(0 4px 12px rgba(0,0,0,.35));animation:icheart .9s ease-out forwards}
+@keyframes icheart{0%{transform:scale(0);opacity:0}15%{transform:scale(1.15);opacity:1}30%{transform:scale(.95)}45%{transform:scale(1)}80%{opacity:1}100%{transform:scale(1);opacity:0}}
+.ic-act{display:flex;align-items:center;gap:2px;padding:4px 4px 0}
+.ic-act button{display:flex;align-items:center;gap:5px;background:none;border:none;padding:8px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;color:#111}
+.ic-act button svg{width:25px;height:25px}
+.ic-act .sp{flex:1}
+.ic-act .liked svg{color:#E11D48;fill:#E11D48;animation:icbeat .35s}
+.ic-act .on svg{color:#2563EB}
+.ic-act .saved svg{fill:#111}
+@keyframes icbeat{50%{transform:scale(1.25)}}
+.ic-cap{padding:2px 12px;font-size:14px;line-height:1.4;word-wrap:break-word}
+.ic-cap b{cursor:pointer}
+.ic-cap .more{color:#777;cursor:pointer;background:none;border:none;padding:0;font:inherit}
+.ic-cap a,.ic-tag{color:#2563EB}
+.ic-meta{padding:3px 12px;font-size:13.5px;color:#777;cursor:pointer;background:none;border:none;text-align:left;font-family:inherit;display:block}
+.ic-time{padding:2px 12px 6px;font-size:11.5px;color:#888}
+.ic-liked{padding:0 12px;font-size:13.5px;cursor:pointer}
+/* bottom nav */
+.ic-nav{display:flex;flex:none;border-top:1px solid #ececf2;background:#fff;padding-bottom:env(safe-area-inset-bottom)}
+.ic-nav button{flex:1;height:52px;display:flex;align-items:center;justify-content:center;background:none;border:none;color:#111;cursor:pointer;position:relative}
+.ic-nav button svg{width:26px;height:26px}
+.ic-nav button.on svg{stroke-width:2.6}
+.ic-nav .ic-av{width:27px;height:27px;font-size:10px}
+.ic-nav button.on .ic-av{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #111}
+.ic-nav .bd{position:absolute;top:8px;left:calc(50% + 6px);min-width:16px;height:16px;border-radius:8px;background:#E11D48;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.ic-nav .bd[hidden]{display:none}
+.ic-dark .ic-nav{background:#000;border-top-color:#222}.ic-dark .ic-nav button{color:#fff}
+/* lists */
+.ic-li{display:flex;align-items:center;gap:12px;padding:8px 14px}
+.ic-li .ic-av{width:46px;height:46px;font-size:15px}
+.ic-li .tx{flex:1;min-width:0;line-height:1.25;font-size:14px}
+.ic-li .tx b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ic-li .tx small{color:#777;font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ic-li .th{width:44px;height:44px;border-radius:6px;object-fit:cover;flex:none;background:#eee}
+.ic-chk{width:26px;height:26px;border-radius:50%;border:1.8px solid #c5c5cf;flex:none;display:flex;align-items:center;justify-content:center;background:#fff;cursor:pointer;padding:0}
+.ic-chk.on{background:#2563EB;border-color:#2563EB;color:#fff}
+.ic-chk svg{width:15px;height:15px}
+.ic-search{display:flex;align-items:center;gap:8px;background:#EFEFF4;border-radius:11px;padding:0 12px;height:38px;margin:4px 12px 8px}
+.ic-search svg{width:18px;height:18px;color:#777;flex:none}
+.ic-search input{flex:1;border:none;background:transparent;outline:none;font:inherit;font-size:16px;min-width:0}
+.ic-sec{padding:14px 14px 6px;font-weight:700;font-size:15px}
+.ic-empty{padding:40px 24px;text-align:center;color:#777;font-size:14.5px}
+.ic-empty svg{width:64px;height:64px;color:#111;display:block;margin:0 auto 10px}
+.ic-empty b{display:block;color:#111;font-size:20px;margin-bottom:4px}
+/* grid */
+.ic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.ic-grid button{position:relative;aspect-ratio:3/4;border:none;padding:0;background:#eee center/cover no-repeat;cursor:pointer}
+.ic-grid button svg{position:absolute;top:6px;right:6px;width:18px;height:18px;color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+/* profile */
+.ic-prof{padding:12px 14px 6px}
+.ic-prof .r1{display:flex;align-items:center;gap:18px}
+.ic-prof .r1 .ic-av{width:84px;height:84px;font-size:26px}
+.ic-prof .nums{flex:1;display:flex;justify-content:space-around;text-align:center}
+.ic-prof .nums button{background:none;border:none;font-family:inherit;cursor:pointer;line-height:1.2;padding:4px}
+.ic-prof .nums b{display:block;font-size:17px}
+.ic-prof .nums span{font-size:13px}
+.ic-prof .nm{font-weight:700;font-size:14px;margin-top:10px}
+.ic-prof .bio{font-size:14px;white-space:pre-wrap;line-height:1.4}
+.ic-prof .btns{display:flex;gap:6px;margin-top:12px}
+.ic-prof .btns .ic-btn{flex:1;min-height:34px;border-radius:9px;font-size:14px}
+.ic-ptabs{display:flex;border-bottom:1px solid #ececf2;margin-top:8px;position:sticky;top:0;background:#fff;z-index:2}
+.ic-ptabs button{flex:1;height:44px;background:none;border:none;color:#999;cursor:pointer;border-bottom:1.5px solid transparent}
+.ic-ptabs button.on{color:#111;border-bottom-color:#111}
+.ic-ptabs svg{width:24px;height:24px}
+/* onboarding avatar */
+.ic-bigav{width:170px;height:170px;border-radius:50%;margin:18px auto 6px;background:#E1E2EA;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.ic-bigav svg{width:110px;height:110px;color:#fff;margin-top:28px}
+.ic-bigav img{width:100%;height:100%;object-fit:cover}
+.ic-swrow{display:flex;align-items:center;gap:12px;border:1px solid #ececf2;border-radius:14px;padding:12px 14px;font-size:14px}
+.ic-swrow span{flex:1}
+.ic-sw{width:50px;height:30px;border-radius:15px;background:#d5d5dd;border:none;position:relative;cursor:pointer;flex:none;transition:background .2s}
+.ic-sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .2s}
+.ic-sw[aria-checked=true]{background:#2563EB}.ic-sw[aria-checked=true]::after{left:23px}
+.ic-pcard{margin:10px auto;width:min(290px,90%);border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.12);padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.ic-pcard .ic-av{width:140px;height:140px;font-size:40px}
+.ic-pcard .u{margin-top:8px;display:inline-block;padding:4px 12px;border-radius:8px;background:#f3f3f7;font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+.ic-pcard textarea{width:100%;border:1px solid #d5d5dd;border-radius:12px;padding:8px 10px;font:inherit;font-size:15px;resize:none;text-align:center}
+/* sheets */
+.ic-sheet{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(0,0,0,.45)}
+.ic-sheet[hidden]{display:none}
+.ic-sheet .pan{background:#fff;border-radius:16px 16px 0 0;max-height:88%;display:flex;flex-direction:column;animation:icup .22s ease-out;padding-bottom:env(safe-area-inset-bottom)}
+.ic-sheet .pan.tall{height:88%}
+.ic-sheet .grab{width:40px;height:4px;border-radius:2px;background:#d0d0d8;margin:8px auto 4px;flex:none}
+.ic-sheet .sh{text-align:center;font-weight:800;font-size:15.5px;padding:6px 40px 10px;border-bottom:1px solid #f0f0f3;position:relative;flex:none}
+.ic-sheet .sh button{position:absolute;right:6px;top:-4px}
+@keyframes icup{from{transform:translateY(40%)}to{transform:none}}
+.ic-menu button{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;padding:15px 18px;font:inherit;font-size:15.5px;cursor:pointer;text-align:left;border-bottom:1px solid #f5f5f7}
+.ic-menu button.red{color:#E11D48;font-weight:700}
+.ic-menu button svg{width:22px;height:22px}
+/* comments */
+.ic-cm{display:flex;gap:10px;padding:9px 12px 9px 14px}
+.ic-cm.rep{padding-left:58px}
+.ic-cm .ic-av{width:34px;height:34px;font-size:12px}
+.ic-cm.rep .ic-av{width:26px;height:26px;font-size:10px}
+.ic-cm .tx{flex:1;min-width:0;font-size:14px;line-height:1.35}
+.ic-cm .tx .h{font-size:12.5px;color:#666}
+.ic-cm .tx .h b{color:#111;font-weight:700}
+.ic-cm .tx .tagA{color:#666}
+.ic-cm .tx .bd2{white-space:pre-wrap;word-wrap:break-word}
+.ic-cm .tx .ops{display:flex;gap:14px;margin-top:3px;font-size:12.5px;color:#777}
+.ic-cm .tx .ops button{background:none;border:none;padding:0;color:#777;font:inherit;font-weight:700;cursor:pointer}
+.ic-cm .lk{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11.5px;color:#777;background:none;border:none;cursor:pointer;padding:0 2px;flex:none}
+.ic-cm .lk svg{width:15px;height:15px}
+.ic-cm .lk.on svg{color:#E11D48;fill:#E11D48}
+.ic-cm.pending{opacity:.6}
+.ic-vrep{padding:0 0 6px 58px;font-size:12.5px;color:#777;font-weight:700;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit}
+.ic-vrep::before{content:"";width:24px;height:1px;background:#bbb}
+.ic-emo{display:flex;justify-content:space-around;padding:6px 8px;border-top:1px solid #f0f0f3;flex:none}
+.ic-emo button{background:none;border:none;font-size:24px;cursor:pointer;padding:2px 4px}
+.ic-cin{display:flex;align-items:center;gap:10px;padding:6px 12px 10px;flex:none}
+.ic-cin .ic-av{width:34px;height:34px}
+.ic-cin .box{flex:1;display:flex;align-items:center;border:1px solid #d5d5dd;border-radius:22px;padding:4px 4px 4px 14px;min-height:42px}
+.ic-cin input,.ic-cin textarea{flex:1;border:none;outline:none;font:inherit;font-size:15px;background:transparent;min-width:0;resize:none}
+.ic-send{width:34px;height:30px;border-radius:15px;border:none;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+.ic-send svg{width:18px;height:18px}
+.ic-send:disabled{opacity:.35}
+.ic-replying{font-size:12.5px;color:#666;padding:6px 14px;background:#f6f6f9;display:flex;align-items:center;gap:8px;flex:none}
+.ic-replying[hidden]{display:none}
+.ic-replying span{flex:1}
+/* composer */
+.ic-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.ic-pick div{position:relative;aspect-ratio:1;background:#000}
+.ic-pick img,.ic-pick video{width:100%;height:100%;object-fit:cover}
+.ic-pick button{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(0,0,0,.65);color:#fff;cursor:pointer;font-size:15px;line-height:1}
+.ic-pick .vt{position:absolute;left:5px;bottom:4px;color:#fff;font-size:11px;font-weight:700;text-shadow:0 1px 2px #000}
+.ic-tabs2{display:flex;gap:8px;padding:10px 12px}
+.ic-tabs2 button{flex:1;height:36px;border-radius:18px;border:1px solid #d5d5dd;background:#fff;font:inherit;font-weight:700;font-size:13.5px;cursor:pointer}
+.ic-tabs2 button.on{background:#111;color:#fff;border-color:#111}
+.ic-prog{height:4px;background:#eee;border-radius:2px;overflow:hidden}
+.ic-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#E11D48,#2563EB);transition:width .2s}
+/* stories viewer */
+.ic-sv{position:absolute;inset:0;z-index:25;background:#000;color:#fff;display:flex;flex-direction:column;user-select:none;-webkit-user-select:none}
+.ic-sv[hidden]{display:none}
+.ic-sv .stage{position:relative;flex:1;margin-top:env(safe-area-inset-top);border-radius:10px;overflow:hidden;background:#111}
+.ic-sv .stage img,.ic-sv .stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.ic-sv .bars{position:absolute;top:8px;left:8px;right:8px;display:flex;gap:3px;z-index:3}
+.ic-sv .bars i{flex:1;height:2.5px;background:rgba(255,255,255,.35);border-radius:2px;overflow:hidden}
+.ic-sv .bars i b{display:block;height:100%;width:0;background:#fff}
+.ic-sv .sh2{position:absolute;top:18px;left:10px;right:4px;display:flex;align-items:center;gap:8px;z-index:3;font-size:13.5px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.ic-sv .sh2 .ic-av{width:32px;height:32px}
+.ic-sv .sh2 small{opacity:.75}
+.ic-sv .sh2 .ic-ib{color:#fff}
+.ic-sv .tap{position:absolute;top:60px;bottom:0;z-index:2;width:35%}
+.ic-sv .tap.l{left:0}.ic-sv .tap.r{right:0;width:65%}
+.ic-sv .stx{position:absolute;left:16px;right:16px;top:22%;z-index:3;text-align:center;font-weight:800;font-size:28px;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.6);pointer-events:none;white-space:pre-wrap}
+.ic-sv .poll{position:absolute;left:50%;bottom:22%;transform:translateX(-50%);z-index:4;width:min(250px,75%);background:#fff;color:#111;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:7px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.ic-sv .poll .q{font-weight:800;font-size:14.5px;text-align:center;padding:2px 4px}
+.ic-sv .poll button{position:relative;height:40px;border-radius:9px;border:none;background:#f1f1f5;font:inherit;font-weight:700;font-size:14px;text-align:left;padding:0 12px;cursor:pointer;overflow:hidden}
+.ic-sv .poll button i{position:absolute;left:0;top:0;bottom:0;background:#111;z-index:0;transition:width .5s}
+.ic-sv .poll button span{position:relative;z-index:1;mix-blend-mode:difference;color:#fff;display:flex;justify-content:space-between}
+.ic-sv .ask{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;width:min(270px,80%);background:#fff;color:#111;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.35);text-align:center}
+.ic-sv .ask .q{font-weight:800;padding:14px 12px 10px;font-size:15px}
+.ic-sv .ask input{width:calc(100% - 24px);margin:0 12px 12px;border:none;background:#f1f1f5;border-radius:10px;padding:10px;font:inherit;font-size:15px;outline:none}
+.ic-sv .ask button{width:100%;height:44px;border:none;background:#2563EB;color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.ic-sv .ask button.sent{background:#0E9F6E}
+.ic-sv .bot{display:flex;align-items:center;gap:8px;padding:10px 10px calc(10px + env(safe-area-inset-bottom));flex:none}
+.ic-sv .bot input{flex:1;height:44px;border-radius:22px;border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;padding:0 16px;font:inherit;font-size:15px;outline:none;min-width:0}
+.ic-sv .bot input::placeholder{color:rgba(255,255,255,.8)}
+.ic-sv .bot .ic-ib{color:#fff}
+.ic-sv .bot .liked svg{color:#E11D48;fill:#E11D48}
+.ic-sv .emos{position:absolute;inset:0;z-index:6;background:rgba(0,0,0,.55);display:grid;grid-template-columns:repeat(3,1fr);align-content:center;gap:22px;padding:30px}
+.ic-sv .emos[hidden]{display:none}
+.ic-sv .emos button{font-size:44px;background:none;border:none;cursor:pointer}
+.ic-sv .toast2{position:absolute;left:50%;top:45%;transform:translateX(-50%);background:rgba(60,60,60,.85);padding:8px 16px;border-radius:12px;font-size:13.5px;font-weight:700;z-index:7}
+.ic-sv .toast2[hidden]{display:none}
+.ic-sv .own{position:absolute;left:12px;bottom:12px;z-index:4;display:flex;gap:8px}
+.ic-sv .own button{background:rgba(0,0,0,.55);color:#fff;border:none;border-radius:16px;padding:7px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;display:flex;gap:6px;align-items:center}
+.ic-sv .own svg{width:16px;height:16px}
+/* reels */
+.ic-reels{flex:1;overflow-y:auto;scroll-snap-type:y mandatory;background:#000;scrollbar-width:none}
+.ic-reels::-webkit-scrollbar{display:none}
+.ic-reel{height:100%;scroll-snap-align:start;position:relative;display:flex;align-items:center;justify-content:center;color:#fff}
+.ic-reel video{width:100%;height:100%;object-fit:cover}
+.ic-reel .side{position:absolute;right:6px;bottom:90px;display:flex;flex-direction:column;gap:14px;align-items:center;z-index:3}
+.ic-reel .side button{background:none;border:none;color:#fff;display:flex;flex-direction:column;align-items:center;font:inherit;font-size:12px;font-weight:700;cursor:pointer;gap:2px;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.ic-reel .side svg{width:28px;height:28px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.ic-reel .side .liked svg{color:#E11D48;fill:#E11D48}
+.ic-reel .info{position:absolute;left:12px;right:70px;bottom:18px;z-index:3;font-size:14px;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.ic-reel .info .u{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:6px}
+.ic-reel .info .ic-av{width:30px;height:30px}
+.ic-reel .info .ic-btn{min-height:28px;padding:0 10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.8);font-size:12.5px;width:auto}
+.ic-toast{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);background:#262626;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;z-index:40;display:flex;gap:14px;align-items:center;max-width:90%;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.ic-toast[hidden]{display:none}
+.ic-toast button{background:none;border:none;color:#60A5FA;font:inherit;font-weight:800;cursor:pointer;padding:0}
+/* chat card in Drive messages */
+.ic-chatcard{display:flex;align-items:center;gap:8px;margin-top:6px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.85);color:#111;border:1px solid rgba(0,0,0,.08);cursor:pointer;font:inherit;font-size:13px;font-weight:700;width:100%;text-align:left}
+.ic-chatcard svg{width:26px;height:26px;flex:none}
+@media (min-width:760px){.ic-app{border-left:1px solid #222;border-right:1px solid #222}}
 </style>
 </head>
 <body>
@@ -1087,6 +1381,11 @@ body.dv-navon{overflow:hidden}
         <div class="tile" onclick="openLib('col_libphotos')">
           <div class="ic" style="background:#FCE7F3;color:#DB2777"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 8"/></svg></div>
           <span class="cntnew tilenew" id="nb_photos" hidden></span><h3 data-i18n="f4t">Photos</h3><p data-i18n="f4d">View photos of halls and equipment.</p>
+          <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
+        </div>
+        <div class="tile wide w3 tile-ic" onclick="go('insta')">
+          <div class="ic" style="background:linear-gradient(135deg,#E11D48,#7C3AED 55%,#2563EB);color:#fff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6.5" width="18" height="13.5" rx="3.5"/><path d="M8.5 6.5l1.3-2.5h4.4l1.3 2.5"/><circle cx="12" cy="13.2" r="3.6"/><path d="M11.2 11.8l2.4 1.4-2.4 1.4z" fill="currentColor"/></svg></div>
+          <h3>Instachallenge</h3><p data-i18n="ic_home_d">Photos and videos shared between Video Referees.</p>
           <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
         </div>
         <div class="tile wide w3" onclick="go('report')">
@@ -1759,6 +2058,213 @@ body.dv-navon{overflow:hidden}
 </div>
 <div id="dv_toast" class="dv-toast" hidden role="status"></div>
 
+<!-- ── Instachallenge (11/11/2026, richiesta utente) ── -->
+<div id="ic" class="ic" hidden role="dialog" aria-modal="true" aria-label="Instachallenge">
+ <div class="ic-app" id="ic_app">
+  <div class="ic-splash" id="ic_splash" hidden><span id="ic_splash_ico"></span><div class="from"><span data-i18n="ic_from">from</span><b>VC Referee</b></div></div>
+
+  <!-- welcome -->
+  <div class="ic-v" data-icv="welcome" hidden>
+   <div class="ic-top flat"><button class="ic-ib" onclick="icExit()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+   <div class="ic-center">
+    <div class="ic-collage"><div class="t t1"><span></span></div><div class="t t2" id="ic_wel_img"><span></span></div><div class="t t3"><span></span></div><div class="h h1">&#10084;</div><div class="h h2">&#9654;</div></div>
+    <h2 style="font-size:22px;font-weight:800" data-i18n="ic_join">Join Instachallenge</h2>
+    <p style="margin:0;color:#444;max-width:300px" data-i18n="ic_join_s">Share photos and videos of your matches with the other Video Referees.</p>
+   </div>
+   <div class="ic-foot">
+    <button class="ic-btn" onclick="icGoLogin()" data-i18n="ic_start">Get started</button>
+    <button class="ic-btn ghost" onclick="icGoLogin()" data-i18n="ic_have">I already have an account</button>
+    <div style="text-align:center;font-size:12.5px;color:#777;font-weight:700">VC Referee</div>
+   </div>
+  </div>
+
+  <!-- login (nome + codice personale, come Drive) -->
+  <div class="ic-v" data-icv="login" hidden>
+   <div class="ic-top flat"><button class="ic-ib" onclick="icShow('welcome')" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+   <div class="ic-body">
+    <h2 data-i18n="ic_login_t">Who are you?</h2>
+    <p class="s" data-i18n="ic_login_s">Choose your name and enter your personal code. It is the same code as the Drive section.</p>
+    <div class="ic-field"><label data-i18n="dv_l_name">Name</label><select id="ic_name"></select></div>
+    <div class="ic-field"><label data-i18n="dv_l_code">Personal code</label><input id="ic_code" type="password" inputmode="numeric" autocomplete="off" maxlength="8" onkeydown="if(event.key==='Enter')icLogin()"></div>
+    <div class="ic-err" id="ic_lerr" hidden></div>
+    <button class="ic-btn" id="ic_login_btn" onclick="icLogin()" data-i18n="ic_next">Next</button>
+    <button class="ic-btn ghost" onclick="icRequestAccess()" data-i18n="ic_nocode">I don't have a code</button>
+    <div class="ic-err" id="ic_rmsg" hidden style="color:#0E9F6E"></div>
+   </div>
+  </div>
+
+  <!-- onboarding: username -->
+  <div class="ic-v" data-icv="onb_user" hidden>
+   <div class="ic-top flat"></div>
+   <div class="ic-body">
+    <h2 data-i18n="ic_user_t">Create a username</h2>
+    <p class="s" data-i18n="ic_user_s">Add a username or use our suggestion. You can change this at any time.</p>
+    <div class="ic-field"><label data-i18n="ic_username">Username</label><input id="ic_uname" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="30" oninput="icUserCheck()"><svg class="ok" id="ic_uok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" hidden><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+    <div class="ic-err" id="ic_uerr" hidden></div>
+    <button class="ic-btn" id="ic_unext" onclick="icUserNext()" data-i18n="ic_next">Next</button>
+   </div>
+  </div>
+
+  <!-- onboarding: profile picture -->
+  <div class="ic-v" data-icv="onb_pic" hidden>
+   <div class="ic-top flat"><button class="ic-ib" onclick="icShow('onb_user')" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+   <div class="ic-body">
+    <h2 id="ic_pic_t" data-i18n="ic_pic_t">Add a profile picture</h2>
+    <p class="s" data-i18n="ic_pic_s">Add a profile picture so the other referees know it's you. Everyone in Instachallenge will be able to see it.</p>
+    <div class="ic-bigav" id="ic_bigav"></div>
+    <div id="ic_pic_done" hidden style="display:flex;flex-direction:column;gap:10px">
+     <div class="ic-swrow"><span data-i18n="ic_pic_post">Also share this picture as a post</span><button type="button" class="ic-sw" id="ic_pic_sw" role="switch" aria-checked="false" onclick="this.setAttribute('aria-checked',this.getAttribute('aria-checked')==='true'?'false':'true')"></button></div>
+     <small style="color:#777" data-i18n="ic_pic_post_s">Make this picture your first post so the others can like and comment on it.</small>
+    </div>
+   </div>
+   <div class="ic-foot">
+    <button class="ic-btn" id="ic_pic_main" onclick="icPicMain()" data-i18n="ic_pic_add">Add picture</button>
+    <button class="ic-btn ghost" id="ic_pic_alt" onclick="icPicAlt()" data-i18n="ic_skip">Skip</button>
+   </div>
+  </div>
+
+  <!-- onboarding: welcome -->
+  <div class="ic-v" data-icv="onb_welcome" hidden>
+   <div class="ic-top flat"><div class="ic-word" id="ic_word2"></div></div>
+   <div class="ic-center" style="align-items:flex-start;text-align:left;padding:24px">
+    <div id="ic_wav" style="align-self:center"></div>
+    <h2 style="font-size:22px;font-weight:800;margin-top:20px" id="ic_wel_t"></h2>
+    <p style="margin:0;color:#444" data-i18n="ic_wel_s">Let's start customizing your profile.</p>
+   </div>
+   <div class="ic-foot"><button class="ic-btn" onclick="icShow('onb_bio')" data-i18n="ic_next">Next</button></div>
+  </div>
+
+  <!-- onboarding: bio card -->
+  <div class="ic-v" data-icv="onb_bio" hidden>
+   <div class="ic-top flat"><span style="flex:1"></span><button class="ic-link" onclick="icShow('onb_follow');icLoadPeople()" data-i18n="ic_skip">Skip</button></div>
+   <div class="ic-body" style="align-items:center;text-align:center">
+    <h2 style="font-size:21px" data-i18n="ic_bio_t">Create a profile that shows who you are</h2>
+    <div class="ic-pcard"><div id="ic_bav"></div><div class="u" id="ic_buser"></div><b id="ic_bname"></b><textarea id="ic_bio" rows="3" maxlength="300" data-i18n-ph="ic_bio_ph" placeholder="Add bio"></textarea></div>
+   </div>
+   <div class="ic-foot"><button class="ic-btn" onclick="icBioDone()" data-i18n="ic_done">Done</button></div>
+  </div>
+
+  <!-- onboarding: follow 5+ -->
+  <div class="ic-v" data-icv="onb_follow" hidden>
+   <div class="ic-top flat"><h1 class="c" data-i18n="ic_f5_t">Try following 5+ referees</h1><button class="ic-link" onclick="icFinishOnb(false)" data-i18n="ic_skip">Skip</button></div>
+   <p style="margin:0 20px 6px;text-align:center;color:#777;font-size:13px" data-i18n="ic_f5_s">Following isn't required, but you will see their posts first.</p>
+   <div class="ic-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="ic_f5q" type="search" data-i18n-ph="ic_search" placeholder="Search" oninput="icRenderF5()"></div>
+   <div class="ic-scroll" id="ic_f5list"></div>
+   <div class="ic-foot"><button class="ic-btn" id="ic_f5btn" onclick="icFinishOnb(true)" data-i18n="ic_follow">Follow</button></div>
+  </div>
+
+  <!-- main: feed / search / reels / profile / activity / post / composer / edit -->
+  <div class="ic-v" data-icv="feed" hidden>
+   <div class="ic-top flat"><button class="ic-ib" onclick="icExit()" aria-label="Close" title="VC Referee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><button class="ic-ib" onclick="icCompose('post')" aria-label="New post"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ic-word" id="ic_word"></div><button class="ic-ib" onclick="icNav('activity')" aria-label="Activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9.3-9.2C1.4 7.4 3.6 4 7 4c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 15.4 12 20 12 20z"/></svg><span class="bd" id="ic_actbd" hidden></span></button></div>
+   <div class="ic-scroll" id="ic_feedsc" onscroll="icFeedScroll(this)">
+    <div class="ic-stories" id="ic_stories"></div>
+    <div class="ic-tabs2" id="ic_fmode"><button data-m="all" class="on" onclick="icFeedMode('all')" data-i18n="ic_m_all">All referees</button><button data-m="following" onclick="icFeedMode('following')" data-i18n="ic_m_fol">Following</button></div>
+    <div id="ic_feed"></div>
+    <div id="ic_feedmore" class="ic-empty" style="padding:18px" hidden><span class="ic-spin"></span></div>
+   </div>
+  </div>
+
+  <div class="ic-v" data-icv="search" hidden>
+   <div class="ic-top flat" style="padding-left:4px"><div class="ic-search" style="flex:1;margin:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="ic_sq" type="search" data-i18n-ph="ic_search" placeholder="Search" oninput="icRenderSearch()"></div></div>
+   <div class="ic-scroll"><div id="ic_spl"></div><div class="ic-sec" id="ic_sx_h" data-i18n="ic_explore">Explore</div><div class="ic-grid" id="ic_sgrid"></div></div>
+  </div>
+
+  <div class="ic-v ic-darkv" data-icv="reels" hidden>
+   <div class="ic-reels" id="ic_reels"></div>
+  </div>
+
+  <div class="ic-v" data-icv="profile" hidden>
+   <div class="ic-top"><button class="ic-ib" id="ic_pback" onclick="icBack()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><h1 id="ic_puser"></h1><button class="ic-ib" id="ic_pmenu" onclick="icProfileMenu()" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+   <div class="ic-scroll" id="ic_prof"></div>
+  </div>
+
+  <div class="ic-v" data-icv="activity" hidden>
+   <div class="ic-top"><button class="ic-ib" onclick="icBack()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><h1 data-i18n="ic_notif">Notifications</h1></div>
+   <div class="ic-scroll" id="ic_act"></div>
+  </div>
+
+  <div class="ic-v" data-icv="post" hidden>
+   <div class="ic-top"><button class="ic-ib" onclick="icBack()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><h1 data-i18n="ic_posts">Posts</h1></div>
+   <div class="ic-scroll" id="ic_post1"></div>
+  </div>
+
+  <div class="ic-v" data-icv="compose" hidden>
+   <div class="ic-top"><button class="ic-ib" onclick="icBack()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><h1 class="c" id="ic_ctitle"></h1><button class="ic-link" id="ic_cshare" onclick="icPublish()" data-i18n="ic_share">Share</button></div>
+   <div class="ic-tabs2"><button data-k="post" onclick="icCompose('post',1)" data-i18n="ic_c_post">Post</button><button data-k="story" onclick="icCompose('story',1)" data-i18n="ic_c_story">Story</button></div>
+   <div class="ic-scroll" id="ic_cbody"></div>
+  </div>
+
+  <div class="ic-v" data-icv="edit" hidden>
+   <div class="ic-top"><button class="ic-ib" onclick="icBack()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><h1 class="c" data-i18n="ic_editp">Edit profile</h1><button class="ic-link" onclick="icEditSave()" data-i18n="ic_done">Done</button></div>
+   <div class="ic-scroll"><div class="ic-body">
+    <div style="text-align:center"><div id="ic_eav" style="display:inline-block"></div><br><button class="ic-link" onclick="icPickAvatar('edit')" data-i18n="ic_chgpic">Change picture</button></div>
+    <div class="ic-field"><label data-i18n="dv_l_name">Name</label><input id="ic_ename" disabled></div>
+    <div class="ic-field"><label data-i18n="ic_username">Username</label><input id="ic_euser" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="30"></div>
+    <div class="ic-field"><label data-i18n="ic_bio">Bio</label><textarea id="ic_ebio" rows="3" maxlength="300"></textarea></div>
+    <div class="ic-err" id="ic_eerr" hidden></div>
+   </div></div>
+  </div>
+
+  <nav class="ic-nav" id="ic_nav" hidden>
+   <button data-n="feed" onclick="icNav('feed')" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></button>
+   <button data-n="reels" onclick="icNav('reels')" aria-label="Videos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M3 8.5h18M9 3l3 5.5M15 3l3 5.5"/><path d="M10 12v5l4.5-2.5z" fill="currentColor"/></svg></button>
+   <button data-n="new" onclick="icCompose('post')" aria-label="New"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg></button>
+   <button data-n="msg" onclick="icMessages()" aria-label="Messages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M22 3L9.5 13.5"/><path d="M22 3l-7 18-5.5-7.5L2 9z"/></svg><span class="bd" id="ic_msgbd" hidden></span></button>
+   <button data-n="search" onclick="icNav('search')" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+   <button data-n="profile" onclick="icNav('profile')" aria-label="Profile"><span id="ic_navav"></span></button>
+  </nav>
+
+  <!-- sheets -->
+  <div class="ic-sheet" id="ic_sh_menu" hidden onclick="if(event.target===this)icCloseSheet()"><div class="pan"><div class="grab"></div><div class="ic-menu" id="ic_menu"></div></div></div>
+  <div class="ic-sheet" id="ic_sh_pic" hidden onclick="if(event.target===this)icCloseSheet()"><div class="pan"><div class="grab"></div><div class="sh" data-i18n="ic_addpic">Add picture</div><div class="ic-menu">
+   <button onclick="icAvatarInput(false)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg><span data-i18n="ic_album">Choose from album</span></button>
+   <button onclick="icAvatarInput(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span data-i18n="ic_takephoto">Take photo</span></button>
+   <button id="ic_pic_rm" onclick="icAvatarRemove()" class="red" hidden><span data-i18n="ic_rmpic">Remove current picture</span></button>
+  </div></div></div>
+  <div class="ic-sheet" id="ic_sh_cm" hidden onclick="if(event.target===this)icCloseSheet()"><div class="pan tall"><div class="grab"></div><div class="sh" data-i18n="ic_comments">Comments</div>
+   <div class="ic-scroll" id="ic_cmlist"></div>
+   <div class="ic-replying" id="ic_replying" hidden><span id="ic_replying_t"></span><button class="ic-ib" style="width:28px;height:28px" onclick="icReplyTo(null)" aria-label="Cancel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:16px;height:16px"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+   <div class="ic-emo" id="ic_emo"></div>
+   <div class="ic-cin"><span id="ic_cmav"></span><div class="box"><input id="ic_cmin" maxlength="1000" oninput="document.getElementById('ic_cmsend').disabled=!this.value.trim()" onkeydown="if(event.key==='Enter')icCommentSend()"><button class="ic-send" id="ic_cmsend" disabled onclick="icCommentSend()" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></div></div>
+  </div></div>
+  <div class="ic-sheet" id="ic_sh_ppl" hidden onclick="if(event.target===this)icCloseSheet()"><div class="pan tall"><div class="grab"></div><div class="sh" id="ic_ppl_t"></div>
+   <div class="ic-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="ic_pplq" type="search" data-i18n-ph="ic_search" placeholder="Search" oninput="icRenderPpl()"></div>
+   <div class="ic-scroll" id="ic_ppllist"></div>
+  </div></div>
+  <div class="ic-sheet" id="ic_sh_share" hidden onclick="if(event.target===this)icCloseSheet()"><div class="pan tall"><div class="grab"></div><div class="sh" data-i18n="ic_sendto">Send to</div>
+   <div class="ic-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="ic_shq" type="search" data-i18n-ph="ic_search" placeholder="Search" oninput="icRenderShare()"></div>
+   <div class="ic-scroll" id="ic_shlist"></div>
+   <div class="ic-cin"><div class="box"><input id="ic_shnote" maxlength="500" data-i18n-ph="ic_writemsg" placeholder="Write a message…"></div></div>
+   <div class="ic-foot" style="padding-top:0"><button class="ic-btn" id="ic_shbtn" onclick="icShareSend()" disabled data-i18n="ic_send">Send</button></div>
+  </div></div>
+  <div class="ic-sheet" id="ic_sh_repost" hidden onclick="if(event.target===this)icCloseSheet()"><div class="pan"><div class="grab"></div>
+   <div class="ic-body" style="align-items:center;text-align:center;gap:10px"><div id="ic_rpav"></div><h2 style="font-size:21px" data-i18n="ic_rp_t">You reposted this post</h2><p class="s" style="margin:0" data-i18n="ic_rp_s">Reposting shares someone else's post with the referees who follow you. It also appears in a special tab of your profile.</p>
+    <div class="ic-cin" style="width:100%;padding:0"><div class="box"><input id="ic_rpthought" maxlength="120" data-i18n-ph="ic_rp_ph" placeholder="Add a thought…"></div></div>
+    <button class="ic-btn" onclick="icRepostOk()" data-i18n="ic_ok">OK</button><button class="ic-link" onclick="icRepostUndo()" data-i18n="ic_undo">Undo</button></div>
+  </div></div>
+
+  <!-- story viewer -->
+  <div class="ic-sv" id="ic_sv" hidden>
+   <div class="stage" id="ic_svstage">
+    <div class="bars" id="ic_svbars"></div>
+    <div class="sh2"><span id="ic_svav"></span><b id="ic_svuser"></b><small id="ic_svtime"></small><span style="flex:1"></span><button class="ic-ib" id="ic_svmore" onclick="icStoryMenu()" aria-label="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button><button class="ic-ib" onclick="icStoryClose()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div id="ic_svmedia"></div>
+    <div class="tap l" onclick="icStoryStep(-1)"></div><div class="tap r" onclick="icStoryStep(1)"></div>
+    <div id="ic_svextra"></div>
+    <div class="emos" id="ic_svemos" hidden onclick="if(event.target===this)icStoryEmos(false)"></div>
+    <div class="toast2" id="ic_svtoast" hidden></div>
+   </div>
+   <div class="bot" id="ic_svbot"><input id="ic_svin" maxlength="500" data-i18n-ph="ic_sendmsg" placeholder="Send message…" onfocus="icStoryPause(true);icStoryEmos(true)" onblur="setTimeout(function(){icStoryEmos(false);icStoryPause(false)},150)" onkeydown="if(event.key==='Enter')icStoryReply()"><button class="ic-ib" id="ic_svlike" onclick="icStoryLike()" aria-label="Like"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9.3-9.2C1.4 7.4 3.6 4 7 4c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 15.4 12 20 12 20z"/></svg></button><button class="ic-ib" onclick="icStoryReply()" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M22 3L9.5 13.5"/><path d="M22 3l-7 18-5.5-7.5L2 9z"/></svg></button></div>
+  </div>
+
+  <div class="ic-toast" id="ic_toast" hidden><span id="ic_toast_t"></span><button id="ic_toast_b" hidden></button></div>
+  <input type="file" id="ic_avfile" accept="image/*" hidden onchange="icAvatarFile(this)">
+  <input type="file" id="ic_avcam" accept="image/*" capture="user" hidden onchange="icAvatarFile(this)">
+  <input type="file" id="ic_mfile" accept="image/*,video/*" multiple hidden onchange="icMediaFiles(this)">
+  <input type="file" id="ic_mcam" accept="image/*,video/*" capture="environment" hidden onchange="icMediaFiles(this)">
+ </div>
+</div>
+
 <nav class="tabbar">
   <div class="in">
     <button class="tab on" data-go="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span data-i18n="tab_home">Home</span></button>
@@ -1766,6 +2272,7 @@ body.dv-navon{overflow:hidden}
     <button class="tab" data-go="report" onclick="go('report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/></svg><span data-i18n="tab_rep">Report</span></button>
     <button class="tab" data-go="diag" onclick="go('diag')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg><span data-i18n="tab_diag">Diagnostics</span></button>
     <button class="tab" data-go="drive" onclick="go('drive')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8z"/></svg><span data-i18n="tab_drive">Drive</span></button>
+    <button class="tab tab-ic" data-go="insta" onclick="go('insta')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6.5" width="18" height="13.5" rx="3.5"/><path d="M8.5 6.5l1.3-2.5h4.4l1.3 2.5"/><circle cx="12" cy="13.2" r="3.6"/><path d="M11.2 11.8l2.4 1.4-2.4 1.4z" fill="currentColor"/></svg><span data-i18n="ic_tab">Insta</span></button>
   </div>
 </nav>
 
@@ -1934,6 +2441,75 @@ Object.assign(T.nl,{tr_title:"Team Right per eerste scheidsrechter",tr_intro:"El
 Object.assign(T.en,{"ad_g_content": "Content", "ad_g_mon": "Reports & monitoring", "ad_g_refs": "Referees & statistics", "ad_d_docs": "Rules and PDF guidelines", "ad_d_vids": "Training clips and slide decks", "ad_d_photos": "Photos of halls and equipment", "ad_d_reps": "Submitted reports, PDFs, Genius Sports", "ad_d_week": "Missing reports and reminders", "ad_d_clubs": "Open problems per club and alerts", "ad_d_refs": "Referee list and email addresses", "ad_d_tr": "Overturned decisions per first referee", "ad_c_open": "open", "ad_c_tr": "Team Right", "ad_close": "Close", "ad_hint": "Choose a section to open it."});
 Object.assign(T.fr,{"ad_g_content": "Contenus", "ad_g_mon": "Rapports & suivi", "ad_g_refs": "Arbitres & statistiques", "ad_d_docs": "Règlements et guides PDF", "ad_d_vids": "Clips de formation et présentations", "ad_d_photos": "Photos des salles et du matériel", "ad_d_reps": "Rapports reçus, PDF, Genius Sports", "ad_d_week": "Rapports manquants et rappels", "ad_d_clubs": "Problèmes ouverts par club et alertes", "ad_d_refs": "Liste des arbitres et adresses e-mail", "ad_d_tr": "Décisions renversées par premier arbitre", "ad_c_open": "ouverts", "ad_c_tr": "Team Right", "ad_close": "Fermer", "ad_hint": "Choisissez une section pour l'ouvrir."});
 Object.assign(T.nl,{"ad_g_content": "Inhoud", "ad_g_mon": "Verslagen & opvolging", "ad_g_refs": "Scheidsrechters & statistieken", "ad_d_docs": "Reglementen en PDF-richtlijnen", "ad_d_vids": "Trainingsclips en presentaties", "ad_d_photos": "Foto's van zalen en materiaal", "ad_d_reps": "Ontvangen verslagen, PDF's, Genius Sports", "ad_d_week": "Ontbrekende verslagen en herinneringen", "ad_d_clubs": "Open problemen per club en meldingen", "ad_d_refs": "Lijst van scheidsrechters en e-mailadressen", "ad_d_tr": "Herziene beslissingen per eerste scheidsrechter", "ad_c_open": "open", "ad_c_tr": "Team Right", "ad_close": "Sluiten", "ad_hint": "Kies een sectie om ze te openen."});
+Object.assign(T.en,{ic_tab:"Insta",ic_home_d:"Photos and videos shared between Video Referees.",ic_from:"from",ic_join:"Join Instachallenge",ic_join_s:"Share photos and videos of your matches with the other Video Referees.",ic_start:"Get started",ic_have:"I already have an account",
+ic_login_t:"Who are you?",ic_login_s:"Choose your name and enter your personal code. It is the same code as the Drive section.",ic_next:"Next",ic_nocode:"I don't have a code",ic_req_ok:"Request sent. The coordinator will send you your code.",
+ic_user_t:"Create a username",ic_user_s:"Add a username or use our suggestion. You can change this at any time.",ic_username:"Username",ic_u_taken:"This username is already taken.",ic_u_bad:"Use 3 to 30 letters, numbers, dots or underscores.",
+ic_pic_t:"Add a profile picture",ic_pic_s:"Add a profile picture so the other referees know it's you. Everyone in Instachallenge will be able to see it.",ic_pic_add:"Add picture",ic_pic_added:"Profile picture added",ic_pic_post:"Also share this picture as a post",ic_pic_post_s:"Make this picture your first post so the others can like and comment on it.",
+ic_skip:"Skip",ic_done:"Done",ic_chgpic:"Change picture",ic_addpic:"Add picture",ic_album:"Choose from album",ic_takephoto:"Take photo",ic_rmpic:"Remove current picture",ic_camera:"Camera",
+ic_wel_t:"Welcome to Instachallenge, {u}",ic_wel_s:"Let's start customizing your profile.",ic_bio_t:"Create a profile that shows who you are",ic_bio_ph:"Add bio",ic_bio:"Bio",ic_addbio:"Add bio",
+ic_f5_t:"Try following 5+ referees",ic_f5_s:"Following isn't required, but you will see their posts first.",ic_search:"Search",ic_follow:"Follow",ic_following:"Following",ic_folback:"Follow back",ic_folyou:"Follows you",ic_noresults:"No results.",
+ic_m_all:"All referees",ic_m_fol:"Following",ic_sug:"Suggested for you",ic_seeall:"See all",ic_findfr:"Find the referees",ic_findfr_s:"Search for names and usernames",
+ic_empty_t:"No posts yet",ic_empty_s:"Be the first to share a photo or a video.",ic_firstpost:"Share your first post",ic_more:"more",ic_viewall:"View all {n} comments",ic_again:"Watch again",
+ic_now:"now",ic_min_ago:"minutes ago",ic_d:"d",ic_likes:"Likes",ic_comments:"Comments",ic_addcm_for:"Add a comment for {u}",ic_reply:"Reply",ic_replyingto:"Replying to {u}",ic_posting:"Posting…",ic_author:"Author",ic_byauthor:"by author",
+ic_view1rep:"View 1 reply",ic_viewreps:"View {n} replies",ic_hiderep:"Hide replies",ic_nocm_t:"No comments yet",ic_nocm_s:"Start the conversation.",ic_delcm_q:"Delete this comment?",
+ic_sendto:"Send to",ic_send:"Send",ic_writemsg:"Write a message…",ic_allrefs:"All referees",ic_allrefs_s:"Group chat",ic_sent:"Sent",ic_openchat:"Open chat",ic_openpost:"Open the post in Instachallenge",ic_message:"Message",
+ic_rp_t:"You reposted this post",ic_rp_s:"Reposting shares someone else's post with the referees who follow you. It also appears in a special tab of your profile.",ic_rp_ph:"Add a thought…",ic_ok:"OK",ic_undo:"Undo",ic_rp_removed:"Repost removed",
+ic_save:"Save",ic_unsave:"Remove from saved",ic_saved_post:"Saved",ic_unsaved:"Removed from saved",ic_savedl:"Saved",ic_aboutacc:"View profile",ic_editcap:"Edit caption",ic_delete:"Delete",ic_cancel:"Cancel",ic_del_q:"Delete this post?",ic_deleted:"Post deleted",ic_gone:"This post is no longer available.",
+ic_explore:"Explore",ic_nposts:"{n} posts",ic_posts:"Posts",ic_posts_l:"posts",ic_followers:"followers",ic_followingn:"following",ic_editp:"Edit profile",ic_addstory:"Add story",ic_saving:"Saving…",ic_saved:"Saved",
+ic_noposts_t:"No posts yet",ic_noposts_s:"When this referee shares photos or videos, they appear here.",ic_noposts_me:"Your photos and videos will appear here.",ic_novid_t:"No videos yet",ic_novid_s:"Videos appear here.",ic_novid_feed:"When a referee shares a video, it appears here.",
+ic_norp_t:"No reposts yet",ic_norp_s:"Posts reposted appear here.",ic_nosaved_t:"Nothing saved",ic_nosaved_s:"Save posts to find them again here. Only you can see them.",
+ic_signout:"Sign out",ic_signout_q:"Sign out of Instachallenge and Drive on this device?",ic_notif:"Notifications",ic_noact_t:"Activity on your posts",ic_noact_s:"When someone likes or comments on one of your posts, or follows you, you see it here.",
+ic_a_like:"liked your post.",ic_a_cm:"commented",ic_a_fol:"started following you.",
+ic_c_post:"Post",ic_c_story:"Story",ic_newpost:"New post",ic_newstory:"New story",ic_share:"Share",ic_sharestory:"Share story",ic_c_post_t:"Share photos and videos",ic_c_post_s:"Up to 10 photos or videos in one post.",ic_c_story_t:"Add to your story",ic_c_story_s:"One photo or video, visible for 24 hours.",
+ic_capph:"Write a caption…",ic_c_hint:"Photos are reduced automatically. Videos up to 50 MB.",ic_st_text:"Text on the story",ic_st_poll:"Add a poll with two choices",ic_st_pollq:"Question",ic_yes:"Yes",ic_no:"No",ic_st_ask:"Ask a question with a free answer",ic_st_askdef:"Tell us why!",ic_st_askq:"Your question",ic_st_hint:"Replies and reactions to your story arrive in your messages.",
+ic_e_net:"Connection problem. Please try again.",ic_e_img:"This picture cannot be read.",ic_e_type:"Only photos and videos can be shared.",ic_e_vbig:"This video is too large (maximum {n} MB). Choose a shorter one.",ic_e_up:"The upload did not work. Please try again.",ic_post_ok:"Your post has been shared.",ic_story_ok:"Your story has been shared.",
+ic_yourstory:"Your story",ic_sendmsg:"Send message…",ic_typesth:"Type something…",ic_reactsent:"Reaction sent",ic_sentx:"Sent!",ic_seenby:"Seen by {n}",ic_viewers:"Viewers",ic_delst_q:"Delete this story?"});
+Object.assign(T.fr,{ic_tab:"Insta",ic_home_d:"Photos et vidéos partagées entre Video Referees.",ic_from:"de",ic_join:"Rejoindre Instachallenge",ic_join_s:"Partagez les photos et vidéos de vos matchs avec les autres Video Referees.",ic_start:"Commencer",ic_have:"J'ai déjà un compte",
+ic_login_t:"Qui êtes-vous ?",ic_login_s:"Choisissez votre nom et entrez votre code personnel. C'est le même code que pour la section Drive.",ic_next:"Suivant",ic_nocode:"Je n'ai pas de code",ic_req_ok:"Demande envoyée. Le coordinateur vous enverra votre code.",
+ic_user_t:"Créez un nom d'utilisateur",ic_user_s:"Ajoutez un nom d'utilisateur ou utilisez notre suggestion. Vous pouvez le modifier à tout moment.",ic_username:"Nom d'utilisateur",ic_u_taken:"Ce nom d'utilisateur est déjà pris.",ic_u_bad:"Utilisez 3 à 30 lettres, chiffres, points ou tirets bas.",
+ic_pic_t:"Ajoutez une photo de profil",ic_pic_s:"Ajoutez une photo de profil pour que les autres arbitres vous reconnaissent. Tout le monde dans Instachallenge pourra la voir.",ic_pic_add:"Ajouter une photo",ic_pic_added:"Photo de profil ajoutée",ic_pic_post:"Partager aussi cette photo comme publication",ic_pic_post_s:"Faites de cette photo votre première publication pour que les autres puissent l'aimer et la commenter.",
+ic_skip:"Passer",ic_done:"Terminé",ic_chgpic:"Changer la photo",ic_addpic:"Ajouter une photo",ic_album:"Choisir dans l'album",ic_takephoto:"Prendre une photo",ic_rmpic:"Supprimer la photo actuelle",ic_camera:"Appareil photo",
+ic_wel_t:"Bienvenue sur Instachallenge, {u}",ic_wel_s:"Commençons à personnaliser votre profil.",ic_bio_t:"Créez un profil qui vous ressemble",ic_bio_ph:"Ajouter une bio",ic_bio:"Bio",ic_addbio:"Ajouter une bio",
+ic_f5_t:"Suivez au moins 5 arbitres",ic_f5_s:"Ce n'est pas obligatoire, mais vous verrez leurs publications en premier.",ic_search:"Rechercher",ic_follow:"Suivre",ic_following:"Suivi(e)",ic_folback:"Suivre en retour",ic_folyou:"Vous suit",ic_noresults:"Aucun résultat.",
+ic_m_all:"Tous les arbitres",ic_m_fol:"Suivis",ic_sug:"Suggestions pour vous",ic_seeall:"Tout voir",ic_findfr:"Trouvez les arbitres",ic_findfr_s:"Recherchez des noms et noms d'utilisateur",
+ic_empty_t:"Pas encore de publications",ic_empty_s:"Soyez le premier à partager une photo ou une vidéo.",ic_firstpost:"Partager votre première publication",ic_more:"plus",ic_viewall:"Voir les {n} commentaires",ic_again:"Revoir",
+ic_now:"à l'instant",ic_min_ago:"minutes",ic_d:"j",ic_likes:"J'aime",ic_comments:"Commentaires",ic_addcm_for:"Ajouter un commentaire pour {u}",ic_reply:"Répondre",ic_replyingto:"Réponse à {u}",ic_posting:"Publication…",ic_author:"Auteur",ic_byauthor:"par l'auteur",
+ic_view1rep:"Voir 1 réponse",ic_viewreps:"Voir {n} réponses",ic_hiderep:"Masquer les réponses",ic_nocm_t:"Pas encore de commentaires",ic_nocm_s:"Lancez la conversation.",ic_delcm_q:"Supprimer ce commentaire ?",
+ic_sendto:"Envoyer à",ic_send:"Envoyer",ic_writemsg:"Écrire un message…",ic_allrefs:"Tous les arbitres",ic_allrefs_s:"Discussion de groupe",ic_sent:"Envoyé",ic_openchat:"Ouvrir la discussion",ic_openpost:"Ouvrir la publication dans Instachallenge",ic_message:"Message",
+ic_rp_t:"Vous avez republié cette publication",ic_rp_s:"Republier partage la publication de quelqu'un d'autre avec les arbitres qui vous suivent. Elle apparaît aussi dans un onglet spécial de votre profil.",ic_rp_ph:"Ajouter une pensée…",ic_ok:"OK",ic_undo:"Annuler",ic_rp_removed:"Republication supprimée",
+ic_save:"Enregistrer",ic_unsave:"Retirer des enregistrements",ic_saved_post:"Enregistré",ic_unsaved:"Retiré des enregistrements",ic_savedl:"Enregistrements",ic_aboutacc:"Voir le profil",ic_editcap:"Modifier la légende",ic_delete:"Supprimer",ic_cancel:"Annuler",ic_del_q:"Supprimer cette publication ?",ic_deleted:"Publication supprimée",ic_gone:"Cette publication n'est plus disponible.",
+ic_explore:"Explorer",ic_nposts:"{n} publications",ic_posts:"Publications",ic_posts_l:"publications",ic_followers:"followers",ic_followingn:"suivi(e)s",ic_editp:"Modifier le profil",ic_addstory:"Ajouter une story",ic_saving:"Enregistrement…",ic_saved:"Enregistré",
+ic_noposts_t:"Pas encore de publications",ic_noposts_s:"Quand cet arbitre partagera des photos ou des vidéos, elles apparaîtront ici.",ic_noposts_me:"Vos photos et vidéos apparaîtront ici.",ic_novid_t:"Pas encore de vidéos",ic_novid_s:"Les vidéos apparaissent ici.",ic_novid_feed:"Quand un arbitre partage une vidéo, elle apparaît ici.",
+ic_norp_t:"Pas encore de republications",ic_norp_s:"Les publications republiées apparaissent ici.",ic_nosaved_t:"Rien d'enregistré",ic_nosaved_s:"Enregistrez des publications pour les retrouver ici. Vous seul pouvez les voir.",
+ic_signout:"Se déconnecter",ic_signout_q:"Se déconnecter d'Instachallenge et de Drive sur cet appareil ?",ic_notif:"Notifications",ic_noact_t:"Activité sur vos publications",ic_noact_s:"Quand quelqu'un aime ou commente une de vos publications, ou vous suit, vous le voyez ici.",
+ic_a_like:"a aimé votre publication.",ic_a_cm:"a commenté",ic_a_fol:"a commencé à vous suivre.",
+ic_c_post:"Publication",ic_c_story:"Story",ic_newpost:"Nouvelle publication",ic_newstory:"Nouvelle story",ic_share:"Partager",ic_sharestory:"Partager la story",ic_c_post_t:"Partagez des photos et des vidéos",ic_c_post_s:"Jusqu'à 10 photos ou vidéos par publication.",ic_c_story_t:"Ajoutez à votre story",ic_c_story_s:"Une photo ou une vidéo, visible pendant 24 heures.",
+ic_capph:"Écrivez une légende…",ic_c_hint:"Les photos sont réduites automatiquement. Vidéos jusqu'à 50 Mo.",ic_st_text:"Texte sur la story",ic_st_poll:"Ajouter un sondage à deux choix",ic_st_pollq:"Question",ic_yes:"Oui",ic_no:"Non",ic_st_ask:"Poser une question à réponse libre",ic_st_askdef:"Dites-nous pourquoi !",ic_st_askq:"Votre question",ic_st_hint:"Les réponses et réactions à votre story arrivent dans vos messages.",
+ic_e_net:"Problème de connexion. Veuillez réessayer.",ic_e_img:"Cette image ne peut pas être lue.",ic_e_type:"Seules les photos et les vidéos peuvent être partagées.",ic_e_vbig:"Cette vidéo est trop lourde (maximum {n} Mo). Choisissez-en une plus courte.",ic_e_up:"L'envoi n'a pas fonctionné. Veuillez réessayer.",ic_post_ok:"Votre publication a été partagée.",ic_story_ok:"Votre story a été partagée.",
+ic_yourstory:"Votre story",ic_sendmsg:"Envoyer un message…",ic_typesth:"Écrivez quelque chose…",ic_reactsent:"Réaction envoyée",ic_sentx:"Envoyé !",ic_seenby:"Vue par {n}",ic_viewers:"Vues",ic_delst_q:"Supprimer cette story ?"});
+Object.assign(T.nl,{ic_tab:"Insta",ic_home_d:"Foto's en video's gedeeld tussen Video Referees.",ic_from:"van",ic_join:"Word lid van Instachallenge",ic_join_s:"Deel foto's en video's van je wedstrijden met de andere Video Referees.",ic_start:"Aan de slag",ic_have:"Ik heb al een account",
+ic_login_t:"Wie ben je?",ic_login_s:"Kies je naam en voer je persoonlijke code in. Het is dezelfde code als voor het onderdeel Drive.",ic_next:"Volgende",ic_nocode:"Ik heb geen code",ic_req_ok:"Aanvraag verzonden. De coördinator stuurt je je code.",
+ic_user_t:"Maak een gebruikersnaam",ic_user_s:"Voeg een gebruikersnaam toe of gebruik onze suggestie. Je kunt dit altijd wijzigen.",ic_username:"Gebruikersnaam",ic_u_taken:"Deze gebruikersnaam is al in gebruik.",ic_u_bad:"Gebruik 3 tot 30 letters, cijfers, punten of underscores.",
+ic_pic_t:"Voeg een profielfoto toe",ic_pic_s:"Voeg een profielfoto toe zodat de andere scheidsrechters weten dat jij het bent. Iedereen in Instachallenge kan ze zien.",ic_pic_add:"Foto toevoegen",ic_pic_added:"Profielfoto toegevoegd",ic_pic_post:"Deze foto ook als bericht delen",ic_pic_post_s:"Maak van deze foto je eerste bericht zodat anderen het leuk kunnen vinden en erop kunnen reageren.",
+ic_skip:"Overslaan",ic_done:"Klaar",ic_chgpic:"Foto wijzigen",ic_addpic:"Foto toevoegen",ic_album:"Kiezen uit album",ic_takephoto:"Foto maken",ic_rmpic:"Huidige foto verwijderen",ic_camera:"Camera",
+ic_wel_t:"Welkom bij Instachallenge, {u}",ic_wel_s:"Laten we je profiel personaliseren.",ic_bio_t:"Maak een profiel dat toont wie je bent",ic_bio_ph:"Bio toevoegen",ic_bio:"Bio",ic_addbio:"Bio toevoegen",
+ic_f5_t:"Volg minstens 5 scheidsrechters",ic_f5_s:"Volgen is niet verplicht, maar je ziet hun berichten eerst.",ic_search:"Zoeken",ic_follow:"Volgen",ic_following:"Volgend",ic_folback:"Terugvolgen",ic_folyou:"Volgt jou",ic_noresults:"Geen resultaten.",
+ic_m_all:"Alle scheidsrechters",ic_m_fol:"Volgend",ic_sug:"Voorgesteld voor jou",ic_seeall:"Alles bekijken",ic_findfr:"Vind de scheidsrechters",ic_findfr_s:"Zoek op naam en gebruikersnaam",
+ic_empty_t:"Nog geen berichten",ic_empty_s:"Deel als eerste een foto of een video.",ic_firstpost:"Deel je eerste bericht",ic_more:"meer",ic_viewall:"Alle {n} reacties bekijken",ic_again:"Opnieuw bekijken",
+ic_now:"nu",ic_min_ago:"minuten geleden",ic_d:"d",ic_likes:"Vind-ik-leuks",ic_comments:"Reacties",ic_addcm_for:"Voeg een reactie toe voor {u}",ic_reply:"Beantwoorden",ic_replyingto:"Antwoord aan {u}",ic_posting:"Plaatsen…",ic_author:"Auteur",ic_byauthor:"door auteur",
+ic_view1rep:"1 antwoord bekijken",ic_viewreps:"{n} antwoorden bekijken",ic_hiderep:"Antwoorden verbergen",ic_nocm_t:"Nog geen reacties",ic_nocm_s:"Start het gesprek.",ic_delcm_q:"Deze reactie verwijderen?",
+ic_sendto:"Verzenden naar",ic_send:"Verzenden",ic_writemsg:"Schrijf een bericht…",ic_allrefs:"Alle scheidsrechters",ic_allrefs_s:"Groepsgesprek",ic_sent:"Verzonden",ic_openchat:"Gesprek openen",ic_openpost:"Bericht openen in Instachallenge",ic_message:"Bericht",
+ic_rp_t:"Je hebt dit bericht opnieuw gedeeld",ic_rp_s:"Opnieuw delen toont het bericht van iemand anders aan de scheidsrechters die jou volgen. Het verschijnt ook in een apart tabblad van je profiel.",ic_rp_ph:"Voeg een gedachte toe…",ic_ok:"OK",ic_undo:"Ongedaan maken",ic_rp_removed:"Opnieuw delen verwijderd",
+ic_save:"Opslaan",ic_unsave:"Verwijderen uit opgeslagen",ic_saved_post:"Opgeslagen",ic_unsaved:"Verwijderd uit opgeslagen",ic_savedl:"Opgeslagen",ic_aboutacc:"Profiel bekijken",ic_editcap:"Bijschrift bewerken",ic_delete:"Verwijderen",ic_cancel:"Annuleren",ic_del_q:"Dit bericht verwijderen?",ic_deleted:"Bericht verwijderd",ic_gone:"Dit bericht is niet meer beschikbaar.",
+ic_explore:"Ontdekken",ic_nposts:"{n} berichten",ic_posts:"Berichten",ic_posts_l:"berichten",ic_followers:"volgers",ic_followingn:"volgend",ic_editp:"Profiel bewerken",ic_addstory:"Verhaal toevoegen",ic_saving:"Opslaan…",ic_saved:"Opgeslagen",
+ic_noposts_t:"Nog geen berichten",ic_noposts_s:"Wanneer deze scheidsrechter foto's of video's deelt, verschijnen ze hier.",ic_noposts_me:"Je foto's en video's verschijnen hier.",ic_novid_t:"Nog geen video's",ic_novid_s:"Video's verschijnen hier.",ic_novid_feed:"Wanneer een scheidsrechter een video deelt, verschijnt die hier.",
+ic_norp_t:"Nog niets opnieuw gedeeld",ic_norp_s:"Opnieuw gedeelde berichten verschijnen hier.",ic_nosaved_t:"Niets opgeslagen",ic_nosaved_s:"Sla berichten op om ze hier terug te vinden. Alleen jij kunt ze zien.",
+ic_signout:"Afmelden",ic_signout_q:"Afmelden bij Instachallenge en Drive op dit toestel?",ic_notif:"Meldingen",ic_noact_t:"Activiteit op je berichten",ic_noact_s:"Wanneer iemand een van je berichten leuk vindt of erop reageert, of jou volgt, zie je dat hier.",
+ic_a_like:"vindt je bericht leuk.",ic_a_cm:"heeft gereageerd",ic_a_fol:"volgt je nu.",
+ic_c_post:"Bericht",ic_c_story:"Verhaal",ic_newpost:"Nieuw bericht",ic_newstory:"Nieuw verhaal",ic_share:"Delen",ic_sharestory:"Verhaal delen",ic_c_post_t:"Deel foto's en video's",ic_c_post_s:"Tot 10 foto's of video's in één bericht.",ic_c_story_t:"Voeg toe aan je verhaal",ic_c_story_s:"Eén foto of video, 24 uur zichtbaar.",
+ic_capph:"Schrijf een bijschrift…",ic_c_hint:"Foto's worden automatisch verkleind. Video's tot 50 MB.",ic_st_text:"Tekst op het verhaal",ic_st_poll:"Peiling met twee keuzes toevoegen",ic_st_pollq:"Vraag",ic_yes:"Ja",ic_no:"Nee",ic_st_ask:"Stel een vraag met een vrij antwoord",ic_st_askdef:"Vertel ons waarom!",ic_st_askq:"Je vraag",ic_st_hint:"Antwoorden en reacties op je verhaal komen in je berichten.",
+ic_e_net:"Verbindingsprobleem. Probeer het opnieuw.",ic_e_img:"Deze afbeelding kan niet worden gelezen.",ic_e_type:"Alleen foto's en video's kunnen worden gedeeld.",ic_e_vbig:"Deze video is te groot (maximum {n} MB). Kies een kortere.",ic_e_up:"Het uploaden is mislukt. Probeer het opnieuw.",ic_post_ok:"Je bericht is gedeeld.",ic_story_ok:"Je verhaal is gedeeld.",
+ic_yourstory:"Jouw verhaal",ic_sendmsg:"Bericht verzenden…",ic_typesth:"Typ iets…",ic_reactsent:"Reactie verzonden",ic_sentx:"Verzonden!",ic_seenby:"Gezien door {n}",ic_viewers:"Kijkers",ic_delst_q:"Dit verhaal verwijderen?"});
 let LANG="en";
 function esc(s){return (s==null?"":""+s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 /* Drive (09/11/2026): texts EN / FR / NL */
@@ -3119,8 +3695,8 @@ function admSyncTile(b){var src=document.getElementById(b.getAttribute("data-cnt
   });
 })();
 (function buildRails(){
-  var I={home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',library:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',report:'<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/>',diag:'<path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',drive:'<path d="M3 11l19-9-9 19-2-8z"/>',admin:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
-  var T={home:'Home',library:'Library',report:'Report',diag:'Diagnostics',drive:'Drive',admin:'Admin'};
+  var I={home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',library:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',report:'<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/>',diag:'<path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',drive:'<path d="M3 11l19-9-9 19-2-8z"/>',insta:'<rect x="3" y="6.5" width="18" height="13.5" rx="3.5"/><path d="M8.5 6.5l1.3-2.5h4.4l1.3 2.5"/><circle cx="12" cy="13.2" r="3.6"/><path d="M11.2 11.8l2.4 1.4-2.4 1.4z" fill="currentColor"/>',admin:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
+  var T={home:'Home',library:'Library',report:'Report',diag:'Diagnostics',drive:'Drive',insta:'Instachallenge',admin:'Admin'};
   document.querySelectorAll('.adm-rail[data-rail]').forEach(function(r){
     var cur=r.getAttribute('data-rail');
     r.innerHTML=Object.keys(I).map(function(k){return '<button data-go="'+k+'" onclick="go(\''+k+'\')" title="'+T[k]+'"'+(k===cur?' class="on"':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+I[k]+'</svg></button>';}).join('');
@@ -3138,6 +3714,7 @@ function openLib(id){PH_TEAM=null;
   lb.setAttribute('data-only',id);
 }
 function go(p){
+  if(p==='insta'){if(typeof icOpen==='function')icOpen();return;}
   document.querySelectorAll('.page').forEach(function(s){s.classList.toggle('active',s.dataset.page===p);});
   document.querySelectorAll('.tab,.adm-rail button[data-go]').forEach(function(b){b.classList.toggle('on',b.dataset.go===p);});
   document.body.classList.toggle('hm',p==='home');syncAdmBody();
@@ -3795,7 +4372,7 @@ function dvRefName(id){var r=(DVP.refs||[]).filter(function(x){return x.id===id;
 async function dvConvsLoad(){
   var j;try{j=await dvCall("chat_convs");}catch(e){return;}if(!j||!j.ok)return;DVP.convs=j.convs;DVP.refs=j.referees||[];dvUnreadShow(dvUnreadCount(j.convs));
   var html=j.convs.map(function(c){var un=c.last_in&&c.last_in>dvSeen(c.id),l=c.last;
-    var pv=l?((c.group&&!l.mine?l.from.split(" ").slice(-1)[0]+": ":(l.mine?dvT("dv_you")+": ":""))+(l.kind==="photo"?"📷 "+dvT("dv_msg_photo_l"):l.kind==="audio"?"🎤 "+dvT("dv_msg_audio_l"):l.body)):(c.group?dvT("dv_msg_all_s"):"");
+    var pv=l?((c.group&&!l.mine?l.from.split(" ").slice(-1)[0]+": ":(l.mine?dvT("dv_you")+": ":""))+(l.kind==="photo"?"📷 "+dvT("dv_msg_photo_l"):l.kind==="audio"?"🎤 "+dvT("dv_msg_audio_l"):icChatPreview(l.body))):(c.group?dvT("dv_msg_all_s"):"");
     return '<button type="button" class="dv-li" onclick="dvChatOpen(\''+c.id+'\')"><span class="ic"'+(c.group?' style="background:#FEF3C7;color:#92400E"':'')+'>'+(c.group?dvIcon("users"):esc(dvInitials(c.name)))+'</span><span class="tx"><b>'+esc(c.group?dvT("dv_msg_all"):c.name)+'</b><small'+(un?' style="color:var(--ink);font-weight:700"':'')+'>'+esc(pv)+'</small></span>'+(c.last_at?'<small class="dv-note" style="flex:none">'+esc(dvShortTime(c.last_at))+'</small>':'')+(un?'<span class="dv-badge">•</span>':'')+'</button>';}).join("");
   html+='<div class="card" style="margin-top:12px"><span class="dv-lbl" data-i18n="dv_msg_new">'+esc(dvT("dv_msg_new"))+'</span><select class="dv-in" onchange="if(this.value)dvChatOpen(this.value)"><option value="">'+esc(dvT("dv_msg_pick"))+'</option>'+DVP.refs.map(function(r){return '<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>';}).join("")+'</select></div>';
   dvGet("dv_convs").innerHTML='<div class="card" style="padding:4px 14px">'+html.replace('<div class="card" style="margin-top:12px">','</div><div class="card" style="margin-top:12px">');
@@ -3818,7 +4395,7 @@ async function dvChatLoad(first){var c=DVP.conv;if(!c)return;var last=DVP.msgs.l
 function dvChatRender(){var box=dvGet("dv_chat_list"),near=box.scrollHeight-box.scrollTop-box.clientHeight<120,prevDay="";
   box.innerHTML=DVP.msgs.length?DVP.msgs.map(function(m){var d=new Date(m.at),day=d.toDateString(),h="";
     if(day!==prevDay){prevDay=day;try{h+='<div class="dv-day">'+esc(new Intl.DateTimeFormat(dvLoc(),{weekday:"long",day:"numeric",month:"long"}).format(d))+'</div>';}catch(e){}}
-    var body=m.kind==="photo"?(m.url?'<img src="'+esc(m.url)+'" alt="'+esc(dvT("dv_msg_photo_l"))+'" loading="lazy" onclick="window.open(this.src,\'_blank\')">':esc(dvT("dv_msg_photo_l"))):m.kind==="audio"?(m.url?'<audio controls preload="none" src="'+esc(m.url)+'"></audio>':esc(dvT("dv_msg_audio_l"))):esc(m.body||"").replace(/\n/g,"<br>");
+    var body=m.kind==="photo"?(m.url?'<img src="'+esc(m.url)+'" alt="'+esc(dvT("dv_msg_photo_l"))+'" loading="lazy" onclick="window.open(this.src,\'_blank\')">':esc(dvT("dv_msg_photo_l"))):m.kind==="audio"?(m.url?'<audio controls preload="none" src="'+esc(m.url)+'"></audio>':esc(dvT("dv_msg_audio_l"))):icChatBody(m.body);
     return h+'<div class="dv-msg'+(m.mine?' mine':'')+(m.tmp?' pending':'')+'">'+(DVP.conv==="all"&&!m.mine?'<div class="who">'+esc(m.name)+'</div>':'')+body+'<div class="at">'+(m.tmp?esc(dvT("dv_msg_sending")):dvHM(d))+'</div></div>';}).join(""):'<div class="dv-note" style="align-self:center;margin-top:30px">'+esc(dvT("dv_msg_empty"))+'</div>';
   if(near||!box._init){box._init=true;box.scrollTop=box.scrollHeight;}
   box.querySelectorAll("img").forEach(function(i){i.addEventListener("load",function(){if(near)box.scrollTop=box.scrollHeight;},{once:true});});}
@@ -3931,6 +4508,588 @@ function dvaGenMissing(){if(confirm(dvT("dva_genall_q")))dvaDo("adm_generate_mis
 function dvaSetting(k,v){var p={};p[k]=v;dvaDo("adm_settings",p,dvT("dva_saved"));}
 function dvaToggleRequire(){var on=dvGet("dva_require").getAttribute("aria-checked")!=="true";if(!on&&!confirm(dvT("dva_require_q")))return;dvaSetting("require_code",on);}
 
+/* ── Instachallenge (11/11/2026, richiesta utente) ─────────────────────────────────────────────
+   Spazio social degli arbitri: foto e video, feed, storie 24 h (sondaggio, domanda, reazioni), like (anche doppio tocco),
+   commenti con risposte e like, ricondivisioni, salvati, profilo, segui, notifiche, condivisione nella chat di Drive.
+   Accesso con lo stesso nome + codice personale di Drive (token vcbe_drive_token). Backend: edge function vcbe-insta,
+   tabelle vcbe_insta_*, bucket privato vcbe-insta (link firmati 1 h). Codice della funzione in docs/vcbe-insta.ts. */
+var IC={open:false,started:false,token:null,me:null,view:null,hist:[],feed:[],feedMode:"all",feedEnd:false,feedBusy:false,P:{},stories:[],people:null,
+  muted:true,onb:{},c:null,cm:null,replyTo:null,cmOpen:{},ppl:{list:[],title:""},share:null,sv:null,act:[],prof:null,ptab:"grid",splashDone:false};
+var IC_MAX_VIDEO=50*1024*1024;
+function icT(k,o){return dvT(k,o);}
+function icG(id){return document.getElementById(id);}
+var IC_GID=0;
+function icIcon(cls){var g="icg"+(++IC_GID);
+  return '<svg class="'+(cls||"ic-ico")+'" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="'+g+'" x1="0" y1="48" x2="48" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E11D48"/><stop offset=".55" stop-color="#7C3AED"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs>'
+  +'<rect width="48" height="48" rx="13" fill="url(#'+g+')"/><path d="M11 19.5a4 4 0 0 1 4-4h3.6l2.4-3.5h6l2.4 3.5H33a4 4 0 0 1 4 4V32a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>'
+  +'<circle cx="24" cy="25.5" r="6.2" fill="none" stroke="#fff" stroke-width="3"/><path d="M22.6 23.2l3.6 2.3-3.6 2.3z" fill="#fff"/><circle cx="32.4" cy="20" r="1.6" fill="#fff"/></svg>';}
+function icWord(){return icIcon("")+'<span>Instachallenge</span>';}
+var IC_SVG={
+  heart:'<path d="M12 20s-7.5-4.6-9.3-9.2C1.4 7.4 3.6 4 7 4c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 15.4 12 20 12 20z"/>',
+  cm:'<path d="M20.5 11.5a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1.4-4.4A8.5 8.5 0 1 1 20.5 11.5z"/>',
+  rp:'<path d="M17 2l3 3-3 3"/><path d="M4 11V9a4 4 0 0 1 4-4h12"/><path d="M7 22l-3-3 3-3"/><path d="M20 13v2a4 4 0 0 1-4 4H4"/>',
+  send:'<path d="M22 3L9.5 13.5"/><path d="M22 3l-7 18-5.5-7.5L2 9z"/>',
+  save:'<path d="M6 3h12v18l-6-4.5L6 21z"/>',
+  more:'<circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/>',
+  grid:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>',
+  video:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M3 8.5h18M9 3l3 5.5M15 3l3 5.5"/><path d="M10 12v5l4.5-2.5z" fill="currentColor"/>',
+  multi:'<rect x="7" y="3" width="14" height="14" rx="2" fill="currentColor"/><path d="M4 7v12a2 2 0 0 0 2 2h12" fill="none" stroke="currentColor" stroke-width="2"/>',
+  play:'<path d="M7 4l13 8-13 8z" fill="currentColor"/>',
+  mute:'<path d="M11 5L6 9H3v6h3l5 4z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6"/>',
+  sound:'<path d="M11 5L6 9H3v6h3l5 4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>',
+  again:'<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M5 7l1 13h12l1-13M9 7V4h6v3"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  out:'<path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4"/><path d="M10 17l5-5-5-5M15 12H3"/>',
+  find:'<circle cx="10" cy="8" r="3"/><path d="M4 18a6 6 0 0 1 9.5-4.9"/><circle cx="17" cy="15" r="3.5"/><path d="M19.5 17.5L22 20"/>',
+  cam:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  album:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>',
+  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'
+};
+function icSvg(n,extra){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'+(extra||"")+'>'+IC_SVG[n]+'</svg>';}
+function icInit(n){return esc(String(n||"").split(/\s+/).filter(Boolean).slice(0,2).map(function(w){return w[0];}).join(""));}
+function icAv(u,px,ring){u=u||{};var st=px?' style="width:'+px+'px;height:'+px+'px;font-size:'+Math.round(px/3)+'px"':'';
+  var a='<span class="ic-av"'+st+'>'+(u.avatar?'<img src="'+esc(u.avatar)+'" alt="" loading="lazy">':icInit(u.name||u.username))+'</span>';
+  return ring?'<span class="ic-ring'+(ring==="seen"?" seen":"")+'">'+a+'</span>':a;}
+function icUser(u){return u?(u.username||u.name||""):"";}
+function icAgo(at,long){var s=(Date.now()-new Date(at).getTime())/1000;
+  if(s<60)return icT("ic_now");if(s<3600)return Math.floor(s/60)+(long?" "+icT("ic_min_ago"):" min");if(s<86400)return Math.floor(s/3600)+" h";if(s<7*86400)return Math.floor(s/86400)+" "+icT("ic_d");
+  try{return new Intl.DateTimeFormat(dvLoc(),{day:"numeric",month:"short"}).format(new Date(at));}catch(e){return "";}}
+function icNum(n){n=+n||0;if(n<10000)return String(n);if(n<1e6)return (Math.round(n/100)/10)+"K";return (Math.round(n/1e5)/10)+"M";}
+function icRich(t){return esc(t).replace(/(^|\s)([#@][\w\u00C0-\u024F.]+)/g,'$1<span class="ic-tag">$2</span>').replace(/\n/g,"<br>");}
+function icToast(msg,btn,fn,ms){var el=icG("ic_toast");icG("ic_toast_t").textContent=msg;var b=icG("ic_toast_b");b.hidden=!btn;if(btn){b.textContent=btn;b.onclick=function(){el.hidden=true;fn&&fn();};}
+  el.hidden=false;clearTimeout(icToast._t);icToast._t=setTimeout(function(){el.hidden=true;},ms||3200);}
+async function icCall(action,payload){
+  var body=Object.assign({action:action,token:IC.token},payload||{});
+  var res=await fetch(FN+"/vcbe-insta",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  var j=null;try{j=await res.json();}catch(e){j={ok:false,reason:"net"};}
+  if(res.status===401){IC.token=null;IC.me=null;icShow("welcome");}
+  return j||{};
+}
+
+/* ---------- open / close / navigation ---------- */
+function icOpen(then){
+  var el=icG("ic");if(!el)return;
+  if(!IC.open){IC.open=true;el.hidden=false;document.documentElement.style.overflow="hidden";try{history.pushState({ic:1},"");}catch(e){}}
+  ["ic_word","ic_word2"].forEach(function(id){var w=icG(id);if(w&&!w.innerHTML)w.innerHTML=icWord();});
+  if(!icG("ic_splash_ico").innerHTML)icG("ic_splash_ico").innerHTML=icIcon();
+  if(!IC.splashDone){IC.splashDone=true;var sp=icG("ic_splash");sp.hidden=false;setTimeout(function(){sp.hidden=true;},1100);}
+  icStart(then);
+}
+function icExit(){if(!IC.open)return;IC.open=false;icStoryClose();icCloseSheet();icPauseAll();icG("ic").hidden=true;document.documentElement.style.overflow="";
+  clearInterval(IC.actTimer);try{if(history.state&&history.state.ic)history.back();}catch(e){}}
+window.addEventListener("popstate",function(){
+  if(!IC.open)return;
+  if(history.state&&history.state.dvppl)return;
+  if(history.state&&history.state.ic)return;      /* tornati dalla chat */
+  var handled=true;
+  if(!icG("ic_sv").hidden)icStoryClose();
+  else if(document.querySelector(".ic-sheet:not([hidden])"))icCloseSheet();
+  else if(IC.hist.length)icBack(true);
+  else handled=false;
+  if(handled){try{history.pushState({ic:1},"");}catch(e){}}
+  else{IC.open=false;icPauseAll();icG("ic").hidden=true;document.documentElement.style.overflow="";}
+});
+function icShow(v,push){
+  if(push&&IC.view&&IC.view!==v)IC.hist.push(IC.view);
+  IC.view=v;
+  document.querySelectorAll("#ic .ic-v").forEach(function(x){x.hidden=x.getAttribute("data-icv")!==v;});
+  var main=["feed","search","reels","profile","activity","post"].indexOf(v)>=0;
+  icG("ic_nav").hidden=!main;
+  icG("ic_app").classList.toggle("ic-dark",v==="reels");
+  document.querySelectorAll("#ic_nav button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-n")===v||(v==="profile"&&IC.prof&&IC.prof.me&&b.getAttribute("data-n")==="profile"));});
+  if(v!=="reels")icPauseReels();
+  setTimeout(icObserveVideos,50);
+}
+function icBack(fromPop){var v=IC.hist.pop();if(!v){if(!fromPop)icExit();return;}
+  if(v==="profile"&&IC.profStack&&IC.profStack.length){IC.profStack.pop();var last=IC.profStack[IC.profStack.length-1];if(last){icShow("profile");icRenderProfile(last);return;}}
+  icShow(v);if(v==="feed")icRenderFeed();}
+function icNav(v){
+  IC.hist=[];
+  if(v==="feed"){icShow("feed");if(!IC.feed.length)icLoadFeed(true);else{icG("ic_feedsc").scrollTop=0;icLoadFeed(true);}icLoadStories();}
+  else if(v==="search"){icShow("search");icG("ic_sq").value="";icRenderSearch();icLoadPeople().then(icRenderSearch);icLoadExplore();}
+  else if(v==="reels"){icShow("reels");icLoadReels();}
+  else if(v==="profile"){IC.profStack=[];icOpenProfile(IC.me.id,true);}
+  else if(v==="activity"){IC.hist=["feed"];icShow("activity");icLoadActivity();}
+}
+
+/* ---------- start / sign in ---------- */
+async function icStart(then){
+  IC.token=IC.token||DV.token||dvLoadToken();
+  if(!IC.token){icShow("welcome");return;}
+  if(IC.me&&IC.me.onboarded){if(then)then();else if(!IC.view||["welcome","login"].indexOf(IC.view)>=0)icNav("feed");return;}
+  var j=await icCall("me");
+  if(!j.ok){if(!IC.token)return;icShow("welcome");icToast(icT("ic_e_net"));return;}
+  icSetMe(j);
+  if(!j.profile||!j.profile.onboarded){icOnbStart(j);return;}
+  if(then)then();else icNav("feed");
+  icActPoll();
+}
+function icSetMe(j){var p=j.profile||{};IC.me={id:j.id,name:j.name,username:p.username||null,bio:p.bio||"",avatar:p.avatar||null,onboarded:!!p.onboarded,counts:j.counts||{},suggestion:j.suggestion};
+  icG("ic_navav").innerHTML=icAv(IC.me,27);}
+function icGoLogin(){
+  var s=icG("ic_name"),cur=s.value;
+  s.innerHTML='<option value="">'+esc(dvT("dv_choose"))+'</option>'+(REFS||[]).map(function(n){return '<option value="'+esc(n)+'">'+esc(n)+'</option>';}).join("");
+  if(cur)s.value=cur;else{try{var last=localStorage.getItem("vcbe_drive_name");if(last)s.value=last;}catch(e){}}
+  icG("ic_lerr").hidden=true;icG("ic_rmsg").hidden=true;icShow("login");}
+async function icLogin(){
+  var name=icG("ic_name").value,code=(icG("ic_code").value||"").replace(/\D/g,""),e=icG("ic_lerr");e.hidden=true;
+  if(!name){e.textContent=dvT("dv_e_name");e.hidden=false;return;}
+  var b=icG("ic_login_btn"),old=b.innerHTML;b.disabled=true;b.innerHTML='<span class="ic-spin"></span>';
+  try{var j=await dvCall("login",{name:name,code:code,keep:true});
+    if(j.ok){dvSaveToken(j.token,true);DV.name=j.name;IC.token=j.token;try{localStorage.setItem("vcbe_drive_name",name);}catch(x){}icG("ic_code").value="";await icStart();}
+    else{var r=j.reason;e.textContent=r==="wrong"?dvT("dv_e_wrong",{n:j.left}):r==="locked"?dvT("dv_e_locked",{n:j.minutes||15}):r==="inactive"?dvT("dv_e_inactive"):r==="no_code"?dvT("dv_e_nocode"):r==="no_name"?dvT("dv_e_name"):dvT("dv_e_net");e.hidden=false;}
+  }catch(x){e.textContent=dvT("dv_e_net");e.hidden=false;}
+  b.disabled=false;b.innerHTML=old;}
+async function icRequestAccess(){var name=icG("ic_name").value,m=icG("ic_rmsg");
+  if(!name){var e=icG("ic_lerr");e.textContent=dvT("dv_req_name");e.hidden=false;return;}
+  try{var j=await dvCall("request_access",{name:name,note:"Instachallenge"});m.textContent=j.ok?icT("ic_req_ok"):dvT("dv_e_net");m.style.color=j.ok?"#0E9F6E":"#E11D48";m.hidden=false;}catch(x){m.textContent=dvT("dv_e_net");m.hidden=false;}}
+
+/* ---------- onboarding (username, foto, benvenuto, bio, segui 5+) ---------- */
+function icOnbStart(j){IC.onb={};var u=(j.profile&&j.profile.username)||j.suggestion||"";icG("ic_uname").value=u;icUserCheck();icShow("onb_user");}
+function icUserCheck(){var inp=icG("ic_uname"),v=inp.value.toLowerCase().replace(/\s+/g,".").replace(/[^a-z0-9._]/g,"");if(v!==inp.value)inp.value=v;
+  var ok=icG("ic_uok"),er=icG("ic_uerr");clearTimeout(icUserCheck._t);ok.hidden=true;er.hidden=true;
+  if(v.length<3)return;
+  icUserCheck._t=setTimeout(async function(){var j=await icCall("username_check",{username:v});if(inp.value!==v)return;
+    ok.hidden=false;ok.classList.toggle("bad",!(j.valid&&j.free));ok.innerHTML=j.valid&&j.free?'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>':'<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>';
+    if(!(j.valid&&j.free)){er.textContent=j.valid?icT("ic_u_taken"):icT("ic_u_bad");er.hidden=false;}},350);}
+async function icUserNext(){var v=icG("ic_uname").value,er=icG("ic_uerr"),b=icG("ic_unext");
+  b.disabled=true;var j=await icCall("profile_save",{username:v});b.disabled=false;
+  if(!j.ok){er.textContent=j.reason==="taken"?icT("ic_u_taken"):j.reason==="bad_username"?icT("ic_u_bad"):icT("ic_e_net");er.hidden=false;return;}
+  IC.me.username=v;icPicReset();icShow("onb_pic");}
+function icPicReset(){IC.onb.av=null;icG("ic_bigav").innerHTML=IC.me.avatar?'<img src="'+esc(IC.me.avatar)+'" alt="">':icSvg("user",' stroke-width="0" fill="currentColor"');
+  icG("ic_pic_t").textContent=icT("ic_pic_t");icG("ic_pic_done").hidden=true;icG("ic_pic_main").textContent=icT("ic_pic_add");icG("ic_pic_alt").textContent=icT("ic_skip");}
+function icPicMain(){if(IC.onb.av){icPicSave();return;}icPickAvatar("onb");}
+function icPicAlt(){if(IC.onb.av){icPickAvatar("onb");return;}icOnbWelcome();}
+function icPickAvatar(mode){IC.avMode=mode;icG("ic_pic_rm").hidden=!(mode==="edit"&&IC.me.avatar);icOpenSheet("ic_sh_pic");}
+function icAvatarInput(cam){icCloseSheet();icG(cam?"ic_avcam":"ic_avfile").click();}
+async function icAvatarFile(inp){var f=inp.files&&inp.files[0];inp.value="";if(!f)return;
+  try{var r=await icResize(f,640,0.86,true);}catch(e){icToast(icT("ic_e_img"));return;}
+  if(IC.avMode==="onb"){IC.onb.av=r;var u=URL.createObjectURL(r.blob);icG("ic_bigav").innerHTML='<img src="'+u+'" alt="">';
+    icG("ic_pic_t").textContent=icT("ic_pic_added");icG("ic_pic_done").hidden=false;icG("ic_pic_main").textContent=icT("ic_done");icG("ic_pic_alt").textContent=icT("ic_chgpic");}
+  else{icToast(icT("ic_saving"));var b64=await icB64(r.blob);var j=await icCall("profile_save",{avatar_base64:b64,avatar_type:"image/jpeg"});
+    if(j.ok){var m=await icCall("me");if(m.ok)icSetMe(m);icRenderEditAv();icToast(icT("ic_saved"));}else icToast(icT("ic_e_net"));}}
+async function icAvatarRemove(){icCloseSheet();var j=await icCall("profile_save",{avatar_clear:true});if(j.ok){IC.me.avatar=null;icG("ic_navav").innerHTML=icAv(IC.me,27);icRenderEditAv();}}
+async function icPicSave(){var b=icG("ic_pic_main");b.disabled=true;b.innerHTML='<span class="ic-spin"></span>';
+  var b64=await icB64(IC.onb.av.blob);var j=await icCall("profile_save",{avatar_base64:b64,avatar_type:"image/jpeg",avatar_post:icG("ic_pic_sw").getAttribute("aria-checked")==="true"});
+  b.disabled=false;b.textContent=icT("ic_done");
+  if(!j.ok){icToast(icT("ic_e_net"));return;}
+  var m=await icCall("me");if(m.ok)icSetMe(m);icOnbWelcome();}
+function icOnbWelcome(){icG("ic_wav").innerHTML=icAv(IC.me,150);icG("ic_wel_t").textContent=icT("ic_wel_t",{u:IC.me.username||""});
+  icG("ic_bav").innerHTML=icAv(IC.me,140);icG("ic_buser").textContent="@"+(IC.me.username||"");icG("ic_bname").textContent=dvTitle(IC.me.name);icG("ic_bio").value=IC.me.bio||"";icShow("onb_welcome");}
+async function icBioDone(){var v=icG("ic_bio").value.trim();if(v){await icCall("profile_save",{bio:v});IC.me.bio=v;}icShow("onb_follow");icLoadPeople().then(function(){
+  var pre=IC.people.slice().sort(function(a,b){return b.posts-a.posts;}).slice(0,5);IC.f5=new Set(pre.map(function(p){return p.id;}));icRenderF5();});}
+function icRenderF5(){var q=(icG("ic_f5q").value||"").toLowerCase(),box=icG("ic_f5list");if(!IC.people){box.innerHTML='<div class="ic-empty"><span class="ic-spin"></span></div>';return;}
+  IC.f5=IC.f5||new Set();
+  box.innerHTML=IC.people.filter(function(p){return !q||p.name.toLowerCase().indexOf(q)>=0||String(p.username||"").indexOf(q)>=0;}).map(function(p){
+    return '<div class="ic-li">'+icAv(p,46)+'<div class="tx"><b>'+esc(p.username||dvTitle(p.name))+'</b><small>'+esc(dvTitle(p.name))+'</small></div><button class="ic-chk'+(IC.f5.has(p.id)?" on":"")+'" onclick="icF5Toggle(\''+p.id+'\')" aria-label="Follow">'+(IC.f5.has(p.id)?icSvg("_ok"):"")+'</button></div>';}).join("")||'<div class="ic-empty">'+esc(icT("ic_noresults"))+'</div>';
+  icG("ic_f5btn").textContent=IC.f5.size?icT("ic_follow")+" ("+IC.f5.size+")":icT("ic_follow");}
+IC_SVG._ok='<path d="M5 12l5 5 9-10"/>';
+function icF5Toggle(id){if(IC.f5.has(id))IC.f5.delete(id);else IC.f5.add(id);icRenderF5();}
+async function icFinishOnb(follow){var b=icG("ic_f5btn");b.disabled=true;
+  if(follow&&IC.f5&&IC.f5.size)await icCall("follow_many",{ids:Array.from(IC.f5)});
+  await icCall("profile_save",{done:true});b.disabled=false;IC.me.onboarded=true;IC.people=null;IC.hist=[];icNav("feed");icActPoll();}
+
+/* ---------- images, video posters, uploads ---------- */
+function icB64(blob){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(String(r.result).split(",")[1]);};r.onerror=rej;r.readAsDataURL(blob);});}
+function icLoadImg(src){return new Promise(function(res,rej){var i=new Image();i.onload=function(){res(i);};i.onerror=rej;i.src=src;});}
+async function icResize(file,max,q,square){var u=URL.createObjectURL(file);try{var img=await icLoadImg(u);}finally{setTimeout(function(){URL.revokeObjectURL(u);},2000);}
+  var w=img.naturalWidth,h=img.naturalHeight,sx=0,sy=0,sw=w,sh=h;
+  if(square){var m=Math.min(w,h);sx=(w-m)/2;sy=(h-m)/2;sw=sh=m;w=h=m;}
+  var k=Math.min(1,max/Math.max(w,h)),cw=Math.round(w*k),ch=Math.round(h*k);
+  var c=document.createElement("canvas");c.width=cw;c.height=ch;var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,cw,ch);x.drawImage(img,sx,sy,sw,sh,0,0,cw,ch);
+  var blob=await new Promise(function(r){c.toBlob(r,"image/jpeg",q||0.85);});if(!blob)throw new Error("canvas");return {blob:blob,w:cw,h:ch};}
+function icPoster(file){return new Promise(function(res){var v=document.createElement("video"),u=URL.createObjectURL(file),done=false;
+  function fin(r){if(done)return;done=true;try{URL.revokeObjectURL(u);}catch(e){}res(r);}
+  v.muted=true;v.playsInline=true;v.preload="auto";v.src=u;
+  v.onloadedmetadata=function(){try{v.currentTime=Math.min(0.6,(v.duration||1)/3);}catch(e){fin({w:v.videoWidth,h:v.videoHeight,dur:v.duration});}};
+  v.onseeked=function(){try{var w=v.videoWidth,h=v.videoHeight,k=Math.min(1,900/Math.max(w,h)),c=document.createElement("canvas");c.width=Math.round(w*k);c.height=Math.round(h*k);
+    c.getContext("2d").drawImage(v,0,0,c.width,c.height);c.toBlob(function(b){fin({blob:b,w:w,h:h,dur:v.duration});},"image/jpeg",0.8);}catch(e){fin({w:v.videoWidth,h:v.videoHeight,dur:v.duration});}};
+  v.onerror=function(){fin({});};setTimeout(function(){fin({});},9000);});}
+function icPut(blob,type,onp){return new Promise(async function(res,rej){
+  var j=await icCall("upload_url",{content_type:type});if(!j.ok){rej(new Error(j.reason||"upload_url"));return;}
+  var x=new XMLHttpRequest();x.open("PUT",SB_URL+"/storage/v1/object/upload/sign/vcbe-insta/"+j.path.split("/").map(encodeURIComponent).join("/")+"?token="+encodeURIComponent(j.upload_token));
+  x.setRequestHeader("Content-Type",type);x.setRequestHeader("x-upsert","false");x.setRequestHeader("apikey",SB_KEY);
+  if(x.upload&&onp)x.upload.onprogress=function(e){if(e.lengthComputable)onp(e.loaded/e.total);};
+  x.onload=function(){if(x.status>=200&&x.status<300)res(j.path);else rej(new Error("upload "+x.status));};x.onerror=function(){rej(new Error("network"));};x.send(blob);});}
+
+/* ---------- feed ---------- */
+function icFeedMode(m){IC.feedMode=m;document.querySelectorAll("#ic_fmode button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-m")===m);});icLoadFeed(true);}
+async function icLoadFeed(reset){if(IC.feedBusy)return;IC.feedBusy=true;
+  if(reset){IC.feedEnd=false;}var more=icG("ic_feedmore");more.hidden=false;
+  if(reset&&!IC.feed.length)icG("ic_feed").innerHTML="";
+  try{var before=reset?null:(IC.feed.length?IC.feed[IC.feed.length-1].at:null);
+    var j=await icCall("feed",{mode:IC.feedMode,before:before,limit:10});
+    if(j.ok){j.posts.forEach(function(p){IC.P[p.id]=p;});IC.feed=reset?j.posts:IC.feed.concat(j.posts);if(j.posts.length<10)IC.feedEnd=true;}
+  }catch(e){}
+  IC.feedBusy=false;more.hidden=true;icRenderFeed();}
+function icFeedScroll(el){if(IC.feedEnd||IC.feedBusy)return;if(el.scrollTop+el.clientHeight>el.scrollHeight-900)icLoadFeed(false);}
+function icRenderFeed(){var box=icG("ic_feed");if(!box)return;
+  var h=IC.feed.map(function(p,i){return icPostHtml(p)+(i===1?icSugHtml():"");}).join("");
+  if(!IC.feed.length&&!IC.feedBusy)h=icSugHtml()+'<div class="ic-empty">'+icIcon("")+'<b>'+esc(icT("ic_empty_t"))+'</b>'+esc(icT("ic_empty_s"))+'<br><br><button class="ic-btn sm" onclick="icCompose(\'post\')">'+esc(icT("ic_firstpost"))+'</button></div>';
+  else if(IC.feed.length===1)h+=icSugHtml();
+  box.innerHTML=h;icObserveVideos();
+  if(!IC.people)icLoadPeople().then(function(){if(IC.view==="feed"&&box.querySelector("[data-sug]"))icRenderFeed();});}
+function icSugHtml(){if(!IC.people)return '<div data-sug></div>';var me=IC.me||{};
+  var sug=IC.people.filter(function(p){return !p.following&&!(IC.hideSug||{})[p.id];}).sort(function(a,b){return (b.follows_you-a.follows_you)||(b.posts-a.posts);}).slice(0,12);
+  if(!sug.length||(me.counts&&me.counts.following>=8&&!sug.some(function(p){return p.follows_you;})))return '<div data-sug></div>';
+  return '<div class="ic-sug" data-sug><div class="hd"><span>'+esc(icT("ic_sug"))+'</span><button class="ic-link" style="padding:0" onclick="icNav(\'search\')">'+esc(icT("ic_seeall"))+'</button></div><div class="row">'
+   +'<div class="ic-card find">'+icSvg("find",' stroke-width="1.4"')+'<b>'+esc(icT("ic_findfr"))+'</b><small>'+esc(icT("ic_findfr_s"))+'</small><button class="ic-btn" onclick="icNav(\'search\')">'+esc(icT("ic_search"))+'</button></div>'
+   +sug.map(function(p){return '<div class="ic-card"><button class="x" onclick="(IC.hideSug=IC.hideSug||{})[\''+p.id+'\']=1;icRenderFeed()" aria-label="Hide">×</button><span onclick="icOpenProfile(\''+p.id+'\')" style="cursor:pointer">'+icAv(p,84)+'</span><b>'+esc(p.username||dvTitle(p.name))+'</b><small>'+esc(p.follows_you?icT("ic_folyou"):dvTitle(p.name))+'</small><button class="ic-btn" onclick="icFollow(\''+p.id+'\',true,this)">'+esc(p.follows_you?icT("ic_folback"):icT("ic_follow"))+'</button></div>';}).join("")
+   +'</div></div>';}
+function icPostHtml(p){var a=p.author||{},n=p.media.length,id=p.id;
+  var med='<div class="ic-media" onclick="icMediaTap(event,\''+id+'\')">'+(n>1?'<span class="ic-cnt" id="ic_cnt_'+id+'">1/'+n+'</span>':'')
+    +'<div class="ic-car" onscroll="icCarScroll(this,\''+id+'\','+n+')">'+p.media.map(function(m){
+      if(m.type==="video")return '<div><video src="'+esc(m.url||"")+'"'+(m.poster?' poster="'+esc(m.poster)+'"':'')+' playsinline muted preload="metadata" data-icv="1" onended="icVidEnd(this)"></video><button class="ic-mute" onclick="event.stopPropagation();icToggleMute()" aria-label="Sound">'+icSvg(IC.muted?"mute":"sound")+'</button><div class="ic-again" hidden><button onclick="event.stopPropagation();icAgain(this)">'+icSvg("again",' width="18" height="18"')+esc(icT("ic_again"))+'</button></div></div>';
+      return '<div><img src="'+esc(m.url||"")+'" alt="" loading="lazy"></div>';}).join("")+'</div></div>'
+    +(n>1?'<div class="ic-dots" id="ic_dots_'+id+'">'+p.media.map(function(m,i){return '<i'+(i?'':' class="on"')+'></i>';}).join("")+'</div>':'');
+  var cap=p.caption||"",long=cap.length>110||cap.split("\n").length>2;
+  return '<article class="ic-post" data-pid="'+id+'">'
+   +'<div class="ic-ph"><span onclick="icOpenProfile(\''+a.id+'\')" style="cursor:pointer">'+icAv(a,34,icHasStory(a.id))+'</span><div class="who" onclick="icOpenProfile(\''+a.id+'\')"><b>'+esc(icUser(a))+'</b><small>'+esc(dvTitle(a.name))+'</small></div><button class="ic-ib" onclick="icPostMenu(\''+id+'\')" aria-label="More">'+icSvg("more")+'</button></div>'
+   +med+icActHtml(p)
+   +(cap?'<div class="ic-cap"><b onclick="icOpenProfile(\''+a.id+'\')">'+esc(icUser(a))+'</b> <span id="ic_cap_'+id+'">'+icRich(long?cap.slice(0,100).replace(/\n[\s\S]*$/,"")+"… ":cap)+(long?'<button class="more" onclick="icMore(\''+id+'\')">'+esc(icT("ic_more"))+'</button>':'')+'</span></div>':'')
+   +(p.comments>2?'<button class="ic-meta" onclick="icComments(\''+id+'\')">'+esc(icT("ic_viewall",{n:p.comments}))+'</button>':'')
+   +(p.last_comments||[]).map(function(c){return '<div class="ic-cap"><b>'+esc(c.user)+'</b> '+icRich(c.body.length>120?c.body.slice(0,120)+"…":c.body)+'</div>';}).join("")
+   +'<div class="ic-time">'+esc(icAgo(p.at,true))+'</div></article>';}
+function icActHtml(p){var id=p.id;
+  return '<div class="ic-act" id="ic_act_'+id+'"><button class="'+(p.liked?"liked":"")+'" onclick="icLike(\''+id+'\')" aria-label="Like">'+icSvg("heart")+(p.likes?'<span onclick="event.stopPropagation();icLikes(\''+id+'\')">'+icNum(p.likes)+'</span>':'')+'</button>'
+   +'<button onclick="icComments(\''+id+'\')" aria-label="Comment">'+icSvg("cm")+(p.comments?icNum(p.comments):'')+'</button>'
+   +'<button class="'+(p.reposted?"on":"")+'" onclick="icRepost(\''+id+'\')" aria-label="Repost">'+icSvg("rp")+(p.reposts?icNum(p.reposts):'')+'</button>'
+   +'<button onclick="icShare(\''+id+'\')" aria-label="Send">'+icSvg("send")+'</button><span class="sp"></span>'
+   +'<button class="'+(p.saved?"saved":"")+'" onclick="icSave(\''+id+'\')" aria-label="Save">'+icSvg("save")+'</button></div>';}
+function icRefreshAct(id){var p=IC.P[id];if(!p)return;document.querySelectorAll('#ic_act_'+id).forEach(function(el){el.outerHTML=icActHtml(p);});icRefreshReel(id);}
+function icMore(id){var p=IC.P[id];var el=icG("ic_cap_"+id);if(p&&el)el.innerHTML=icRich(p.caption);}
+function icCarScroll(el,id,n){var i=Math.round(el.scrollLeft/el.clientWidth);var c=icG("ic_cnt_"+id);if(c)c.textContent=(i+1)+"/"+n;
+  var d=icG("ic_dots_"+id);if(d)Array.prototype.forEach.call(d.children,function(x,k){x.classList.toggle("on",k===i);});
+  clearTimeout(el._t);el._t=setTimeout(icObserveVideos,120);}
+function icMediaTap(ev,id){var now=Date.now(),t=ev.currentTarget;
+  if(t._last&&now-t._last<320){t._last=0;clearTimeout(t._st);var p=IC.P[id];if(p&&!p.liked)icLike(id);icHeartAnim(t);return;}
+  t._last=now;clearTimeout(t._st);t._st=setTimeout(function(){var v=icVisibleVideo(t);if(v)icToggleMute();},330);}
+function icHeartAnim(el){var h=document.createElement("div");h.className="ic-heart";h.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor">'+IC_SVG.heart+'</svg>';el.appendChild(h);setTimeout(function(){h.remove();},950);}
+function icVisibleVideo(t){var car=t.querySelector(".ic-car");if(!car)return null;var i=Math.round(car.scrollLeft/car.clientWidth);var s=car.children[i];return s?s.querySelector("video"):null;}
+function icToggleMute(){IC.muted=!IC.muted;document.querySelectorAll("#ic video[data-icv]").forEach(function(v){v.muted=IC.muted;});
+  document.querySelectorAll("#ic .ic-mute").forEach(function(b){b.innerHTML=icSvg(IC.muted?"mute":"sound");});}
+function icVidEnd(v){var a=v.parentNode.querySelector(".ic-again");if(a)a.hidden=false;}
+function icAgain(b){var w=b.closest(".ic-again"),v=w.parentNode.querySelector("video");w.hidden=true;v.currentTime=0;v.play().catch(function(){});}
+var IC_IO=null;
+function icObserveVideos(){if(!("IntersectionObserver" in window))return;
+  if(!IC_IO)IC_IO=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;
+    if(e.isIntersecting&&e.intersectionRatio>=0.6&&IC.open&&!icG("ic").hidden&&icG("ic_sv").hidden){v.muted=IC.muted;if(!v.ended||v.loop){var w=v.parentNode.querySelector(".ic-again");if(!w||w.hidden)v.play().catch(function(){});}}
+    else v.pause();});},{threshold:[0,0.6,1]});
+  document.querySelectorAll("#ic video[data-icv]").forEach(function(v){if(!v._obs){v._obs=1;IC_IO.observe(v);}});}
+function icPauseAll(){document.querySelectorAll("#ic video").forEach(function(v){try{v.pause();}catch(e){}});}
+
+/* like / save / repost / follow */
+async function icLike(id){var p=IC.P[id];if(!p)return;p.liked=!p.liked;p.likes+=p.liked?1:-1;icRefreshAct(id);
+  var j=await icCall("like",{id:id,on:p.liked});if(j.ok){p.likes=j.likes;icRefreshAct(id);}}
+async function icSave(id){var p=IC.P[id];if(!p)return;p.saved=!p.saved;icRefreshAct(id);await icCall("save",{id:id,on:p.saved});icToast(p.saved?icT("ic_saved_post"):icT("ic_unsaved"));}
+async function icRepost(id){var p=IC.P[id];if(!p)return;
+  if(p.reposted){p.reposted=false;p.reposts=Math.max(0,p.reposts-1);icRefreshAct(id);await icCall("repost",{id:id,on:false});icToast(icT("ic_rp_removed"));return;}
+  p.reposted=true;p.reposts++;icRefreshAct(id);IC.rp=id;icCall("repost",{id:id,on:true});
+  icG("ic_rpav").innerHTML=icAv(IC.me,84);icG("ic_rpthought").value="";icOpenSheet("ic_sh_repost");}
+async function icRepostOk(){var id=IC.rp,t=icG("ic_rpthought").value.trim();icCloseSheet();if(t)await icCall("repost",{id:id,on:true,thought:t});}
+async function icRepostUndo(){var id=IC.rp,p=IC.P[id];icCloseSheet();if(p){p.reposted=false;p.reposts=Math.max(0,p.reposts-1);icRefreshAct(id);}await icCall("repost",{id:id,on:false});}
+async function icFollow(uid,on,btn){if(btn){btn.disabled=true;}
+  var j=await icCall("follow",{id:uid,on:on});if(btn)btn.disabled=false;if(!j.ok){icToast(icT("ic_e_net"));return;}
+  (IC.people||[]).forEach(function(p){if(p.id===uid)p.following=on;});(IC.ppl.list||[]).forEach(function(p){if(p.id===uid)p.following=on;});
+  if(IC.me&&IC.me.counts)IC.me.counts.following=Math.max(0,(IC.me.counts.following||0)+(on?1:-1));
+  if(btn&&btn.closest(".ic-card")){btn.textContent=on?icT("ic_following"):icT("ic_follow");btn.className=on?"ic-btn gray":"ic-btn";btn.setAttribute("onclick","icFollow('"+uid+"',"+(!on)+",this)");}
+  else if(btn){btn.outerHTML=icFolBtn({id:uid,following:on});}
+  if(IC.view==="profile"&&IC.prof&&IC.prof.user.id===uid){IC.prof.following=on;IC.prof.counts.followers+=on?1:-1;icRenderProfile(IC.prof);}}
+function icFolBtn(p){if(p.me)return "";return '<button class="ic-btn sm'+(p.following?" gray":"")+'" onclick="icFollow(\''+p.id+'\','+(!p.following)+',this)">'+esc(p.following?icT("ic_following"):p.follows_you?icT("ic_folback"):icT("ic_follow"))+'</button>';}
+async function icLoadPeople(){try{var j=await icCall("people",{});if(j.ok)IC.people=j.people;}catch(e){}return IC.people;}
+
+/* post menu */
+function icPostMenu(id){var p=IC.P[id];if(!p)return;var m=icG("ic_menu"),h="";
+  h+='<button onclick="icCloseSheet();icShare(\''+id+'\')">'+icSvg("send")+esc(icT("ic_sendto"))+'</button>';
+  h+='<button onclick="icCloseSheet();icSave(\''+id+'\')">'+icSvg("save")+esc(p.saved?icT("ic_unsave"):icT("ic_save"))+'</button>';
+  if(!p.mine)h+='<button onclick="icCloseSheet();icOpenProfile(\''+p.author.id+'\')">'+icSvg("user")+esc(icT("ic_aboutacc"))+'</button>';
+  if(p.mine){h+='<button onclick="icEditCaption(\''+id+'\')">'+icSvg("edit")+esc(icT("ic_editcap"))+'</button>';
+    h+='<button class="red" onclick="icDeletePost(\''+id+'\')">'+icSvg("trash")+esc(icT("ic_delete"))+'</button>';}
+  h+='<button onclick="icCloseSheet()">'+esc(icT("ic_cancel"))+'</button>';m.innerHTML=h;icOpenSheet("ic_sh_menu");}
+async function icEditCaption(id){icCloseSheet();var p=IC.P[id];var v=prompt(icT("ic_editcap"),p.caption||"");if(v===null)return;
+  var j=await icCall("post_edit",{id:id,caption:v});if(j.ok){p.caption=v.trim();icRerenderPost(id);}}
+async function icDeletePost(id){icCloseSheet();if(!confirm(icT("ic_del_q")))return;var j=await icCall("post_delete",{id:id});
+  if(j.ok){IC.feed=IC.feed.filter(function(p){return p.id!==id;});delete IC.P[id];icRenderFeed();if(IC.view==="post")icBack();else if(IC.view==="profile")icOpenProfile(IC.me.id,true);icToast(icT("ic_deleted"));}}
+function icRerenderPost(id){var p=IC.P[id];document.querySelectorAll('#ic [data-pid="'+id+'"]').forEach(function(el){el.outerHTML=icPostHtml(p);});icObserveVideos();}
+
+/* sheets */
+function icOpenSheet(id){icCloseSheet();icG(id).hidden=false;}
+function icCloseSheet(){document.querySelectorAll("#ic .ic-sheet").forEach(function(s){s.hidden=true;});IC.cm=null;}
+
+/* ---------- comments ---------- */
+var IC_EMO=["❤️","🙌","🔥","👏","😢","😍","😮","😂"];
+async function icComments(id){IC.cm={id:id,list:null};IC.replyTo=null;icReplyTo(null);icG("ic_cmav").innerHTML=icAv(IC.me,34);
+  icG("ic_emo").innerHTML=IC_EMO.map(function(e){return '<button onclick="icEmo(\''+e+'\')">'+e+'</button>';}).join("");
+  icG("ic_cmlist").innerHTML='<div class="ic-empty"><span class="ic-spin"></span></div>';icOpenSheet("ic_sh_cm");IC.cm={id:id,list:null};
+  var p=IC.P[id];icG("ic_cmin").placeholder=icT("ic_addcm_for",{u:p?icUser(p.author):""});
+  var j=await icCall("comments",{id:id});if(!IC.cm||IC.cm.id!==id)return;
+  if(j.ok){IC.cm.list=j.comments;IC.cm.post=j.post;icRenderComments();}else icG("ic_cmlist").innerHTML='<div class="ic-empty">'+esc(icT("ic_e_net"))+'</div>';}
+function icRenderComments(){var c=IC.cm;if(!c||!c.list)return;var top=c.list.filter(function(x){return !x.parent;}),h="";
+  if(c.post&&c.post.caption)h+=icCmHtml({id:"cap",author:c.post.author,body:c.post.caption,at:c.post.at,cap:true},false);
+  top.forEach(function(x){h+=icCmHtml(x,false);var reps=c.list.filter(function(r){return r.parent===x.id;});
+    if(reps.length){var open=IC.cmOpen[x.id];if(open)reps.forEach(function(r){h+=icCmHtml(r,true);});
+      h+='<button class="ic-vrep" onclick="IC.cmOpen[\''+x.id+'\']=!IC.cmOpen[\''+x.id+'\'];icRenderComments()">'+esc(open?icT("ic_hiderep"):icT(reps.length===1?"ic_view1rep":"ic_viewreps",{n:reps.length}))+'</button>';}});
+  if(!top.length&&!(c.post&&c.post.caption))h='<div class="ic-empty"><b>'+esc(icT("ic_nocm_t"))+'</b>'+esc(icT("ic_nocm_s"))+'</div>';
+  icG("ic_cmlist").innerHTML=h;}
+function icCmHtml(x,rep){var a=x.author||{};
+  return '<div class="ic-cm'+(rep?" rep":"")+(x.pending?" pending":"")+'"><span onclick="icCloseSheet();icOpenProfile(\''+a.id+'\')" style="cursor:pointer">'+icAv(a,rep?26:34)+'</span><div class="tx"><div class="h"><b>'+esc(icUser(a))+'</b> '+esc(icAgo(x.at))
+    +(x.by_author?' · <span style="color:#E11D48">♥</span> '+esc(icT("ic_byauthor")):'')+(x.is_author&&!x.cap?' · <span class="tagA">'+esc(icT("ic_author"))+'</span>':'')+'</div><div class="bd2">'+icRich(x.body)+'</div>'
+    +(x.cap?'':'<div class="ops">'+(x.pending?'<span>'+esc(icT("ic_posting"))+'</span>':'<button onclick="icReplyTo(\''+x.id+'\')">'+esc(icT("ic_reply"))+'</button>'+(x.can_delete?'<button onclick="icCmDelete(\''+x.id+'\')">'+esc(icT("ic_delete"))+'</button>':''))+'</div>')+'</div>'
+    +(x.cap||x.pending?'':'<button class="lk'+(x.liked?" on":"")+'" onclick="icCmLike(\''+x.id+'\')" aria-label="Like">'+icSvg("heart")+(x.likes?'<span>'+x.likes+'</span>':'')+'</button>')+'</div>';}
+function icReplyTo(cid){var r=icG("ic_replying");if(!cid||!IC.cm){IC.replyTo=null;r.hidden=true;return;}
+  var x=IC.cm.list.filter(function(c){return c.id===cid;})[0];if(!x)return;IC.replyTo=x;var u=icUser(x.author);
+  icG("ic_replying_t").textContent=icT("ic_replyingto",{u:u});r.hidden=false;var i=icG("ic_cmin");if(!i.value)i.value="@"+u+" ";i.focus();icG("ic_cmsend").disabled=false;}
+function icEmo(e){var i=icG("ic_cmin");i.value+=e;i.focus();icG("ic_cmsend").disabled=false;}
+async function icCommentSend(){var c=IC.cm,i=icG("ic_cmin"),v=i.value.trim();if(!c||!v)return;
+  var parent=IC.replyTo?(IC.replyTo.parent||IC.replyTo.id):null;
+  var tmp={id:"tmp"+Date.now(),parent:parent,author:IC.me,body:v,at:new Date().toISOString(),pending:true,likes:0};
+  c.list=c.list||[];c.list.push(tmp);if(parent)IC.cmOpen[parent]=true;i.value="";icG("ic_cmsend").disabled=true;icReplyTo(null);icRenderComments();
+  var box=icG("ic_cmlist");if(!parent)box.scrollTop=box.scrollHeight;
+  var j=await icCall("comment_add",{id:c.id,body:v,parent:parent});
+  if(j.ok){tmp.id=j.id;tmp.pending=false;tmp.mine=true;tmp.can_delete=true;tmp.at=j.at;var p=IC.P[c.id];if(p){p.comments++;p.last_comments=(p.last_comments||[]).concat([{id:j.id,user:IC.me.username,body:v}]).slice(-2);icRerenderPost(c.id);}}
+  else{c.list=c.list.filter(function(x){return x!==tmp;});icToast(icT("ic_e_net"));}
+  icRenderComments();}
+async function icCmLike(cid){var x=(IC.cm.list||[]).filter(function(c){return c.id===cid;})[0];if(!x)return;x.liked=!x.liked;x.likes+=x.liked?1:-1;icRenderComments();await icCall("comment_like",{id:cid,on:x.liked});}
+async function icCmDelete(cid){if(!confirm(icT("ic_delcm_q")))return;var j=await icCall("comment_delete",{id:cid});if(j.ok){IC.cm.list=IC.cm.list.filter(function(c){return c.id!==cid&&c.parent!==cid;});icRenderComments();var p=IC.P[IC.cm.id];if(p){p.comments=Math.max(0,p.comments-1);p.last_comments=(p.last_comments||[]).filter(function(c){return c.id!==cid;});icRerenderPost(p.id);}}}
+
+/* ---------- people sheet (likes, followers) ---------- */
+async function icLikes(id){IC.ppl={title:icT("ic_likes"),list:null};icG("ic_ppl_t").textContent=IC.ppl.title;icG("ic_pplq").value="";icG("ic_ppllist").innerHTML='<div class="ic-empty"><span class="ic-spin"></span></div>';icOpenSheet("ic_sh_ppl");
+  var j=await icCall("likes_list",{id:id});IC.ppl.list=j.ok?j.people:[];icRenderPpl();}
+function icPplSheet(title,list){IC.ppl={title:title,list:list};icG("ic_ppl_t").textContent=title;icG("ic_pplq").value="";icOpenSheet("ic_sh_ppl");icRenderPpl();}
+function icRenderPpl(){var q=(icG("ic_pplq").value||"").toLowerCase(),l=IC.ppl.list||[];
+  icG("ic_ppllist").innerHTML=l.filter(function(p){return !q||p.name.toLowerCase().indexOf(q)>=0||String(p.username||"").indexOf(q)>=0;}).map(function(p){
+    var extra=p.vote!=null&&p.vote!==undefined&&IC.ppl.poll?" · "+esc(IC.ppl.poll[p.vote?"b":"a"]):"";
+    return '<div class="ic-li"><span onclick="icCloseSheet();icOpenProfile(\''+p.id+'\')" style="cursor:pointer">'+icAv(p,46)+'</span><div class="tx" onclick="icCloseSheet();icOpenProfile(\''+p.id+'\')" style="cursor:pointer"><b>'+esc(p.username||dvTitle(p.name))+(p.liked?' <span style="color:#E11D48">♥</span>':'')+'</b><small>'+esc(dvTitle(p.name))+extra+'</small></div>'+(p.id===IC.me.id?"":icFolBtn(p))+'</div>';}).join("")||'<div class="ic-empty">'+esc(icT("ic_noresults"))+'</div>';}
+
+/* ---------- share into the referees chat ---------- */
+async function icShare(id){IC.share={id:id,to:null};icG("ic_shq").value="";icG("ic_shnote").value="";icG("ic_shbtn").disabled=true;icOpenSheet("ic_sh_share");
+  if(!IC.people)await icLoadPeople();icRenderShare();}
+function icRenderShare(){if(!IC.share)return;var q=(icG("ic_shq").value||"").toLowerCase(),to=IC.share.to;
+  var all='<div class="ic-li" onclick="icShareTo(\'all\')" style="cursor:pointer"><span class="ic-av" style="width:46px;height:46px;background:linear-gradient(135deg,#E11D48,#2563EB);color:#fff">'+icSvg("find",' style="width:24px;height:24px"')+'</span><div class="tx"><b>'+esc(icT("ic_allrefs"))+'</b><small>'+esc(icT("ic_allrefs_s"))+'</small></div><span class="ic-chk'+(to==="all"?" on":"")+'">'+(to==="all"?icSvg("_ok"):"")+'</span></div>';
+  icG("ic_shlist").innerHTML=(!q?all:"")+(IC.people||[]).filter(function(p){return !q||p.name.toLowerCase().indexOf(q)>=0||String(p.username||"").indexOf(q)>=0;}).map(function(p){
+    return '<div class="ic-li" onclick="icShareTo(\''+p.id+'\')" style="cursor:pointer">'+icAv(p,46)+'<div class="tx"><b>'+esc(dvTitle(p.name))+'</b><small>'+esc(p.username?"@"+p.username:"")+'</small></div><span class="ic-chk'+(to===p.id?" on":"")+'">'+(to===p.id?icSvg("_ok"):"")+'</span></div>';}).join("");}
+function icShareTo(t){IC.share.to=IC.share.to===t?null:t;icG("ic_shbtn").disabled=!IC.share.to;icRenderShare();}
+async function icShareSend(){var s=IC.share;if(!s||!s.to)return;var b=icG("ic_shbtn");b.disabled=true;
+  var j=await icCall("share",{id:s.id,to:s.to,note:icG("ic_shnote").value.trim()});b.disabled=false;
+  if(j.ok){icCloseSheet();icToast(icT("ic_sent"),icT("ic_openchat"),function(){icMessages(s.to);});}else icToast(icT("ic_e_net"));}
+function icMessages(conv){if(!IC.token)return;DV.token=IC.token;if(typeof dvPplOpen!=="function")return;dvPplOpen("msg");if(conv&&typeof dvChatOpen==="function")setTimeout(function(){dvChatOpen(conv);},60);}
+/* chat → apri il post condiviso */
+function icOpenFromChat(id){if(typeof dvPplClose==="function"){try{if(history.state&&history.state.dvppl)history.back();}catch(e){}dvPplClose();}
+  setTimeout(function(){icOpen(function(){icShowPost(id);});},80);}
+function icChatBody(txt){var s=String(txt||""),m=s.match(/\[ic:([0-9a-f-]{36})\]/),st=/\[ics:[0-9a-f-]{36}\]/.test(s);
+  s=s.replace(/\s*\[ics?:[0-9a-f-]{36}\]/g,"");var h=esc(s).replace(/\n/g,"<br>");
+  if(m)h+='<button class="ic-chatcard" onclick="icOpenFromChat(\''+m[1]+'\')">'+icIcon("")+'<span>'+esc(icT("ic_openpost"))+'</span></button>';
+  return h;}
+function icChatPreview(txt){return String(txt||"").replace(/\s*\[ics?:[0-9a-f-]{36}\]/g,"").replace(/\n/g," ");}
+
+/* ---------- single post ---------- */
+async function icShowPost(id){icShow("post",true);var box=icG("ic_post1");
+  if(IC.P[id]){box.innerHTML=icPostHtml(IC.P[id]);icObserveVideos();}else box.innerHTML='<div class="ic-empty"><span class="ic-spin"></span></div>';
+  var j=await icCall("post",{id:id});if(j.ok){IC.P[id]=j.post;box.innerHTML=icPostHtml(j.post);icObserveVideos();}else if(!IC.P[id])box.innerHTML='<div class="ic-empty">'+esc(icT("ic_gone"))+'</div>';}
+
+/* ---------- search / explore ---------- */
+function icRenderSearch(){var q=(icG("ic_sq").value||"").toLowerCase().trim(),box=icG("ic_spl");
+  icG("ic_sx_h").hidden=!!q;icG("ic_sgrid").hidden=!!q;
+  if(!IC.people){box.innerHTML=q?'<div class="ic-empty"><span class="ic-spin"></span></div>':"";return;}
+  var l=IC.people.filter(function(p){return !q||p.name.toLowerCase().indexOf(q)>=0||String(p.username||"").indexOf(q)>=0;});
+  if(!q)l=l.filter(function(p){return !p.following;}).slice(0,6);
+  box.innerHTML=(!q&&l.length?'<div class="ic-sec">'+esc(icT("ic_sug"))+'</div>':'')+l.map(function(p){
+    return '<div class="ic-li"><span onclick="icOpenProfile(\''+p.id+'\')" style="cursor:pointer">'+icAv(p,46,icHasStory(p.id))+'</span><div class="tx" onclick="icOpenProfile(\''+p.id+'\')" style="cursor:pointer"><b>'+esc(p.username||dvTitle(p.name))+'</b><small>'+esc(dvTitle(p.name))+(p.posts?" · "+icT("ic_nposts",{n:p.posts}):"")+(p.follows_you?" · "+icT("ic_folyou"):"")+'</small></div>'+icFolBtn(p)+'</div>';}).join("")+(q&&!l.length?'<div class="ic-empty">'+esc(icT("ic_noresults"))+'</div>':"");}
+async function icLoadExplore(){var g=icG("ic_sgrid");var j=await icCall("feed",{mode:"all",limit:30});if(!j.ok)return;j.posts.forEach(function(p){IC.P[p.id]=p;});
+  g.innerHTML=j.posts.map(function(p){var m=p.media[0]||{};return icCell({id:p.id,thumb:m.poster||m.url,video:p.media.some(function(x){return x.type==="video";}),multi:p.media.length>1});}).join("")||'<div class="ic-empty" style="grid-column:1/-1">'+esc(icT("ic_empty_t"))+'</div>';}
+function icCell(c){return '<button style="background-image:url(\''+esc(c.thumb||"")+'\')" onclick="icShowPost(\''+c.id+'\')">'+(c.video?icSvg("play",' stroke="none"'):c.multi?'<svg viewBox="0 0 24 24">'+IC_SVG.multi+'</svg>':"")+'</button>';}
+
+/* ---------- profile ---------- */
+async function icOpenProfile(uid,root){if(!uid)return;if(!root)icShow("profile",true);else icShow("profile");IC.profStack=IC.profStack||[];
+  icG("ic_prof").innerHTML='<div class="ic-empty"><span class="ic-spin"></span></div>';icG("ic_puser").textContent="";
+  var j=await icCall("profile",{id:uid});if(!j.ok){icG("ic_prof").innerHTML='<div class="ic-empty">'+esc(icT("ic_e_net"))+'</div>';return;}
+  if(j.me){IC.me.counts=j.counts;}IC.ptab="grid";IC.profStack.push(j);icRenderProfile(j);if(!IC.stories.length)icLoadStories();}
+function icRenderProfile(j){IC.prof=j;var u=j.user;icG("ic_puser").textContent=u.username||dvTitle(u.name);
+  icG("ic_pback").style.visibility=IC.hist.length?"visible":"hidden";icG("ic_pmenu").style.visibility=j.me?"visible":"hidden";
+  document.querySelectorAll("#ic_nav button").forEach(function(b){b.classList.toggle("on",j.me&&b.getAttribute("data-n")==="profile");});
+  var ring=icHasStory(u.id);
+  var h='<div class="ic-prof"><div class="r1"><span onclick="'+(ring?"icStoryOpenUser('"+u.id+"')":(j.me?"icPickAvatar('edit')":""))+'" style="cursor:pointer">'+icAv(u,84,ring)+'</span><div class="nums">'
+    +'<button><b>'+icNum(j.counts.posts)+'</b><span>'+esc(icT("ic_posts_l"))+'</span></button>'
+    +'<button onclick="icFolList(\''+u.id+'\',\'followers\')"><b>'+icNum(j.counts.followers)+'</b><span>'+esc(icT("ic_followers"))+'</span></button>'
+    +'<button onclick="icFolList(\''+u.id+'\',\'following\')"><b>'+icNum(j.counts.following)+'</b><span>'+esc(icT("ic_followingn"))+'</span></button></div></div>'
+    +'<div class="nm">'+esc(dvTitle(u.name))+'</div>'+(u.bio?'<div class="bio">'+icRich(u.bio)+'</div>':(j.me?'<button class="ic-link" style="padding:2px 0" onclick="icEditOpen()">'+esc(icT("ic_addbio"))+'</button>':''))
+    +'<div class="btns">'+(j.me?'<button class="ic-btn gray" onclick="icEditOpen()">'+esc(icT("ic_editp"))+'</button><button class="ic-btn gray" onclick="icCompose(\'story\')">'+esc(icT("ic_addstory"))+'</button>'
+      :'<button class="ic-btn'+(j.following?" gray":"")+'" onclick="icFollow(\''+u.id+'\','+(!j.following)+')">'+esc(j.following?icT("ic_following"):j.follows_you?icT("ic_folback"):icT("ic_follow"))+'</button><button class="ic-btn gray" onclick="icMessages(\''+u.id+'\')">'+esc(icT("ic_message"))+'</button>')+'</div></div>'
+    +'<div class="ic-ptabs">'+[["grid","grid"],["video","video"],["rp","rp"]].concat(j.me?[["saved","save"]]:[]).map(function(t){return '<button class="'+(IC.ptab===t[0]?"on":"")+'" onclick="icPTab(\''+t[0]+'\')" aria-label="'+t[0]+'">'+icSvg(t[1])+'</button>';}).join("")+'</div><div id="ic_pgrid"></div>';
+  icG("ic_prof").innerHTML=h;icPTab(IC.ptab);}
+async function icPTab(t){IC.ptab=t;var j=IC.prof;document.querySelectorAll(".ic-ptabs button").forEach(function(b,i){b.classList.toggle("on",["grid","video","rp","saved"][i]===t);});
+  var g=icG("ic_pgrid");if(!g)return;var cells;
+  if(t==="grid")cells=j.grid;else if(t==="video")cells=j.grid.filter(function(c){return c.video;});else if(t==="rp")cells=j.reposts||[];
+  else{g.innerHTML='<div class="ic-empty"><span class="ic-spin"></span></div>';var s=await icCall("feed",{mode:"saved",limit:30});if(!s.ok)return;s.posts.forEach(function(p){IC.P[p.id]=p;});
+    cells=s.posts.map(function(p){var m=p.media[0]||{};return {id:p.id,thumb:m.poster||m.url,video:p.media.some(function(x){return x.type==="video";}),multi:p.media.length>1};});}
+  var em={grid:["ic_noposts_t",j.me?"ic_noposts_me":"ic_noposts_s"],video:["ic_novid_t","ic_novid_s"],rp:["ic_norp_t","ic_norp_s"],saved:["ic_nosaved_t","ic_nosaved_s"]}[t];
+  g.innerHTML=cells.length?'<div class="ic-grid">'+cells.map(icCell).join("")+'</div>':'<div class="ic-empty">'+icSvg(t==="rp"?"rp":t==="saved"?"save":t==="video"?"video":"cam",' stroke-width="1.2"')+'<b>'+esc(icT(em[0]))+'</b>'+esc(icT(em[1]))+(t==="grid"&&j.me?'<br><br><button class="ic-btn sm" onclick="icCompose(\'post\')">'+esc(icT("ic_firstpost"))+'</button>':'')+'</div>';}
+async function icFolList(uid,kind){if(uid!==IC.me.id)return;await icLoadPeople();
+  icPplSheet(kind==="followers"?icT("ic_followers"):icT("ic_followingn"),(IC.people||[]).filter(function(p){return kind==="followers"?p.follows_you:p.following;}));}
+function icProfileMenu(){var m=icG("ic_menu");
+  m.innerHTML='<button onclick="icCloseSheet();icPTab(\'saved\')">'+icSvg("save")+esc(icT("ic_savedl"))+'</button>'
+   +'<button onclick="icCloseSheet();icNav(\'activity\')">'+icSvg("heart")+esc(icT("ic_notif"))+'</button>'
+   +'<button onclick="icCloseSheet();icEditOpen()">'+icSvg("edit")+esc(icT("ic_editp"))+'</button>'
+   +'<button class="red" onclick="icSignOut()">'+icSvg("out")+esc(icT("ic_signout"))+'</button>'
+   +'<button onclick="icCloseSheet()">'+esc(icT("ic_cancel"))+'</button>';icOpenSheet("ic_sh_menu");}
+async function icSignOut(){icCloseSheet();if(!confirm(icT("ic_signout_q")))return;try{await dvCall("logout");}catch(e){}dvForget();IC.token=null;IC.me=null;IC.feed=[];IC.P={};IC.people=null;IC.hist=[];icShow("welcome");}
+function icEditOpen(){icShow("edit",true);icG("ic_ename").value=dvTitle(IC.me.name);icG("ic_euser").value=IC.me.username||"";icG("ic_ebio").value=IC.me.bio||"";icG("ic_eerr").hidden=true;icRenderEditAv();}
+function icRenderEditAv(){var e=icG("ic_eav");if(e)e.innerHTML=icAv(IC.me,90);icG("ic_navav").innerHTML=icAv(IC.me,27);}
+async function icEditSave(){var u=icG("ic_euser").value.trim().toLowerCase(),b=icG("ic_ebio").value.trim(),er=icG("ic_eerr");
+  var j=await icCall("profile_save",{username:u,bio:b});if(!j.ok){er.textContent=j.reason==="taken"?icT("ic_u_taken"):j.reason==="bad_username"?icT("ic_u_bad"):icT("ic_e_net");er.hidden=false;return;}
+  IC.me.username=u;IC.me.bio=b;icToast(icT("ic_saved"));IC.hist.pop();icOpenProfile(IC.me.id,true);}
+
+/* ---------- activity (notifications) ---------- */
+var IC_ACT_KEY="vcbe_ic_act_seen";
+async function icActPoll(){clearInterval(IC.actTimer);var f=async function(){if(!IC.open||!IC.token)return;var j=await icCall("activity",{});if(!j.ok)return;IC.act=j.items;icActBadge();if(IC.view==="activity")icRenderActivity();};
+  f();IC.actTimer=setInterval(f,60000);}
+function icActBadge(){var seen=0;try{seen=+localStorage.getItem(IC_ACT_KEY)||0;}catch(e){}var n=IC.act.filter(function(a){return new Date(a.at).getTime()>seen;}).length;var b=icG("ic_actbd");b.hidden=!n;b.textContent=n>9?"9+":String(n);}
+async function icLoadActivity(){icG("ic_act").innerHTML='<div class="ic-empty"><span class="ic-spin"></span></div>';var j=await icCall("activity",{});if(j.ok)IC.act=j.items;icRenderActivity();
+  try{localStorage.setItem(IC_ACT_KEY,String(Date.now()));}catch(e){}icActBadge();}
+function icRenderActivity(){var l=IC.act||[];if(!l.length){icG("ic_act").innerHTML='<div class="ic-empty">'+icSvg("heart",' stroke-width="1.2"')+'<b>'+esc(icT("ic_noact_t"))+'</b>'+esc(icT("ic_noact_s"))+'</div>';return;}
+  icG("ic_act").innerHTML=l.map(function(a){var u=a.user||{},who='<b>'+esc(icUser(u))+'</b> ';
+    var tx=a.kind==="like"?who+esc(icT("ic_a_like")):a.kind==="comment"?who+esc(icT("ic_a_cm"))+': '+esc(a.body):who+esc(icT("ic_a_fol"));
+    var right=a.kind==="follow"?icFolBtn({id:u.id,following:a.following,follows_you:true}):(a.thumb?'<img class="th" src="'+esc(a.thumb)+'" alt="" onclick="icShowPost(\''+a.post+'\')" style="cursor:pointer">':'');
+    return '<div class="ic-li"><span onclick="icOpenProfile(\''+u.id+'\')" style="cursor:pointer">'+icAv(u,44)+'</span><div class="tx" style="white-space:normal" onclick="'+(a.post?"icShowPost('"+a.post+"')":"icOpenProfile('"+u.id+"')")+'"><span style="font-size:14px">'+tx+'</span> <small style="display:inline;color:#888">'+esc(icAgo(a.at))+'</small></div>'+right+'</div>';}).join("");}
+
+/* ---------- composer (post / story) ---------- */
+function icCompose(kind,keep){
+  if(!keep||!IC.c||IC.c.kind!==kind){var old=IC.c;if(old)old.items.forEach(function(x){try{URL.revokeObjectURL(x.url);}catch(e){}});IC.c={kind:kind,items:[],caption:"",text:"",poll:null,question:"",busy:false};}
+  if(IC.view!=="compose")icShow("compose",true);
+  document.querySelectorAll('#ic [data-icv="compose"] .ic-tabs2 button').forEach(function(b){b.classList.toggle("on",b.getAttribute("data-k")===kind);});
+  icG("ic_ctitle").textContent=kind==="story"?icT("ic_newstory"):icT("ic_newpost");icRenderCompose();}
+function icRenderCompose(){var c=IC.c,box=icG("ic_cbody");icG("ic_cshare").style.visibility=c.items.length?"visible":"hidden";
+  icG("ic_cshare").textContent=c.kind==="story"?icT("ic_sharestory"):icT("ic_share");
+  if(!c.items.length){box.innerHTML='<div class="ic-body" style="align-items:center;text-align:center;padding-top:40px">'+icSvg(c.kind==="story"?"cam":"album",' style="width:70px;height:70px" stroke-width="1.2"')+'<h2 style="font-size:20px">'+esc(c.kind==="story"?icT("ic_c_story_t"):icT("ic_c_post_t"))+'</h2><p class="s" style="margin:0">'+esc(c.kind==="story"?icT("ic_c_story_s"):icT("ic_c_post_s"))+'</p>'
+    +'<button class="ic-btn" onclick="icG(\'ic_mfile\').multiple='+(c.kind==="post")+';icG(\'ic_mfile\').click()">'+icSvg("album",' style="width:20px;height:20px"')+esc(icT("ic_album"))+'</button><button class="ic-btn ghost" onclick="icG(\'ic_mcam\').click()">'+icSvg("cam",' style="width:20px;height:20px"')+esc(icT("ic_camera"))+'</button></div>';return;}
+  var h='';
+  if(c.kind==="post"){h+='<div class="ic-pick">'+c.items.map(function(x,i){return '<div>'+(x.type==="video"?'<video src="'+x.url+'" muted playsinline preload="metadata"></video><span class="vt">▶ '+(x.dur?Math.round(x.dur)+" s":"")+'</span>':'<img src="'+x.url+'" alt="">')+'<button onclick="icRmItem('+i+')" aria-label="Remove">×</button></div>';}).join("")
+      +(c.items.length<10?'<div style="display:flex;align-items:center;justify-content:center;background:#f3f3f7;cursor:pointer" onclick="icG(\'ic_mfile\').multiple=true;icG(\'ic_mfile\').click()"><span style="font-size:34px;color:#888">+</span></div>':'')+'</div>'
+      +'<div class="ic-body" style="gap:10px"><div class="ic-cin" style="padding:0">'+icAv(IC.me,34)+'<div class="box" style="border-radius:14px"><textarea id="ic_ccap" rows="3" maxlength="2200" placeholder="'+esc(icT("ic_capph"))+'" oninput="IC.c.caption=this.value">'+esc(c.caption)+'</textarea></div></div><small style="color:#777">'+esc(icT("ic_c_hint"))+'</small>';}
+  else{var x=c.items[0];h+='<div style="position:relative;background:#000;aspect-ratio:9/14;max-height:56vh;margin:0 auto;overflow:hidden;border-radius:12px;width:min(100%,360px)">'+(x.type==="video"?'<video src="'+x.url+'" muted playsinline autoplay loop style="width:100%;height:100%;object-fit:cover"></video>':'<img src="'+x.url+'" alt="" style="width:100%;height:100%;object-fit:cover">')
+      +'<div style="position:absolute;left:12px;right:12px;top:18%;text-align:center;color:#fff;font-weight:800;font-size:24px;text-shadow:0 2px 8px rgba(0,0,0,.6);white-space:pre-wrap" id="ic_cstx">'+esc(c.text)+'</div><button onclick="icRmItem(0)" style="position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;border:none;background:rgba(0,0,0,.6);color:#fff;font-size:18px;cursor:pointer">×</button></div>'
+      +'<div class="ic-body" style="gap:10px"><div class="ic-field"><label>'+esc(icT("ic_st_text"))+'</label><input maxlength="200" value="'+esc(c.text)+'" oninput="IC.c.text=this.value;icG(\'ic_cstx\').textContent=this.value"></div>'
+      +'<div class="ic-swrow"><span>'+esc(icT("ic_st_poll"))+'</span><button type="button" class="ic-sw" role="switch" aria-checked="'+(!!c.poll)+'" onclick="IC.c.poll=IC.c.poll?null:{q:\'\',a:\''+esc(icT("ic_yes"))+'\',b:\''+esc(icT("ic_no"))+'\'};icRenderCompose()"></button></div>'
+      +(c.poll?'<div class="ic-field"><label>'+esc(icT("ic_st_pollq"))+'</label><input maxlength="80" value="'+esc(c.poll.q)+'" oninput="IC.c.poll.q=this.value"></div><div style="display:flex;gap:8px"><div class="ic-field" style="flex:1;padding-right:14px"><label>A</label><input maxlength="40" value="'+esc(c.poll.a)+'" oninput="IC.c.poll.a=this.value"></div><div class="ic-field" style="flex:1;padding-right:14px"><label>B</label><input maxlength="40" value="'+esc(c.poll.b)+'" oninput="IC.c.poll.b=this.value"></div></div>':'')
+      +'<div class="ic-swrow"><span>'+esc(icT("ic_st_ask"))+'</span><button type="button" class="ic-sw" role="switch" aria-checked="'+(c.question!==""&&c.question!==null)+'" onclick="IC.c.question=IC.c.question?\'\':\''+esc(icT("ic_st_askdef"))+'\';icRenderCompose()"></button></div>'
+      +(c.question?'<div class="ic-field"><label>'+esc(icT("ic_st_askq"))+'</label><input maxlength="120" value="'+esc(c.question)+'" oninput="IC.c.question=this.value"></div>':'')
+      +'<small style="color:#777">'+esc(icT("ic_st_hint"))+'</small>';}
+  h+='<div class="ic-prog" id="ic_cprog" hidden><i></i></div><div class="ic-err" id="ic_cerr" hidden></div></div>';
+  box.innerHTML=h;}
+function icRmItem(i){var x=IC.c.items.splice(i,1)[0];try{URL.revokeObjectURL(x.url);}catch(e){}icRenderCompose();}
+async function icMediaFiles(inp){var fs=Array.prototype.slice.call(inp.files||[]);inp.value="";if(!fs.length||!IC.c)return;var c=IC.c,skipped=0;
+  if(c.kind==="story"){c.items.forEach(function(x){try{URL.revokeObjectURL(x.url);}catch(e){}});c.items=[];fs=fs.slice(0,1);}
+  for(var k=0;k<fs.length&&c.items.length<10;k++){var f=fs[k],isV=/^video\//.test(f.type)||/\.(mov|mp4|m4v|webm|3gp)$/i.test(f.name);
+    if(!isV&&!/^image\//.test(f.type)&&!/\.(jpe?g|png|heic|heif|webp|gif)$/i.test(f.name)){skipped++;continue;}
+    if(isV&&f.size>IC_MAX_VIDEO){icToast(icT("ic_e_vbig",{n:Math.round(IC_MAX_VIDEO/1048576)}),null,null,5000);continue;}
+    var it={file:f,type:isV?"video":"image",url:URL.createObjectURL(f)};
+    if(isV){var pr=await icPoster(f);it.poster=pr.blob||null;it.w=pr.w;it.h=pr.h;it.dur=pr.dur;}
+    c.items.push(it);}
+  if(skipped)icToast(icT("ic_e_type"));icRenderCompose();}
+async function icPublish(){var c=IC.c;if(!c||!c.items.length||c.busy)return;c.busy=true;var btn=icG("ic_cshare");btn.disabled=true;
+  var pr=icG("ic_cprog"),bar=pr.querySelector("i"),er=icG("ic_cerr");pr.hidden=false;er.hidden=true;
+  var total=c.items.length,media=[];
+  try{for(var i=0;i<c.items.length;i++){var x=c.items[i],step=function(f){bar.style.width=Math.round(((i+f)/total)*100)+"%";};
+      if(x.type==="image"){var r=await icResize(x.file,1440,0.86);var path=await icPut(r.blob,"image/jpeg",step);media.push({path:path,type:"image",w:r.w,h:r.h});}
+      else{var poster=null;if(x.poster){try{poster=await icPut(x.poster,"image/jpeg");}catch(e){}}
+        var vt=(x.file.type||"").toLowerCase();if(!vt||vt==="video/x-matroska")vt=/\.mov$/i.test(x.file.name)?"video/quicktime":"video/mp4";
+        var vp=await icPut(x.file,vt,step);media.push({path:vp,type:"video",w:x.w,h:x.h,poster:poster});}}
+    bar.style.width="100%";
+    var j=c.kind==="story"?await icCall("story_create",{path:media[0].path,type:media[0].type,poster:media[0].poster,text:c.text,poll:c.poll&&c.poll.a&&c.poll.b?c.poll:null,question:c.question||null})
+      :await icCall("post_create",{caption:c.caption,media:media});
+    if(!j.ok)throw new Error(j.reason||"save");
+    var kind=c.kind;c.items.forEach(function(x){try{URL.revokeObjectURL(x.url);}catch(e){}});IC.c=null;c.busy=false;btn.disabled=false;
+    icToast(kind==="story"?icT("ic_story_ok"):icT("ic_post_ok"));icNav("feed");
+  }catch(e){c.busy=false;btn.disabled=false;pr.hidden=true;er.textContent=icT("ic_e_up")+" ("+(e&&e.message||"")+")";er.hidden=false;}}
+
+/* ---------- stories ---------- */
+function icHasStory(uid){var g=IC.stories.filter(function(x){return x.user&&x.user.id===uid;})[0];return g?(g.seen?"seen":true):false;}
+async function icLoadStories(){var j=await icCall("stories",{});if(!j.ok)return;IC.stories=j.groups;icRenderStories();}
+function icRenderStories(){var box=icG("ic_stories");if(!box)return;var me=IC.me||{},mine=IC.stories.filter(function(g){return g.mine;})[0];
+  var h='<button class="ic-st" onclick="'+(mine?"icStoryOpen(0)":"icCompose('story')")+'"><span class="wr">'+(mine?icAv(me,64,mine.seen?"seen":true):icAv(me,64))+'<span class="plus" onclick="event.stopPropagation();icCompose(\'story\')">+</span></span><span class="n">'+esc(icT("ic_yourstory"))+'</span></button>';
+  IC.stories.forEach(function(g,i){if(g.mine)return;h+='<button class="ic-st" onclick="icStoryOpen('+i+')">'+icAv(g.user,64,g.seen?"seen":true)+'<span class="n">'+esc(icUser(g.user))+'</span></button>';});
+  box.innerHTML=h;}
+function icStoryOpenUser(uid){var i=-1;IC.stories.forEach(function(g,k){if(g.user&&g.user.id===uid)i=k;});if(i>=0)icStoryOpen(i);}
+function icStoryOpen(gi){var g=IC.stories[gi];if(!g)return;icPauseAll();var ii=0;if(!g.mine){for(var k=0;k<g.items.length;k++){if(!g.items[k].seen){ii=k;break;}}}
+  IC.sv={gi:gi,ii:ii,t0:0,dur:5000,paused:false,raf:0,el:0};icG("ic_sv").hidden=false;icStoryShow();}
+function icStoryClose(){var s=IC.sv;if(!s)return;cancelAnimationFrame(s.raf);var v=icG("ic_svmedia").querySelector("video");if(v)v.pause();IC.sv=null;icG("ic_sv").hidden=true;icG("ic_svmedia").innerHTML="";icRenderStories();if(IC.view==="profile"&&IC.prof)icRenderProfile(IC.prof);icObserveVideos();}
+function icStoryShow(){var s=IC.sv,g=IC.stories[s.gi],it=g.items[s.ii];cancelAnimationFrame(s.raf);
+  icG("ic_svbars").innerHTML=g.items.map(function(x,k){return '<i><b style="width:'+(k<s.ii?100:0)+'%"></b></i>';}).join("");
+  icG("ic_svav").innerHTML=icAv(g.user,32);icG("ic_svuser").textContent=icUser(g.user);icG("ic_svtime").textContent=icAgo(it.at);
+  icG("ic_svmore").style.visibility=g.mine?"visible":"hidden";
+  var m=icG("ic_svmedia");m.innerHTML=it.type==="video"?'<video src="'+esc(it.url||"")+'"'+(it.poster?' poster="'+esc(it.poster)+'"':'')+' playsinline autoplay></video>':'<img src="'+esc(it.url||"")+'" alt="">';
+  var x='';if(it.text)x+='<div class="stx">'+esc(it.text)+'</div>';
+  if(it.poll)x+=icPollHtml(it);
+  if(it.question)x+='<div class="ask"><div class="q">'+esc(it.question)+'</div>'+(g.mine?'':'<input id="ic_svans" maxlength="300" placeholder="'+esc(icT("ic_typesth"))+'" onfocus="icStoryPause(true)" onblur="icStoryPause(false)" onkeydown="if(event.key===\'Enter\')icStoryAnswer(this)"><button onclick="icStoryAnswer(icG(\'ic_svans\'))">'+esc(icT("ic_send"))+'</button>')+'</div>';
+  if(g.mine)x+='<div class="own"><button onclick="icStoryViewers()">'+icSvg("eye")+esc(icT("ic_seenby",{n:it.views||0}))+'</button></div>';
+  icG("ic_svextra").innerHTML=x;
+  icG("ic_svbot").style.display=g.mine?"none":"flex";icG("ic_svin").value="";icG("ic_svlike").classList.toggle("liked",!!it.liked);
+  icG("ic_svemos").innerHTML=["😂","😮","😍","😢","👏","🔥","🎉","💯","🙌"].map(function(e){return '<button onclick="icStoryReact(\''+e+'\')">'+e+'</button>';}).join("");
+  if(!g.mine&&!it.seen){it.seen=true;icCall("story_view",{id:it.id});if(g.items.every(function(z){return z.seen;}))g.seen=true;}
+  s.el=0;s.dur=5000;s.last=performance.now();
+  if(it.type==="video"){var v=m.querySelector("video");v.muted=false;v.onloadedmetadata=function(){s.dur=Math.max(1000,(v.duration||5)*1000);};v.play().catch(function(){v.muted=true;v.play().catch(function(){});});}
+  var tick=function(now){if(!IC.sv||IC.sv!==s)return;var dt=now-s.last;s.last=now;
+    if(!s.paused){if(it.type==="video"){var v=m.querySelector("video");if(v&&v.duration){s.el=v.currentTime*1000;s.dur=v.duration*1000;if(v.ended)s.el=s.dur;}else s.el+=0;}else s.el+=dt;}
+    var bar=icG("ic_svbars").children[s.ii];if(bar)bar.firstChild.style.width=Math.min(100,s.el/s.dur*100)+"%";
+    if(s.el>=s.dur){icStoryStep(1);return;}s.raf=requestAnimationFrame(tick);};
+  s.raf=requestAnimationFrame(tick);}
+function icPollHtml(it){var r=it.results,tot=r?(r[0]+r[1]):0,p=function(k){return tot?Math.round(r[k]/tot*100):0;};
+  return '<div class="poll">'+(it.poll.q?'<div class="q">'+esc(it.poll.q)+'</div>':'')+[it.poll.a,it.poll.b].map(function(o,k){
+    return '<button onclick="icStoryVote('+k+')"'+(r?' disabled':'')+'>'+(r?'<i style="width:'+p(k)+'%"></i>':'')+'<span><b>'+esc(o)+'</b>'+(r?'<b>'+p(k)+' %</b>':'')+'</span></button>';}).join("")+'</div>';}
+function icStoryStep(d){var s=IC.sv;if(!s)return;var g=IC.stories[s.gi];
+  if(d>0){if(s.ii<g.items.length-1){s.ii++;icStoryShow();return;}var n=s.gi+1;while(n<IC.stories.length&&IC.stories[n].mine)n++;if(n<IC.stories.length){s.gi=n;s.ii=0;icStoryShow();}else icStoryClose();}
+  else{if(s.ii>0){s.ii--;icStoryShow();return;}var p=s.gi-1;while(p>=0&&IC.stories[p].mine&&!g.mine)p--;if(p>=0){s.gi=p;s.ii=IC.stories[p].items.length-1;icStoryShow();}else{s.el=0;icStoryShow();}}}
+function icStoryPause(on){if(!IC.sv)return;IC.sv.paused=on;var v=icG("ic_svmedia").querySelector("video");if(v){if(on)v.pause();else v.play().catch(function(){});}}
+(function(){var st=document.getElementById("ic_svstage");if(!st)return;var hold=null;
+  st.addEventListener("pointerdown",function(e){if(e.target.closest("button,input,.poll,.ask"))return;hold=setTimeout(function(){icStoryPause(true);hold="p";},220);});
+  ["pointerup","pointercancel","pointerleave"].forEach(function(ev){st.addEventListener(ev,function(e){if(hold==="p"){icStoryPause(false);e.preventDefault();var t=e.target;if(t.classList&&t.classList.contains("tap"))t._skip=Date.now();}else clearTimeout(hold);hold=null;});});
+  st.addEventListener("click",function(e){var t=e.target;if(t._skip&&Date.now()-t._skip<400){e.stopPropagation();e.preventDefault();}},true);})();
+function icStoryEmos(on){var el=icG("ic_svemos");if(!el)return;if(on&&window.innerHeight<500)return;el.hidden=!on;}
+function icSvToast(m){var t=icG("ic_svtoast");t.textContent=m;t.hidden=false;setTimeout(function(){t.hidden=true;},1500);}
+async function icStoryReact(e){var s=IC.sv;if(!s)return;var it=IC.stories[s.gi].items[s.ii];icG("ic_svin").blur();icStoryEmos(false);icSvToast(icT("ic_reactsent"));await icCall("story_reply",{id:it.id,body:e,kind:"reaction"});}
+async function icStoryReply(){var s=IC.sv;if(!s)return;var i=icG("ic_svin"),v=i.value.trim();if(!v)return;var it=IC.stories[s.gi].items[s.ii];i.value="";i.blur();
+  var j=await icCall("story_reply",{id:it.id,body:v});icSvToast(j.ok?icT("ic_sent"):icT("ic_e_net"));}
+async function icStoryAnswer(inp){var s=IC.sv;if(!s||!inp)return;var v=inp.value.trim();if(!v)return;var it=IC.stories[s.gi].items[s.ii];
+  var b=inp.nextSibling;b.disabled=true;var j=await icCall("story_reply",{id:it.id,body:v,kind:"answer"});if(j.ok){b.textContent=icT("ic_sentx");b.classList.add("sent");inp.disabled=true;}else b.disabled=false;inp.blur();}
+async function icStoryVote(k){var s=IC.sv;if(!s)return;var it=IC.stories[s.gi].items[s.ii];if(it.results)return;it.vote=k;
+  var j=await icCall("story_view",{id:it.id,vote:k});if(j.ok&&j.results){it.results=j.results;var el=icG("ic_svextra").querySelector(".poll");if(el)el.outerHTML=icPollHtml(it);}}
+async function icStoryLike(){var s=IC.sv;if(!s)return;var it=IC.stories[s.gi].items[s.ii];it.liked=!it.liked;icG("ic_svlike").classList.toggle("liked",it.liked);if(it.liked)icHeartAnim(icG("ic_svstage"));await icCall("story_view",{id:it.id,liked:it.liked});}
+async function icStoryViewers(){var s=IC.sv;if(!s)return;var it=IC.stories[s.gi].items[s.ii];icStoryPause(true);
+  var j=await icCall("story_viewers",{id:it.id});IC.ppl.poll=it.poll;icPplSheet(icT("ic_viewers"),j.ok?j.viewers:[]);IC.ppl.poll=it.poll;icRenderPpl();
+  var sh=icG("ic_sh_ppl");sh.style.zIndex=30;var obs=new MutationObserver(function(){if(sh.hidden){obs.disconnect();sh.style.zIndex="";icStoryPause(false);}});obs.observe(sh,{attributes:true});}
+function icStoryMenu(){var s=IC.sv;if(!s)return;icStoryPause(true);var m=icG("ic_menu");
+  m.innerHTML='<button class="red" onclick="icStoryDelete()">'+icSvg("trash")+esc(icT("ic_delete"))+'</button><button onclick="icCloseSheet();icStoryPause(false)">'+esc(icT("ic_cancel"))+'</button>';
+  var sh=icG("ic_sh_menu");sh.hidden=false;sh.style.zIndex=30;var obs=new MutationObserver(function(){if(sh.hidden){obs.disconnect();sh.style.zIndex="";icStoryPause(false);}});obs.observe(sh,{attributes:true});}
+async function icStoryDelete(){var s=IC.sv;icCloseSheet();if(!s)return;var g=IC.stories[s.gi],it=g.items[s.ii];if(!confirm(icT("ic_delst_q")))return;
+  await icCall("story_delete",{id:it.id});g.items.splice(s.ii,1);if(!g.items.length){IC.stories.splice(s.gi,1);icStoryClose();return;}if(s.ii>=g.items.length)s.ii=g.items.length-1;icStoryShow();}
+
+/* ---------- reels (videos) ---------- */
+var IC_RIO=null;
+async function icLoadReels(){var box=icG("ic_reels");box.innerHTML='<div class="ic-empty" style="color:#fff"><span class="ic-spin"></span></div>';
+  var j=await icCall("feed",{mode:"videos",limit:20});if(!j.ok){box.innerHTML='<div class="ic-empty" style="color:#fff">'+esc(icT("ic_e_net"))+'</div>';return;}
+  j.posts.forEach(function(p){IC.P[p.id]=p;});IC.reels=j.posts;
+  if(!j.posts.length){box.innerHTML='<div class="ic-empty" style="color:#bbb;padding-top:30vh">'+icSvg("video",' stroke-width="1.2" style="color:#fff"')+'<b style="color:#fff">'+esc(icT("ic_novid_t"))+'</b>'+esc(icT("ic_novid_feed"))+'</div>';return;}
+  box.innerHTML=j.posts.map(icReelHtml).join("");
+  if(!IC_RIO&&"IntersectionObserver" in window)IC_RIO=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting&&e.intersectionRatio>0.7&&IC.view==="reels"){v.muted=IC.muted;v.play().catch(function(){});}else v.pause();});},{threshold:[0,0.7]});
+  box.querySelectorAll("video").forEach(function(v){IC_RIO&&IC_RIO.observe(v);});}
+function icReelHtml(p){var v=p.media.filter(function(m){return m.type==="video";})[0]||p.media[0],a=p.author||{};
+  return '<div class="ic-reel" data-rid="'+p.id+'" onclick="icMediaTapReel(event,\''+p.id+'\')"><video src="'+esc(v.url||"")+'"'+(v.poster?' poster="'+esc(v.poster)+'"':'')+' playsinline muted preload="metadata" onended="icVidEnd(this)"></video>'
+    +'<div class="ic-again" hidden><button onclick="event.stopPropagation();icAgain(this)">'+icSvg("again",' width="18" height="18"')+esc(icT("ic_again"))+'</button></div>'
+    +'<div class="side" id="ic_rs_'+p.id+'">'+icReelSide(p)+'</div>'
+    +'<div class="info"><div class="u"><span onclick="event.stopPropagation();icOpenProfile(\''+a.id+'\')">'+icAv(a,30)+'</span><span>'+esc(icUser(a))+'</span></div>'+(p.caption?'<div>'+icRich(p.caption.length>90?p.caption.slice(0,90)+"…":p.caption)+'</div>':'')+'</div>'
+    +'<button class="ic-mute" style="top:calc(14px + env(safe-area-inset-top));bottom:auto" onclick="event.stopPropagation();icToggleMute()">'+icSvg(IC.muted?"mute":"sound")+'</button></div>';}
+function icReelSide(p){return '<button class="'+(p.liked?"liked":"")+'" onclick="event.stopPropagation();icLike(\''+p.id+'\')">'+icSvg("heart")+icNum(p.likes)+'</button>'
+  +'<button onclick="event.stopPropagation();icComments(\''+p.id+'\')">'+icSvg("cm")+icNum(p.comments)+'</button>'
+  +'<button onclick="event.stopPropagation();icRepost(\''+p.id+'\')">'+icSvg("rp")+icNum(p.reposts)+'</button>'
+  +'<button onclick="event.stopPropagation();icShare(\''+p.id+'\')">'+icSvg("send")+'</button>'
+  +'<button onclick="event.stopPropagation();icPostMenu(\''+p.id+'\')">'+icSvg("more")+'</button>';}
+function icRefreshReel(id){var el=icG("ic_rs_"+id),p=IC.P[id];if(el&&p)el.innerHTML=icReelSide(p);}
+function icMediaTapReel(ev,id){var now=Date.now(),t=ev.currentTarget;if(t._last&&now-t._last<320){t._last=0;clearTimeout(t._st);var p=IC.P[id];if(p&&!p.liked)icLike(id);icHeartAnim(t);return;}
+  t._last=now;clearTimeout(t._st);t._st=setTimeout(function(){icToggleMute();},330);}
+function icPauseReels(){var b=icG("ic_reels");if(b)b.querySelectorAll("video").forEach(function(v){v.pause();});}
 </script>
 </body>
 </html>
