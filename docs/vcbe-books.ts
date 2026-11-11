@@ -1,4 +1,4 @@
-// Edge function vcbe-books (11/11/2026): sezione «Books» dell'app (libri PDF da leggere nell'app).
+// Edge function vcbe-books (11/11/2026; v2 stesso giorno: source_url / source_label): sezione «Books» dell'app (libri PDF da leggere nell'app).
 // Il catalogo (tabella vcbe_books, bucket pubblico vcbe-books) si legge con la chiave anon; qui passano solo
 // le recensioni (token della sessione Drive: nome + codice personale) e le azioni admin (password admin).
 //   reviews {book_id, token?}                         -> recensioni del libro (+ mine)
@@ -14,7 +14,9 @@ const sha256 = async (s: string) => Array.from(new Uint8Array(await crypto.subtl
 const randHex = (n: number) => Array.from(crypto.getRandomValues(new Uint8Array(n))).map((b) => b.toString(16).padStart(2, "0")).join("");
 const str = (v: any, max: number) => { const s = String(v ?? "").trim().slice(0, max); return s || null; };
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const FIELDS: Record<string, number> = { title: 200, author: 200, category: 80, description: 6000, language: 40, publisher: 200, released: 40 };
+const FIELDS: Record<string, number> = { title: 200, author: 200, category: 80, description: 6000, language: 40, publisher: 200, released: 40, source_label: 120 };
+// Link alla fonte del documento (FIVB, CEV, Drive personale…): solo indirizzi http(s).
+const srcUrl = (v: any) => { const s = String(v ?? "").trim().slice(0, 1000); return /^https?:\/\/[^\s<>"]+$/i.test(s) ? s : null; };
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
@@ -34,6 +36,7 @@ Deno.serve(async (req) => {
       if ("pages" in body) row.pages = Math.max(0, Math.min(100000, Number(body.pages) || 0)) || null;
       if ("size_bytes" in body) row.size_bytes = Number(body.size_bytes) || null;
       if ("toc" in body) row.toc = Array.isArray(body.toc) ? body.toc.slice(0, 600).map((x: any) => ({ t: String(x.t || "").slice(0, 200), p: Number(x.p) || 1, l: Number(x.l) || 0 })) : null;
+      if ("source_url" in body) row.source_url = srcUrl(body.source_url);
       if ("published" in body) row.published = !!body.published;
       if ("sort_order" in body) row.sort_order = Number(body.sort_order) || 0;
       return row;
