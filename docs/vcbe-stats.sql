@@ -1,6 +1,6 @@
 -- Statistiche visite dell'app (11/11/2026, richiesta utente) — migration vcbe_app_stats_20261111
 -- Solo dati anonimi: id casuale del browser (localStorage), sezione aperta, tipo di dispositivo, lingua.
--- Nessun IP, nessun user agent, nessuna email. Il nome compare solo per gli arbitri collegati a Drive (sessione vcbe_drive_sessions).
+-- Nessun user agent, nessuna email. (Dal 11/11/2026 sera anche l'IP, su scelta dell'utente: vedi fondo file.) Il nome compare solo per gli arbitri collegati a Drive (sessione vcbe_drive_sessions).
 -- Tabelle con RLS senza policy: scritte e lette solo dalla edge function vcbe-stats (service role).
 create table if not exists public.vcbe_app_visitors(
   visitor_id text primary key,
@@ -61,7 +61,7 @@ begin
         'sid', right(p.session_id,6), 'vid', right(p.visitor_id,4), 'name', rf.name, 'page', p.page,
         'device', p.device, 'lang', p.lang, 'started_at', p.started_at, 'last_seen', p.last_seen,
         'new', (v.first_seen >= now() - interval '1 hour'),
-        'country', p.country, 'country_name', p.country_name, 'city', p.city, 'region', p.region)
+        'country', p.country, 'country_name', p.country_name, 'city', p.city, 'region', p.region, 'ip', p.ip)
         order by p.started_at)
       from (select distinct on (visitor_id) * from vcbe_app_presence
             where last_seen > now() - interval '75 seconds' order by visitor_id, last_seen desc) p
@@ -108,6 +108,10 @@ begin
     'cities', coalesce((select jsonb_agg(jsonb_build_object('city', city, 'region', rg, 'country', c, 'visitors', u) order by u desc, city)
       from (select city, max(region) rg, max(country) c, count(distinct visitor_id) u
             from vcbe_app_events where created_at >= pfrom and city is not null group by city, country order by 4 desc, 1 limit 30) s), '[]'::jsonb),
+    'ips', coalesce((select jsonb_agg(jsonb_build_object('ip', v.ip, 'vid', right(v.visitor_id,4), 'name', rf.name, 'country', v.country,
+        'country_name', v.country_name, 'city', v.city, 'device', v.device, 'sessions', v.sessions, 'last_seen', v.last_seen) order by v.last_seen desc)
+      from (select * from vcbe_app_visitors where ip is not null and last_seen >= pfrom order by last_seen desc limit 100) v
+      left join vcbe_referees rf on rf.id = v.referee_id), '[]'::jsonb),
     'referees', coalesce((select jsonb_agg(jsonb_build_object('name', rf.name, 'views', s.n, 'last', s.l) order by s.l desc)
       from (select referee_id, count(*) n, max(created_at) l from vcbe_app_events
             where referee_id is not null and created_at >= pfrom group by 1) s join vcbe_referees rf on rf.id = s.referee_id), '[]'::jsonb)
@@ -120,3 +124,9 @@ end $$;
 alter table public.vcbe_app_presence add column if not exists country text, add column if not exists country_name text, add column if not exists region text, add column if not exists city text;
 alter table public.vcbe_app_visitors add column if not exists country text, add column if not exists country_name text, add column if not exists region text, add column if not exists city text;
 alter table public.vcbe_app_events add column if not exists country text, add column if not exists country_name text, add column if not exists region text, add column if not exists city text;
+
+-- 11/11/2026 (terza richiesta utente, scelta «Sì, salva e mostra l'IP»): si salva anche l'indirizzo IP
+-- (ultimo IP della visita in vcbe_app_presence.ip, ultimo IP del visitatore in vcbe_app_visitors.ip).
+-- Migration vcbe_app_stats_ip_20261111; vcbe_app_stats restituisce 'ip' in live e la lista 'ips' (ultimi 100 visitatori del periodo).
+alter table public.vcbe_app_presence add column if not exists ip text;
+alter table public.vcbe_app_visitors add column if not exists ip text;
