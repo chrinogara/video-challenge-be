@@ -1170,6 +1170,10 @@ textarea.bk-in{min-height:140px;resize:vertical}
 .bk-ed svg{width:20px;height:20px;flex:none;color:#4B4868}
 .bk-ed small{display:block;font-size:11.5px;color:#9A96B3}
 .bk-ed b{font-size:14px;font-weight:600}
+.bk-ed .bk-dl{display:flex;gap:12px;align-items:center;padding:9px 0;color:inherit;text-decoration:none}
+.bk-ed .bk-dl svg{color:#2D5BD3}
+.bk-ed .bk-dl span{flex:1;min-width:0}
+.bk-ed .bk-dl em{font-style:normal;font-weight:800;font-size:13px;color:#fff;background:#2D5BD3;border-radius:16px;padding:6px 12px}
 /* reading goal */
 .bk-goal{margin:28px 20px 0;background:#F6F5FA;border-radius:22px;padding:22px 18px;text-align:center}
 .bk-sheet .bk-goal{margin:0 16px;background:none;padding:6px 4px}
@@ -2302,6 +2306,9 @@ Object.assign(T.nl,{"bk_zoom_in":"Inzoomen","bk_zoom_out":"Uitzoomen","bk_zoom_f
 Object.assign(T.en,{"bk_source":"Source:","bka_src_hint":"Source link, shown under the description: the FIVB page for an FIVB document, the CEV page for a CEV document, or your personal Drive for your own documents.","bka_ph_src_label":"Source name (e.g. FIVB)","bka_ph_src_url":"https://… link to the source","bka_src_bad":"The source link must start with https://","bka_src_none":"no source link"});
 Object.assign(T.fr,{"bk_source":"Source :","bka_src_hint":"Lien vers la source, affiché sous la description : la page FIVB pour un document FIVB, la page CEV pour un document CEV, ou votre Drive personnel pour vos propres documents.","bka_ph_src_label":"Nom de la source (ex. FIVB)","bka_ph_src_url":"https://… lien vers la source","bka_src_bad":"Le lien de la source doit commencer par https://","bka_src_none":"pas de lien source"});
 Object.assign(T.nl,{"bk_source":"Bron:","bka_src_hint":"Link naar de bron, getoond onder de beschrijving: de FIVB-pagina voor een FIVB-document, de CEV-pagina voor een CEV-document, of je persoonlijke Drive voor eigen documenten.","bka_ph_src_label":"Naam van de bron (bv. FIVB)","bka_ph_src_url":"https://… link naar de bron","bka_src_bad":"De bronlink moet beginnen met https://","bka_src_none":"geen bronlink"});
+Object.assign(T.en,{"bk_download":"Download"});
+Object.assign(T.fr,{"bk_download":"Télécharger"});
+Object.assign(T.nl,{"bk_download":"Downloaden"});
 let LANG="en";
 function esc(s){return (s==null?"":""+s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 /* Drive (09/11/2026): texts EN / FR / NL */
@@ -4476,6 +4483,10 @@ function bkGoalSet(d){var g=BK.st.goal,steps=g+d>60||(g>=60&&d>0)?10:g+d>20||(g>
 function bkBook(id){var b=bkBy(id);if(!b)return;BK.cur=id;bkSheetClose();var el=bkG("bk_s_book");el.hidden=false;bkBookRender();el.scrollTop=0;bkRevLoad(id);}
 function bkBookClose(){bkG("bk_s_book").hidden=true;BK.cur=null;}
 function bkSrcName(b){if(b.source_label)return b.source_label;try{return new URL(b.source_url).hostname.replace(/^www\./,"");}catch(e){return b.source_url;}}
+function bkDlUrl(b){var u=bkUrl(b.file_url),fn=(b.title||"book").replace(/[\\/:*?"<>|]+/g," ").replace(/\s+/g," ").trim().slice(0,120)+".pdf";
+  if(/\/storage\/v1\/object\/public\//.test(u))u+=(u.indexOf("?")<0?"?":"&")+"download="+encodeURIComponent(fn);return {u:u,fn:fn};}
+function bkDl(b){if(!b.file_url)return bkEd("size",bkT("bk_e_size"),bkSize(b.size_bytes));var d=bkDlUrl(b);
+  return '<a class="bk-dl" href="'+esc(d.u)+'" download="'+esc(d.fn)+'" target="_blank" rel="noopener">'+bkI("size")+'<span><small>'+esc(bkT("bk_e_size"))+'</small><b>'+esc(bkSize(b.size_bytes)||"PDF")+'</b></span><em>'+esc(bkT("bk_download"))+'</em></a>';}
 function bkEd(ic,l,v){return v?'<div>'+bkI(ic)+'<span><small>'+esc(l)+'</small><b>'+esc(v)+'</b></span></div>':"";}
 function bkBookRender(){var b=bkBy(BK.cur),st=BK.st;if(!b)return;var r=BK.rat[b.id],rv=BK.revs[b.id],inP=st.prog[b.id]&&!bkHas(st.fin,b.id),want=bkHas(st.want,b.id);
   var meta=[b.released,b.pages?bkT("bk_npages",{n:b.pages}):""].filter(Boolean).join(" · ");
@@ -4487,7 +4498,7 @@ function bkBookRender(){var b=bkBy(BK.cur),st=BK.st;if(!b)return;var r=BK.rat[b.
   if(b.source_url&&/^https?:\/\//i.test(b.source_url))h+='<div class="bk-src"><span>'+esc(bkT("bk_source"))+'</span><a href="'+esc(b.source_url)+'" target="_blank" rel="noopener">'+esc(bkSrcName(b))+' ↗</a></div>';
   h+='<div class="bk-sec"><button class="bk-sech" onclick="bkRevSheet()"><span>'+esc(bkT("bk_revs"))+'</span>'+bkI("chev")+'</button>'+bkRateH(b.id)+
      (rv&&rv.reviews.filter(function(x){return x.title||x.body;}).length?'<div class="bk-rvs">'+rv.reviews.filter(function(x){return x.title||x.body;}).slice(0,6).map(function(x){return bkRevCard(x);}).join("")+'</div>':'')+'</div>';
-  h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_edition"))+'</span></div><div class="bk-ed">'+bkEd("star",bkT("bk_e_rating"),r&&r.n?r.avg+" / 5 ("+r.n+")":"")+bkEd("cal",bkT("bk_e_released"),b.released)+bkEd("globe",bkT("bk_e_lang"),b.language)+bkEd("pages",bkT("bk_e_len"),b.pages?bkT("bk_npages",{n:b.pages}):"")+bkEd("size",bkT("bk_e_size"),bkSize(b.size_bytes))+bkEd("pub",bkT("bk_e_pub"),b.publisher)+'</div></div>';
+  h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_edition"))+'</span></div><div class="bk-ed">'+bkEd("star",bkT("bk_e_rating"),r&&r.n?r.avg+" / 5 ("+r.n+")":"")+bkEd("cal",bkT("bk_e_released"),b.released)+bkEd("globe",bkT("bk_e_lang"),b.language)+bkEd("pages",bkT("bk_e_len"),b.pages?bkT("bk_npages",{n:b.pages}):"")+bkDl(b)+bkEd("pub",bkT("bk_e_pub"),b.publisher)+'</div></div>';
   var more=BK.books.filter(function(x){return x.id!==b.id&&b.category&&x.category===b.category;});
   if(more.length)h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_morein",{c:b.category}))+'</span></div><div class="bk-row">'+more.slice(0,12).map(function(x){return '<button class="bk-bk" onclick="bkBook(\''+x.id+'\')">'+bkCover(x)+'<b>'+esc(x.title)+'</b><small>'+esc(x.author||"")+'</small></button>';}).join("")+'</div></div>';
   var el=bkG("bk_s_book"),sc=el.scrollTop;el.innerHTML=h+'</div>';el.scrollTop=sc;
