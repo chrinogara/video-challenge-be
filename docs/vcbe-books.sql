@@ -54,3 +54,7 @@ select 'Official Beach Volleyball Rules 2025-2028', 'FIVB', 'Rules',
   'English', 'Fédération Internationale de Volleyball', '2025', 72, 5265949,
   'docs/books/fivb-beach-volleyball-rules-2025-2028.pdf', 'docs/books/fivb-beach-volleyball-rules-2025-2028.jpg'
 where not exists (select 1 from public.vcbe_books where file_url = 'docs/books/fivb-beach-volleyball-rules-2025-2028.pdf');
+
+-- 11/11/2026 (migration vcbe_books_source_link_20261111): link alla fonte mostrato sotto la descrizione.
+alter table public.vcbe_books add column if not exists source_url text;
+alter table public.vcbe_books add column if not exists source_label text;
