@@ -212,11 +212,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 .gate{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
 .foot{color:var(--hint);font-size:12.5px;text-align:center;padding:22px 0 6px;border-top:1px solid var(--line);margin-top:24px}
 .foot b{font-family:var(--fd);color:var(--muted)}
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+/* barra in basso (11/11/2026, richiesta utente): bianca, icone a contorno sottile, scheda attiva blu con icona piena e linea blu sopra */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:1px solid #E4E6EB;padding-bottom:env(safe-area-inset-bottom)}
 .tabbar .in{max-width:760px;margin:0 auto;display:flex;height:var(--tab-h)}
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:transparent;color:var(--hint);cursor:pointer;font-family:var(--fd);font-weight:600;font-size:11px}
-.tab svg{width:22px;height:22px}
+.tab{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:transparent;color:#65676B;cursor:pointer;font-family:var(--fd);font-weight:500;font-size:11px;padding:6px 0 4px;-webkit-tap-highlight-color:transparent}
+.tab svg{width:26px;height:26px;flex:none}
+.tab .ti-f{display:none}
+.tab.on .ti-o{display:none}.tab.on .ti-f{display:block}
 .tab.on{color:var(--violet)}
+.tab.on::before{content:"";position:absolute;top:-1px;left:12%;right:12%;height:3px;border-radius:0 0 3px 3px;background:var(--violet)}
+.tab:active svg{transform:scale(.92)}
+@media (max-width:360px){.tab{font-size:9.5px;gap:3px}.tab svg{width:23px;height:23px}}
 @media (min-width:620px){.tiles{grid-template-columns:repeat(3,1fr)}.tile.wide{grid-column:auto}.hero h1{font-size:30px}.mng-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:380px){.brand span{display:none}}
 @media print{
@@ -229,7 +235,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 
 }
 
 /* tabs: fit 4 */
-.tab{font-size:10.5px}.tab span{white-space:nowrap}
+.tab span{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 /* video card buttons */
 .vid{cursor:default}.vid .thumb{cursor:pointer}
 .vid .vactions{display:flex;gap:8px;margin-top:10px}
@@ -1019,7 +1025,6 @@ body.dv-navon{overflow:hidden}
 .dva-set select{min-height:38px;border:1.5px solid var(--line2);border-radius:10px;padding:0 8px;font-weight:700;width:auto!important;min-width:96px;flex:none}
 .dva-ev{font-size:12.5px;color:#55516E;padding:4px 0}
 /* ── Books (11/11/2026, richiesta utente): libreria di libri PDF con lettore integrato ── */
-.tab-bk.on{color:#B45309}
 .bk{position:fixed;inset:0;z-index:300;background:#fff;color:#15132B;--bka:#1D4ED8;--bks:Georgia,'Iowan Old Style','Times New Roman',serif}
 .bk[hidden],.bk [hidden]{display:none!important}
 .bk button{font-family:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -2127,12 +2132,12 @@ textarea.bk-in{min-height:140px;resize:vertical}
 </div>
 <nav class="tabbar">
   <div class="in">
-    <button class="tab on" data-go="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span data-i18n="tab_home">Home</span></button>
-    <button class="tab" data-go="library" onclick="go('library')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-i18n="tab_lib">Library</span></button>
-    <button class="tab" data-go="report" onclick="go('report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/></svg><span data-i18n="tab_rep">Report</span></button>
-    <button class="tab" data-go="diag" onclick="go('diag')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg><span data-i18n="tab_diag">Diagnostics</span></button>
-    <button class="tab" data-go="drive" onclick="go('drive')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8z"/></svg><span data-i18n="tab_drive">Drive</span></button>
-    <button class="tab tab-bk" data-go="books" onclick="go('books')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/></svg><span data-i18n="mbook">Documents</span></button>
+    <button class="tab on" data-go="home" onclick="go('home')"><svg class="ti-o" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg><svg class="ti-f" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg><span data-i18n="tab_home">Home</span></button>
+    <button class="tab" data-go="library" onclick="go('library')"><svg class="ti-o" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><svg class="ti-f" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-i18n="tab_lib">Library</span></button>
+    <button class="tab" data-go="report" onclick="go('report')"><svg class="ti-o" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="4" width="13" height="17" rx="2"/><path d="M9 4V2.8h6V4"/><path d="M9 13l2 2 4-4"/></svg><svg class="ti-f" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="4" width="13" height="17" rx="2"/><path d="M9 4V2.8h6V4" fill="none"/><path d="M9 13l2 2 4-4" fill="none" stroke="#fff" stroke-width="2"/></svg><span data-i18n="tab_rep">Report</span></button>
+    <button class="tab" data-go="diag" onclick="go('diag')"><svg class="ti-o" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><rect x="7.5" y="11" width="3" height="6" rx=".5"/><rect x="12.5" y="7" width="3" height="10" rx=".5"/><rect x="17.5" y="13" width="2.5" height="4" rx=".5"/></svg><svg class="ti-f" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16" fill="none" stroke-width="2"/><rect x="7.5" y="11" width="3" height="6" rx=".5"/><rect x="12.5" y="7" width="3" height="10" rx=".5"/><rect x="17.5" y="13" width="2.5" height="4" rx=".5"/></svg><span data-i18n="tab_diag">Diagnostics</span></button>
+    <button class="tab" data-go="drive" onclick="go('drive')"><svg class="ti-o" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg><svg class="ti-f" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg><span data-i18n="tab_drive">Drive</span></button>
+    <button class="tab tab-bk" data-go="books" onclick="go('books')"><svg class="ti-o" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/></svg><svg class="ti-f" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 7v13" fill="none" stroke="#fff" stroke-width="1.4"/></svg><span data-i18n="mbook">Documents</span></button>
   </div>
 </nav>
 
