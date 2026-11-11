@@ -447,6 +447,84 @@ body.adm .foot{display:none}
 .acol .upload{border:2px dashed rgba(255,255,255,.5);background:rgba(255,255,255,.14);color:#fff}
 .acol .upload b,.acol .upload .uic{color:#fff}
 @media(min-width:900px){.adm-board.lib-board{grid-template-columns:1fr 1fr}.acol .vidgrid{grid-template-columns:1fr 1fr}}
+/* ── Video & slides page (11/11/2026): player on top, details, actions, tabs, poster grid ── */
+.vx{background:#0B0F19;color:#F3F4F8;border-radius:12px;overflow:hidden;margin-top:6px}
+.vx-empty{padding:28px 16px;text-align:center;color:#A7ADC0;font-size:14px}
+.vx-stage{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
+.vx-stage iframe,.vx-stage video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.vx-cov{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;margin:0;cursor:pointer;background:#111;display:block;color:#fff}
+.vx-cov img{width:100%;height:100%;object-fit:cover;display:block}
+.vx-cov::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.65))}
+.vx-cov .vx-gen{position:absolute;inset:0}
+.vx-pbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92);color:#0B0F19;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+.vx-pbtn svg{width:28px;height:28px;margin-left:3px}
+.vx-pbtn.sl svg{margin-left:0}
+.vx-lbl{position:absolute;left:14px;bottom:10px;z-index:2;font-family:var(--fd);font-weight:800;font-size:15px;letter-spacing:.04em;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.vx-dur{position:absolute;right:12px;bottom:10px;z-index:2;background:rgba(0,0,0,.7);font-size:12px;font-weight:700;padding:2px 7px;border-radius:6px}
+.vx-x{position:absolute;right:10px;top:10px;z-index:3;width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.vx-x svg{width:18px;height:18px}
+.vx-bar{height:3px;background:#2A2F3D}.vx-bar i{display:block;height:100%;width:0;background:var(--violet)}
+.vx-info{padding:12px 16px 4px}
+.vx-title{font-family:var(--fd);font-size:20px;font-weight:800;line-height:1.2;margin:0 0 6px;color:#fff}
+.vx-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:12.5px;color:#A7ADC0;margin-bottom:8px}
+.vx-meta .k{background:#232838;color:#E6E8F0;border-radius:5px;padding:1px 7px;font-weight:700;font-size:11.5px;letter-spacing:.02em;text-transform:uppercase}
+.vx-meta .newbadge{margin:0}
+.vx-desc{font-size:15px;line-height:1.45;color:#EDEFF5;margin:0;white-space:pre-line}
+.vx-desc.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.vx-morebtn{background:none;border:0;color:#fff;font-weight:800;font-size:14px;padding:2px 0;cursor:pointer;font-family:inherit}
+.vx-cred{font-size:14px;color:#A7ADC0;margin-top:8px;line-height:1.4}
+.vx-acts{display:flex;gap:6px;padding:14px 8px 6px}
+.vx-acts button{flex:0 0 auto;min-width:86px;background:none;border:0;color:#C9CDD9;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12.5px;font-family:inherit;cursor:pointer;padding:4px 6px}
+.vx-acts button svg{width:26px;height:26px;color:#fff}
+.vx-acts button.on svg{color:var(--lime)}
+.vx-tabs{display:flex;gap:22px;padding:6px 16px 0;border-top:1px solid #1E2330;overflow-x:auto;scrollbar-width:none}
+.vx-tabs button{background:none;border:0;border-top:4px solid transparent;color:#9AA0B4;font-family:var(--fd);font-weight:800;font-size:16px;padding:10px 0 12px;cursor:pointer;white-space:nowrap}
+.vx-tabs button.on{color:#fff;border-top-color:var(--violet)}
+.vx-chips{display:flex;gap:8px;padding:2px 16px 10px;overflow-x:auto;scrollbar-width:none}
+.vx-chips button{flex:none;background:#1B2030;border:1px solid #2A3042;color:#D5D9E5;border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.vx-chips button.on{background:#fff;color:#0B0F19;border-color:#fff}
+.vx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0 10px 14px}
+@media(min-width:900px){.vx-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.vx-post{position:relative;aspect-ratio:2/3;border-radius:6px;overflow:hidden;border:0;padding:0;background:#1B2030;cursor:pointer;color:#fff;text-align:left;display:block;width:100%}
+.vx-post.cur{outline:3px solid var(--violet);outline-offset:-3px}
+.vx-post img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vx-post::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.85))}
+.vx-post b{position:absolute;left:7px;right:7px;bottom:7px;z-index:2;font-family:var(--fd);font-size:12.5px;font-weight:800;line-height:1.15;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.vx-post .ty{position:absolute;left:6px;top:6px;z-index:2;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center}
+.vx-post .ty svg{width:12px;height:12px}
+.vx-post .newbadge{position:absolute;right:5px;top:5px;z-index:2;margin:0}
+.vx-gen{background:linear-gradient(150deg,var(--g1),var(--g2));display:flex;align-items:center;justify-content:center}
+.vx-gen svg{width:34%;height:34%;color:rgba(255,255,255,.28)}
+.vx-post .vx-gen{position:absolute;inset:0}
+.vx-note{padding:4px 16px 16px;color:#A7ADC0;font-size:13.5px}
+/* admin */
+.va-row{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:7px 8px;margin-bottom:7px;font-size:13.5px}
+.va-row.off{opacity:.6}
+.va-th{flex:none;width:42px;height:56px;border-radius:5px;overflow:hidden;position:relative;background:#1B2030}
+.va-th img{width:100%;height:100%;object-fit:cover;display:block}
+.va-th .vx-gen{position:absolute;inset:0}
+.va-tx{flex:1 1 auto;min-width:0}
+.va-tx b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.va-tx small{display:block;color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.va-tx .hid{color:var(--bad);font-weight:700}
+.va-bt{flex:none;display:flex;gap:2px}
+.va-bt button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;padding:0}
+.va-bt button:disabled{opacity:.3;cursor:default}
+.va-bt button.rm{color:var(--bad)}
+.va-bt svg{width:15px;height:15px}
+.va-form .field{margin-bottom:9px}
+.va-form label.l{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:0 0 3px}
+.va-form textarea{width:100%;min-height:96px;border:1px solid var(--line2);border-radius:10px;padding:9px 11px;font:inherit;font-size:14px;resize:vertical}
+.va-src{display:flex;gap:6px;margin-bottom:6px}
+.va-src button{flex:1;border:1px solid var(--line2);background:#fff;border-radius:9px;padding:7px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink)}
+.va-src button.on{background:var(--violet);border-color:var(--violet);color:#fff}
+.va-cov{display:flex;align-items:center;gap:10px}
+.va-cov .va-th{width:54px;height:72px}
+.va-chk{display:flex;align-items:center;gap:8px;font-size:14px;margin:4px 0 10px}
+.va-st{font-size:13px;margin-top:8px;min-height:18px}
+.va-st.bad{color:var(--bad)}.va-st.ok{color:var(--ok)}
+.va-btns{display:flex;gap:8px;flex-wrap:wrap}
+
 /* report form inside the console */
 .rep-wrap{width:100%;max-width:900px;margin:0 auto}
 .rep-wrap .formcard{border:0;box-shadow:0 2px 8px rgba(0,0,0,.14)}
@@ -1662,8 +1740,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
         <div class="adm-board lib-board">
           <div class="acol c2" id="col_libvids">
             <div class="acol-h"><span class="hlbl"><span data-i18n="vid_title">Video &amp; slides</span><b class="hnew" id="hn_libvids" hidden></b></span><i id="cnt_libvids">0</i></div>
-            <div class="acol-big"><span id="big_libvids">0</span><small data-i18n="mvid">Videos</small></div>
-            <div class="vidgrid" id="vidgrid"></div>
+            <div class="vx" id="vidgrid"></div>
             <div id="clipstatus" style="margin-top:12px;font-size:14px;color:#fff"></div>
           </div>
           <div class="acol cph" id="col_libphotos">
@@ -2005,14 +2082,27 @@ textarea.bk-in{min-height:140px;resize:vertical}
             <div class="acol c2" id="col_vids">
               <div class="acol-h"><span data-i18n="mvid">Videos</span><i id="cnt_vids">0</i></div>
               <div class="acol-big"><span id="big_vids">0</span><small data-i18n="mvid">Videos</small></div>
-              <details class="aadd">
-                <summary>+ <span data-i18n="m_addv">Add video</span></summary>
-                <div class="aform">
-                  <div class="field"><input type="text" id="v_title" data-i18n-ph="ph_vtitle" placeholder="Video title"></div>
-                  <div class="field"><input type="text" id="v_sub" data-i18n-ph="ph_vsub" placeholder="Subtitle (e.g. Training · 8 clips)"></div>
-                  <div class="field"><input type="url" id="v_url" data-i18n-ph="ph_vurl" placeholder="Video link (YouTube/Vimeo)"></div>
-                  <div class="field"><div class="hint" data-i18n="v_hint">Add a video link above, or upload a .pptx file below.</div><input type="file" id="v_file" accept=".ppt,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint"></div>
-                  <button class="btn accent" id="add_vid" data-i18n="m_addv">Add video</button>
+              <details class="aadd" id="va_box">
+                <summary>+ <span id="va_sum" data-i18n="va_add">Add video</span></summary>
+                <div class="aform va-form">
+                  <div class="field"><label class="l" for="va_title" data-i18n="va_title">Title</label><input type="text" id="va_title" maxlength="200"></div>
+                  <div class="field"><label class="l" for="va_desc" data-i18n="va_desc">Description</label><textarea id="va_desc" maxlength="6000"></textarea></div>
+                  <div class="field"><label class="l" for="va_pres" data-i18n="va_pres">Presented by</label><input type="text" id="va_pres" maxlength="300"></div>
+                  <div class="field"><label class="l" for="va_cat" data-i18n="va_cat">Category</label><input type="text" id="va_cat" maxlength="80" list="va_cats"><datalist id="va_cats"></datalist></div>
+                  <div class="field"><label class="l" for="va_sub" data-i18n="va_sub">Short line under the title</label><input type="text" id="va_sub" maxlength="200"></div>
+                  <div class="field"><label class="l" for="va_dur" data-i18n="va_dur">Duration (e.g. 4:30)</label><input type="text" id="va_dur" maxlength="20"></div>
+                  <div class="field"><label class="l" data-i18n="va_source">Video or slides</label>
+                    <div class="va-src"><button type="button" id="va_s_link" class="on" onclick="vaSrc('link')" data-i18n="va_s_link">Link</button><button type="button" id="va_s_file" onclick="vaSrc('file')" data-i18n="va_s_file">Upload a file</button></div>
+                    <input type="url" id="va_url" data-i18n-ph="va_url_ph" placeholder="YouTube, Vimeo, Google Drive…">
+                    <div id="va_filebox" hidden><input type="file" id="va_file" accept="video/mp4,video/quicktime,video/webm,.mp4,.m4v,.mov,.webm,.pptx,.ppt,.pdf,.key,.odp"><div class="hint" data-i18n="va_file_hint">Video .mp4 / .mov or slides .pptx / .pdf. Long videos: better a YouTube or Drive link.</div><div class="hint" id="va_curfile"></div></div>
+                  </div>
+                  <div class="field"><label class="l" for="va_kind" data-i18n="va_kind">Type</label><select id="va_kind"><option value="" data-i18n="va_k_auto">Automatic</option><option value="video" data-i18n="va_k_video">Video</option><option value="slides" data-i18n="va_k_slides">Slides</option></select></div>
+                  <div class="field"><label class="l" data-i18n="va_cover">Cover image</label>
+                    <div class="va-cov"><div class="va-th" id="va_covprev"></div><div style="flex:1;min-width:0"><input type="file" id="va_cover" accept="image/*" onchange="vaCoverPicked(this)"><div class="hint" data-i18n="va_cover_hint">Optional. Without a cover the app uses the YouTube / Drive image or an automatic cover.</div><button type="button" class="btn ghost" id="va_cov_rm" onclick="vaCoverRemove()" hidden data-i18n="va_cover_rm">Remove cover</button></div></div>
+                  </div>
+                  <label class="va-chk"><input type="checkbox" id="va_pub" checked> <span data-i18n="va_pub">Visible in the app</span></label>
+                  <div class="va-btns"><button type="button" class="btn accent" id="va_save" onclick="vaSave()" data-i18n="va_add">Add video</button><button type="button" class="btn ghost" id="va_cancel" onclick="vaReset(true)" hidden data-i18n="va_cancel">Cancel</button></div>
+                  <div class="va-st" id="va_st"></div>
                 </div>
               </details>
               <div class="mlist" id="mng_vidlist"></div>
@@ -2537,6 +2627,12 @@ Object.assign(T.nl,{"bk_zoom_in":"Inzoomen","bk_zoom_out":"Uitzoomen","bk_zoom_f
 Object.assign(T.en,{"bk_source":"Source:","bka_src_hint":"Source link, shown under the description: the FIVB page for an FIVB document, the CEV page for a CEV document, or your personal Drive for your own documents.","bka_ph_src_label":"Source name (e.g. FIVB)","bka_ph_src_url":"https://… link to the source","bka_src_bad":"The source link must start with https://","bka_src_none":"no source link"});
 Object.assign(T.fr,{"bk_source":"Source :","bka_src_hint":"Lien vers la source, affiché sous la description : la page FIVB pour un document FIVB, la page CEV pour un document CEV, ou votre Drive personnel pour vos propres documents.","bka_ph_src_label":"Nom de la source (ex. FIVB)","bka_ph_src_url":"https://… lien vers la source","bka_src_bad":"Le lien de la source doit commencer par https://","bka_src_none":"pas de lien source"});
 Object.assign(T.nl,{"bk_source":"Bron:","bka_src_hint":"Link naar de bron, getoond onder de beschrijving: de FIVB-pagina voor een FIVB-document, de CEV-pagina voor een CEV-document, of je persoonlijke Drive voor eigen documenten.","bka_ph_src_label":"Naam van de bron (bv. FIVB)","bka_ph_src_url":"https://… link naar de bron","bka_src_bad":"De bronlink moet beginnen met https://","bka_src_none":"geen bronlink"});
+Object.assign(T.en,{vx_play:"Play",vx_preview:"Preview",vx_slides:"Slides",vx_k_video:"Video",vx_k_slides:"Slides",vx_more:"more",vx_less:"less",vx_by:"Presented by",vx_mylist:"My list",vx_share:"Share",vx_full:"Full screen",vx_tab_more:"More videos",vx_tab_my:"My list",vx_all:"All",vx_none:"No other videos yet.",vx_my_empty:"Tap + My list on a video to keep it here (saved on this device).",vx_copied:"Link copied.",vx_copy:"Copy this link:",
+ va_add:"Add video",va_edit:"Edit",va_save:"Save changes",va_cancel:"Cancel",va_title:"Title",va_desc:"Description",va_pres:"Presented by",va_cat:"Category",va_sub:"Short line under the title",va_dur:"Duration (e.g. 4:30)",va_source:"Video or slides",va_s_link:"Link",va_s_file:"Upload a file",va_url_ph:"YouTube, Vimeo, Google Drive… link",va_file_hint:"Video .mp4 / .mov or slides .pptx / .pdf. Long videos: better a YouTube or Drive link.",va_curfile:"Current file",va_kind:"Type",va_k_auto:"Automatic",va_k_video:"Video",va_k_slides:"Slides",va_cover:"Cover image",va_cover_hint:"Optional. Without a cover the app uses the YouTube / Drive image or an automatic cover.",va_cover_rm:"Remove cover",va_pub:"Visible in the app",va_hidden:"Hidden",va_hide:"Hide from the app",va_show:"Show in the app",va_up:"Move up",va_down:"Move down",va_delete:"Delete",va_del_q:"Delete \"{t}\" from the app? This cannot be undone.",va_need_title:"The title is required.",va_need_src:"Add a link (https://…) or choose a file.",va_uploading:"Uploading… {p}%",va_saved:"Saved.",va_big:"The file is too large to upload: put the video on YouTube or Google Drive and paste the link.",va_badtype:"File type not supported.",va_badimg:"This image cannot be read."});
+Object.assign(T.fr,{vx_play:"Lire",vx_preview:"Aperçu",vx_slides:"Présentation",vx_k_video:"Vidéo",vx_k_slides:"Présentation",vx_more:"plus",vx_less:"moins",vx_by:"Présenté par",vx_mylist:"Ma liste",vx_share:"Partager",vx_full:"Plein écran",vx_tab_more:"Autres vidéos",vx_tab_my:"Ma liste",vx_all:"Tout",vx_none:"Pas encore d'autres vidéos.",vx_my_empty:"Touchez + Ma liste sur une vidéo pour la garder ici (enregistré sur cet appareil).",vx_copied:"Lien copié.",vx_copy:"Copiez ce lien :",
+ va_add:"Ajouter une vidéo",va_edit:"Modifier",va_save:"Enregistrer",va_cancel:"Annuler",va_title:"Titre",va_desc:"Description",va_pres:"Présenté par",va_cat:"Catégorie",va_sub:"Ligne courte sous le titre",va_dur:"Durée (ex. 4:30)",va_source:"Vidéo ou présentation",va_s_link:"Lien",va_s_file:"Charger un fichier",va_url_ph:"Lien YouTube, Vimeo, Google Drive…",va_file_hint:"Vidéo .mp4 / .mov ou présentation .pptx / .pdf. Vidéos longues : mieux vaut un lien YouTube ou Drive.",va_curfile:"Fichier actuel",va_kind:"Type",va_k_auto:"Automatique",va_k_video:"Vidéo",va_k_slides:"Présentation",va_cover:"Image de couverture",va_cover_hint:"Facultatif. Sans couverture, l'app utilise l'image YouTube / Drive ou une couverture automatique.",va_cover_rm:"Retirer la couverture",va_pub:"Visible dans l'app",va_hidden:"Masquée",va_hide:"Masquer dans l'app",va_show:"Afficher dans l'app",va_up:"Monter",va_down:"Descendre",va_delete:"Supprimer",va_del_q:"Supprimer « {t} » de l'app ? Action irréversible.",va_need_title:"Le titre est obligatoire.",va_need_src:"Ajoutez un lien (https://…) ou choisissez un fichier.",va_uploading:"Chargement… {p} %",va_saved:"Enregistré.",va_big:"Fichier trop lourd : mettez la vidéo sur YouTube ou Google Drive et collez le lien.",va_badtype:"Type de fichier non pris en charge.",va_badimg:"Impossible de lire cette image."});
+Object.assign(T.nl,{vx_play:"Afspelen",vx_preview:"Voorvertoning",vx_slides:"Presentatie",vx_k_video:"Video",vx_k_slides:"Presentatie",vx_more:"meer",vx_less:"minder",vx_by:"Gepresenteerd door",vx_mylist:"Mijn lijst",vx_share:"Delen",vx_full:"Volledig scherm",vx_tab_more:"Meer video's",vx_tab_my:"Mijn lijst",vx_all:"Alle",vx_none:"Nog geen andere video's.",vx_my_empty:"Tik op + Mijn lijst bij een video om hem hier te bewaren (op dit toestel).",vx_copied:"Link gekopieerd.",vx_copy:"Kopieer deze link:",
+ va_add:"Video toevoegen",va_edit:"Bewerken",va_save:"Wijzigingen opslaan",va_cancel:"Annuleren",va_title:"Titel",va_desc:"Beschrijving",va_pres:"Gepresenteerd door",va_cat:"Categorie",va_sub:"Korte regel onder de titel",va_dur:"Duur (bv. 4:30)",va_source:"Video of presentatie",va_s_link:"Link",va_s_file:"Bestand uploaden",va_url_ph:"Link van YouTube, Vimeo, Google Drive…",va_file_hint:"Video .mp4 / .mov of presentatie .pptx / .pdf. Lange video's: beter een YouTube- of Drive-link.",va_curfile:"Huidig bestand",va_kind:"Type",va_k_auto:"Automatisch",va_k_video:"Video",va_k_slides:"Presentatie",va_cover:"Coverafbeelding",va_cover_hint:"Optioneel. Zonder cover gebruikt de app de YouTube- / Drive-afbeelding of een automatische cover.",va_cover_rm:"Cover verwijderen",va_pub:"Zichtbaar in de app",va_hidden:"Verborgen",va_hide:"Verbergen in de app",va_show:"Tonen in de app",va_up:"Omhoog",va_down:"Omlaag",va_delete:"Verwijderen",va_del_q:"\"{t}\" uit de app verwijderen? Dit kan niet ongedaan worden.",va_need_title:"De titel is verplicht.",va_need_src:"Voeg een link (https://…) toe of kies een bestand.",va_uploading:"Uploaden… {p}%",va_saved:"Opgeslagen.",va_big:"Bestand te groot: zet de video op YouTube of Google Drive en plak de link.",va_badtype:"Bestandstype niet ondersteund.",va_badimg:"Deze afbeelding kan niet gelezen worden."});
 Object.assign(T.en,{"bk_download":"Download"});
 Object.assign(T.fr,{"bk_download":"Télécharger"});
 Object.assign(T.nl,{"bk_download":"Downloaden"});
@@ -2774,18 +2870,164 @@ function renderDocs(){admCount("libdocs",DOCS.length);setHeadNew("hn_libdocs",DO
 function isSlide(u){if(!u)return false;u=(""+u).toLowerCase();return u.endsWith(".ppt")||u.endsWith(".pptx")||u.endsWith(".key")||u.indexOf("slides")>-1||u.indexOf("presentation")>-1||u.indexOf("powerpoint")>-1||u.indexOf("sway")>-1;}
 const PLAY_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 const SLIDE_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg>';
-function renderVideos(){admCount("libvids",VIDEOS.length);setHeadNew("hn_libvids",VIDEOS);
-  const el=document.getElementById("vidgrid");if(!el)return;el.innerHTML="";
-  if(!VIDEOS.length){el.innerHTML='<div class="empty">'+t("vid_empty")+'</div>';return;}
-  sortNewFirst(VIDEOS);
-  VIDEOS.forEach(v=>{const c=document.createElement("div");c.className="vid";
-    const ico=isSlide(v.url)?SLIDE_SVG:PLAY_SVG;
-    const nb=isRecent(v.created_at)?' '+newBadge():'';
-    const acts='<div class="vactions"><button class="btn" data-vw="1">'+t("vid_view")+'</button>'+(v.url?'<a class="btn ghost" href="'+esc(v.url)+'" target="_blank" rel="noopener">'+t("vid_dl")+'</a>':'')+'</div>';
-    c.innerHTML='<div class="thumb"><div class="play">'+ico+'</div><div class="dur">'+esc(v.dur||"")+'</div></div><div class="vbody"><b>'+esc(v.title)+'</b>'+nb+'<span>'+esc(v.sub||"")+'</span>'+acts+'</div>';
-    if(v.url){c.querySelector(".thumb").addEventListener("click",function(){openViewer(v.title,v.url);});c.querySelector('[data-vw]').addEventListener("click",function(e){e.stopPropagation();openViewer(v.title,v.url);});}
-    el.appendChild(c);});
+/* ── VIDEO & SLIDES PAGE (11/11/2026) ──
+   Player on top (cover + play), title, details («more»), Presented by, actions (My list · Share · Full screen),
+   tabs More videos / My list, category chips, poster grid. Data: vcbe_videos (anon, published only).
+   My list is stored on the device only (localStorage vcbe_vids_mylist). Deep link: #video=<id>. */
+function vidMap(x){return {id:x.id,title:x.title||"",sub:x.subtitle||"",url:x.url||"",dur:x.duration||"",created_at:x.created_at,desc:x.description||"",presenter:x.presenter||"",cat:x.category||"",cover:x.cover_url||"",kind:x.kind||"",published:x.published!==false,sort:Number(x.sort_order)||0};}
+var VX={cur:null,play:false,tab:"more",cat:"",more:false};
+var VX_I={
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>',
+  slides:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>',
+  share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg>',
+  full:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  edit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>',
+  eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  eyeoff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.1 6.1A17 17 0 0 0 2 12s3.5 7 10 7a10 10 0 0 0 4.4-1"/></svg>'
+};
+function vxKind(v){if(v.kind==="video"||v.kind==="slides")return v.kind;var u=(v.url||"").toLowerCase();return (isSlide(u)||/\.pdf(\?|$)/.test(u)||u.indexOf("docs.google.com/presentation")>-1)?"slides":"video";}
+function vxYt(u){var m=(""+(u||"")).match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|live\/|embed\/)|youtu\.be\/)([\w-]{6,})/);return m?m[1]:"";}
+function vxDrive(u){var m=(""+(u||"")).match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/);return m?m[1]:"";}
+function vxIsFile(u){return /\.(mp4|m4v|mov|webm)(\?|$)/i.test(u||"");}
+function vxCoverUrl(v){if(v.cover)return v.cover;var y=vxYt(v.url);if(y)return "https://i.ytimg.com/vi/"+y+"/hqdefault.jpg";var d=vxDrive(v.url);if(d)return "https://drive.google.com/thumbnail?id="+d+"&sz=w800";return "";}
+function vxGen(v){var h=0,s=(v.title||v.id||"");for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;
+  var pal=[["#1D4ED8","#0B1E5B"],["#0891B2","#073B4C"],["#7C3AED","#2E1065"],["#DB2777","#500724"],["#15803D","#052E16"],["#D97706","#451A03"],["#B91C1C","#3F0A0A"]][h%7];
+  return '<span class="vx-gen" style="--g1:'+pal[0]+';--g2:'+pal[1]+'">'+(vxKind(v)==="slides"?VX_I.slides:VX_I.play)+'</span>';}
+/* cover image with automatic fallback: if the picture fails, the generated cover stays underneath */
+function vxImg(v){var c=vxCoverUrl(v);return vxGen(v)+(c?'<img loading="lazy" alt="" src="'+esc(c)+'" onerror="this.remove()">':'');}
+function vxList(){var L=(VIDEOS||[]).filter(function(v){return v.published!==false;});
+  L.sort(function(a,b){return (a.sort-b.sort)||(String(b.created_at||"").localeCompare(String(a.created_at||"")));});return L;}
+function vxMy(){try{return JSON.parse(localStorage.getItem("vcbe_vids_mylist")||"[]")||[];}catch(e){return [];}}
+function vxMySet(a){try{localStorage.setItem("vcbe_vids_mylist",JSON.stringify(a));}catch(e){}}
+function vxPlayerSrc(v){var e=embedUrl(v.url);var y=vxYt(v.url);if(y)return "https://www.youtube.com/embed/"+y+"?autoplay=1&playsinline=1&rel=0&modestbranding=1";
+  if(/player\.vimeo\.com/.test(e))return e+"?autoplay=1";return e;}
+function vxStage(v){
+  var k=vxKind(v);
+  if(VX.play&&v.url){
+    if(vxIsFile(v.url))return '<video src="'+esc(v.url)+'" controls autoplay playsinline'+(v.cover?' poster="'+esc(v.cover)+'"':'')+'></video><button type="button" class="vx-x" onclick="vxStop()" aria-label="Close">'+VX_I.x+'</button>';
+    return '<iframe src="'+esc(vxPlayerSrc(v))+'" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="'+esc(v.title)+'"></iframe><button type="button" class="vx-x" onclick="vxStop()" aria-label="Close">'+VX_I.x+'</button>';
+  }
+  return '<button type="button" class="vx-cov" onclick="vxPlay()" aria-label="'+esc(dvT("vx_play"))+'">'+vxImg(v)+'<span class="vx-pbtn'+(k==="slides"?' sl':'')+'">'+(k==="slides"?VX_I.slides:VX_I.play)+'</span><span class="vx-lbl">'+esc(dvT(k==="slides"?"vx_slides":"vx_preview"))+'</span>'+(v.dur?'<span class="vx-dur">'+esc(v.dur)+'</span>':'')+'</button>';
 }
+function vxPost(v,cur){var k=vxKind(v);
+  return '<button type="button" class="vx-post'+(cur?' cur':'')+'" data-id="'+esc(v.id)+'" onclick="vxPick(this.dataset.id)">'+vxImg(v)+'<span class="ty">'+(k==="slides"?VX_I.slides:VX_I.play)+'</span>'+(isRecent(v.created_at)?newBadge():'')+'<b>'+esc(v.title)+'</b></button>';}
+function renderVideos(){
+  var L=vxList();admCount("libvids",L.length);setHeadNew("hn_libvids",L);
+  var el=document.getElementById("vidgrid");if(!el)return;
+  if(!L.length){el.innerHTML='<div class="vx-empty">'+esc(dvT("vid_empty"))+'</div>';return;}
+  var v=L.filter(function(x){return x.id===VX.cur;})[0];if(!v){v=L[0];VX.cur=v.id;VX.play=false;}
+  var k=vxKind(v),my=vxMy(),inList=my.indexOf(v.id)>-1;
+  /* keep the running player when the page is redrawn (language change, data refresh) */
+  var oldStage=document.getElementById("vx_stage"),keep=VX.play&&oldStage&&oldStage.dataset.id===v.id;
+  var desc=v.desc||v.sub||"",longDesc=desc.length>170||desc.split("\n").length>3;
+  var meta=[];if(isRecent(v.created_at))meta.push(newBadge());meta.push('<span class="k">'+esc(dvT(k==="slides"?"vx_k_slides":"vx_k_video"))+'</span>');
+  if(v.cat)meta.push('<span>'+esc(v.cat)+'</span>');if(v.dur)meta.push('<span>'+esc(v.dur)+'</span>');if(v.desc&&v.sub)meta.push('<span>'+esc(v.sub)+'</span>');
+  var h='<div class="vx-stage" id="vx_stage" data-id="'+esc(v.id)+'"></div><div class="vx-bar"><i style="width:'+(VX.play?100:0)+'%"></i></div>'
+   +'<div class="vx-info"><h3 class="vx-title">'+esc(v.title)+'</h3><div class="vx-meta">'+meta.join("")+'</div>'
+   +(desc?'<p class="vx-desc'+(longDesc&&!VX.more?' clamp':'')+'">'+esc(desc)+'</p>'+(longDesc?'<button type="button" class="vx-morebtn" onclick="VX.more=!VX.more;renderVideos()">'+esc(dvT(VX.more?"vx_less":"vx_more"))+'</button>':''):'')
+   +(v.presenter?'<div class="vx-cred">'+esc(dvT("vx_by"))+': '+esc(v.presenter)+'</div>':'')+'</div>'
+   +'<div class="vx-acts"><button type="button" class="'+(inList?'on':'')+'" onclick="vxToggleMy()">'+(inList?VX_I.check:VX_I.plus)+'<span>'+esc(dvT("vx_mylist"))+'</span></button>'
+   +'<button type="button" onclick="vxShare()">'+VX_I.share+'<span>'+esc(dvT("vx_share"))+'</span></button>'
+   +(v.url?'<button type="button" onclick="vxFull()">'+VX_I.full+'<span>'+esc(dvT("vx_full"))+'</span></button>':'')+'</div>'
+   +'<div class="vx-tabs"><button type="button" class="'+(VX.tab==="more"?'on':'')+'" onclick="VX.tab=\'more\';renderVideos()">'+esc(dvT("vx_tab_more"))+'</button><button type="button" class="'+(VX.tab==="my"?'on':'')+'" onclick="VX.tab=\'my\';renderVideos()">'+esc(dvT("vx_tab_my"))+(my.length?' ('+my.filter(function(id){return L.some(function(x){return x.id===id;});}).length+')':'')+'</button></div>';
+  var grid;
+  if(VX.tab==="my"){grid=my.map(function(id){return L.filter(function(x){return x.id===id;})[0];}).filter(Boolean);
+    h+=grid.length?'<div class="vx-grid">'+grid.map(function(x){return vxPost(x,x.id===v.id);}).join("")+'</div>':'<div class="vx-note">'+esc(dvT("vx_my_empty"))+'</div>';}
+  else{var cats=[];L.forEach(function(x){if(x.cat&&cats.indexOf(x.cat)<0)cats.push(x.cat);});if(VX.cat&&cats.indexOf(VX.cat)<0)VX.cat="";
+    if(cats.length>1)h+='<div class="vx-chips"><button type="button" class="'+(VX.cat?'':'on')+'" onclick="VX.cat=\'\';renderVideos()">'+esc(dvT("vx_all"))+'</button>'+cats.map(function(c){return '<button type="button" class="'+(VX.cat===c?'on':'')+'" data-c="'+esc(c)+'" onclick="VX.cat=this.dataset.c;renderVideos()">'+esc(c)+'</button>';}).join("")+'</div>';
+    grid=L.filter(function(x){return !VX.cat||x.cat===VX.cat;});
+    /* same category as the video on top first */
+    if(!VX.cat&&v.cat)grid=grid.filter(function(x){return x.cat===v.cat;}).concat(grid.filter(function(x){return x.cat!==v.cat;}));
+    h+=grid.length?'<div class="vx-grid">'+grid.map(function(x){return vxPost(x,x.id===v.id);}).join("")+'</div>':'<div class="vx-note">'+esc(dvT("vx_none"))+'</div>';}
+  el.innerHTML=h;
+  var st=document.getElementById("vx_stage");
+  if(keep){st.replaceWith(oldStage);}else st.innerHTML=vxStage(v);
+}
+function vxCurV(){return vxList().filter(function(x){return x.id===VX.cur;})[0];}
+function vxPlay(){var v=vxCurV();if(!v||!v.url)return;VX.play=true;var st=document.getElementById("vx_stage");if(st){st.innerHTML=vxStage(v);var b=document.querySelector(".vx-bar i");if(b)b.style.width="100%";}}
+function vxStop(){VX.play=false;var v=vxCurV(),st=document.getElementById("vx_stage");if(v&&st){st.innerHTML=vxStage(v);var b=document.querySelector(".vx-bar i");if(b)b.style.width="0";}}
+function vxPick(id){if(VX.cur===id){vxPlay();return;}VX.cur=id;VX.play=false;VX.more=false;renderVideos();
+  var el=document.getElementById("vidgrid");if(el&&el.scrollIntoView)try{el.scrollIntoView({behavior:"smooth",block:"start"});}catch(e){el.scrollIntoView();}}
+function vxToggleMy(){var a=vxMy(),i=a.indexOf(VX.cur);if(i>-1)a.splice(i,1);else a.unshift(VX.cur);vxMySet(a);renderVideos();}
+function vxFull(){var v=vxCurV();if(!v||!v.url)return;if(VX.play)vxStop();if(vxIsFile(v.url)){window.open(v.url,"_blank","noopener");return;}openViewer(v.title,v.url);}
+async function vxShare(){var v=vxCurV();if(!v)return;var url=location.origin+location.pathname+"#video="+v.id;
+  try{if(navigator.share){await navigator.share({title:v.title,text:v.title,url:url});return;}}catch(e){if(e&&e.name==="AbortError")return;}
+  try{await navigator.clipboard.writeText(url);alert(dvT("vx_copied"));}catch(e){prompt(dvT("vx_copy"),url);}}
+/* deep link: …/#video=<id> opens the video page with that video on top */
+(function(){var m=/[#&]video=([0-9a-f-]{36})/i.exec(location.hash||"");if(m){VX.cur=m[1];setTimeout(function(){if(typeof openLib==="function"){openLib("col_libvids");var c=document.getElementById("col_libvids");if(c)c.classList.remove("collapsed");renderVideos();}},700);}})();
+
+/* ── ADMIN: Video & slides (edge function vcbe-videos, admin password) ── */
+var VA={list:[],loaded:false,loading:false,edit:null,src:"link",cover:null,coverRm:false,busy:false};
+async function vaCall(action,payload){var r=await fetch(FN+"/vcbe-videos",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({password:ADMIN_PW,action:action},payload||{}))});return r.json();}
+async function vaLoad(){VA.loading=true;try{var j=await vaCall("adm_list");if(j&&j.ok){VA.list=(j.videos||[]).map(vidMap);VA.loaded=true;}}catch(e){}VA.loading=false;vaRender();}
+async function vaRefreshPublic(){try{var v=await rest("vcbe_videos?select=*&published=eq.true&order=sort_order");VIDEOS=v.map(vidMap);}catch(e){}renderVideos();}
+function vaSorted(){return VA.list.slice().sort(function(a,b){return (a.sort-b.sort)||(String(b.created_at||"").localeCompare(String(a.created_at||"")));});}
+function vaRender(){var el=document.getElementById("mng_vidlist");if(!el)return;
+  var L=VA.loaded?vaSorted():vxList();admCount("vids",L.length);
+  var dl=document.getElementById("va_cats");if(dl){var cs=[];L.forEach(function(x){if(x.cat&&cs.indexOf(x.cat)<0)cs.push(x.cat);});["Video Challenge","Training","Slides"].forEach(function(c){if(cs.indexOf(c)<0)cs.push(c);});dl.innerHTML=cs.map(function(c){return '<option value="'+esc(c)+'">';}).join("");}
+  if(!L.length){el.innerHTML='<div class="hint">'+esc(dvT("vid_empty"))+'</div>';return;}
+  el.innerHTML=L.map(function(v,i){var k=vxKind(v);
+    return '<div class="va-row'+(v.published?'':' off')+'"><div class="va-th">'+vxImg(v)+'</div><div class="va-tx"><b>'+esc(v.title)+'</b><small>'+esc(dvT(k==="slides"?"vx_k_slides":"vx_k_video"))+(v.cat?' · '+esc(v.cat):'')+(v.published?'':' · <span class="hid">'+esc(dvT("va_hidden"))+'</span>')+'</small></div>'
+    +'<div class="va-bt"><button type="button" title="'+esc(dvT("va_up"))+'" onclick="vaMove(\''+v.id+'\',-1)"'+(i===0||!VA.loaded?' disabled':'')+'>'+VX_I.up+'</button><button type="button" title="'+esc(dvT("va_down"))+'" onclick="vaMove(\''+v.id+'\',1)"'+(i===L.length-1||!VA.loaded?' disabled':'')+'>'+VX_I.down+'</button>'
+    +'<button type="button" title="'+esc(dvT(v.published?"va_hide":"va_show"))+'" onclick="vaToggle(\''+v.id+'\')"'+(VA.loaded?'':' disabled')+'>'+(v.published?VX_I.eye:VX_I.eyeoff)+'</button><button type="button" title="'+esc(dvT("va_edit"))+'" onclick="vaEdit(\''+v.id+'\')"'+(VA.loaded?'':' disabled')+'>'+VX_I.edit+'</button><button type="button" class="rm" title="'+esc(dvT("va_delete"))+'" onclick="vaDelete(\''+v.id+'\')"'+(VA.loaded?'':' disabled')+'>&times;</button></div></div>';}).join("");
+}
+function vaG(id){return document.getElementById(id);}
+function vaStatus(msg,cls){var s=vaG("va_st");if(s){s.textContent=msg||"";s.className="va-st"+(cls?" "+cls:"");}}
+function vaSrc(m){VA.src=m;vaG("va_s_link").classList.toggle("on",m==="link");vaG("va_s_file").classList.toggle("on",m==="file");vaG("va_url").hidden=m!=="link";vaG("va_filebox").hidden=m!=="file";}
+function vaCovPrev(){var b=vaG("va_covprev");if(!b)return;var cur=VA.edit?VA.list.filter(function(x){return x.id===VA.edit;})[0]:null;
+  if(VA.cover){b.innerHTML='<img alt="" src="'+URL.createObjectURL(VA.cover)+'">';}
+  else{var tmp=Object.assign({},cur||{title:vaG("va_title").value,id:"new"},{url:VA.src==="link"?vaG("va_url").value:(cur?cur.url:""),cover:VA.coverRm?"":(cur?cur.cover:"")});b.innerHTML=vxImg(tmp);}
+  vaG("va_cov_rm").hidden=!(VA.cover||(cur&&cur.cover&&!VA.coverRm));}
+function vaCoverPicked(inp){var f=inp.files&&inp.files[0];if(!f)return;
+  var img=new Image(),u=URL.createObjectURL(f);img.onload=function(){var M=900,s=Math.min(1,M/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(function(b){VA.cover=b;VA.coverRm=false;vaCovPrev();},"image/jpeg",0.85);};
+  img.onerror=function(){vaStatus(dvT("va_badimg"),"bad");};img.src=u;}
+function vaCoverRemove(){VA.cover=null;VA.coverRm=true;var i=vaG("va_cover");if(i)i.value="";vaCovPrev();}
+function vaReset(close){VA.edit=null;VA.cover=null;VA.coverRm=false;["title","desc","pres","cat","sub","dur","url"].forEach(function(k){vaG("va_"+k).value="";});vaG("va_file").value="";vaG("va_cover").value="";vaG("va_kind").value="";vaG("va_pub").checked=true;vaG("va_curfile").textContent="";
+  vaSrc("link");vaG("va_save").textContent=dvT("va_add");vaG("va_sum").textContent=dvT("va_add");vaG("va_cancel").hidden=true;vaCovPrev();vaStatus("");if(close){var b=vaG("va_box");if(b)b.open=false;}}
+function vaEdit(id){var v=VA.list.filter(function(x){return x.id===id;})[0];if(!v)return;vaReset(false);VA.edit=id;
+  vaG("va_title").value=v.title;vaG("va_desc").value=v.desc;vaG("va_pres").value=v.presenter;vaG("va_cat").value=v.cat;vaG("va_sub").value=v.sub;vaG("va_dur").value=v.dur;vaG("va_kind").value=v.kind||"";vaG("va_pub").checked=v.published;
+  var isOur=/\/storage\/v1\/object\/public\/vcbe-videos\/app\//.test(v.url);
+  if(isOur){vaSrc("file");vaG("va_curfile").textContent=dvT("va_curfile")+": "+decodeURIComponent(v.url.split("/").pop());}else{vaSrc("link");vaG("va_url").value=v.url;}
+  vaG("va_save").textContent=dvT("va_save");vaG("va_sum").textContent=dvT("va_edit")+": "+v.title;vaG("va_cancel").hidden=false;vaCovPrev();
+  var b=vaG("va_box");if(b){b.open=true;try{b.scrollIntoView({behavior:"smooth",block:"start"});}catch(e){}}}
+function vaPut(path,token,blob,type,onp){return new Promise(function(res,rej){var x=new XMLHttpRequest();x.open("PUT",SB_URL+"/storage/v1/object/upload/sign/vcbe-videos/"+path.split("/").map(encodeURIComponent).join("/")+"?token="+encodeURIComponent(token));
+  x.setRequestHeader("Content-Type",type);x.setRequestHeader("x-upsert","false");x.setRequestHeader("apikey",SB_KEY);if(x.upload&&onp)x.upload.onprogress=function(e){if(e.lengthComputable)onp(e.loaded/e.total);};
+  x.onload=function(){if(x.status>=200&&x.status<300)res(path);else rej(new Error(x.status===413||/exceeded|too large/i.test(x.responseText||"")?"too_big":"upload "+x.status));};x.onerror=function(){rej(new Error("network"));};x.send(blob);});}
+function vaMime(ext,f){var m={mp4:"video/mp4",m4v:"video/x-m4v",mov:"video/quicktime",webm:"video/webm",pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation",ppt:"application/vnd.ms-powerpoint",pdf:"application/pdf",key:"application/vnd.apple.keynote",odp:"application/vnd.oasis.opendocument.presentation"};return (f&&f.type)||m[ext]||"application/octet-stream";}
+async function vaSave(){if(VA.busy)return;var g=function(k){return vaG("va_"+k).value.trim();};
+  var row={title:g("title"),description:g("desc"),presenter:g("pres"),category:g("cat"),subtitle:g("sub"),duration:g("dur"),kind:vaG("va_kind").value,published:vaG("va_pub").checked};
+  if(!row.title){vaStatus(dvT("va_need_title"),"bad");return;}
+  var f=VA.src==="file"?(vaG("va_file").files||[])[0]:null,cur=VA.edit?VA.list.filter(function(x){return x.id===VA.edit;})[0]:null;
+  if(VA.src==="link"){var u=g("url");if(!/^https?:\/\//i.test(u)){vaStatus(dvT("va_need_src"),"bad");return;}row.url=u;}
+  else if(!f&&!(cur&&/\/vcbe-videos\/app\//.test(cur.url))){vaStatus(dvT("va_need_src"),"bad");return;}
+  VA.busy=true;vaG("va_save").disabled=true;
+  try{
+    if(f){var ext=(f.name.split(".").pop()||"").toLowerCase(),kind=/^(mp4|m4v|mov|webm)$/.test(ext)?"video":"slides";
+      var u1=await vaCall("adm_upload_url",{kind:kind,ext:ext});if(!u1||!u1.ok)throw new Error(u1&&u1.error==="bad_file_type"?"bad_type":"upload");
+      await vaPut(u1.path,u1.upload_token,f,vaMime(ext,f),function(p){vaStatus(dvT("va_uploading").replace("{p}",Math.round(p*100)));});
+      row.storage_path=u1.path;if(!row.kind)row.kind=kind;}
+    if(VA.cover){vaStatus(dvT("va_uploading").replace("{p}","…"));var u2=await vaCall("adm_upload_url",{kind:"cover",ext:"jpg"});if(!u2||!u2.ok)throw new Error("upload");await vaPut(u2.path,u2.upload_token,VA.cover,"image/jpeg");row.cover_path=u2.path;}
+    else if(VA.coverRm)row.cover_url="";
+    var j=VA.edit?await vaCall("adm_update",Object.assign({id:VA.edit},row)):await vaCall("adm_add",row);
+    if(!j||!j.ok)throw new Error((j&&j.error)||"save");
+    vaReset(true);vaStatus(dvT("va_saved"),"ok");await vaLoad();await vaRefreshPublic();
+  }catch(e){var m=String(e&&e.message||e);vaStatus(m==="too_big"?dvT("va_big"):m==="bad_type"?dvT("va_badtype"):dvT("adm_error")+": "+m,"bad");}
+  finally{VA.busy=false;vaG("va_save").disabled=false;}}
+async function vaMove(id,d){var L=vaSorted(),i=L.findIndex(function(x){return x.id===id;}),j=i+d;if(i<0||j<0||j>=L.length)return;
+  var t0=L[i];L[i]=L[j];L[j]=t0;L.forEach(function(x,k){x.sort=k;});VA.list=L;vaRender();
+  try{await vaCall("adm_reorder",{ids:L.map(function(x){return x.id;})});}catch(e){}await vaRefreshPublic();}
+async function vaToggle(id){var v=VA.list.filter(function(x){return x.id===id;})[0];if(!v)return;
+  try{var j=await vaCall("adm_update",{id:id,published:!v.published});if(!j||!j.ok)throw new Error(j&&j.error);}catch(e){alert(dvT("adm_error"));}await vaLoad();await vaRefreshPublic();}
+async function vaDelete(id){var v=VA.list.filter(function(x){return x.id===id;})[0];if(!v)return;
+  if(!confirm(dvT("va_del_q").replace("{t}",v.title)))return;
+  try{var j=await vaCall("adm_delete",{id:id});if(!j||!j.ok)throw new Error(j&&j.error);}catch(e){alert(dvT("adm_error"));}
+  if(VA.edit===id)vaReset(true);await vaLoad();await vaRefreshPublic();}
+(function(){var u=document.getElementById("va_url"),t=document.getElementById("va_title");if(u)u.addEventListener("input",vaCovPrev);if(t)t.addEventListener("input",vaCovPrev);var vf=document.getElementById("va_file");if(vf)vf.addEventListener("change",function(){var f=vf.files&&vf.files[0];if(f&&!t.value.trim())t.value=f.name.replace(/\.[^.]+$/,"").replace(/[_-]+/g," ").trim();});})();
 
 /* ── PHOTOS ── */
 /* Photos are grouped in one folder per team (column team, "" = General). PH_TEAM = open folder (null = folder list). */
@@ -3045,7 +3287,7 @@ async function adminCall(action,payload){
 }
 function applyLists(docs,vids){
   DOCS=(docs||[]).map(d=>({id:d.id,title:d.title,cat:d.category,size:d.size_label,url:d.external_url,created_at:d.created_at}));
-  VIDEOS=(vids||[]).map(v=>({id:v.id,title:v.title,sub:v.subtitle,url:v.url,dur:v.duration,created_at:v.created_at}));
+  VIDEOS=(vids||[]).map(vidMap);
   splitPhotos();
   renderDocs();renderVideos();renderMngDocs();renderMngVideos();
 }
@@ -3068,11 +3310,11 @@ function admUnlocked(on){
   var rl=document.getElementById("rail_lock");if(rl)rl.style.display=on?"flex":"none";
   if(on){var last=null;try{last=sessionStorage.getItem("vcbe_adm_open");}catch(e){}if(last&&document.getElementById(last)&&typeof admOpen==="function")admOpen(last);}
 }
-function lockAdmin(){admClose();ADMIN_PW=null;admUnlocked(false);if(typeof renderPhotos==="function")renderPhotos();var c=document.getElementById("mng_code");if(c)c.value="";if(typeof renderDiag==="function")renderDiag();}
+function lockAdmin(){admClose();ADMIN_PW=null;if(typeof VA!=="undefined"){VA.loaded=false;VA.list=[];}admUnlocked(false);if(typeof renderPhotos==="function")renderPhotos();var c=document.getElementById("mng_code");if(c)c.value="";if(typeof renderDiag==="function")renderDiag();}
 function admCount(key,n){var a=document.getElementById("cnt_"+key),b=document.getElementById("big_"+key);if(a)a.textContent=n;if(b)b.textContent=n;}
 function admJump(id){var el=document.getElementById(id);if(!el)return;if(el.closest("#manage")){admOpen(id);return;}el.classList.remove("collapsed");try{el.scrollIntoView({behavior:"smooth",block:"nearest",inline:"start"});}catch(e){el.scrollIntoView();}}
 function renderMngDocs(){admCount("docs",DOCS.length);const el=document.getElementById("mng_doclist");if(!el)return;el.innerHTML="";DOCS.forEach(d=>{const r=document.createElement("div");r.className="mrow";r.innerHTML='<span><b>'+esc(d.title)+'</b><span class="sub">'+esc(d.cat||"")+'</span></span><button class="rm">&times;</button>';r.querySelector(".rm").addEventListener("click",async()=>{await adminCall("delete_document",{id:d.id});const j=await adminCall("list",{});if(j.ok)applyLists(j.documents,j.videos);});el.appendChild(r);});}
-function renderMngVideos(){admCount("vids",VIDEOS.length);const el=document.getElementById("mng_vidlist");if(!el)return;el.innerHTML="";VIDEOS.forEach(v=>{const r=document.createElement("div");r.className="mrow";r.innerHTML='<span><b>'+esc(v.title)+'</b><span class="sub">'+esc(v.sub||"")+'</span></span><button class="rm">&times;</button>';r.querySelector(".rm").addEventListener("click",async()=>{await adminCall("delete_video",{id:v.id});const j=await adminCall("list",{});if(j.ok)applyLists(j.documents,j.videos);});el.appendChild(r);});}
+function renderMngVideos(){vaRender();if(ADMIN_PW&&!VA.loaded&&!VA.loading)vaLoad();}
 
 let ADMIN_REPORTS=[];
 async function loadAdminReports(){try{const j=await adminCall("list_reports",{});ADMIN_REPORTS=(j&&j.ok)?(j.reports||[]):[];}catch(e){ADMIN_REPORTS=[];}renderMngReports();}
@@ -3128,14 +3370,7 @@ document.getElementById("add_doc").addEventListener("click",async()=>{
   if(j.ok){document.getElementById("d_title").value="";document.getElementById("d_cat").value="";document.getElementById("d_url").value="";document.getElementById("d_file").value="";const l=await adminCall("list",{});if(l.ok)applyLists(l.documents,l.videos);}
   else alert(t("adm_error")+": "+((j&&j.error)||""));
 });
-document.getElementById("add_vid").addEventListener("click",async()=>{
-  const title=document.getElementById("v_title").value.trim();const sub=document.getElementById("v_sub").value.trim();const url=document.getElementById("v_url").value.trim();const f=document.getElementById("v_file").files[0];
-  if(!title)return;
-  const payload={title,subtitle:sub,url};
-  if(f){payload.file_base64=await fileToB64(f);payload.file_name=f.name;payload.content_type=f.type||"application/vnd.openxmlformats-officedocument.presentationml.presentation";}
-  const j=await adminCall("add_video",payload);
-  if(j.ok){document.getElementById("v_title").value="";document.getElementById("v_sub").value="";document.getElementById("v_url").value="";document.getElementById("v_file").value="";const l=await adminCall("list",{});if(l.ok)applyLists(l.documents,l.videos);}
-});
+
 var P_SEL=[];
 /* Team folder choice (General + teams of vcbe_teams, Men / Women). */
 function fillPhotoTeams(sel,val){if(!sel)return;var cur=val!=null?val:sel.value;sel.innerHTML="";
@@ -3685,7 +3920,7 @@ async function init(){
   try{const tm=await rest("vcbe_teams?select=name,league&active=eq.true&order=name");if(tm.length){TEAMS={Men:[],Women:[]};tm.forEach(x=>{(TEAMS[x.league]=TEAMS[x.league]||[]).push(x.name);});}}catch(e){}
   /* 11/11/2026: i documenti sono in «Documents» (ex Books, tabella vcbe_books); vcbe_documents non è più mostrata. */
   try{const ph=await rest("vcbe_photos?select=id,title,url,team,created_at,published&published=eq.true&order=sort_order,created_at.desc");PHOTOS=ph.map(x=>({id:x.id,title:x.title,url:x.url,team:x.team||"",created_at:x.created_at}));}catch(e){}
-  try{const v=await rest("vcbe_videos?select=*&published=eq.true&order=sort_order");VIDEOS=v.map(x=>({id:x.id,title:x.title,sub:x.subtitle,url:x.url,dur:x.duration,created_at:x.created_at}));}catch(e){}
+  try{const v=await rest("vcbe_videos?select=*&published=eq.true&order=sort_order");VIDEOS=v.map(vidMap);}catch(e){}
   await loadReports();
   fillRefs();fillTeams(league);fillCounts();setLang("en");renderDiag();loadIssueStatus().then(renderDiag);loadPrevIssues();loadWeekMatches();
 }
@@ -3747,6 +3982,8 @@ function openLib(id){PH_TEAM=null;
   go('library');
   var lb=document.getElementById('page-library');if(!lb)return;
   lb.setAttribute('data-only',id);
+  /* Video & slides opens straight on the video screen (player on top), not on the collapsed column */
+  if(id==='col_libvids'){var c=document.getElementById(id);if(c)c.classList.remove('collapsed');if(typeof renderVideos==='function')renderVideos();try{window.scrollTo(0,0);}catch(e){}}
 }
 function go(p){
   if(p==='books'){if(typeof bkOpen==='function')bkOpen();return;}
