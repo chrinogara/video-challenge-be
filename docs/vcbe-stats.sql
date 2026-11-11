@@ -63,9 +63,10 @@ begin
         'new', (v.first_seen >= now() - interval '1 hour'),
         'country', p.country, 'country_name', p.country_name, 'city', p.city, 'region', p.region)
         order by p.started_at)
-      from vcbe_app_presence p left join vcbe_referees rf on rf.id = p.referee_id
-      left join vcbe_app_visitors v on v.visitor_id = p.visitor_id
-      where p.last_seen > now() - interval '75 seconds'), '[]'::jsonb),
+      from (select distinct on (visitor_id) * from vcbe_app_presence
+            where last_seen > now() - interval '75 seconds' order by visitor_id, last_seen desc) p
+      left join vcbe_referees rf on rf.id = p.referee_id
+      left join vcbe_app_visitors v on v.visitor_id = p.visitor_id), '[]'::jsonb),
     'totals', jsonb_build_object(
       'today', (select count(distinct visitor_id) from vcbe_app_events where created_at >= t0),
       'd7', (select count(distinct visitor_id) from vcbe_app_events where created_at >= ((today-6)::timestamp at time zone tz)),
