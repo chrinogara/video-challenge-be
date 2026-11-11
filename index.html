@@ -1621,6 +1621,55 @@ textarea.bk-in{min-height:140px;resize:vertical}
 .pg-toast[hidden]{display:none}
 .pg-prog{position:absolute;left:0;right:0;top:0;height:3px;z-index:21;background:linear-gradient(90deg,var(--pga),#8AB4F8);animation:pgProg 1.2s linear infinite;background-size:200% 100%}
 @keyframes pgProg{from{background-position:0 0}to{background-position:-200% 0}}
+/* ── App statistics (Admin → Live visitors & statistics, 11/11/2026) ── */
+.dtile.kst{--k:#1D4ED8;--kb:#E6EDFD}
+.st-live{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.st-live .big{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-size:44px;font-weight:800;line-height:1}
+.st-live .big small{font-family:inherit;font-size:13px;font-weight:600;color:var(--muted);line-height:1.2}
+.st-dot{width:12px;height:12px;border-radius:50%;background:#16A34A;box-shadow:0 0 0 0 rgba(22,163,74,.55);animation:stPulse 1.6s infinite}
+.st-dot.off{background:#C9C6D6;animation:none}
+@keyframes stPulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.55)}70%{box-shadow:0 0 0 10px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.st-upd{margin-left:auto;font-size:12px;color:var(--muted)}
+.st-people{margin-top:10px;display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
+.st-p{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.st-p .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:12px;flex:none;background:#EEF2FF;color:#1D4ED8}
+.st-p .av.anon{background:#F1F0F6;color:#6E6A86}
+.st-p .tx{flex:1;min-width:0}
+.st-p .tx b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-p .tx span{font-size:12px;color:var(--muted)}
+.st-p .st-pgl{font-size:12px;font-weight:700;color:#1D4ED8;background:#EEF2FF;border-radius:999px;padding:3px 9px;white-space:nowrap;max-width:45%;overflow:hidden;text-overflow:ellipsis}
+.st-new{font-size:10px;font-weight:800;color:#166534;background:#DCFCE7;border-radius:6px;padding:1px 5px;margin-left:6px;vertical-align:1px}
+.st-per{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}
+.st-per button{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:7px 13px;font-weight:700;font-size:13px;color:var(--ink);cursor:pointer}
+.st-per button.on{background:#1D4ED8;border-color:#1D4ED8;color:#fff}
+.st-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:10px}
+.st-kpi div{background:#fff;border-radius:12px;padding:10px 12px;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.st-kpi b{display:block;font-family:var(--fd);font-size:26px;line-height:1.1}
+.st-kpi small{font-size:12px;color:var(--muted)}
+.st-ch{position:relative;display:flex;align-items:flex-end;gap:2px;height:150px;padding-top:18px;border-bottom:1px solid var(--line2)}
+.st-ch .c{flex:1;min-width:0;height:100%;display:flex;align-items:flex-end;position:relative;cursor:default}
+.st-ch .c i{display:block;width:100%;background:#2563EB;border-radius:4px 4px 0 0;min-height:0}
+.st-ch .c.now i{background:#1E3A8A}
+.st-ch .c.z i{background:transparent}
+.st-ch .c .tip{display:none;position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#15132B;color:#fff;font-size:11.5px;line-height:1.35;padding:5px 8px;border-radius:8px;white-space:nowrap;z-index:3;pointer-events:none}
+.st-ch .c:hover .tip,.st-ch .c:focus .tip{display:block}
+.st-ch .c .lab{position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;color:var(--ink)}
+.st-ch .c:hover i{filter:brightness(1.15)}
+.st-ax{display:flex;gap:2px;font-size:10.5px;color:var(--muted);margin-top:4px}
+.st-ax span{flex:1;text-align:center;min-width:0;white-space:nowrap;overflow:visible}
+.st-hb{display:grid;gap:7px}
+.st-hb .r{display:grid;grid-template-columns:minmax(110px,38%) 1fr auto;align-items:center;gap:8px;font-size:13px}
+.st-hb .r .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-hb .r .tr{height:14px;background:#F1F0F6;border-radius:4px;overflow:hidden}
+.st-hb .r .tr i{display:block;height:100%;background:#2563EB;border-radius:0 4px 4px 0}
+.st-hb .r .v{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;white-space:nowrap}
+.st-hb .r .v b{color:var(--ink);font-size:13px}
+.st-two{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:900px){.st-two{grid-template-columns:1fr 1fr}}
+.st-err{font-size:12.5px;border-top:1px solid var(--line);padding:6px 0;word-break:break-word}
+.st-err small{display:block;color:var(--muted)}
+.st-note{font-size:12px;color:var(--muted);margin:6px 0 0}
+@media(max-width:560px){.st-p{flex-wrap:wrap}.st-p .tx{flex:1 1 calc(100% - 46px)}.st-p .st-pgl{max-width:calc(100% - 42px);margin-left:42px}}
 </style>
 </head>
 <body>
@@ -2060,6 +2109,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
               <button type="button" class="dtile k5" data-col="col_refs" data-cnt="cnt_refs" onclick="admOpen('col_refs')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></span><span class="dtx"><b data-i18n="ref_title">Referees &amp; emails</b><small data-i18n="ad_d_refs">Referee list and email addresses</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="adm_refs">referees</small></span></button>
               <button type="button" class="dtile k7" data-col="col_tr" data-cnt="cnt_tr" onclick="admOpen('col_tr')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span class="dtx"><b data-i18n="tr_title">Team Right by first referee</b><small data-i18n="ad_d_tr">Overturned decisions per first referee</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="ad_c_tr">Team Right</small></span></button>
               <button type="button" class="dtile k2" data-col="col_drive" data-cnt="cnt_drive" onclick="admOpen('col_drive')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8z"/></svg></span><span class="dtx"><b data-i18n="dva_title">Drive access codes</b><small data-i18n="ad_d_drive">Personal codes for the Drive section</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="ad_c_drive">active</small></span></button>
+              <button type="button" class="dtile kst" data-col="col_stats" data-cnt="cnt_stats" onclick="admOpen('col_stats')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><span class="dtx"><b data-i18n="st_title">Live visitors &amp; statistics</b><small data-i18n="ad_d_stats">Who is in the app now, visits and sections</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="st_online">online now</small></span></button>
             </div></section>
           </div>
           <div class="adm-board" id="adm_detail">
@@ -2271,6 +2321,38 @@ textarea.bk-in{min-height:140px;resize:vertical}
                 <label class="dva-set"><span data-i18n="dva_len">Generated code length</span><select id="dva_len" onchange="dvaSetting('code_length',+this.value)"><option value="4">4</option><option value="6">6</option><option value="8">8</option></select></label>
               </div>
               <div class="card"><h3 data-i18n="dva_recent">Recent activity</h3><div id="dva_ev"></div></div>
+            </div>
+
+            <!-- ── LIVE VISITORS & STATISTICS (11/11/2026) ─────────── -->
+            <div class="acol c1 wide" id="col_stats">
+              <div class="acol-h"><span data-i18n="st_title">Live visitors &amp; statistics</span><i id="cnt_stats">0</i></div>
+              <div class="card">
+                <div class="st-live"><div class="big"><span class="st-dot off" id="st_dot"></span><span id="st_live_n">0</span><small data-i18n="st_online_long">people in the app<br>right now</small></div><span class="st-upd" id="st_upd"></span></div>
+                <div class="st-people" id="st_people"></div>
+              </div>
+              <div class="st-per" id="st_per">
+                <button type="button" data-d="1" onclick="stPeriod(1)" data-i18n="st_p1">Today</button>
+                <button type="button" data-d="7" class="on" onclick="stPeriod(7)" data-i18n="st_p7">7 days</button>
+                <button type="button" data-d="30" onclick="stPeriod(30)" data-i18n="st_p30">30 days</button>
+                <button type="button" data-d="0" onclick="stPeriod(0)" data-i18n="st_p0">All</button>
+                <button type="button" class="btn ghost" style="margin-left:auto" onclick="stLoad()" data-i18n="wk_refresh">&#8635; Refresh</button>
+              </div>
+              <div class="st-kpi" id="st_kpi"></div>
+              <div class="st-two">
+                <div class="card"><h3 data-i18n="st_hourly">Today, hour by hour</h3><div id="st_hourly"></div></div>
+                <div class="card"><h3 data-i18n="st_daily">Last 30 days</h3><div id="st_daily"></div></div>
+              </div>
+              <div class="st-two">
+                <div class="card"><h3 data-i18n="st_sections">Most visited sections</h3><div id="st_sections"></div></div>
+                <div class="card"><h3 data-i18n="st_actions">What people do</h3><div id="st_actions"></div></div>
+              </div>
+              <div class="st-two">
+                <div class="card"><h3 data-i18n="st_devices">Devices and languages</h3><div id="st_devices"></div></div>
+                <div class="card"><h3 data-i18n="st_refs">Referees signed in to Drive</h3><div id="st_refs"></div></div>
+              </div>
+              <div class="card"><h3 data-i18n="st_errors">Errors in the app</h3><div id="st_errors"></div></div>
+              <div class="card"><p class="st-note" style="margin:0" data-i18n="st_privacy">Anonymous count: each phone or computer gets a random number, nothing else is stored (no IP address, no personal data). Names are shown only for referees signed in to Drive with their code. Counting started on 11/11/2026.</p>
+              <div style="margin-top:10px"><button type="button" class="btn ghost" onclick="stReset()" data-i18n="st_reset">Reset statistics</button></div></div>
             </div>
 
             <div class="acol c3 wide" id="col_tr">
@@ -2495,6 +2577,25 @@ Object.assign(T.nl,{p_team:"Map van de ploeg",p_general:"Algemeen",p_other:"Ande
 Object.assign(T.en,{wm_ls:'Live streaming',wm_ls_back:'Matches of the week',wm_ls_ext:'New tab',wm_ls_src:'Live streaming · watch.lottovolleyleague.be',wm_sc_live:'Live score',wm_sc_final:'Final',wm_sc_src:'Live scores: livescore.volleyadmin2.be (updated every minute)',wm_btn:"Matches of the week",wm_label:"Designations",wm_title:"Matches with a Video Referee",wm_sub:"All matches with a designated Video Referee, week by week. The list updates when new weeks are loaded.",wm_this:"This week",wm_next:"Next week",wm_week:"Week",wm_prev:"Previous weeks",wm_n:"{n} matches",wm_n1:"1 match",wm_live_n:"{n} live now",wm_live:"Live",wm_ended:"Ended",wm_men:"Men",wm_women:"Women",wm_h_series:"Series",wm_h_gender:"M / W",wm_h_day:"Day",wm_h_time:"Start",wm_h_teams:"Teams (home – away)",wm_h_vr:"Video Referee",wm_none:"No designations loaded yet.",wm_none_week:"No match with a Video Referee loaded for this week yet.",wm_loading:"Loading…",wm_err:"Could not load the matches. Please try again later."});
 Object.assign(T.fr,{wm_ls:'Live streaming',wm_ls_back:'Matchs de la semaine',wm_ls_ext:'Nouvel onglet',wm_ls_src:'Live streaming · watch.lottovolleyleague.be',wm_sc_live:'Score en direct',wm_sc_final:'Final',wm_sc_src:'Scores en direct : livescore.volleyadmin2.be (mis à jour chaque minute)',wm_btn:"Matchs de la semaine",wm_label:"Désignations",wm_title:"Matchs avec Video Referee",wm_sub:"Tous les matchs avec un Video Referee désigné, semaine par semaine. La liste se met à jour quand de nouvelles semaines sont chargées.",wm_this:"Cette semaine",wm_next:"Semaine prochaine",wm_week:"Semaine",wm_prev:"Semaines précédentes",wm_n:"{n} matchs",wm_n1:"1 match",wm_live_n:"{n} en cours",wm_live:"En cours",wm_ended:"Terminé",wm_men:"Hommes",wm_women:"Femmes",wm_h_series:"Série",wm_h_gender:"H / F",wm_h_day:"Jour",wm_h_time:"Début",wm_h_teams:"Équipes (domicile – visiteurs)",wm_h_vr:"Video Referee",wm_none:"Aucune désignation chargée pour l'instant.",wm_none_week:"Aucun match avec Video Referee chargé pour cette semaine.",wm_loading:"Chargement…",wm_err:"Impossible de charger les matchs. Réessayez plus tard."});
 Object.assign(T.nl,{wm_ls:'Livestream',wm_ls_back:'Wedstrijden van de week',wm_ls_ext:'Nieuw tabblad',wm_ls_src:'Livestream · watch.lottovolleyleague.be',wm_sc_live:'Live score',wm_sc_final:'Einde',wm_sc_src:'Live scores: livescore.volleyadmin2.be (elke minuut bijgewerkt)',wm_btn:"Wedstrijden van de week",wm_label:"Aanduidingen",wm_title:"Wedstrijden met Video Referee",wm_sub:"Alle wedstrijden met een aangeduide Video Referee, week per week. De lijst wordt bijgewerkt wanneer nieuwe weken geladen worden.",wm_this:"Deze week",wm_next:"Volgende week",wm_week:"Week",wm_prev:"Vorige weken",wm_n:"{n} wedstrijden",wm_n1:"1 wedstrijd",wm_live_n:"{n} nu bezig",wm_live:"Bezig",wm_ended:"Afgelopen",wm_men:"Heren",wm_women:"Dames",wm_h_series:"Reeks",wm_h_gender:"H / D",wm_h_day:"Dag",wm_h_time:"Aanvang",wm_h_teams:"Ploegen (thuis – bezoekers)",wm_h_vr:"Video Referee",wm_none:"Nog geen aanduidingen geladen.",wm_none_week:"Nog geen wedstrijd met Video Referee geladen voor deze week.",wm_loading:"Laden…",wm_err:"De wedstrijden konden niet geladen worden. Probeer later opnieuw."});
+/* App statistics (Admin → Live visitors & statistics, 11/11/2026) */
+Object.assign(T.en,{st_title:"Live visitors & statistics",ad_d_stats:"Who is in the app now, visits and sections",st_online:"online now",st_online_long:"people in the app<br>right now",st_p1:"Today",st_p7:"7 days",st_p30:"30 days",st_p0:"All",st_hourly:"Today, hour by hour",st_daily:"Last 30 days",st_sections:"Most visited sections",st_actions:"What people do",st_devices:"Devices and languages",st_refs:"Referees signed in to Drive",st_errors:"Errors in the app",st_privacy:"Anonymous count: each phone or computer gets a random number, nothing else is stored (no IP address, no personal data). Names are shown only for referees signed in to Drive with their code. Counting started on 11/11/2026.",st_reset:"Reset statistics",st_reset_q:"Delete all visit statistics and start counting again from zero?",st_reset_ok:"Statistics reset.",
+st_k_today:"Visitors today",st_k_7:"Visitors, 7 days",st_k_30:"Visitors, 30 days",st_k_all:"Visitors since {d}",st_k_all0:"Visitors in total",st_k_new:"New today",st_k_views:"Pages viewed today",st_k_vper:"Pages viewed in the period",st_k_refs:"Referees signed in",
+st_upd:"Updated {t} · refreshes every 10 s",st_nobody:"Nobody is in the app right now.",st_visitor:"Visitor {n}",st_new:"NEW",st_since:"in the app for {m}",st_min:"{n} min",st_lt1:"less than 1 min",st_dev_phone:"Phone",st_dev_tablet:"Tablet",st_dev_desktop:"Computer",st_dev_x:"Unknown",
+st_views:"views",st_people:"people",st_vis_h:"{v} visitors · {p} pages viewed",st_none:"No data yet for this period.",st_noerr:"No errors recorded. Good!",st_err_n:"{n} times · {u} devices · last {d}",st_last:"last {d}",st_noref:"No referee signed in to Drive in this period.",st_lang:"Language",st_dev:"Device",st_err_load:"Could not load the statistics.",
+st_s_home:"Home",st_s_library:"Library",st_s_library_videos:"Video & slides",st_s_library_photos:"Photos",st_s_photos:"Photos",st_s_documents:"Documents",st_s_report:"Report form",st_s_diag:"Diagnostics",st_s_matches:"Matches of the week",st_s_drive:"Drive",st_s_admin:"Admin",
+st_a_report_started:"Started filling a report",st_a_report_sent:"Report sent",st_a_doc_read:"Opened a document to read",st_a_video_play:"Played a video",st_a_photo_view:"Viewed a photo",st_a_viewer_open:"Opened a file in the viewer",st_a_drive_login:"Signed in to Drive",st_a_drive_nav:"Started a drive with navigation",st_a_live_stream:"Opened a live streaming",st_a_admin_unlock:"Unlocked Admin"});
+Object.assign(T.fr,{st_title:"Visiteurs en direct & statistiques",ad_d_stats:"Qui est dans l'app maintenant, visites et sections",st_online:"en ligne",st_online_long:"personnes dans l'app<br>en ce moment",st_p1:"Aujourd'hui",st_p7:"7 jours",st_p30:"30 jours",st_p0:"Tout",st_hourly:"Aujourd'hui, heure par heure",st_daily:"30 derniers jours",st_sections:"Sections les plus visitées",st_actions:"Ce que font les visiteurs",st_devices:"Appareils et langues",st_refs:"Arbitres connectés à Drive",st_errors:"Erreurs dans l'app",st_privacy:"Comptage anonyme : chaque téléphone ou ordinateur reçoit un numéro aléatoire, rien d'autre n'est enregistré (pas d'adresse IP, pas de données personnelles). Les noms ne s'affichent que pour les arbitres connectés à Drive avec leur code. Comptage commencé le 11/11/2026.",st_reset:"Remettre les statistiques à zéro",st_reset_q:"Supprimer toutes les statistiques de visite et recommencer à zéro ?",st_reset_ok:"Statistiques remises à zéro.",
+st_k_today:"Visiteurs aujourd'hui",st_k_7:"Visiteurs, 7 jours",st_k_30:"Visiteurs, 30 jours",st_k_all:"Visiteurs depuis le {d}",st_k_all0:"Visiteurs au total",st_k_new:"Nouveaux aujourd'hui",st_k_views:"Pages vues aujourd'hui",st_k_vper:"Pages vues sur la période",st_k_refs:"Arbitres connectés",
+st_upd:"Mis à jour à {t} · actualisé toutes les 10 s",st_nobody:"Personne n'est dans l'app en ce moment.",st_visitor:"Visiteur {n}",st_new:"NOUVEAU",st_since:"dans l'app depuis {m}",st_min:"{n} min",st_lt1:"moins d'1 min",st_dev_phone:"Téléphone",st_dev_tablet:"Tablette",st_dev_desktop:"Ordinateur",st_dev_x:"Inconnu",
+st_views:"vues",st_people:"personnes",st_vis_h:"{v} visiteurs · {p} pages vues",st_none:"Pas encore de données pour cette période.",st_noerr:"Aucune erreur enregistrée. Parfait !",st_err_n:"{n} fois · {u} appareils · dernière le {d}",st_last:"dernière le {d}",st_noref:"Aucun arbitre connecté à Drive sur cette période.",st_lang:"Langue",st_dev:"Appareil",st_err_load:"Impossible de charger les statistiques.",
+st_s_home:"Accueil",st_s_library:"Bibliothèque",st_s_library_videos:"Vidéos & slides",st_s_library_photos:"Photos",st_s_photos:"Photos",st_s_documents:"Documents",st_s_report:"Formulaire de rapport",st_s_diag:"Diagnostics",st_s_matches:"Matchs de la semaine",st_s_drive:"Drive",st_s_admin:"Admin",
+st_a_report_started:"A commencé un rapport",st_a_report_sent:"Rapport envoyé",st_a_doc_read:"A ouvert un document à lire",st_a_video_play:"A lancé une vidéo",st_a_photo_view:"A regardé une photo",st_a_viewer_open:"A ouvert un fichier dans la visionneuse",st_a_drive_login:"Connexion à Drive",st_a_drive_nav:"A lancé un trajet avec navigation",st_a_live_stream:"A ouvert un live streaming",st_a_admin_unlock:"A déverrouillé l'Admin"});
+Object.assign(T.nl,{st_title:"Live bezoekers & statistieken",ad_d_stats:"Wie nu in de app is, bezoeken en secties",st_online:"nu online",st_online_long:"mensen in de app<br>op dit moment",st_p1:"Vandaag",st_p7:"7 dagen",st_p30:"30 dagen",st_p0:"Alles",st_hourly:"Vandaag, uur per uur",st_daily:"Laatste 30 dagen",st_sections:"Meest bezochte secties",st_actions:"Wat bezoekers doen",st_devices:"Toestellen en talen",st_refs:"Scheidsrechters aangemeld bij Drive",st_errors:"Fouten in de app",st_privacy:"Anonieme telling: elke telefoon of computer krijgt een willekeurig nummer, verder wordt niets bewaard (geen IP-adres, geen persoonsgegevens). Namen verschijnen alleen voor scheidsrechters die met hun code bij Drive zijn aangemeld. Telling gestart op 11/11/2026.",st_reset:"Statistieken op nul zetten",st_reset_q:"Alle bezoekstatistieken wissen en opnieuw vanaf nul tellen?",st_reset_ok:"Statistieken op nul gezet.",
+st_k_today:"Bezoekers vandaag",st_k_7:"Bezoekers, 7 dagen",st_k_30:"Bezoekers, 30 dagen",st_k_all:"Bezoekers sinds {d}",st_k_all0:"Bezoekers in totaal",st_k_new:"Nieuw vandaag",st_k_views:"Pagina's bekeken vandaag",st_k_vper:"Pagina's bekeken in de periode",st_k_refs:"Aangemelde scheidsrechters",
+st_upd:"Bijgewerkt om {t} · ververst elke 10 s",st_nobody:"Er is nu niemand in de app.",st_visitor:"Bezoeker {n}",st_new:"NIEUW",st_since:"in de app sinds {m}",st_min:"{n} min",st_lt1:"minder dan 1 min",st_dev_phone:"Telefoon",st_dev_tablet:"Tablet",st_dev_desktop:"Computer",st_dev_x:"Onbekend",
+st_views:"weergaven",st_people:"mensen",st_vis_h:"{v} bezoekers · {p} pagina's bekeken",st_none:"Nog geen gegevens voor deze periode.",st_noerr:"Geen fouten geregistreerd. Prima!",st_err_n:"{n} keer · {u} toestellen · laatst op {d}",st_last:"laatst op {d}",st_noref:"Geen scheidsrechter aangemeld bij Drive in deze periode.",st_lang:"Taal",st_dev:"Toestel",st_err_load:"De statistieken konden niet worden geladen.",
+st_s_home:"Home",st_s_library:"Bibliotheek",st_s_library_videos:"Video & slides",st_s_library_photos:"Foto's",st_s_photos:"Foto's",st_s_documents:"Documenten",st_s_report:"Rapportformulier",st_s_diag:"Diagnostiek",st_s_matches:"Wedstrijden van de week",st_s_drive:"Drive",st_s_admin:"Admin",
+st_a_report_started:"Begon een rapport in te vullen",st_a_report_sent:"Rapport verzonden",st_a_doc_read:"Opende een document om te lezen",st_a_video_play:"Speelde een video af",st_a_photo_view:"Bekeek een foto",st_a_viewer_open:"Opende een bestand in de viewer",st_a_drive_login:"Aangemeld bij Drive",st_a_drive_nav:"Startte een rit met navigatie",st_a_live_stream:"Opende een livestream",st_a_admin_unlock:"Admin ontgrendeld"});
 
 /* ---- Matches of the week: public list from vcbe_assignments (RPC vcbe_public_video_matches, no emails) ---- */
 var WM={rows:null,loading:false,at:0,err:false,scores:{},sat:0,sload:false,streams:{},stat:0,stload:false};
@@ -5696,6 +5797,139 @@ function pgStoryStop(){clearTimeout(PG._st);PG.story=null;var el=pgG("pg_story")
 (function(){var h=location.hash||"",m=/[#&]photo=([0-9a-f-]{36})/i.exec(h),a=/[#&]album=([^&]*)/.exec(h);
   if(!m&&!a)return;var tries=0;(function wait(){tries++;if((PHOTOS&&PHOTOS.length)||tries>40){if(m)pgOpen({photo:m[1]});else pgOpen({tab:"coll",album:decodeURIComponent(a[1])});return;}setTimeout(wait,250);})();})();
 
+</script>
+<script>
+/* ── App statistics (11/11/2026, richiesta utente) ─────────────────────────────────────
+   Conteggio ANONIMO delle visite: id casuale del browser (localStorage vcbe_vid), id della visita (sessionStorage),
+   sezione aperta, azioni principali, errori JavaScript. Nessun IP, nessun dato personale; il nome compare in Admin
+   solo per gli arbitri collegati a Drive (token Drive). Edge function vcbe-stats (codice in docs/vcbe-stats.ts).
+   Admin → «Live visitors & statistics» (col_stats): presenze in tempo reale e grafici, aggiornati ogni 10 s. */
+var ST={vid:null,sid:null,page:null,q:{views:[],acts:[],errs:[]},t:null,lastView:0,once:{},errN:0,days:7,data:null,timer:null,busy:false};
+function stRid(){try{if(crypto&&crypto.randomUUID)return crypto.randomUUID().replace(/-/g,"");}catch(e){}return Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);}
+(function stInit(){
+  try{ST.vid=localStorage.getItem("vcbe_vid");if(!ST.vid){ST.vid=stRid();localStorage.setItem("vcbe_vid",ST.vid);}}catch(e){ST.vid=ST.vid||stRid();}
+  try{ST.sid=sessionStorage.getItem("vcbe_sid");if(!ST.sid){ST.sid=stRid();sessionStorage.setItem("vcbe_sid",ST.sid);}}catch(e){ST.sid=ST.sid||stRid();}
+})();
+function stDevice(){var w=Math.min(screen.width||innerWidth,screen.height||innerHeight),coarse=false;try{coarse=matchMedia("(pointer:coarse)").matches;}catch(e){}
+  if(!coarse)return "desktop";return w<600?"phone":"tablet";}
+function stToken(){try{return (typeof DV!=="undefined"&&DV.token)||localStorage.getItem("vcbe_drive_token")||sessionStorage.getItem("vcbe_drive_token")||null;}catch(e){return null;}}
+function stSend(){
+  clearTimeout(ST.t);ST.t=null;
+  var b={action:"ping",vid:ST.vid,sid:ST.sid,page:ST.page,views:ST.q.views,acts:ST.q.acts,errs:ST.q.errs,lang:(typeof LANG!=="undefined"?LANG:null),device:stDevice(),token:stToken()};
+  ST.q={views:[],acts:[],errs:[]};
+  try{ST._f.call(window,FN+"/vcbe-stats",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b),keepalive:true}).catch(function(){});}catch(e){}
+}
+function stSoon(){if(!ST.t)ST.t=setTimeout(stSend,700);}
+function stView(name){if(!name)return;name=String(name).toLowerCase().replace(/[^a-z0-9_:.\-]/g,"").slice(0,48);if(!name)return;
+  var now=Date.now();
+  /* one click that opens a page and then its sub-page counts once (the more precise one) */
+  var prev=ST.q.views[ST.q.views.length-1];if(prev&&now-ST.lastView<400&&name.indexOf(prev.split(":")[0]+":")===0)ST.q.views[ST.q.views.length-1]=name;else if(name!==ST.page)ST.q.views.push(name);
+  ST.lastView=now;ST.page=name;stSoon();}
+function stPage(name){ST.page=name;}
+function stAct(name,once){if(once){if(ST.once[name])return;ST.once[name]=1;}ST.q.acts.push(name);stSoon();}
+function stErr(msg){if(ST.errN>=5)return;ST.errN++;ST.q.errs.push(String(msg||"error").slice(0,160));stSoon();}
+ST._f=window.fetch;
+/* fetch wrapper: report sent / failed, Drive sign-in */
+window.fetch=function(u,o){var p=ST._f.apply(window,arguments);try{var url=String(u&&u.url||u||"");
+  if(/\/send-report/.test(url))p.then(function(r){if(r.ok)r.clone().json().then(function(j){if(j&&j.ok)stAct("report_sent");else stErr("report not sent: "+String(j&&j.error||"error").slice(0,100));}).catch(function(){});else stErr("report not sent: HTTP "+r.status);},function(){stErr("report not sent: network");});
+  else if(/\/vcbe-drive/.test(url)&&o&&typeof o.body==="string"&&o.body.indexOf('"action":"login"')>=0)p.then(function(r){if(r.ok)r.clone().json().then(function(j){if(j&&j.ok&&j.token)stAct("drive_login");}).catch(function(){});});
+}catch(e){}return p;};
+function stWrap(n,after){var f=window[n];if(typeof f!=="function")return;window[n]=function(){var r=f.apply(this,arguments);try{after.apply(this,arguments);}catch(e){}return r;};}
+stWrap("go",function(p){if(p!=="books"&&p!=="photos")stView(p);});
+stWrap("pgOpen",function(){stView("photos");});
+stWrap("pgHide",function(){var a=document.querySelector(".page.active");stPage(a?a.dataset.page:null);});
+stWrap("pgView",function(){stAct("photo_view");});
+stWrap("bkOpen",function(){stView("documents");});
+stWrap("bkHide",function(){var a=document.querySelector(".page.active");stPage(a?a.dataset.page:null);});
+stWrap("openLib",function(id){stView(id==="col_libvids"?"library:videos":id==="col_libphotos"?"library:photos":"library");});
+stWrap("dvShow",function(v){if(v&&v!=="login")stView("drive:"+v);});
+stWrap("bkRead",function(){stAct("doc_read");});
+stWrap("vxPlay",function(){stAct("video_play");});
+stWrap("lbxShow",function(){stAct("photo_view");});
+stWrap("openViewer",function(){stAct("viewer_open");});
+stWrap("dvStartNav",function(){stAct("drive_nav");});
+stWrap("admUnlocked",function(on){if(on){stAct("admin_unlock",true);stLoad();}else stStop();});
+stWrap("admOpen",function(id){if(id==="col_stats")stLoad();});
+stWrap("setLang",function(){if(ST.data)stRender();});
+document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a.wm-ls");if(a)stAct("live_stream");},true);
+(function(){var r=document.getElementById("report");if(!r)return;var f=function(){stAct("report_started",true);};r.addEventListener("input",f,true);r.addEventListener("change",f,true);})();
+window.addEventListener("error",function(e){if(!e||!e.message)return;var src=String(e.filename||"").split("/").pop();stErr(e.message+(src?" @"+src+":"+(e.lineno||0):""));});
+window.addEventListener("unhandledrejection",function(e){var m=e&&e.reason&&(e.reason.message||e.reason);if(m)stErr("promise: "+m);});
+/* first page + heartbeat every 30 s while the app is visible; leave when hidden */
+(function(){var a=document.querySelector(".page.active");stView(/^#book=/.test(location.hash)?"documents":(a?a.dataset.page:"home"));})();
+setInterval(function(){if(document.visibilityState==="visible")stSend();},30000);
+document.addEventListener("visibilitychange",function(){
+  if(document.visibilityState==="hidden"){if(ST.q.views.length||ST.q.acts.length||ST.q.errs.length)stSend();try{navigator.sendBeacon(FN+"/vcbe-stats",JSON.stringify({action:"leave",sid:ST.sid}));}catch(e){}}
+  else{stSend();if(ST.timer&&ADMIN_PW)stLoad();}
+});
+window.addEventListener("pagehide",function(){try{navigator.sendBeacon(FN+"/vcbe-stats",JSON.stringify({action:"leave",sid:ST.sid}));}catch(e){}});
+
+/* ── Admin view ── */
+function stT(k,o){var s=(T[LANG]&&T[LANG][k]!==undefined)?T[LANG][k]:(T.en[k]!==undefined?T.en[k]:k);if(o)Object.keys(o).forEach(function(x){s=s.split("{"+x+"}").join(o[x]);});return s;}
+function stLoc(){return LANG==="fr"?"fr-BE":LANG==="nl"?"nl-BE":"en-GB";}
+function stFmtD(iso,withTime){try{var d=new Date(iso);var o={timeZone:"Europe/Brussels",day:"2-digit",month:"2-digit"};if(withTime){o.hour="2-digit";o.minute="2-digit";}else o.year="numeric";return d.toLocaleString(stLoc(),o);}catch(e){return String(iso||"").slice(0,10);}}
+function stSec(n){if(!n)return "–";var k="st_s_"+n.replace(/[:.\-]/g,"_");if(T.en[k]!==undefined)return stT(k);
+  if(/^drive:/.test(n)){var v=n.slice(6),tt=(T[LANG]&&T[LANG]["dv_t_"+v])||T.en["dv_t_"+v];return "Drive · "+(tt||v);}
+  if(/^library:/.test(n))return stT("st_s_library")+" · "+n.slice(8);return n;}
+function stActL(n){var k="st_a_"+n;return T.en[k]!==undefined?stT(k):n;}
+function stDev(d){return stT("st_dev_"+(d==="phone"||d==="tablet"||d==="desktop"?d:"x"));}
+function stStop(){clearInterval(ST.timer);ST.timer=null;}
+function stOpenNow(){var c=document.getElementById("col_stats");return !!(c&&c.classList.contains("active"));}
+async function stLoad(){
+  if(!ADMIN_PW)return;
+  if(!ST.timer)ST.timer=setInterval(function(){if(document.visibilityState==="visible"&&ADMIN_PW)stLoad();},10000);
+  if(ST.busy)return;ST.busy=true;
+  try{var r=await ST._f.call(window,FN+"/vcbe-stats",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"adm_stats",password:ADMIN_PW,days:ST.days})});
+    var j=await r.json();if(j&&j.ok){ST.data=j.stats;ST.at=new Date();stRender();}
+    else if(!ST.data){var e=document.getElementById("st_people");if(e)e.innerHTML='<div class="empty">'+esc(stT("st_err_load"))+'</div>';}
+  }catch(e){}finally{ST.busy=false;}
+}
+function stPeriod(d){ST.days=d;document.querySelectorAll("#st_per button[data-d]").forEach(function(b){b.classList.toggle("on",+b.getAttribute("data-d")===d);});stLoad();}
+async function stReset(){if(!ADMIN_PW||!confirm(stT("st_reset_q")))return;
+  try{var r=await ST._f.call(window,FN+"/vcbe-stats",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"adm_reset",password:ADMIN_PW})});var j=await r.json();if(j&&j.ok){alert(stT("st_reset_ok"));ST.page=null;stView((document.querySelector(".page.active")||{dataset:{}}).dataset.page||"admin");stSend();setTimeout(stLoad,800);}else alert(j&&j.error||"error");}catch(e){alert(String(e));}}
+function stHb(rows,max){/* horizontal bars: rows [{label,v,sub}] */
+  if(!rows.length)return '<div class="empty" style="font-size:13px">'+esc(stT("st_none"))+'</div>';
+  max=max||Math.max.apply(null,rows.map(function(r){return r.v;}))||1;
+  return '<div class="st-hb">'+rows.map(function(r){var w=Math.max(2,Math.round(r.v/max*100));return '<div class="r" title="'+esc(r.label+": "+r.v+(r.sub?" · "+r.sub:""))+'"><span class="nm">'+esc(r.label)+'</span><span class="tr"><i style="width:'+w+'%"></i></span><span class="v"><b>'+r.v+'</b>'+(r.sub?' · '+esc(r.sub):'')+'</span></div>';}).join("")+'</div>';}
+function stCols(items,labelOf,tipOf,nowIdx,axisEvery){/* vertical bars, one series (visitors) */
+  var max=Math.max.apply(null,items.map(function(x){return x.visitors;}))||0,peak=-1;
+  items.forEach(function(x,i){if(max&&x.visitors===max&&peak<0)peak=i;});
+  var h='<div class="st-ch" role="img" aria-label="'+esc(items.map(function(x,i){return labelOf(x,i)+": "+x.visitors;}).join(", "))+'">'+items.map(function(x,i){
+    var pct=max?Math.round(x.visitors/max*100):0;
+    return '<div class="c'+(i===nowIdx?' now':'')+(x.visitors?'':' z')+'" tabindex="0"><i style="height:'+pct+'%"></i>'+(i===peak?'<span class="lab">'+x.visitors+'</span>':'')+'<span class="tip"><b>'+esc(labelOf(x,i))+'</b><br>'+esc(tipOf(x))+'</span></div>';}).join("")+'</div>';
+  h+='<div class="st-ax">'+items.map(function(x,i){return '<span>'+(i%axisEvery===0||i===items.length-1?esc(labelOf(x,i,true)):"")+'</span>';}).join("")+'</div>';
+  return h;}
+function stRender(){
+  var d=ST.data;if(!d)return;var tot=d.totals||{},live=d.live||[];
+  var n=live.length;var el=function(id){return document.getElementById(id);};
+  if(el("st_live_n"))el("st_live_n").textContent=n;
+  if(el("st_dot"))el("st_dot").classList.toggle("off",!n);
+  if(typeof admCount==="function"){var c=el("cnt_stats");if(c)c.textContent=n;}
+  if(el("st_upd")&&ST.at)el("st_upd").textContent=stT("st_upd",{t:ST.at.toLocaleTimeString(stLoc(),{timeZone:"Europe/Brussels",hour:"2-digit",minute:"2-digit",second:"2-digit"})});
+  var now=Date.now();
+  el("st_people").innerHTML=n?live.map(function(p){
+    var m=Math.floor((now-new Date(p.started_at).getTime())/60000),dur=m<1?stT("st_lt1"):stT("st_min",{n:m});
+    var nm=p.name?p.name:stT("st_visitor",{n:"#"+String(p.vid||"").toUpperCase()});
+    var ini=p.name?p.name.split(/\s+/).map(function(w){return w[0]||"";}).join("").slice(0,2):"?";
+    return '<div class="st-p"><span class="av'+(p.name?'':' anon')+'">'+esc(ini)+'</span><span class="tx"><b>'+esc(nm)+(p.new?'<span class="st-new">'+esc(stT("st_new"))+'</span>':'')+'</b><span>'+esc(stDev(p.device))+(p.lang?' · '+esc(String(p.lang).toUpperCase()):'')+' · '+esc(stT("st_since",{m:dur}))+'</span></span><span class="st-pgl">'+esc(stSec(p.page))+'</span></div>';}).join(""):'<div class="empty" style="font-size:13px">'+esc(stT("st_nobody"))+'</div>';
+  var since=tot.since?stFmtD(tot.since):"";
+  var k=[[tot.today,"st_k_today"],[tot.d7,"st_k_7"],[tot.d30,"st_k_30"],[tot.all,since?"st_k_all":"st_k_all0"],[tot.new_today,"st_k_new"],[tot.views_today,"st_k_views"],[tot.views_period,"st_k_vper"],[tot.referees_period,"st_k_refs"]];
+  el("st_kpi").innerHTML=k.map(function(x){return '<div><b>'+(x[0]||0)+'</b><small>'+esc(stT(x[1],{d:since}))+'</small></div>';}).join("");
+  var hr=new Date().toLocaleString("en-GB",{timeZone:"Europe/Brussels",hour:"2-digit",hour12:false});hr=parseInt(hr,10)%24;
+  el("st_hourly").innerHTML=stCols(d.hourly||[],function(x,i,ax){return ax?String(x.h):(String(x.h).padStart(2,"0")+":00–"+String((x.h+1)%24).padStart(2,"0")+":00");},function(x){return stT("st_vis_h",{v:x.visitors,p:x.views});},hr,3);
+  var dl=d.daily||[];
+  el("st_daily").innerHTML=stCols(dl,function(x,i,ax){var p=String(x.d).split("-");return ax?(p[2]+"/"+p[1]):(p[2]+"/"+p[1]+"/"+p[0]);},function(x){return stT("st_vis_h",{v:x.visitors,p:x.views});},dl.length-1,5);
+  el("st_sections").innerHTML=stHb((d.sections||[]).map(function(s){return {label:stSec(s.name),v:s.views,sub:s.visitors+" "+stT("st_people")};}));
+  el("st_actions").innerHTML=stHb((d.actions||[]).map(function(s){return {label:stActL(s.name),v:s.n,sub:s.visitors+" "+stT("st_people")};}));
+  var dv=d.devices||{},lg=d.langs||{};
+  var devRows=Object.keys(dv).sort(function(a,b){return dv[b]-dv[a];}).map(function(x){return {label:stDev(x),v:dv[x]};});
+  var lgRows=Object.keys(lg).sort(function(a,b){return lg[b]-lg[a];}).map(function(x){return {label:x==="?"?stT("st_dev_x"):x.toUpperCase(),v:lg[x]};});
+  el("st_devices").innerHTML='<div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px">'+esc(stT("st_dev"))+'</div>'+stHb(devRows)+'<div style="font-size:12px;font-weight:700;color:var(--muted);margin:10px 0 4px">'+esc(stT("st_lang"))+'</div>'+stHb(lgRows);
+  var rf=d.referees||[];
+  el("st_refs").innerHTML=rf.length?stHb(rf.map(function(r){return {label:r.name,v:r.views,sub:stT("st_last",{d:stFmtD(r.last,true)})};})):'<div class="empty" style="font-size:13px">'+esc(stT("st_noref"))+'</div>';
+  var er=d.errors||[];
+  el("st_errors").innerHTML=er.length?er.map(function(x){return '<div class="st-err">'+esc(x.name)+'<small>'+esc(stT("st_err_n",{n:x.n,u:x.visitors,d:stFmtD(x.last,true)}))+'</small></div>';}).join(""):'<div class="empty" style="font-size:13px">'+esc(stT("st_noerr"))+'</div>';
+}
 </script>
 </body>
 </html>
