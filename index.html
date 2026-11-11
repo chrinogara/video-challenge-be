@@ -103,10 +103,11 @@ a{color:inherit;text-decoration:none}
 .cntnew{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;margin-left:8px;border-radius:999px;background:#EF4444;color:#fff;font-size:11px;font-weight:700;line-height:1;vertical-align:middle}
 .cntnew[hidden]{display:none}
 .tile{position:relative}
-.tilenew{position:absolute;top:12px;right:12px;margin:0;min-width:24px;height:24px;font-size:12px}
+.tilenew{position:absolute;top:12px;right:12px;margin:0;min-width:0;height:20px;padding:0 8px;font-size:10px;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;box-shadow:0 1px 3px rgba(239,68,68,.35)}
 .tab,.adm-rail button[data-go]{position:relative}
-.navnew{position:absolute;top:2px;right:calc(50% - 22px);min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#EF4444;color:#fff;font-size:10px;font-weight:700;line-height:17px;text-align:center;pointer-events:none}
-.adm-rail .navnew{top:0;right:0}
+.navnew{position:absolute;top:1px;left:calc(50% + 3px);height:14px;padding:0 4px;border-radius:999px;background:#EF4444;color:#fff;font-size:8.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;line-height:14px;white-space:nowrap;text-align:center;pointer-events:none;box-shadow:0 0 0 2px #fff}
+.tab:last-child .navnew{left:auto;right:3px}
+.adm-rail .navnew{top:-3px;left:auto;right:-6px;box-shadow:none}
 .newbadge{display:inline-block;background:#EF4444;color:#fff;font-family:var(--fd);font-weight:700;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle}
 .doc .btn{padding:8px 13px;font-size:13px;border-radius:10px}
 
@@ -1123,6 +1124,7 @@ body.dv-navon{overflow:hidden}
 .bk-secs{padding:0 20px;font-size:13.5px;color:#6E6A86;margin-top:2px}
 .bk-row{display:flex;gap:14px;overflow-x:auto;padding:12px 20px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .bk-row::-webkit-scrollbar{display:none}
+.bk-cv{position:relative}.bk-cv .bk-nw{position:absolute;top:5px;left:5px;z-index:2;background:#EF4444;color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:6px;line-height:1.3;box-shadow:0 1px 3px rgba(0,0,0,.25);pointer-events:none}
 .bk-bk{flex:none;width:112px;border:none;background:none;padding:0;text-align:left}
 .bk-row.big .bk-bk{width:150px}
 .bk-bk b{display:block;font-size:13.5px;line-height:1.25;margin-top:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -1674,7 +1676,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
       <div class="tiles">
         <div class="tile tile-docs" onclick="go('books')">
           <div class="ic" style="background:var(--violet-50);color:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
-          <h3 data-i18n="f1t">Documents</h3><p data-i18n="bk_home_d">Official rules, Video Challenge documents and guides, by topic.</p>
+          <span class="cntnew tilenew" id="nb_docs" hidden></span><h3 data-i18n="f1t">Documents</h3><p data-i18n="bk_home_d">Official rules, Video Challenge documents and guides, by topic.</p>
           <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
         </div>
         <div class="tile" onclick="openLib('col_libvids')">
@@ -2637,9 +2639,9 @@ Object.assign(T.en,{"bk_download":"Download"});
 Object.assign(T.fr,{"bk_download":"Télécharger"});
 Object.assign(T.nl,{"bk_download":"Downloaden"});
 /* 11/11/2026: «Books» diventa «Documents», con argomenti (categorie). */
-Object.assign(T.en,{"mbook": "Documents", "bk_home_d": "Official rules, Video Challenge documents and guides, by topic.", "ad_d_books": "Documents by topic: rules, Video Challenge, guides", "bk_nobooks": "No documents", "bk_nobooks_s": "Documents added by the coordinator will appear here.", "bk_book": "Document", "bk_new": "New documents", "bk_new_s": "Added in the last 30 days", "bk_all": "All documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, topics and authors", "bk_share": "Share document", "bk_opening": "Opening the document…", "bk_open_err": "The document could not be opened here.", "bk_sbook": "Search in the document", "bk_sbook_ph": "In this document", "bk_toc_e": "This document has no table of contents. Go to a page:", "bk_fin_e": "Documents you have finished appear here.", "bka_add": "Add document", "bka_del_q": "Delete the document “{t}” and its file?", "bk_sort_topic": "By topic", "bk_browse": "Topics", "bk_cat_rules": "Official rules", "bk_cat_vc": "Video Challenge documents", "bk_cat_tech": "Equipment & technical guides", "bk_cat_training": "Training", "bk_cat_other": "Other documents", "bka_topic": "Topic (section where the document appears)", "bka_move": "Topic:", "bka_up": "Move up", "bka_down": "Move down", "bka_cat_empty": "No documents in this topic yet.", "bka_ord_err": "The order could not be saved. Try again.", "bka_help": "Every document is in one topic. To move a document, choose another topic in its menu. Use ↑ ↓ to change the order inside a topic. ✎ edits title, description and source.", "doc_title": "Video & photos", "doc_sub": "Training videos, slides and photos of the halls."});
-Object.assign(T.fr,{"mbook": "Documents", "bk_home_d": "Règlements officiels, documents Video Challenge et guides, par sujet.", "ad_d_books": "Documents par sujet : règlements, Video Challenge, guides", "bk_nobooks": "Aucun document", "bk_nobooks_s": "Les documents ajoutés par le coordinateur apparaîtront ici.", "bk_book": "Document", "bk_new": "Nouveaux documents", "bk_new_s": "Ajoutés ces 30 derniers jours", "bk_all": "Tous les documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, sujets et auteurs", "bk_share": "Partager le document", "bk_opening": "Ouverture du document…", "bk_open_err": "Le document n'a pas pu être ouvert ici.", "bk_sbook": "Rechercher dans le document", "bk_sbook_ph": "Dans ce document", "bk_toc_e": "Ce document n'a pas de table des matières. Aller à une page :", "bk_fin_e": "Les documents terminés apparaissent ici.", "bka_add": "Ajouter un document", "bka_del_q": "Supprimer le document « {t} » et son fichier ?", "bk_sort_topic": "Par sujet", "bk_browse": "Sujets", "bk_cat_rules": "Règlements officiels", "bk_cat_vc": "Documents Video Challenge", "bk_cat_tech": "Matériel et guides techniques", "bk_cat_training": "Formation", "bk_cat_other": "Autres documents", "bka_topic": "Sujet (section où le document apparaît)", "bka_move": "Sujet :", "bka_up": "Monter", "bka_down": "Descendre", "bka_cat_empty": "Pas encore de documents dans ce sujet.", "bka_ord_err": "L'ordre n'a pas pu être enregistré. Réessayez.", "bka_help": "Chaque document est dans un sujet. Pour déplacer un document, choisissez un autre sujet dans son menu. ↑ ↓ changent l'ordre dans le sujet. ✎ modifie le titre, la description et la source.", "doc_title": "Vidéos & photos", "doc_sub": "Vidéos de formation, présentations et photos des salles."});
-Object.assign(T.nl,{"mbook": "Documenten", "bk_home_d": "Officiële reglementen, Video Challenge-documenten en handleidingen, per onderwerp.", "ad_d_books": "Documenten per onderwerp: reglementen, Video Challenge, handleidingen", "bk_nobooks": "Geen documenten", "bk_nobooks_s": "Documenten die de coördinator toevoegt, verschijnen hier.", "bk_book": "Document", "bk_new": "Nieuwe documenten", "bk_new_s": "Toegevoegd in de laatste 30 dagen", "bk_all": "Alle documenten", "bk_count": "{n} documenten", "bk_count1": "1 document", "bk_search_ph": "Documenten, onderwerpen en auteurs", "bk_share": "Document delen", "bk_opening": "Document openen…", "bk_open_err": "Het document kon hier niet worden geopend.", "bk_sbook": "Zoeken in het document", "bk_sbook_ph": "In dit document", "bk_toc_e": "Dit document heeft geen inhoudsopgave. Ga naar een pagina:", "bk_fin_e": "Documenten die je hebt uitgelezen, verschijnen hier.", "bka_add": "Document toevoegen", "bka_del_q": "Het document “{t}” en het bestand verwijderen?", "bk_sort_topic": "Per onderwerp", "bk_browse": "Onderwerpen", "bk_cat_rules": "Officiële reglementen", "bk_cat_vc": "Video Challenge-documenten", "bk_cat_tech": "Materiaal en technische handleidingen", "bk_cat_training": "Opleiding", "bk_cat_other": "Andere documenten", "bka_topic": "Onderwerp (sectie waar het document verschijnt)", "bka_move": "Onderwerp:", "bka_up": "Omhoog", "bka_down": "Omlaag", "bka_cat_empty": "Nog geen documenten in dit onderwerp.", "bka_ord_err": "De volgorde kon niet worden opgeslagen. Probeer opnieuw.", "bka_help": "Elk document staat in één onderwerp. Kies een ander onderwerp in het menu om een document te verplaatsen. Met ↑ ↓ verander je de volgorde binnen het onderwerp. ✎ wijzigt titel, beschrijving en bron.", "doc_title": "Video's & foto's", "doc_sub": "Opleidingsvideo's, presentaties en foto's van de zalen."});
+Object.assign(T.en,{"mbook": "Documents", "bk_home_d": "Official rules, Video Challenge documents and guides, by topic.", "ad_d_books": "Documents by topic: rules, Video Challenge, guides", "bk_nobooks": "No documents", "bk_nobooks_s": "Documents added by the coordinator will appear here.", "bk_book": "Document", "bk_new": "New documents", "bk_new_s": "Added in the last 7 days", "bk_all": "All documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, topics and authors", "bk_share": "Share document", "bk_opening": "Opening the document…", "bk_open_err": "The document could not be opened here.", "bk_sbook": "Search in the document", "bk_sbook_ph": "In this document", "bk_toc_e": "This document has no table of contents. Go to a page:", "bk_fin_e": "Documents you have finished appear here.", "bka_add": "Add document", "bka_del_q": "Delete the document “{t}” and its file?", "bk_sort_topic": "By topic", "bk_browse": "Topics", "bk_cat_rules": "Official rules", "bk_cat_vc": "Video Challenge documents", "bk_cat_tech": "Equipment & technical guides", "bk_cat_training": "Training", "bk_cat_other": "Other documents", "bka_topic": "Topic (section where the document appears)", "bka_move": "Topic:", "bka_up": "Move up", "bka_down": "Move down", "bka_cat_empty": "No documents in this topic yet.", "bka_ord_err": "The order could not be saved. Try again.", "bka_help": "Every document is in one topic. To move a document, choose another topic in its menu. Use ↑ ↓ to change the order inside a topic. ✎ edits title, description and source.", "doc_title": "Video & photos", "doc_sub": "Training videos, slides and photos of the halls."});
+Object.assign(T.fr,{"mbook": "Documents", "bk_home_d": "Règlements officiels, documents Video Challenge et guides, par sujet.", "ad_d_books": "Documents par sujet : règlements, Video Challenge, guides", "bk_nobooks": "Aucun document", "bk_nobooks_s": "Les documents ajoutés par le coordinateur apparaîtront ici.", "bk_book": "Document", "bk_new": "Nouveaux documents", "bk_new_s": "Ajoutés ces 7 derniers jours", "bk_all": "Tous les documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, sujets et auteurs", "bk_share": "Partager le document", "bk_opening": "Ouverture du document…", "bk_open_err": "Le document n'a pas pu être ouvert ici.", "bk_sbook": "Rechercher dans le document", "bk_sbook_ph": "Dans ce document", "bk_toc_e": "Ce document n'a pas de table des matières. Aller à une page :", "bk_fin_e": "Les documents terminés apparaissent ici.", "bka_add": "Ajouter un document", "bka_del_q": "Supprimer le document « {t} » et son fichier ?", "bk_sort_topic": "Par sujet", "bk_browse": "Sujets", "bk_cat_rules": "Règlements officiels", "bk_cat_vc": "Documents Video Challenge", "bk_cat_tech": "Matériel et guides techniques", "bk_cat_training": "Formation", "bk_cat_other": "Autres documents", "bka_topic": "Sujet (section où le document apparaît)", "bka_move": "Sujet :", "bka_up": "Monter", "bka_down": "Descendre", "bka_cat_empty": "Pas encore de documents dans ce sujet.", "bka_ord_err": "L'ordre n'a pas pu être enregistré. Réessayez.", "bka_help": "Chaque document est dans un sujet. Pour déplacer un document, choisissez un autre sujet dans son menu. ↑ ↓ changent l'ordre dans le sujet. ✎ modifie le titre, la description et la source.", "doc_title": "Vidéos & photos", "doc_sub": "Vidéos de formation, présentations et photos des salles."});
+Object.assign(T.nl,{"mbook": "Documenten", "bk_home_d": "Officiële reglementen, Video Challenge-documenten en handleidingen, per onderwerp.", "ad_d_books": "Documenten per onderwerp: reglementen, Video Challenge, handleidingen", "bk_nobooks": "Geen documenten", "bk_nobooks_s": "Documenten die de coördinator toevoegt, verschijnen hier.", "bk_book": "Document", "bk_new": "Nieuwe documenten", "bk_new_s": "Toegevoegd in de laatste 7 dagen", "bk_all": "Alle documenten", "bk_count": "{n} documenten", "bk_count1": "1 document", "bk_search_ph": "Documenten, onderwerpen en auteurs", "bk_share": "Document delen", "bk_opening": "Document openen…", "bk_open_err": "Het document kon hier niet worden geopend.", "bk_sbook": "Zoeken in het document", "bk_sbook_ph": "In dit document", "bk_toc_e": "Dit document heeft geen inhoudsopgave. Ga naar een pagina:", "bk_fin_e": "Documenten die je hebt uitgelezen, verschijnen hier.", "bka_add": "Document toevoegen", "bka_del_q": "Het document “{t}” en het bestand verwijderen?", "bk_sort_topic": "Per onderwerp", "bk_browse": "Onderwerpen", "bk_cat_rules": "Officiële reglementen", "bk_cat_vc": "Video Challenge-documenten", "bk_cat_tech": "Materiaal en technische handleidingen", "bk_cat_training": "Opleiding", "bk_cat_other": "Andere documenten", "bka_topic": "Onderwerp (sectie waar het document verschijnt)", "bka_move": "Onderwerp:", "bka_up": "Omhoog", "bka_down": "Omlaag", "bka_cat_empty": "Nog geen documenten in dit onderwerp.", "bka_ord_err": "De volgorde kon niet worden opgeslagen. Probeer opnieuw.", "bka_help": "Elk document staat in één onderwerp. Kies een ander onderwerp in het menu om een document te verplaatsen. Met ↑ ↓ verander je de volgorde binnen het onderwerp. ✎ wijzigt titel, beschrijving en bron.", "doc_title": "Video's & foto's", "doc_sub": "Opleidingsvideo's, presentaties en foto's van de zalen."});
 let LANG="en";
 function esc(s){return (s==null?"":""+s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 /* Drive (09/11/2026): texts EN / FR / NL */
@@ -2793,15 +2795,16 @@ function setLang(l){
   if(typeof bkLang==="function")bkLang();
 }
 
-/* "What's new" in the Library. Every item is NEW (tag, top of the list, banner pill, Home alert and red counts)
-   from its upload until exactly 1 calendar month later, then it turns normal by itself; newer items keep NEW. */
-const NEW_DAYS=30;
+/* "What's new". User rule 11/11/2026: every document, video or photo is NEW (small "New" tag on the item,
+   on its Home tile and on the bottom bar) for 7 days from its upload (created_at), the same for everybody,
+   then it turns normal by itself. */
+const NEW_DAYS=7;
 const SEEN_KEY="vcbe_seen";
 function seenRead(){try{var o=JSON.parse(localStorage.getItem(SEEN_KEY)||"null");return (o&&typeof o==="object")?o:{};}catch(e){return {};}}
 var SEEN0=seenRead();
 function tsOf(x){var t=x?new Date(x).getTime():NaN;return isNaN(t)?0:t;}
 /* NEW until the same day and time of the following month (e.g. 08/11 14:00 -> 08/12 14:00). */
-function newUntil(createdAt){var t=tsOf(createdAt);if(!t)return 0;var d=new Date(t);d.setMonth(d.getMonth()+1);return d.getTime();}
+function newUntil(createdAt){var t=tsOf(createdAt);return t?t+NEW_DAYS*864e5:0;}
 function isRecent(createdAt){var u=newUntil(createdAt);return !!u&&Date.now()<u;}
 /* Home alert/counters: recent items this device has not seen yet in the Library. */
 /* User rule 08/11/2026: one rule everywhere. Home alert, red counts, banners and tags all show an item
@@ -2817,12 +2820,12 @@ function sortNewFirst(arr){
     return idx.get(a)-idx.get(b);});
   return arr;
 }
-/* "N New" pill in a Library section banner (30-day rule, same as the item tags). */
+/* "N New" pill in a Library section banner (same 7-day rule as the item tags). */
 function setHeadNew(id,arr){var b=document.getElementById(id);if(!b)return;var n=(arr||[]).filter(function(x){return isRecent(x.created_at);}).length;b.hidden=!n;b.textContent=n?(t("new_tag")+" · "+n):"";}
 function newBadge(){return '<span class="newbadge">'+t("new_tag")+'</span>';}
 function newCounts(seen){
   var c=function(arr,sec){return (arr||[]).filter(function(x){return isNewItem(x.created_at,sec,seen);}).length;};
-  return {docs:0,vids:c(VIDEOS,"vids"),photos:c(PHOTOS,"photos")};
+  return {docs:c((typeof BK!=="undefined"&&BK.books)||[],"docs"),vids:c(VIDEOS,"vids"),photos:c(PHOTOS,"photos")};
 }
 /* Mark the three Library sections as seen on this device (called when the Library opens). */
 function markLibrarySeen(){
@@ -2837,14 +2840,18 @@ function markLibrarySeen(){
 document.addEventListener("visibilitychange",function(){if(!document.hidden)renderWhatsNew();});
 function renderWhatsNew(){
   var n=newCounts(seenRead()),tot=n.docs+n.vids+n.photos;
-  var setB=function(id,k){var b=document.getElementById(id);if(!b)return;b.textContent=k>99?"99+":k;b.hidden=!k;};
-  setB("nb_docs",n.docs);setB("nb_vids",n.vids);setB("nb_photos",n.photos);setB("nb_cta",tot);
-  document.querySelectorAll(".tab[data-go=library],.adm-rail button[data-go=library]").forEach(function(b){
+  /* Home tiles: small "New" pill (with the count when more than one). */
+  var setB=function(id,k){var b=document.getElementById(id);if(!b)return;b.textContent=k?(t("new_tag")+(k>1?" · "+(k>99?"99+":k):"")):"";b.hidden=!k;b.title=k?String(k):"";};
+  setB("nb_docs",n.docs);setB("nb_vids",n.vids);setB("nb_photos",n.photos);
+  /* Bottom bar and side rail: "New" on Documents (documents) and on Library (videos + photos). */
+  var navB=function(sel,k){document.querySelectorAll(sel).forEach(function(b){
     var d=b.querySelector(".navnew");
-    if(!tot){if(d)d.remove();return;}
+    if(!k){if(d)d.remove();return;}
     if(!d){d=document.createElement("span");d.className="navnew";b.appendChild(d);}
-    d.textContent=tot>99?"99+":tot;
-  });
+    d.textContent=t("new_tag");d.title=String(k);
+  });};
+  navB(".tab[data-go=library],.adm-rail button[data-go=library]",n.vids+n.photos);
+  navB(".tab[data-go=books],.adm-rail button[data-go=books]",n.docs);
   var bn=document.getElementById("whatsnew");if(!bn)return;
   if(!tot){bn.hidden=true;return;}
   var parts=[];
@@ -3923,6 +3930,7 @@ async function init(){
   try{const v=await rest("vcbe_videos?select=*&published=eq.true&order=sort_order");VIDEOS=v.map(vidMap);}catch(e){}
   await loadReports();
   fillRefs();fillTeams(league);fillCounts();setLang("en");renderDiag();loadIssueStatus().then(renderDiag);loadPrevIssues();loadWeekMatches();
+  if(typeof bkFetch==="function")bkFetch();
 }
 init();
 </script>
@@ -4827,11 +4835,11 @@ function bkTog(a,id){var i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.unshift(id
 function bkPct(id){var p=BK.st.prog[id];if(!p||!p.n)return 0;return Math.max(1,Math.min(100,Math.round(p.p/p.n*100)));}
 function bkToast(m,ms){var el=bkG("bk_toast");if(!el)return;el.textContent=m;el.hidden=false;clearTimeout(bkToast._t);bkToast._t=setTimeout(function(){el.hidden=true;},ms||2600);}
 function bkHue(s){var h=0;s=s||"";for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h;}
-function bkCover(b){return '<span class="bk-cv">'+(b.cover_url?'<img src="'+esc(bkUrl(b.cover_url))+'" alt="" loading="lazy">':'<span class="gen" style="background:linear-gradient(160deg,hsl('+bkHue(b.title)+',55%,38%),hsl('+((bkHue(b.title)+40)%360)+',60%,24%))"><i>'+esc(b.title)+'</i><u>'+esc(b.author||"")+'</u></span>')+'</span>';}
+function bkCover(b){return '<span class="bk-cv">'+(bkIsNew(b)?'<span class="bk-nw">'+esc(t("new_tag"))+'</span>':'')+(b.cover_url?'<img src="'+esc(bkUrl(b.cover_url))+'" alt="" loading="lazy">':'<span class="gen" style="background:linear-gradient(160deg,hsl('+bkHue(b.title)+',55%,38%),hsl('+((bkHue(b.title)+40)%360)+',60%,24%))"><i>'+esc(b.title)+'</i><u>'+esc(b.author||"")+'</u></span>')+'</span>';}
 function bkStars(v){return '<span class="bk-st"><i style="width:'+Math.max(0,Math.min(100,(v||0)*20))+'%"></i></span>';}
 function bkRatH(b){var r=BK.rat[b.id];return r&&r.n?bkStars(r.avg)+'<span class="bk-stn">('+r.n+')</span>':"";}
 function bkSize(n){if(!n)return"";return n>=1048576?(n/1048576).toFixed(1)+" MB":Math.max(1,Math.round(n/1024))+" KB";}
-function bkIsNew(b){return b.created_at&&Date.now()-new Date(b.created_at).getTime()<30*864e5&&!BK.st.prog[b.id];}
+function bkIsNew(b){return isRecent(b.created_at);}
 function bkK(k){BK._k.push(k);return BK._k.length-1;}
 
 function bkOpen(){var el=bkG("bk");if(!el)return;if(!BK.st)bkLoadSt();
@@ -4855,7 +4863,7 @@ async function bkFetch(force){if(BK.loading)return;if(BK.loaded&&!force&&Date.no
       fetch(SB_URL+"/rest/v1/rpc/vcbe_book_ratings",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},H),body:"{}"}).then(function(x){return x.json();}).catch(function(){return[];})]);
     if(Array.isArray(r[0])){BK.books=r[0];BK.rat={};(Array.isArray(r[1])?r[1]:[]).forEach(function(x){BK.rat[x.book_id]=x;});BK.loaded=true;BK.at=Date.now();BK.err=false;}else BK.err=true;
   }catch(e){BK.err=true;}
-  BK.loading=false;if(BK.open){bkRender();if(BK.cur&&!bkG("bk_s_book").hidden&&bkBy(BK.cur))bkBookRender();}
+  BK.loading=false;renderWhatsNew();if(BK.open){bkRender();if(BK.cur&&!bkG("bk_s_book").hidden&&bkBy(BK.cur))bkBookRender();}
   if(BK.loaded&&BK.pending){var id=BK.pending;BK.pending=null;if(bkBy(id))bkBook(id);}}
 async function bkCall(action,payload){var tk=null;try{tk=(typeof dvLoadToken==="function")?dvLoadToken():null;}catch(e){}
   var res=await fetch(FN+"/vcbe-books",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action:action,token:tk||""},payload||{}))});return res.json();}
@@ -4893,13 +4901,13 @@ function bkVHome(){var st=BK.st,h='<div class="bk-top"><h1>'+esc(bkT("mbook"))+'
     return '<button class="bk-cont" onclick="bkRead(\''+b.id+'\')">'+bkCover(b)+'<span class="tx"><b>'+esc(b.title)+'</b><small>'+esc(b.author||"")+'</small><small>'+esc(bkT("bk_book"))+' · '+p+'%</small><span class="bk-bar"><i style="width:'+p+'%"></i></span></span></button>';}).join("")+'</div></div>';
   var cats=bkCats();
   if(cats.length>1)h+='<div class="bk-chips bk-topics">'+cats.map(function(c){return '<button class="bk-chip" onclick="bkPush({v:\'list\',k:this.dataset.k})" data-k="'+esc("cat:"+c)+'">'+esc(bkCatName(c))+' <i>'+bkInCat(c).length+'</i></button>';}).join("")+'</div>';
-  cats.forEach(function(c){var L=bkInCat(c);h+=bkShelf(bkCatName(c),"cat:"+c,L,false,bkT(L.length===1?"bk_count1":"bk_count",{n:L.length}));});
   h+=bkShelf(bkT("bk_new"),"new",bkListOf("new").b.filter(bkIsNew),false,bkT("bk_new_s"));
+  cats.forEach(function(c){var L=bkInCat(c);h+=bkShelf(bkCatName(c),"cat:"+c,L,false,bkT(L.length===1?"bk_count1":"bk_count",{n:L.length}));});
   h+=bkShelf(bkT("bk_want"),"want",bkListOf("want").b);
   h+=bkShelf(bkT("bk_top"),"top",bkListOf("top").b,false,bkT("bk_top_s"));
   h+=bkShelf(bkT("bk_fin"),"fin",bkListOf("fin").b);
   return h+bkGoalHtml(false);}
-function bkCell(b){var st=BK.st,tag=bkHas(st.fin,b.id)?'<span class="bk-tag ok">'+esc(bkT("bk_fin"))+'</span>':st.prog[b.id]?'<span class="bk-tag g">'+bkPct(b.id)+'%</span>':bkIsNew(b)?'<span class="bk-tag">'+esc(bkT("bk_newtag"))+'</span>':'<span></span>';
+function bkCell(b){var st=BK.st,tag=bkHas(st.fin,b.id)?'<span class="bk-tag ok">'+esc(bkT("bk_fin"))+'</span>':st.prog[b.id]?'<span class="bk-tag g">'+bkPct(b.id)+'%</span>':'<span></span>';
   return '<div class="bk-cell"><button class="c" onclick="bkBook(\''+b.id+'\')">'+bkCover(b)+'</button><div class="m">'+tag+'<button class="bk-dots" onclick="bkMenu(\''+b.id+'\')" aria-label="More">•••</button></div></div>';}
 function bkLi(b,sm){var st=BK.st;return '<div class="bk-li'+(sm?' sm':'')+'"><button class="c" onclick="bkBook(\''+b.id+'\')">'+bkCover(b)+'</button><div class="tx"><h3 onclick="bkBook(\''+b.id+'\')">'+esc(b.title)+'</h3><div class="au">'+esc(b.author||"")+'</div>'+(bkRatH(b)?'<div style="margin-top:4px">'+bkRatH(b)+'</div>':'')+
     (sm?'':'<p>'+esc(b.description||"")+'</p>')+'<div class="ac"><button class="bk-pill'+(st.prog[b.id]?' f':'')+'" onclick="bkRead(\''+b.id+'\')">'+esc(bkT(st.prog[b.id]&&!bkHas(st.fin,b.id)?"bk_continue":"bk_read"))+'</button>'+(st.prog[b.id]?'<span class="bk-tag g">'+bkPct(b.id)+'%</span>':'')+'<span style="flex:1"></span><button class="bk-dots" onclick="bkMenu(\''+b.id+'\')" aria-label="More">•••</button></div></div></div>';}
