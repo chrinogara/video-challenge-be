@@ -1323,6 +1323,22 @@ textarea.bk-in{min-height:140px;resize:vertical}
 .bka-row .tx{flex:1;min-width:0;font-size:13.5px}
 .bka-row .tx b{display:block;font-size:14.5px}
 .bka-row .tx small{color:var(--muted)}
+.bka-help{font-size:13px;margin:2px 2px 4px;color:rgba(255,255,255,.88)}
+#manage #col_books.active>.bka-help,#manage #col_books.active>#bk_a_det,#manage #col_books.active>.mlist{grid-column:1/-1}
+#col_books .bka-cat{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:0 10px}
+#col_books .bka-cath,#col_books .bka-empty{grid-column:1/-1;color:#fff}
+.bka-cat{margin:0 0 16px}
+.bka-cath{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:2px solid rgba(255,255,255,.35);margin-bottom:8px;font-size:14px;letter-spacing:.02em;text-transform:uppercase}
+.bka-cath i{font-style:normal;background:rgba(255,255,255,.2);border-radius:10px;padding:1px 8px;font-size:12px}
+.bka-empty{font-size:12.5px;padding:4px 6px 8px;opacity:.8}
+.bka-mv{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:12.5px;color:var(--muted)}
+.bka-mv select{flex:1;min-width:0;max-width:260px;padding:5px 8px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px}
+.bka-ord{display:flex;flex-direction:column;gap:4px}
+.bka-ord .bka-b{height:28px!important}
+.bka-row .bka-b:disabled{opacity:.3;cursor:default}
+.bk-topics{padding-top:2px}
+.bk-topics .bk-chip i{font-style:normal;opacity:.65;margin-left:2px}
+.bk-cn{font-weight:600;color:#8A87A3;font-size:.8em;margin-left:4px}
 .bka-rev{font-size:12.5px;color:var(--muted);margin-top:4px;display:flex;gap:6px;align-items:flex-start}
 .bka-rev span{flex:1}
 </style>
@@ -1369,9 +1385,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
         <p data-i18n="hero_p">Rules, video review and your post-match report — everything in one place, in your language. No account needed.</p>
         <div class="cta">
           <button class="btn accent" onclick="go('report')" data-i18n="hero_cta1">Fill the report</button>
-          <button class="btn" style="background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.5);color:#fff" onclick="go('library')"><span data-i18n="hero_cta2">Browse documents</span><span class="cntnew" id="nb_cta" hidden></span></button>
         </div>
-        <button type="button" class="whatsnew" id="whatsnew" hidden onclick="go('library')"><span class="wn-ic" aria-hidden="true">&#9733;</span><span class="wn-tx"><b data-i18n="wn_title">New in the Library</b><span id="wn_list"></span></span><span class="wn-go" data-i18n="wn_go">See what's new</span></button>
         <div class="cta cta2">
           <button class="btn wmbtn" onclick="go('matches')"><span data-i18n="wm_btn">Matches of the week</span></button>
           <span class="livedot" id="wm_dot" hidden title="Live"></span>
@@ -1381,9 +1395,9 @@ textarea.bk-in{min-height:140px;resize:vertical}
     </div>
     <div class="block" style="margin-top:22px">
       <div class="tiles">
-        <div class="tile" onclick="openLib('col_libdocs')">
+        <div class="tile tile-docs" onclick="go('books')">
           <div class="ic" style="background:var(--violet-50);color:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
-          <span class="cntnew tilenew" id="nb_docs" hidden></span><h3 data-i18n="f1t">Documents</h3><p data-i18n="f1d">Download rules and guidelines as PDF.</p>
+          <h3 data-i18n="f1t">Documents</h3><p data-i18n="bk_home_d">Official rules, Video Challenge documents and guides, by topic.</p>
           <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
         </div>
         <div class="tile" onclick="openLib('col_libvids')">
@@ -1394,11 +1408,6 @@ textarea.bk-in{min-height:140px;resize:vertical}
         <div class="tile" onclick="openLib('col_libphotos')">
           <div class="ic" style="background:#FCE7F3;color:#DB2777"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 8"/></svg></div>
           <span class="cntnew tilenew" id="nb_photos" hidden></span><h3 data-i18n="f4t">Photos</h3><p data-i18n="f4d">View photos of halls and equipment.</p>
-          <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
-        </div>
-        <div class="tile wide w3 tile-bk" onclick="go('books')">
-          <div class="ic" style="background:linear-gradient(135deg,#1D4ED8,#B45309);color:#fff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/></svg></div>
-          <h3>Books</h3><p data-i18n="bk_home_d">Rule books and manuals to read in the app.</p>
           <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
         </div>
         <div class="tile wide w3" onclick="go('report')">
@@ -1452,11 +1461,6 @@ textarea.bk-in{min-height:140px;resize:vertical}
           </div>
         </div>
         <div class="adm-board lib-board">
-          <div class="acol c1" id="col_libdocs">
-            <div class="acol-h"><span class="hlbl"><span data-i18n="mdoc">Documents</span><b class="hnew" id="hn_libdocs" hidden></b></span><i id="cnt_libdocs">0</i></div>
-            <div class="acol-big"><span id="big_libdocs">0</span><small data-i18n="mdoc">Documents</small></div>
-            <div class="doclist" id="doclist"></div>
-          </div>
           <div class="acol c2" id="col_libvids">
             <div class="acol-h"><span class="hlbl"><span data-i18n="vid_title">Video &amp; slides</span><b class="hnew" id="hn_libvids" hidden></b></span><i id="cnt_libvids">0</i></div>
             <div class="acol-big"><span id="big_libvids">0</span><small data-i18n="mvid">Videos</small></div>
@@ -1764,7 +1768,6 @@ textarea.bk-in{min-height:140px;resize:vertical}
         <div id="mng_panel" style="display:none">
           <div class="dash" id="adm_dash">
             <section class="dgrp"><h4 data-i18n="ad_g_content">Content</h4><div class="dgrid">
-              <button type="button" class="dtile k1" data-col="col_docs" data-cnt="cnt_docs" onclick="admOpen('col_docs')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg></span><span class="dtx"><b data-i18n="mdoc">Documents</b><small data-i18n="ad_d_docs">Rules and PDF guidelines</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="mdoc">Documents</small></span></button>
               <button type="button" class="dtile k2" data-col="col_vids" data-cnt="cnt_vids" onclick="admOpen('col_vids')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></span><span class="dtx"><b data-i18n="mvid">Video &amp; slides</b><small data-i18n="ad_d_vids">Training clips and slide decks</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="mvid">Video &amp; slides</small></span></button>
               <button type="button" class="dtile kph" data-col="col_photos" data-cnt="cnt_photos" onclick="admOpen('col_photos')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></span><span class="dtx"><b data-i18n="mpho">Photos</b><small data-i18n="ad_d_photos">Photos of halls and equipment</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="mpho">Photos</small></span></button>
               <button type="button" class="dtile kbk" data-col="col_books" data-cnt="cnt_books" onclick="admOpen('col_books')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/></svg></span><span class="dtx"><b data-i18n="mbook">Books</b><small data-i18n="ad_d_books">Books to read in the app</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="mbook">Books</small></span></button>
@@ -1783,7 +1786,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
           <div class="adm-board" id="adm_detail">
 
             <!-- ── DOCUMENTS ──────────────────────────────────────── -->
-            <div class="acol c1" id="col_docs">
+            <div class="acol c1" id="col_docs" hidden style="display:none">
               <div class="acol-h"><span data-i18n="mdoc">Documents</span><i id="cnt_docs">0</i></div>
               <div class="acol-big"><span id="big_docs">0</span><small data-i18n="mdoc">Documents</small></div>
               <details class="aadd">
@@ -1841,15 +1844,16 @@ textarea.bk-in{min-height:140px;resize:vertical}
 
             <!-- ── BOOKS ──────────────────────────────────────────── -->
             <div class="acol cbk" id="col_books">
-              <div class="acol-h"><span data-i18n="mbook">Books</span><i id="cnt_books">0</i></div>
-              <div class="acol-big"><span id="big_books">0</span><small data-i18n="mbook">Books</small></div>
-              <details class="aadd" id="bk_a_det" open>
+              <div class="acol-h"><span data-i18n="mbook">Documents</span><i id="cnt_books">0</i></div>
+              <div class="acol-big"><span id="big_books">0</span><small data-i18n="mbook">Documents</small></div>
+              <div class="hint bka-help" data-i18n="bka_help">Every document is in one topic. To move a document, choose another topic in its menu. Use ↑ ↓ to change the order inside a topic. ✎ edits title, description and source.</div>
+              <details class="aadd" id="bk_a_det">
                 <summary>+ <span data-i18n="bka_add">Add book</span></summary>
                 <div class="aform">
                   <div class="field" id="bk_a_filebox"><div class="hint" data-i18n="bka_hint">Choose a PDF (max 100 MB). The cover, the number of pages and the contents are read from the PDF automatically.</div><input type="file" id="bk_a_file" accept="application/pdf" onchange="bkaFilePicked(this)"></div>
                   <div class="field"><input type="text" id="bk_a_title" data-i18n-ph="bka_ph_title" placeholder="Title"></div>
                   <div class="field"><input type="text" id="bk_a_author" data-i18n-ph="bka_ph_author" placeholder="Author"></div>
-                  <div class="field"><input type="text" id="bk_a_category" data-i18n-ph="bka_ph_category" placeholder="Category (e.g. Rules)"></div>
+                  <div class="field"><label for="bk_a_category" data-i18n="bka_topic">Topic (section where the document appears)</label><select id="bk_a_category"></select></div>
                   <div class="field"><input type="text" id="bk_a_language" data-i18n-ph="bka_ph_language" placeholder="Language (e.g. English)"></div>
                   <div class="field"><input type="text" id="bk_a_publisher" data-i18n-ph="bka_ph_publisher" placeholder="Publisher"></div>
                   <div class="field"><input type="text" id="bk_a_released" data-i18n-ph="bka_ph_released" placeholder="Year of publication"></div>
@@ -2128,7 +2132,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
     <button class="tab" data-go="report" onclick="go('report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/></svg><span data-i18n="tab_rep">Report</span></button>
     <button class="tab" data-go="diag" onclick="go('diag')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg><span data-i18n="tab_diag">Diagnostics</span></button>
     <button class="tab" data-go="drive" onclick="go('drive')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8z"/></svg><span data-i18n="tab_drive">Drive</span></button>
-    <button class="tab tab-bk" data-go="books" onclick="go('books')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/></svg><span>Books</span></button>
+    <button class="tab tab-bk" data-go="books" onclick="go('books')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/></svg><span data-i18n="mbook">Documents</span></button>
   </div>
 </nav>
 
@@ -2309,6 +2313,10 @@ Object.assign(T.nl,{"bk_source":"Bron:","bka_src_hint":"Link naar de bron, getoo
 Object.assign(T.en,{"bk_download":"Download"});
 Object.assign(T.fr,{"bk_download":"Télécharger"});
 Object.assign(T.nl,{"bk_download":"Downloaden"});
+/* 11/11/2026: «Books» diventa «Documents», con argomenti (categorie). */
+Object.assign(T.en,{"mbook": "Documents", "bk_home_d": "Official rules, Video Challenge documents and guides, by topic.", "ad_d_books": "Documents by topic: rules, Video Challenge, guides", "bk_nobooks": "No documents", "bk_nobooks_s": "Documents added by the coordinator will appear here.", "bk_book": "Document", "bk_new": "New documents", "bk_new_s": "Added in the last 30 days", "bk_all": "All documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, topics and authors", "bk_share": "Share document", "bk_opening": "Opening the document…", "bk_open_err": "The document could not be opened here.", "bk_sbook": "Search in the document", "bk_sbook_ph": "In this document", "bk_toc_e": "This document has no table of contents. Go to a page:", "bk_fin_e": "Documents you have finished appear here.", "bka_add": "Add document", "bka_del_q": "Delete the document “{t}” and its file?", "bk_sort_topic": "By topic", "bk_browse": "Topics", "bk_cat_rules": "Official rules", "bk_cat_vc": "Video Challenge documents", "bk_cat_tech": "Equipment & technical guides", "bk_cat_training": "Training", "bk_cat_other": "Other documents", "bka_topic": "Topic (section where the document appears)", "bka_move": "Topic:", "bka_up": "Move up", "bka_down": "Move down", "bka_cat_empty": "No documents in this topic yet.", "bka_ord_err": "The order could not be saved. Try again.", "bka_help": "Every document is in one topic. To move a document, choose another topic in its menu. Use ↑ ↓ to change the order inside a topic. ✎ edits title, description and source.", "doc_title": "Video & photos", "doc_sub": "Training videos, slides and photos of the halls."});
+Object.assign(T.fr,{"mbook": "Documents", "bk_home_d": "Règlements officiels, documents Video Challenge et guides, par sujet.", "ad_d_books": "Documents par sujet : règlements, Video Challenge, guides", "bk_nobooks": "Aucun document", "bk_nobooks_s": "Les documents ajoutés par le coordinateur apparaîtront ici.", "bk_book": "Document", "bk_new": "Nouveaux documents", "bk_new_s": "Ajoutés ces 30 derniers jours", "bk_all": "Tous les documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, sujets et auteurs", "bk_share": "Partager le document", "bk_opening": "Ouverture du document…", "bk_open_err": "Le document n'a pas pu être ouvert ici.", "bk_sbook": "Rechercher dans le document", "bk_sbook_ph": "Dans ce document", "bk_toc_e": "Ce document n'a pas de table des matières. Aller à une page :", "bk_fin_e": "Les documents terminés apparaissent ici.", "bka_add": "Ajouter un document", "bka_del_q": "Supprimer le document « {t} » et son fichier ?", "bk_sort_topic": "Par sujet", "bk_browse": "Sujets", "bk_cat_rules": "Règlements officiels", "bk_cat_vc": "Documents Video Challenge", "bk_cat_tech": "Matériel et guides techniques", "bk_cat_training": "Formation", "bk_cat_other": "Autres documents", "bka_topic": "Sujet (section où le document apparaît)", "bka_move": "Sujet :", "bka_up": "Monter", "bka_down": "Descendre", "bka_cat_empty": "Pas encore de documents dans ce sujet.", "bka_ord_err": "L'ordre n'a pas pu être enregistré. Réessayez.", "bka_help": "Chaque document est dans un sujet. Pour déplacer un document, choisissez un autre sujet dans son menu. ↑ ↓ changent l'ordre dans le sujet. ✎ modifie le titre, la description et la source.", "doc_title": "Vidéos & photos", "doc_sub": "Vidéos de formation, présentations et photos des salles."});
+Object.assign(T.nl,{"mbook": "Documenten", "bk_home_d": "Officiële reglementen, Video Challenge-documenten en handleidingen, per onderwerp.", "ad_d_books": "Documenten per onderwerp: reglementen, Video Challenge, handleidingen", "bk_nobooks": "Geen documenten", "bk_nobooks_s": "Documenten die de coördinator toevoegt, verschijnen hier.", "bk_book": "Document", "bk_new": "Nieuwe documenten", "bk_new_s": "Toegevoegd in de laatste 30 dagen", "bk_all": "Alle documenten", "bk_count": "{n} documenten", "bk_count1": "1 document", "bk_search_ph": "Documenten, onderwerpen en auteurs", "bk_share": "Document delen", "bk_opening": "Document openen…", "bk_open_err": "Het document kon hier niet worden geopend.", "bk_sbook": "Zoeken in het document", "bk_sbook_ph": "In dit document", "bk_toc_e": "Dit document heeft geen inhoudsopgave. Ga naar een pagina:", "bk_fin_e": "Documenten die je hebt uitgelezen, verschijnen hier.", "bka_add": "Document toevoegen", "bka_del_q": "Het document “{t}” en het bestand verwijderen?", "bk_sort_topic": "Per onderwerp", "bk_browse": "Onderwerpen", "bk_cat_rules": "Officiële reglementen", "bk_cat_vc": "Video Challenge-documenten", "bk_cat_tech": "Materiaal en technische handleidingen", "bk_cat_training": "Opleiding", "bk_cat_other": "Andere documenten", "bka_topic": "Onderwerp (sectie waar het document verschijnt)", "bka_move": "Onderwerp:", "bka_up": "Omhoog", "bka_down": "Omlaag", "bka_cat_empty": "Nog geen documenten in dit onderwerp.", "bka_ord_err": "De volgorde kon niet worden opgeslagen. Probeer opnieuw.", "bka_help": "Elk document staat in één onderwerp. Kies een ander onderwerp in het menu om een document te verplaatsen. Met ↑ ↓ verander je de volgorde binnen het onderwerp. ✎ wijzigt titel, beschrijving en bron.", "doc_title": "Video's & foto's", "doc_sub": "Opleidingsvideo's, presentaties en foto's van de zalen."});
 let LANG="en";
 function esc(s){return (s==null?"":""+s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 /* Drive (09/11/2026): texts EN / FR / NL */
@@ -2491,7 +2499,7 @@ function setHeadNew(id,arr){var b=document.getElementById(id);if(!b)return;var n
 function newBadge(){return '<span class="newbadge">'+t("new_tag")+'</span>';}
 function newCounts(seen){
   var c=function(arr,sec){return (arr||[]).filter(function(x){return isNewItem(x.created_at,sec,seen);}).length;};
-  return {docs:c(DOCS,"docs"),vids:c(VIDEOS,"vids"),photos:c(PHOTOS,"photos")};
+  return {docs:0,vids:c(VIDEOS,"vids"),photos:c(PHOTOS,"photos")};
 }
 /* Mark the three Library sections as seen on this device (called when the Library opens). */
 function markLibrarySeen(){
@@ -2525,7 +2533,7 @@ function renderWhatsNew(){
 }
 const DOC_SVG='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>';
 function renderDocs(){admCount("libdocs",DOCS.length);setHeadNew("hn_libdocs",DOCS);
-  const el=document.getElementById("doclist");el.innerHTML="";
+  const el=document.getElementById("doclist");if(!el)return;el.innerHTML="";
   if(!DOCS.length){el.innerHTML='<div class="empty">'+t("doc_empty")+'</div>';return;}
   sortNewFirst(DOCS);
   DOCS.forEach(d=>{const r=document.createElement("div");r.className="doc";
@@ -3448,7 +3456,7 @@ function renderDiag(){
 async function init(){
   try{const r=await rest("vcbe_referees?select=name&active=eq.true&order=sort_order");if(r.length)REFS=r.map(x=>x.name);}catch(e){}
   try{const tm=await rest("vcbe_teams?select=name,league&active=eq.true&order=name");if(tm.length){TEAMS={Men:[],Women:[]};tm.forEach(x=>{(TEAMS[x.league]=TEAMS[x.league]||[]).push(x.name);});}}catch(e){}
-  try{const d=await rest("vcbe_documents?select=*&published=eq.true&order=sort_order");DOCS=d.map(x=>({id:x.id,title:x.title,cat:x.category,size:x.size_label,url:x.external_url,created_at:x.created_at}));splitPhotos();}catch(e){}
+  /* 11/11/2026: i documenti sono in «Documents» (ex Books, tabella vcbe_books); vcbe_documents non è più mostrata. */
   try{const ph=await rest("vcbe_photos?select=id,title,url,team,created_at,published&published=eq.true&order=sort_order,created_at.desc");PHOTOS=ph.map(x=>({id:x.id,title:x.title,url:x.url,team:x.team||"",created_at:x.created_at}));}catch(e){}
   try{const v=await rest("vcbe_videos?select=*&published=eq.true&order=sort_order");VIDEOS=v.map(x=>({id:x.id,title:x.title,sub:x.subtitle,url:x.url,dur:x.duration,created_at:x.created_at}));}catch(e){}
   await loadReports();
@@ -3496,7 +3504,7 @@ function admSyncTile(b){var src=document.getElementById(b.getAttribute("data-cnt
 })();
 (function buildRails(){
   var I={home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',library:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',report:'<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/>',diag:'<path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',drive:'<path d="M3 11l19-9-9 19-2-8z"/>',books:'<path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/>',admin:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
-  var T={home:'Home',library:'Library',report:'Report',diag:'Diagnostics',drive:'Drive',books:'Books',admin:'Admin'};
+  var T={home:'Home',library:'Library',report:'Report',diag:'Diagnostics',drive:'Drive',books:'Documents',admin:'Admin'};
   document.querySelectorAll('.adm-rail[data-rail]').forEach(function(r){
     var cur=r.getAttribute('data-rail');
     r.innerHTML=Object.keys(I).map(function(k){return '<button data-go="'+k+'" onclick="go(\''+k+'\')" title="'+T[k]+'"'+(k===cur?' class="on"':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+I[k]+'</svg></button>';}).join('');
@@ -4334,12 +4342,20 @@ function bkI(n){var p={
  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(p[n]||"")+'</svg>';}
 function bkLoadSt(){var s={};try{s=JSON.parse(localStorage.getItem(BK_KEY)||"{}")||{};}catch(e){}
   s.prog=s.prog||{};s.want=s.want||[];s.fin=s.fin||[];s.finAt=s.finAt||{};s.cols=s.cols||[];s.marks=s.marks||{};s.days=s.days||{};s.recent=s.recent||[];s.rq=s.rq||{};
-  s.goal=s.goal||5;s.lv=s.lv||"grid";s.sort=s.sort||"recent";
+  s.goal=s.goal||5;s.lv=s.lv||"grid";s.sort=s.sort||"topic";if(s.sv!==2){s.sort="topic";s.sv=2;}
   s.rs=Object.assign({theme:"original",zoom:1,scroll:false,mode:"page",fs:1,font:"serif",bold:false,ls:1.55,bright:1,rate:1},s.rs||{});BK.st=s;}
 function bkSave(){try{localStorage.setItem(BK_KEY,JSON.stringify(BK.st));}catch(e){}}
 function bkDay(d){d=d||new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);}
 function bkMin(day){return Math.floor(((BK.st.days[day||bkDay()])||0)/60);}
 function bkBy(id){for(var i=0;i<BK.books.length;i++)if(BK.books[i].id===id)return BK.books[i];return null;}
+/* Categorie (argomenti) dei documenti, 11/11/2026: chiavi fisse salvate in vcbe_books.category, nomi tradotti EN/FR/NL. */
+var BK_CATS=["rules","vc","tech","training","other"];
+function bkCatKey(c){var n=bkNorm(c||"").trim();if(!n)return"other";if(BK_CATS.indexOf(n)>=0)return n;if(/^(rule|regl|regle|reglement)/.test(n))return"rules";return c;}
+function bkCatName(c){var k=bkCatKey(c);return BK_CATS.indexOf(k)>=0?bkT("bk_cat_"+k):String(c||"");}
+function bkCatOrd(a,b){return (a.sort_order||0)-(b.sort_order||0)||(a.title||"").localeCompare(b.title||"");}
+function bkCats(list){list=list||BK.books;var out=[];BK_CATS.forEach(function(k){if(list.some(function(b){return bkCatKey(b.category)===k;}))out.push(k);});
+  list.forEach(function(b){var k=bkCatKey(b.category);if(out.indexOf(k)<0)out.push(k);});return out;}
+function bkInCat(k,list){return (list||BK.books).filter(function(b){return bkCatKey(b.category)===k;}).sort(bkCatOrd);}
 function bkUrl(u){if(!u)return"";return /^https?:|^data:|^blob:/.test(u)?u:(location.origin+"/"+u.replace(/^\//,""));}
 function bkHas(a,id){return a.indexOf(id)>=0;}
 function bkTog(a,id){var i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.unshift(id);return i<0;}
@@ -4391,7 +4407,7 @@ function bkListOf(k){var st=BK.st,B=BK.books,ids=function(a){return a.map(bkBy).
   if(k==="fin")return{t:bkT("bk_fin"),b:ids(st.fin),e:bkT("bk_fin_e")};
   if(k==="prog")return{t:bkT("bk_cont"),b:B.filter(function(b){return st.prog[b.id]&&!bkHas(st.fin,b.id);}).sort(function(x,y){return st.prog[y.id].t-st.prog[x.id].t;})};
   if(k==="top")return{t:bkT("bk_top"),b:B.filter(function(b){return BK.rat[b.id]&&BK.rat[b.id].n;}).sort(function(x,y){return BK.rat[y.id].avg-BK.rat[x.id].avg||BK.rat[y.id].n-BK.rat[x.id].n;})};
-  if(k.indexOf("cat:")===0){var c=k.slice(4);return{t:c,b:B.filter(function(b){return (b.category||"")===c;})};}
+  if(k.indexOf("cat:")===0){var c=k.slice(4);return{t:bkCatName(c),b:bkInCat(c)};}
   if(k.indexOf("col:")===0){var col=st.cols.filter(function(x){return x.id===k.slice(4);})[0];return{t:col?col.name:"",b:col?ids(col.ids):[],e:bkT("bk_col_e")};}
   return{t:bkT("bk_all"),b:bkSorted()};}
 function bkRender(){if(!BK.st)bkLoadSt();BK._k=[];var top=BK.stack[BK.stack.length-1],v=bkG("bk_view"),h;
@@ -4405,15 +4421,16 @@ function bkShelf(title,k,list,big,sub){if(!list.length)return"";
     '<div class="bk-row'+(big?' big':'')+'">'+list.slice(0,14).map(function(b){return '<button class="bk-bk" onclick="bkBook(\''+b.id+'\')">'+bkCover(b)+'<b>'+esc(b.title)+'</b><small>'+esc(b.author||"")+'</small></button>';}).join("")+'</div></div>';}
 function bkRing(sz){var m=bkMin(),g=BK.st.goal,f=Math.min(1,m/g),r=18,c=2*Math.PI*r;
   return '<svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="'+r+'" fill="none" stroke="#DBEAFE" stroke-width="4"/><circle cx="22" cy="22" r="'+r+'" fill="none" stroke="#1D4ED8" stroke-width="4" stroke-linecap="round" stroke-dasharray="'+(c*f).toFixed(1)+' '+c.toFixed(1)+'"/></svg><b>'+m+'</b>';}
-function bkVHome(){var st=BK.st,h='<div class="bk-top"><h1>'+esc(bkT("bk_home"))+'</h1><button class="bk-goalbtn" onclick="bkGoalSheet()" aria-label="'+esc(bkT("bk_goal"))+'">'+bkRing()+'</button></div>',s=bkState();
+function bkVHome(){var st=BK.st,h='<div class="bk-top"><h1>'+esc(bkT("mbook"))+'</h1><button class="bk-goalbtn" onclick="bkGoalSheet()" aria-label="'+esc(bkT("bk_goal"))+'">'+bkRing()+'</button></div>',s=bkState();
   if(s)return h+s;
   var cont=bkListOf("prog").b;
   if(cont.length)h+='<div class="bk-sec"><button class="bk-sech" onclick="bkPush({v:\'list\',k:\'prog\'})"><span>'+esc(bkT("bk_cont"))+'</span>'+bkI("chev")+'</button><div class="bk-conts">'+cont.map(function(b){var p=bkPct(b.id);
     return '<button class="bk-cont" onclick="bkRead(\''+b.id+'\')">'+bkCover(b)+'<span class="tx"><b>'+esc(b.title)+'</b><small>'+esc(b.author||"")+'</small><small>'+esc(bkT("bk_book"))+' · '+p+'%</small><span class="bk-bar"><i style="width:'+p+'%"></i></span></span></button>';}).join("")+'</div></div>';
-  h+=bkShelf(bkT("bk_new"),"new",bkListOf("new").b,true,bkT("bk_new_s"));
+  var cats=bkCats();
+  if(cats.length>1)h+='<div class="bk-chips bk-topics">'+cats.map(function(c){return '<button class="bk-chip" onclick="bkPush({v:\'list\',k:this.dataset.k})" data-k="'+esc("cat:"+c)+'">'+esc(bkCatName(c))+' <i>'+bkInCat(c).length+'</i></button>';}).join("")+'</div>';
+  cats.forEach(function(c){var L=bkInCat(c);h+=bkShelf(bkCatName(c),"cat:"+c,L,false,bkT(L.length===1?"bk_count1":"bk_count",{n:L.length}));});
+  h+=bkShelf(bkT("bk_new"),"new",bkListOf("new").b.filter(bkIsNew),false,bkT("bk_new_s"));
   h+=bkShelf(bkT("bk_want"),"want",bkListOf("want").b);
-  var cats=[];BK.books.forEach(function(b){if(b.category&&cats.indexOf(b.category)<0)cats.push(b.category);});
-  cats.forEach(function(c){h+=bkShelf(c,"cat:"+c,bkListOf("cat:"+c).b);});
   h+=bkShelf(bkT("bk_top"),"top",bkListOf("top").b,false,bkT("bk_top_s"));
   h+=bkShelf(bkT("bk_fin"),"fin",bkListOf("fin").b);
   return h+bkGoalHtml(false);}
@@ -4424,7 +4441,8 @@ function bkLi(b,sm){var st=BK.st;return '<div class="bk-li'+(sm?' sm':'')+'"><bu
 function bkVLib(){var st=BK.st,h='<div class="bk-top"><h1>'+esc(bkT("bk_library"))+'</h1><button class="bk-ib" onclick="BK.st.lv=BK.st.lv===\'grid\'?\'list\':\'grid\';bkSave();bkRender()" aria-label="View">'+bkI(st.lv==="grid"?"list":"grid")+'</button><button class="bk-ib" onclick="bkSortSheet()" aria-label="Sort">'+bkI("sort")+'</button></div>';
   h+='<button class="bk-lrow" style="margin-top:8px" onclick="bkColsSheet()">'+bkI("folder")+'<span>'+esc(bkT("bk_cols"))+'</span>'+bkI("chev")+'</button>';
   var s=bkState();if(s)return h+s;var a=bkSorted();
-  h+=st.lv==="grid"?'<div class="bk-grid">'+a.map(bkCell).join("")+'</div>':a.map(function(b){return bkLi(b,true);}).join("");
+  if(st.sort==="topic"){bkCats(a).forEach(function(c){var L=bkInCat(c,a);h+='<div class="bk-sec"><button class="bk-sech" onclick="bkPush({v:\'list\',k:this.dataset.k})" data-k="'+esc("cat:"+c)+'"><span>'+esc(bkCatName(c))+' <small class="bk-cn">'+L.length+'</small></span>'+bkI("chev")+'</button></div>'+(st.lv==="grid"?'<div class="bk-grid">'+L.map(bkCell).join("")+'</div>':L.map(function(b){return bkLi(b,true);}).join(""));});}
+  else h+=st.lv==="grid"?'<div class="bk-grid">'+a.map(bkCell).join("")+'</div>':a.map(function(b){return bkLi(b,true);}).join("");
   return h+'<div class="bk-empty" style="padding:26px">'+esc(bkT(a.length===1?"bk_count1":"bk_count",{n:a.length}))+'</div>';}
 function bkVList(k){var L=bkListOf(k);
   return '<div class="bk-top"><button class="bk-ib" onclick="bkBack()" aria-label="Back">'+bkI("back")+'</button><span style="flex:1"></span></div><div class="bk-top"><h1>'+esc(L.t)+'</h1></div>'+
@@ -4432,10 +4450,10 @@ function bkVList(k){var L=bkListOf(k);
 function bkNorm(s){return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
 function bkSearchRes(){var q=bkNorm(BK.q.trim()),st=BK.st,h="";
   if(!q){if(st.recent.length)h+='<div class="bk-sec"><div class="bk-sech" style="justify-content:space-between;width:100%;box-sizing:border-box"><span>'+esc(bkT("bk_recent"))+'</span><button class="bk-link" onclick="BK.st.recent=[];bkSave();bkRender()">'+esc(bkT("bk_clear"))+'</button></div>'+st.recent.map(function(r,i){return '<button class="bk-lrow" onclick="bkSetQ(BK.st.recent['+i+'])">'+bkI("search")+'<span>'+esc(r)+'</span></button>';}).join("")+'</div>';
-    var cats=[];BK.books.forEach(function(b){if(b.category&&cats.indexOf(b.category)<0)cats.push(b.category);});
-    if(cats.length)h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_browse"))+'</span></div><div class="bk-chips">'+cats.map(function(c){return '<button class="bk-chip" onclick="bkPush({v:\'list\',k:this.dataset.k})" data-k="'+esc("cat:"+c)+'">'+esc(c)+'</button>';}).join("")+'</div></div>';
+    var cats=bkCats();
+    if(cats.length)h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_browse"))+'</span></div><div class="bk-chips">'+cats.map(function(c){return '<button class="bk-chip" onclick="bkPush({v:\'list\',k:this.dataset.k})" data-k="'+esc("cat:"+c)+'">'+esc(bkCatName(c))+'</button>';}).join("")+'</div></div>';
     return h||bkState();}
-  var res=BK.books.filter(function(b){return bkNorm([b.title,b.author,b.category,b.description].join(" ")).indexOf(q)>=0;});
+  var res=BK.books.filter(function(b){return bkNorm([b.title,b.author,bkCatName(b.category),b.description].join(" ")).indexOf(q)>=0;});
   return '<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_results"))+'</span></div>'+(res.length?res.map(function(b){return bkLi(b,true);}).join(""):'<div class="bk-empty">'+esc(bkT("bk_noresults"))+'</div>')+'</div>';}
 function bkVSearch(){return '<div class="bk-top"><h1>'+esc(bkT("bk_search"))+'</h1></div><div class="bk-srch">'+bkI("search")+'<input id="bk_q" type="search" autocomplete="off" placeholder="'+esc(bkT("bk_search_ph"))+'" value="'+esc(BK.q)+'" oninput="BK.q=this.value;bkRender()" onchange="bkRemQ(this.value)"></div><div id="bk_sr">'+bkSearchRes()+'</div>';}
 function bkSetQ(q){BK.q=q;var i=bkG("bk_q");if(i)i.value=q;bkRender();}
@@ -4445,7 +4463,7 @@ function bkRemQ(q){q=(q||"").trim();if(q.length<2)return;var r=BK.st.recent;var 
 function bkSheet(html,o){o=o||{};var s=bkG("bk_sheet");s.className="bk-sheet"+(o.full?" full":"");s.querySelector(".in").innerHTML=html;s.hidden=false;s.querySelector(".in").scrollTop=0;BK.sheetBack=o.back||null;}
 function bkSheetClose(viaBack){var s=bkG("bk_sheet");var b=BK.sheetBack;BK.sheetBack=null;if(viaBack&&b){b();return;}s.hidden=true;BK._revOpen=null;}
 function bkShHead(t,right){return '<div class="bk-sh-h"><button class="bk-ib" onclick="bkSheetClose(true)" aria-label="Close">'+bkI(BK._shBack?"back":"x")+'</button><h2>'+esc(t)+'</h2>'+(right||'<span class="sp"></span>')+'</div>';}
-function bkSortSheet(){var st=BK.st;bkSheet(bkShHead(bkT("bk_sort"))+["recent","title","author"].map(function(k){return '<button class="bk-lrow'+(st.sort===k?' sel':'')+'" onclick="BK.st.sort=\''+k+'\';bkSave();bkSheetClose();bkRender()"><span>'+esc(bkT("bk_sort_"+k))+'</span>'+(st.sort===k?bkI("check"):'')+'</button>';}).join(""));}
+function bkSortSheet(){var st=BK.st;bkSheet(bkShHead(bkT("bk_sort"))+["topic","recent","title","author"].map(function(k){return '<button class="bk-lrow'+(st.sort===k?' sel':'')+'" onclick="BK.st.sort=\''+k+'\';bkSave();bkSheetClose();bkRender()"><span>'+esc(bkT("bk_sort_"+k))+'</span>'+(st.sort===k?bkI("check"):'')+'</button>';}).join(""));}
 function bkColsSheet(pick){var st=BK.st,row=function(ic,t,n,k){return '<button class="bk-lrow" onclick="bkSheetClose();bkTab(\'lib\');bkPush({v:\'list\',k:\''+k+'\'})">'+bkI(ic)+'<span>'+esc(t)+'</span><small>'+n+'</small></button>';};
   var h=bkShHead(bkT("bk_cols"))+row("want",bkT("bk_want"),st.want.filter(bkBy).length,"want")+row("fin",bkT("bk_fin"),st.fin.filter(bkBy).length,"fin")+row("book",bkT("bk_cont"),bkListOf("prog").b.length,"prog")+row("lib",bkT("bk_all"),BK.books.length,"all");
   h+='<div class="bk-lbl" style="padding:16px 20px 0">'+esc(bkT("bk_mycols"))+'</div>'+st.cols.map(function(c,i){return '<div style="display:flex;align-items:center"><button class="bk-lrow" style="flex:1" onclick="bkSheetClose();bkTab(\'lib\');bkPush({v:\'list\',k:\'col:'+c.id+'\'})">'+bkI("list")+'<span>'+esc(c.name)+'</span><small>'+c.ids.filter(bkBy).length+'</small></button><button class="bk-ib" style="margin-right:14px" onclick="bkColDel('+i+')" aria-label="Delete">'+bkI("trash")+'</button></div>';}).join("");
@@ -4491,7 +4509,7 @@ function bkEd(ic,l,v){return v?'<div>'+bkI(ic)+'<span><small>'+esc(l)+'</small><
 function bkBookRender(){var b=bkBy(BK.cur),st=BK.st;if(!b)return;var r=BK.rat[b.id],rv=BK.revs[b.id],inP=st.prog[b.id]&&!bkHas(st.fin,b.id),want=bkHas(st.want,b.id);
   var meta=[b.released,b.pages?bkT("bk_npages",{n:b.pages}):""].filter(Boolean).join(" · ");
   var h='<div class="bk-bs-top" id="bk_bs_top"><button class="bk-ib" onclick="bkBookClose()" aria-label="Close">'+bkI("x")+'</button><span><button class="bk-ib" onclick="bkWant(\''+b.id+'\')" aria-label="Want to read">'+bkI(want?"check":"plus")+'</button><button class="bk-ib" onclick="bkMenu(\''+b.id+'\')" aria-label="More">'+bkI("dots")+'</button></span></div>';
-  h+='<div class="bk-bs-hero" id="bk_bs_hero"'+(BK.col&&BK.col[b.id]?' style="--c:'+BK.col[b.id]+'"':'')+'>'+bkCover(b)+(b.category?'<button class="bk-bs-cat" onclick="bkBookClose();bkPush({v:\'list\',k:this.dataset.k})" data-k="'+esc("cat:"+b.category)+'">'+esc(b.category)+' ›</button>':'')+'<h2>'+esc(b.title)+'</h2><div class="au">'+esc(b.author||"")+'</div>'+
+  h+='<div class="bk-bs-hero" id="bk_bs_hero"'+(BK.col&&BK.col[b.id]?' style="--c:'+BK.col[b.id]+'"':'')+'>'+bkCover(b)+('<button class="bk-bs-cat" onclick="bkBookClose();bkPush({v:\'list\',k:this.dataset.k})" data-k="'+esc("cat:"+bkCatKey(b.category))+'">'+esc(bkCatName(b.category))+' ›</button>')+'<h2>'+esc(b.title)+'</h2><div class="au">'+esc(b.author||"")+'</div>'+
     '<div class="mt">'+(r&&r.n?'★ '+r.avg+' ('+r.n+')':esc(bkT("bk_norat")))+(b.language?' · '+esc(b.language):'')+'</div>'+
     '<div class="bk-bs-box"><b>'+esc(bkT("bk_book"))+'</b><small>'+esc(meta)+(st.prog[b.id]?' · '+bkPct(b.id)+'%':'')+'</small><div class="bt"><button onclick="bkWant(\''+b.id+'\')">'+bkI(want?"check":"plus")+esc(bkT("bk_want"))+'</button><button class="w" onclick="bkRead(\''+b.id+'\')">'+bkI("book")+esc(bkT(inP?"bk_continue":"bk_read"))+'</button></div></div></div><div class="bk-bs-body">';
   if(b.description)h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_desc"))+'</span></div><div class="bk-desc cl" id="bk_desc">'+esc(b.description)+'</div><button class="bk-more" onclick="bkG(\'bk_desc\').classList.remove(\'cl\');this.hidden=true">'+esc(bkT("bk_more"))+'</button></div>';
@@ -4499,8 +4517,8 @@ function bkBookRender(){var b=bkBy(BK.cur),st=BK.st;if(!b)return;var r=BK.rat[b.
   h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_edition"))+'</span></div><div class="bk-ed">'+bkEd("star",bkT("bk_e_rating"),r&&r.n?r.avg+" / 5 ("+r.n+")":"")+bkEd("cal",bkT("bk_e_released"),b.released)+bkEd("globe",bkT("bk_e_lang"),b.language)+bkEd("pages",bkT("bk_e_len"),b.pages?bkT("bk_npages",{n:b.pages}):"")+bkDl(b)+bkEd("pub",bkT("bk_e_pub"),b.publisher)+'</div></div>';
   h+='<div class="bk-sec"><button class="bk-sech" onclick="bkRevSheet()"><span>'+esc(bkT("bk_revs"))+'</span>'+bkI("chev")+'</button>'+bkRateH(b.id)+
      (rv&&rv.reviews.filter(function(x){return x.title||x.body;}).length?'<div class="bk-rvs">'+rv.reviews.filter(function(x){return x.title||x.body;}).slice(0,6).map(function(x){return bkRevCard(x);}).join("")+'</div>':'')+'</div>';
-  var more=BK.books.filter(function(x){return x.id!==b.id&&b.category&&x.category===b.category;});
-  if(more.length)h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_morein",{c:b.category}))+'</span></div><div class="bk-row">'+more.slice(0,12).map(function(x){return '<button class="bk-bk" onclick="bkBook(\''+x.id+'\')">'+bkCover(x)+'<b>'+esc(x.title)+'</b><small>'+esc(x.author||"")+'</small></button>';}).join("")+'</div></div>';
+  var more=bkInCat(bkCatKey(b.category)).filter(function(x){return x.id!==b.id;});
+  if(more.length)h+='<div class="bk-sec"><div class="bk-sech"><span>'+esc(bkT("bk_morein",{c:bkCatName(b.category)}))+'</span></div><div class="bk-row">'+more.slice(0,12).map(function(x){return '<button class="bk-bk" onclick="bkBook(\''+x.id+'\')">'+bkCover(x)+'<b>'+esc(x.title)+'</b><small>'+esc(x.author||"")+'</small></button>';}).join("")+'</div></div>';
   var el=bkG("bk_s_book"),sc=el.scrollTop;el.innerHTML=h+'</div>';el.scrollTop=sc;
   el.onscroll=function(){var t=bkG("bk_bs_top"),he=bkG("bk_bs_hero");if(t&&he)t.classList.toggle("dk",el.scrollTop>he.offsetHeight-30);};el.onscroll();
   var d=bkG("bk_desc");if(d&&d.scrollHeight<=d.clientHeight+2){var mb=d.nextElementSibling;if(mb)mb.hidden=true;}
@@ -4783,14 +4801,26 @@ function bkTtsStop(){var R=BK.rd;if(R&&R.tts){clearTimeout(R.tts.st);R.tts.on=fa
 var BKA={books:[],reviews:[],edit:null,busy:false};
 async function bkaCall(action,payload){var res=await fetch(FN+"/vcbe-books",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({password:ADMIN_PW,action:action},payload||{}))});return res.json();}
 async function loadAdminBooks(){try{var j=await bkaCall("adm_list");if(j&&j.ok){BKA.books=j.books||[];BKA.reviews=j.reviews||[];}}catch(e){}renderAdminBooks();}
+function bkaCatOpts(sel){return BK_CATS.map(function(k){return '<option value="'+k+'"'+(k===sel?' selected':'')+'>'+esc(bkCatName(k))+'</option>';}).join("")+(sel&&BK_CATS.indexOf(sel)<0?'<option value="'+esc(sel)+'" selected>'+esc(sel)+'</option>':'');}
 function renderAdminBooks(){var box=bkG("mng_booklist");if(!box)return;var sb=bkG("bk_a_save");if(sb)sb.textContent=dvT(BKA.edit?"bka_save":"bka_add");var n=BKA.books.length;["cnt_books","big_books"].forEach(function(id){var e=bkG(id);if(e)e.textContent=n;});
+  var cs=bkG("bk_a_category");if(cs){var cv=cs.value||"rules";cs.innerHTML=bkaCatOpts(cv);cs.value=cv;}
   document.querySelectorAll('#adm_dash .dtile[data-cnt="cnt_books"]').forEach(function(b){if(typeof admSyncTile==="function")admSyncTile(b);});
-  box.innerHTML=n?BKA.books.map(function(b){var rv=BKA.reviews.filter(function(r){return r.book_id===b.id;});
-    return '<div class="bka-row">'+(b.cover_url?'<img src="'+esc(bkUrl(b.cover_url))+'" alt="">':'<span class="ph"></span>')+'<div class="tx"><b>'+esc(b.title)+'</b><small>'+esc([b.author,b.category,b.pages?b.pages+" p.":"",bkSize(b.size_bytes)].filter(Boolean).join(" · "))+(b.published?"":" · "+esc(dvT("bka_hidden")))+'</small>'+(b.source_url?'<small>🔗 '+esc(bkSrcName(b))+'</small>':'<small style="color:#FCA5A5">🔗 '+esc(dvT("bka_src_none"))+'</small>')+
+  if(!n){box.innerHTML='<div class="hint">'+esc(dvT("bk_nobooks"))+'</div>';return;}
+  var cats=BK_CATS.slice();BKA.books.forEach(function(b){var k=bkCatKey(b.category);if(cats.indexOf(k)<0)cats.push(k);});
+  box.innerHTML=cats.map(function(c){var L=bkInCat(c,BKA.books);
+    return '<div class="bka-cat"><div class="bka-cath"><b>'+esc(bkCatName(c))+'</b><i>'+L.length+'</i></div>'+(L.length?L.map(function(b,ix){var rv=BKA.reviews.filter(function(r){return r.book_id===b.id;});
+    return '<div class="bka-row">'+(b.cover_url?'<img src="'+esc(bkUrl(b.cover_url))+'" alt="">':'<span class="ph"></span>')+'<div class="tx"><b>'+esc(b.title)+'</b><small>'+esc([b.author,b.pages?b.pages+" p.":"",bkSize(b.size_bytes)].filter(Boolean).join(" · "))+(b.published?"":" · "+esc(dvT("bka_hidden")))+'</small>'+(b.source_url?'<small>🔗 '+esc(bkSrcName(b))+'</small>':'<small style="color:#FCA5A5">🔗 '+esc(dvT("bka_src_none"))+'</small>')+
+      '<label class="bka-mv"><span>'+esc(dvT("bka_move"))+'</span><select onchange="bkaMove(\''+b.id+'\',this.value)">'+bkaCatOpts(bkCatKey(b.category))+'</select></label>'+
       rv.map(function(r){return '<div class="bka-rev"><span>★'+r.rating+' '+esc(r.name)+(r.title||r.body?': '+esc((r.title||r.body).slice(0,90)):'')+'</span><button class="rm" style="border:none;background:none;color:var(--bad);cursor:pointer" title="Delete" onclick="bkaDelRev(\''+r.id+'\')">×</button></div>';}).join("")+
-      '</div><button class="bka-b" onclick="bkaEdit(\''+b.id+'\')" title="Edit">✎</button><button class="bka-b del" onclick="bkaDel(\''+b.id+'\')" title="Delete">×</button></div>';}).join(""):'<div class="hint">'+esc(dvT("bk_nobooks"))+'</div>';}
+      '</div><span class="bka-ord"><button class="bka-b" '+(ix?'':'disabled ')+'onclick="bkaOrder(\''+b.id+'\',-1)" title="'+esc(dvT("bka_up"))+'">↑</button><button class="bka-b" '+(ix<L.length-1?'':'disabled ')+'onclick="bkaOrder(\''+b.id+'\',1)" title="'+esc(dvT("bka_down"))+'">↓</button></span><button class="bka-b" onclick="bkaEdit(\''+b.id+'\')" title="Edit">✎</button><button class="bka-b del" onclick="bkaDel(\''+b.id+'\')" title="Delete">×</button></div>';}).join(""):'<div class="hint bka-empty">'+esc(dvT("bka_cat_empty"))+'</div>')+'</div>';}).join("");}
+async function bkaMove(id,cat){var b=BKA.books.filter(function(x){return x.id===id;})[0];if(!b)return;var L=bkInCat(cat,BKA.books),so=L.length?(L[L.length-1].sort_order||0)+1:0;
+  try{var j=await bkaCall("adm_update",{id:id,category:cat,sort_order:so});if(!j||!j.ok)throw new Error((j&&j.error)||"error");b.category=cat;b.sort_order=so;BK.at=0;renderAdminBooks();}catch(e){alert((e&&e.message)||"Error");renderAdminBooks();}}
+async function bkaOrder(id,d){var b=BKA.books.filter(function(x){return x.id===id;})[0];if(!b||BKA.busy)return;var L=bkInCat(bkCatKey(b.category),BKA.books),i=L.indexOf(b),k=i+d;if(k<0||k>=L.length)return;
+  L.splice(i,1);L.splice(k,0,b);BKA.busy=true;var ups=[];L.forEach(function(x,ix){if((x.sort_order||0)!==ix){x.sort_order=ix;ups.push(bkaCall("adm_update",{id:x.id,sort_order:ix}));}});renderAdminBooks();
+  try{var rs=await Promise.all(ups);if(rs.some(function(j){return !j||!j.ok;}))throw new Error("error");}catch(e){alert(dvT("bka_ord_err"));await loadAdminBooks();}BKA.busy=false;BK.at=0;}
 function bkaStatus(m,bad){var s=bkG("bk_a_status");if(s){s.textContent=m||"";s.style.color=bad?"#FECACA":"";}}
-function bkaForm(b){b=b||{};["title","author","category","description","language","publisher","released","source_label","source_url"].forEach(function(k){var e=bkG("bk_a_"+k);if(e)e.value=b[k]||"";});bkG("bk_a_file").value="";
+function bkaForm(b){b=b||{};["title","author","description","language","publisher","released","source_label","source_url"].forEach(function(k){var e=bkG("bk_a_"+k);if(e)e.value=b[k]||"";});
+  var cs=bkG("bk_a_category");if(cs){var ck=b.category?bkCatKey(b.category):(cs.value||"rules");cs.innerHTML=bkaCatOpts(ck);cs.value=ck;}bkG("bk_a_file").value="";
   bkG("bk_a_filebox").hidden=!!BKA.edit;bkG("bk_a_cancel").hidden=!BKA.edit;bkG("bk_a_save").textContent=dvT(BKA.edit?"bka_save":"bka_add");}
 function bkaEdit(id){var b=BKA.books.filter(function(x){return x.id===id;})[0];if(!b)return;BKA.edit=id;bkaForm(b);bkaStatus("");var d=bkG("bk_a_det");if(d){d.open=true;try{d.scrollIntoView({behavior:"smooth",block:"start"});}catch(e){}}}
 function bkaSrc(l,u){var a=bkG("bk_a_source_label"),b=bkG("bk_a_source_url");a.value=l;if(!b.value.trim()||/^https:\/\/(www\.fivb\.com|www\.cev\.eu|drive\.google\.com)\/$/.test(b.value.trim()))b.value=u;b.focus();}
@@ -4803,6 +4833,7 @@ function bkaPut(path,token,blob,type,onp){return new Promise(function(res,rej){v
 async function bkaFilePicked(inp){var f=inp.files&&inp.files[0],t=bkG("bk_a_title");if(f&&t&&!t.value.trim())t.value=f.name.replace(/\.pdf$/i,"").replace(/[_-]+/g," ").trim();}
 async function bkaSave(){if(BKA.busy)return;var v=function(k){return bkG("bk_a_"+k).value.trim();},row={title:v("title"),author:v("author"),category:v("category"),description:v("description"),language:v("language"),publisher:v("publisher"),released:v("released"),source_label:v("source_label"),source_url:v("source_url")};
   if(!row.title){bkaStatus(dvT("bka_need_title"),true);return;}
+  if(!row.category)row.category="other";if(!BKA.edit){var Lc=bkInCat(row.category,BKA.books);row.sort_order=Lc.length?(Lc[Lc.length-1].sort_order||0)+1:0;}
   if(row.source_url&&!/^https?:\/\//i.test(row.source_url)){if(/^[\w-]+(\.[\w-]+)+/.test(row.source_url))row.source_url="https://"+row.source_url;else{bkaStatus(dvT("bka_src_bad"),true);return;}}BKA.busy=true;
   try{if(BKA.edit){bkaStatus(dvT("bka_saving"));var j=await bkaCall("adm_update",Object.assign({id:BKA.edit},row));if(!j||!j.ok)throw new Error((j&&j.error)||"error");}
     else{var f=bkG("bk_a_file").files[0];if(!f){BKA.busy=false;bkaStatus(dvT("bka_need_file"),true);return;}if(f.size>100*1048576)throw new Error(dvT("bka_too_big"));
