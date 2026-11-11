@@ -3,7 +3,8 @@
 // sezione aperta, tipo di dispositivo (phone/tablet/desktop), lingua dell'app. Nessun user agent.
 // v4 (11/11/2026, seconda richiesta utente): paese, regione e città ricavati dall'IP (header cf-connecting-ip) una volta
 // per visita con un servizio di geolocalizzazione gratuito (ipwho.is, ripieghi ipapi.co e api.country.is).
-// L'IP NON viene salvato da nessuna parte: si salvano solo paese/regione/città.
+// v5 (11/11/2026, scelta utente «Sì, salva e mostra l'IP»): l'IP viene salvato (vcbe_app_presence.ip = ultimo IP della visita,
+// vcbe_app_visitors.ip = ultimo IP del visitatore) e mostrato in Admin. Non negli eventi.
 // Il nome compare solo per gli arbitri collegati a Drive: il token di Drive viene confrontato (hash SHA-256)
 // con vcbe_drive_sessions, come in vcbe-drive.
 // Azioni:
@@ -108,25 +109,28 @@ Deno.serve(async (req) => {
   const lang = LANGS.includes(String(body.lang)) ? String(body.lang) : null;
   const ref = await refereeOf(body.token);
   const now = new Date().toISOString();
+  const rawIp = clientIp(req);
+  const ip = /^[0-9a-f:.]{3,45}$/i.test(rawIp) ? rawIp : null;
 
   const { data: pres } = await sb.from("vcbe_app_presence").select("session_id,country,country_name,region,city").eq("session_id", sid).maybeSingle();
-  // paese/città: una sola ricerca per visita; l'IP resta in memoria solo per questa richiesta
-  const geo: Geo = pres?.country ? { country: pres.country, country_name: pres.country_name, region: pres.region, city: pres.city } : await geoOf(clientIp(req));
+  // paese/città: una sola ricerca per visita
+  const geo: Geo = pres?.country ? { country: pres.country, country_name: pres.country_name, region: pres.region, city: pres.city } : await geoOf(rawIp);
   const { data: vis } = await sb.from("vcbe_app_visitors").select("visitor_id,sessions,referee_id").eq("visitor_id", vid).maybeSingle();
   if (!vis) {
-    await sb.from("vcbe_app_visitors").insert({ visitor_id: vid, first_seen: now, last_seen: now, referee_id: ref, device, lang, sessions: 1, ...geo });
+    await sb.from("vcbe_app_visitors").insert({ visitor_id: vid, first_seen: now, last_seen: now, referee_id: ref, device, lang, sessions: 1, ip, ...geo });
   } else {
     const up: Record<string, unknown> = { last_seen: now };
     if (ref) up.referee_id = ref;
     if (device) up.device = device;
     if (lang) up.lang = lang;
+    if (ip) up.ip = ip;
     if (!pres) up.sessions = (vis.sessions || 0) + 1;
     if (geo.country) Object.assign(up, geo);
     await sb.from("vcbe_app_visitors").update(up).eq("visitor_id", vid);
   }
   const rid = ref || vis?.referee_id || null;
-  if (pres) await sb.from("vcbe_app_presence").update({ last_seen: now, page, referee_id: rid, device, lang, ...(geo.country ? geo : {}) }).eq("session_id", sid);
-  else await sb.from("vcbe_app_presence").insert({ session_id: sid, visitor_id: vid, referee_id: rid, page, device, lang, started_at: now, last_seen: now, ...geo });
+  if (pres) await sb.from("vcbe_app_presence").update({ last_seen: now, page, referee_id: rid, device, lang, ...(ip ? { ip } : {}), ...(geo.country ? geo : {}) }).eq("session_id", sid);
+  else await sb.from("vcbe_app_presence").insert({ session_id: sid, visitor_id: vid, referee_id: rid, page, device, lang, started_at: now, last_seen: now, ip, ...geo });
 
   const ev = [
     ...list(body.views, NAME, 20, 48).map((name) => ({ kind: "view", name })),
