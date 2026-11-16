@@ -1,14 +1,18 @@
 // Edge function vcbe-quiz (v1, 16/11/2026, richiesta utente): sezione «Quiz» dell'app.
 // Ogni domanda ha un video, una foto o una situazione scritta, una domanda e la risposta giusta Sì/No.
 // Accesso arbitri: stesso nome + codice personale di Drive (login con vcbe-drive, stesso token vcbe_drive_sessions).
-// Una sola risposta per arbitro e domanda (non modificabile). La risposta giusta non viene mai inviata prima della risposta.
+// Tentativi (v3, 16/11/2026, richiesta utente): l'arbitro risponde a tutte le domande SENZA vedere l'esito; il risultato
+// (giuste/sbagliate, risposta corretta, spiegazione) compare solo quando ha risposto a tutte. «Start again» chiude il tentativo
+// (resta salvato con data, ora e punteggio) e il successivo parte da zero. Tabella vcbe_quiz_attempts; vcbe_quiz_answers.attempt_id.
+// La risposta giusta non viene mai inviata al telefono finché il tentativo non è finito.
 //   summary {}                      -> {count, recent:[created_at ultimi 7 giorni]} (pubblico, per il riquadro Home)
-//   list {token}                    -> domande pubblicate + mie risposte (con esito e spiegazione per quelle già risposte)
-//   answer {token, item_id, answer} -> salva la risposta, restituisce correct, explanation
+//   list {token}                    -> domande pubblicate + tentativo in corso (+ esiti solo se finito) + storico dei miei tentativi
+//   answer {token, item_id, answer} -> salva la risposta nel tentativo in corso; all'ultima domanda chiude il tentativo
+//   restart {token}                 -> chiude il tentativo in corso (salvato) e ne prepara uno nuovo
 // Admin (password di vcbe_admin_config):
 //   adm_list -> items, referees (con conteggi), answers
 //   adm_upload_url {kind photo|video, ext} ; adm_add {...} ; adm_update {id, ...} ; adm_reorder {ids} ; adm_delete {id}
-//   adm_reset {referee_id?, item_id?} (cancella risposte)
+//   adm_delete_attempt {id} (elimina un tentativo e le sue risposte)
 // Codice sorgente: docs/vcbe-quiz.ts del repo chrinogara/video-challenge-be.
 // Tabelle vcbe_quiz_items, vcbe_quiz_answers (RLS senza policy), bucket pubblico vcbe-quiz. Migration vcbe_quiz_20261116.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -30,6 +34,19 @@ const OUR = /^(photos|videos)\/[\w.-]+\.[a-z0-9]{2,5}$/;
 const EXT: Record<string, string[]> = { photo: ["jpg", "jpeg", "png", "webp"], video: ["mp4", "m4v", "mov", "webm"] };
 const FIELDS: Record<string, number> = { title: 200, situation: 6000, question: 1000, explanation: 6000 };
 const pub = (it: any) => ({ id: it.id, kind: it.kind, title: it.title || "", situation: it.situation || "", question: it.question, media_url: it.media_url || "", sort_order: it.sort_order, created_at: it.created_at });
+
+// Ricalcola i conteggi di un tentativo; con finish=true (tutte le domande pubblicate hanno risposta) lo chiude.
+async function recount(sb: any, attemptId: string, total: number | null, finish = false) {
+  const { data: rows } = await sb.from("vcbe_quiz_answers").select("is_correct").eq("attempt_id", attemptId);
+  const answered = (rows || []).length, correct = (rows || []).filter((r: any) => r.is_correct).length;
+  const upd: any = { answered, correct, wrong: answered - correct };
+  if (total !== null) {
+    upd.total = total;
+    if (finish && total > 0 && answered >= total) { upd.status = "finished"; upd.finished_at = new Date().toISOString(); }
+  }
+  await sb.from("vcbe_quiz_attempts").update(upd).eq("id", attemptId);
+  return upd;
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
@@ -57,7 +74,7 @@ Deno.serve(async (req) => {
     if (action === "adm_list") {
       const [{ data: items, error }, { data: ans }, { data: refs }, { data: acc }] = await Promise.all([
         sb.from("vcbe_quiz_items").select("*").order("sort_order").order("created_at", { ascending: false }),
-        sb.from("vcbe_quiz_answers").select("id,item_id,referee_id,answer,is_correct,created_at").order("created_at", { ascending: false }).limit(20000),
+        sb.from("vcbe_quiz_answers").select("id,item_id,referee_id,attempt_id,answer,is_correct,created_at").order("created_at", { ascending: false }).limit(20000),
         sb.from("vcbe_referees").select("id,name,email,active,sort_order").order("sort_order", { nullsFirst: false }).order("name"),
         sb.from("vcbe_drive_access").select("referee_id,code,active"),
       ]);
@@ -66,7 +83,10 @@ Deno.serve(async (req) => {
       const st: Record<string, any> = {};
       (ans || []).forEach((a: any) => { const s = st[a.referee_id] ||= { answered: 0, correct: 0, wrong: 0, last_at: null }; s.answered++; a.is_correct ? s.correct++ : s.wrong++; if (!s.last_at || a.created_at > s.last_at) s.last_at = a.created_at; });
       const referees = (refs || []).filter((r: any) => r.active !== false || st[r.id]).map((r: any) => ({ id: r.id, name: r.name, email: r.email || "", has_code: !!hasCode[r.id], ...(st[r.id] || { answered: 0, correct: 0, wrong: 0, last_at: null }) }));
-      return json({ ok: true, items: items || [], answers: ans || [], referees });
+      const { data: atts } = await sb.from("vcbe_quiz_attempts").select("*").order("started_at", { ascending: false }).limit(5000);
+      const byRef: Record<string, any[]> = {}; (atts || []).forEach((t: any) => (byRef[t.referee_id] ||= []).push(t));
+      referees.forEach((r: any) => { const L = byRef[r.id] || []; r.attempts = L.length; r.last_attempt = L[0] || null; r.best = L.reduce((b: any, t: any) => (!b || t.correct > b.correct ? t : b), null); });
+      return json({ ok: true, items: items || [], answers: ans || [], attempts: atts || [], referees });
     }
     if (action === "adm_upload_url") {
       const kind = body.kind === "video" ? "video" : "photo";
@@ -104,6 +124,8 @@ Deno.serve(async (req) => {
       if ("correct" in row && old && old.correct !== row.correct) {
         await sb.from("vcbe_quiz_answers").update({ is_correct: true }).eq("item_id", body.id).eq("answer", row.correct);
         await sb.from("vcbe_quiz_answers").update({ is_correct: false }).eq("item_id", body.id).eq("answer", !row.correct);
+        const { data: aa } = await sb.from("vcbe_quiz_answers").select("attempt_id").eq("item_id", body.id);
+        for (const id of [...new Set((aa || []).map((x: any) => x.attempt_id).filter(Boolean))]) await recount(sb, id as string, null);
       }
       return json({ ok: true, item: data });
     }
@@ -120,13 +142,9 @@ Deno.serve(async (req) => {
       if (row?.media_path) await sb.storage.from(BUCKET).remove([row.media_path]);
       return json({ ok: true });
     }
-    if (action === "adm_reset") {
-      const rid = String(body.referee_id || ""), iid = String(body.item_id || "");
-      if (!UUID.test(rid) && !UUID.test(iid)) return json({ error: "referee_or_item_required" });
-      let q = sb.from("vcbe_quiz_answers").delete();
-      if (UUID.test(rid)) q = q.eq("referee_id", rid);
-      if (UUID.test(iid)) q = q.eq("item_id", iid);
-      const { error } = await q;
+    if (action === "adm_delete_attempt") {
+      if (!UUID.test(String(body.id || ""))) return json({ error: "id_required" });
+      const { error } = await sb.from("vcbe_quiz_attempts").delete().eq("id", body.id);
       return json(error ? { error: error.message } : { ok: true });
     }
     return json({ error: "unknown admin action" }, 400);
@@ -153,31 +171,54 @@ Deno.serve(async (req) => {
     if (!a || !a.active || !a.code) return json({ ok: false, reason: "signed_out" }, 401);
   }
 
+  const pubItems = async () => (await sb.from("vcbe_quiz_items").select("*").eq("published", true).order("sort_order").order("created_at", { ascending: false })).data || [];
+  // Tentativo in corso = l'ultimo non chiuso con «Start again».
+  const current = async () => (await sb.from("vcbe_quiz_attempts").select("*").eq("referee_id", me.id).is("restarted_at", null).order("started_at", { ascending: false }).limit(1).maybeSingle()).data;
+  const pubAtt = (t: any) => t ? { id: t.id, status: t.status, started_at: t.started_at, finished_at: t.finished_at, total: t.total, answered: t.answered, correct: t.correct, wrong: t.wrong } : null;
+
   if (action === "list") {
-    const [{ data: items, error }, { data: mine }] = await Promise.all([
-      sb.from("vcbe_quiz_items").select("*").eq("published", true).order("sort_order").order("created_at", { ascending: false }),
-      sb.from("vcbe_quiz_answers").select("item_id,answer,is_correct,created_at").eq("referee_id", me.id),
-    ]);
-    if (error) return json({ ok: false, reason: error.message }, 500);
+    const items = await pubItems();
+    const att = await current();
+    const { data: mine } = att ? await sb.from("vcbe_quiz_answers").select("item_id,answer,is_correct,created_at").eq("attempt_id", att.id) : { data: [] as any[] };
     const m: Record<string, any> = {}; (mine || []).forEach((a: any) => m[a.item_id] = a);
-    const out = (items || []).map((it: any) => {
+    const done = att && att.status === "finished";
+    const out = items.map((it: any) => {
       const a = m[it.id];
-      return a ? { ...pub(it), my: { answer: a.answer, correct: a.is_correct, right: it.correct, explanation: it.explanation || "", at: a.created_at } } : pub(it);
+      if (!a) return pub(it);
+      return { ...pub(it), my: done ? { answer: a.answer, correct: a.is_correct, right: it.correct, explanation: it.explanation || "", at: a.created_at } : { answer: a.answer, at: a.created_at } };
     });
-    return json({ ok: true, name: me.name, items: out });
+    const { data: hist } = await sb.from("vcbe_quiz_attempts").select("*").eq("referee_id", me.id).order("started_at", { ascending: false }).limit(30);
+    return json({ ok: true, name: me.name, items: out, attempt: pubAtt(att), history: (hist || []).filter((t: any) => t.answered > 0).map(pubAtt) });
   }
   if (action === "answer") {
     const id = String(body.item_id || "");
     if (!UUID.test(id)) return json({ ok: false, reason: "item_required" }, 400);
     if (typeof body.answer !== "boolean") return json({ ok: false, reason: "answer_required" }, 400);
-    const { data: it } = await sb.from("vcbe_quiz_items").select("id,correct,explanation,published").eq("id", id).maybeSingle();
+    const { data: it } = await sb.from("vcbe_quiz_items").select("id,correct,published").eq("id", id).maybeSingle();
     if (!it || !it.published) return json({ ok: false, reason: "not_found" }, 404);
-    const { data: prev } = await sb.from("vcbe_quiz_answers").select("answer,is_correct").eq("item_id", id).eq("referee_id", me.id).maybeSingle();
-    if (prev) return json({ ok: true, already: true, answer: prev.answer, correct: prev.is_correct, right: it.correct, explanation: it.explanation || "" });
-    const isC = body.answer === it.correct;
-    const { error } = await sb.from("vcbe_quiz_answers").insert({ item_id: id, referee_id: me.id, answer: body.answer, is_correct: isC });
-    if (error) return json({ ok: false, reason: error.message }, 500);
-    return json({ ok: true, answer: body.answer, correct: isC, right: it.correct, explanation: it.explanation || "" });
+    let att = await current();
+    if (att && att.status === "finished") return json({ ok: false, reason: "finished" });
+    if (!att) { const r = await sb.from("vcbe_quiz_attempts").insert({ referee_id: me.id }).select().single(); if (r.error) return json({ ok: false, reason: r.error.message }, 500); att = r.data; }
+    const { data: prev } = await sb.from("vcbe_quiz_answers").select("id").eq("attempt_id", att.id).eq("item_id", id).maybeSingle();
+    if (!prev) {
+      const { error } = await sb.from("vcbe_quiz_answers").insert({ attempt_id: att.id, item_id: id, referee_id: me.id, answer: body.answer, is_correct: body.answer === it.correct });
+      if (error) return json({ ok: false, reason: error.message }, 500);
+    }
+    const items = await pubItems();
+    const { data: got } = await sb.from("vcbe_quiz_answers").select("item_id").eq("attempt_id", att.id);
+    const have = new Set((got || []).map((x: any) => x.item_id));
+    const allDone = items.length > 0 && items.every((x: any) => have.has(x.id));
+    const upd = await recount(sb, att.id, items.length, allDone);
+    return json({ ok: true, already: !!prev, answer: body.answer, finished: allDone, answered: upd.answered, total: items.length });
+  }
+  if (action === "restart") {
+    const att = await current();
+    if (att && att.answered > 0) {
+      const upd: any = { restarted_at: new Date().toISOString() };
+      if (att.status === "open") upd.status = "restarted";
+      await sb.from("vcbe_quiz_attempts").update(upd).eq("id", att.id);
+    }
+    return json({ ok: true });
   }
   return json({ ok: false, reason: "unknown action" }, 400);
 });

@@ -1788,6 +1788,34 @@ textarea.bk-in{min-height:140px;resize:vertical}
 #qa_p_items>*{margin:0;min-width:0}
 @media(min-width:900px){#qa_p_items{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 .dtile.kqz{--k:#2563EB;--kb:#E6EDFD}
+.qz-saved{background:var(--violet-50);color:var(--violet);border-radius:12px;padding:11px 13px;font-weight:800;font-size:14.5px;display:flex;flex-direction:column;gap:3px}
+.qz-saved small{font-weight:600;color:var(--muted);font-size:12.5px}
+.qz-saved.off{background:var(--bg);color:var(--muted);font-weight:600}
+.qz-resbox{margin-top:12px}
+.qz-final{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;background:linear-gradient(135deg,#0F2E6B,#2563EB);color:#fff;border-radius:16px;padding:18px 16px}
+.qz-final .k{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#C7D7FB}
+.qz-final .big{font-family:var(--fd);font-size:38px;line-height:1}
+.qz-final .pct{font-weight:800;color:#FDE68A;font-size:18px}
+.qz-final small{color:#DCE7FB}
+.qz-final .dv-note{color:#DCE7FB;font-size:13px;line-height:1.45}
+.qz-final .qz-more{margin:0;background:rgba(255,255,255,.14);border-radius:10px;padding:8px 10px;font-size:13.5px;font-weight:700}
+.qz-final .btn{width:100%;background:#fff;color:var(--violet)}
+.qz-score .wait b{color:var(--violet)}
+.qz-hist{margin-top:12px;border-top:1px dashed var(--line2);padding-top:10px;display:flex;flex-direction:column;gap:4px}
+.qz-hh{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.qz-hr{display:flex;align-items:center;gap:8px;font-size:13.5px;padding:5px 0}
+.qz-hr span:first-child{flex:1;min-width:0}
+.qst{font-size:11.5px;font-weight:800;border-radius:999px;padding:2px 8px;background:var(--bg);color:var(--muted)}
+.qst.finished{background:#E7F7EE;color:#0F7A3D}.qst.open{background:var(--violet-50);color:var(--violet)}.qst.restarted{background:#FEF3C7;color:#B45309}
+.qa-att{display:flex;align-items:center;gap:10px;padding:8px;border-radius:9px;cursor:pointer;border-bottom:1px dashed var(--line2)}
+.qa-att:hover,.qa-att.on{background:#fff}
+.qa-att .no{font-weight:800;color:var(--muted);width:28px;flex:none}
+.qa-att .q{flex:1;min-width:0;font-size:13.5px}
+.qa-att .sc{text-align:right;font-size:14px}
+.qa-att .sc .ok{color:var(--ok)}.qa-att .sc .ko{color:var(--bad)}
+.qa-att .rm{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--bad);cursor:pointer;flex:none}
+.qa-attd{padding:4px 8px 8px 46px}
+
 </style>
 </head>
 <body>
@@ -2215,6 +2243,8 @@ textarea.bk-in{min-height:140px;resize:vertical}
               <div class="qz-me"><span class="dv-av" id="qz_av"></span><div class="tx"><b id="qz_myname"></b><small data-i18n="qz_signed">Signed in with your Drive code</small></div><button type="button" class="btn ghost" onclick="qzLogout()" data-i18n="dv_signout">Sign out</button></div>
               <div class="qz-score" id="qz_score"></div>
               <div class="qz-bar"><i id="qz_bar" style="width:0"></i></div>
+              <div id="qz_result" class="qz-resbox" hidden></div>
+              <div id="qz_hist" class="qz-hist" hidden></div>
             </div>
             <div class="qz-chips" id="qz_chips">
               <button type="button" data-f="todo" class="on" onclick="qzFilter('todo')" data-i18n="qz_f_todo">To answer</button>
@@ -6176,14 +6206,14 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")cevClose();}
    chi è già collegato a Drive entra direttamente). Una sola risposta per domanda, non modificabile.
    Dati e risposte SOLO tramite la edge function vcbe-quiz (codice in docs/vcbe-quiz.ts).
    Admin → «Quiz» (domande) e «Quiz results» (per arbitro: risposte, giuste, sbagliate). */
-Object.assign(T.en,{qz_label:"Training",qz_title:"Quiz",qz_sub:"Watch the video, look at the photo or read the situation, then answer Yes or No.",
+Object.assign(T.en,{qz_saved_a:"Answer saved: {a}",qz_saved_s:"You will see if it is correct at the end of the quiz.",qz_new_after:"New question, added after you finished: start again to answer it.",qz_res_t:"Your result",qz_res_when:"Finished on {d}",qz_res_more:"{n} new question(s) were added after you finished. Start again to answer them.",qz_res_note:"Your result is saved. You can start the quiz again: this result stays saved and a new attempt begins.",qz_restart:"Start the quiz again",qz_restart_q:"Start the quiz again from the beginning? Your current result stays saved.",qz_s_left:"still to answer",qz_hint_end:"Answer all the questions: you will see your result and the correct answers at the end.",qz_all_sent:"You answered all the questions.",qz_hist:"Your attempts",qa_st_open:"in progress",qa_st_finished:"finished",qa_st_restarted:"restarted before the end",qa_k_att:"attempts",qa_k_avg:"average score",qa_h_att:"Attempts",qa_h_lastatt:"Last attempt",qa_h_best:"Best",qa_answered_l:"answered",qa_del_att:"Delete this attempt",qa_del_att_q:"Delete this attempt and its answers?",qz_final:"Your answer is saved and cannot be changed. You will see the result at the end.",qz_label:"Training",qz_title:"Quiz",qz_sub:"Watch the video, look at the photo or read the situation, then answer Yes or No.",
 qz_home_d:"Video, photo and written situations: answer Yes or No with your Drive code.",
 qz_login_s:"Sign in with your name and the personal code you already use for Drive. Your answers are saved under your name.",
 qz_nocode:"No code yet, or you forgot it? Ask the coordinator: it is the same code as for Drive (Drive → Request access).",
 qz_signed:"Signed in with your Drive code",qz_f_todo:"To answer",qz_f_done:"Answered",qz_f_all:"All",
 qz_s_done:"answered",qz_s_ok:"correct",qz_s_ko:"wrong",qz_yes:"Yes",qz_no:"No",
 qz_k_video:"Video",qz_k_photo:"Photo",qz_k_text:"Situation",qz_n:"Question {i} of {n}",
-qz_confirm:"Confirm my answer",qz_change:"Change",qz_final:"Your answer is final: you cannot change it afterwards.",
+qz_confirm:"Confirm my answer",qz_change:"Change",
 qz_right:"Correct!",qz_wrong:"Wrong answer",qz_your:"Your answer: {a}",qz_correct_is:"Correct answer: {a}",qz_expl:"Explanation",
 qz_none:"No questions yet. Come back soon!",qz_all_done:"Well done: you answered all the questions.",qz_no_done:"You have not answered any question yet.",
 qz_e_net:"Not saved. Check your connection and try again.",qz_open_video:"Open the video",
@@ -6196,14 +6226,14 @@ qa_saved:"Saved.",qa_cur:"Current file",qa_del_q:"Delete this question and all i
 qa_empty:"No questions yet. Add the first one above.",qa_h_ref:"Referee",qa_h_ans:"Answered",qa_h_ok:"Correct",qa_h_ko:"Wrong",qa_h_pct:"Score",qa_h_last:"Last answer",
 qa_nocode:"no Drive code",qa_reset:"Delete this referee's answers",qa_reset_q:"Delete all quiz answers of {n}? They can answer again.",qa_k_q:"questions",qa_k_refs:"referees answered",qa_k_ans:"answers",qa_k_pct:"correct overall",
 qa_det_none:"No answers yet.",st_s_quiz:"Quiz",st_a_quiz_login:"Signed in to the quiz",st_a_quiz_answer:"Answered a quiz question",qa_hidden:"hidden",qa_ans_lbl:"answer"});
-Object.assign(T.fr,{qz_label:"Formation",qz_title:"Quiz",qz_sub:"Regardez la vidéo, la photo ou lisez la situation, puis répondez Oui ou Non.",
+Object.assign(T.fr,{qz_saved_a:"Réponse enregistrée : {a}",qz_saved_s:"Vous verrez si elle est juste à la fin du quiz.",qz_new_after:"Nouvelle question, ajoutée après la fin de votre quiz : recommencez pour y répondre.",qz_res_t:"Votre résultat",qz_res_when:"Terminé le {d}",qz_res_more:"{n} nouvelle(s) question(s) ajoutée(s) après la fin. Recommencez pour y répondre.",qz_res_note:"Votre résultat est enregistré. Vous pouvez recommencer le quiz : ce résultat reste enregistré et une nouvelle tentative commence.",qz_restart:"Recommencer le quiz",qz_restart_q:"Recommencer le quiz depuis le début ? Votre résultat actuel reste enregistré.",qz_s_left:"encore à répondre",qz_hint_end:"Répondez à toutes les questions : vous verrez votre résultat et les bonnes réponses à la fin.",qz_all_sent:"Vous avez répondu à toutes les questions.",qz_hist:"Vos tentatives",qa_st_open:"en cours",qa_st_finished:"terminé",qa_st_restarted:"recommencé avant la fin",qa_k_att:"tentatives",qa_k_avg:"score moyen",qa_h_att:"Tentatives",qa_h_lastatt:"Dernière tentative",qa_h_best:"Meilleur",qa_answered_l:"répondues",qa_del_att:"Supprimer cette tentative",qa_del_att_q:"Supprimer cette tentative et ses réponses ?",qz_final:"Votre réponse est enregistrée et ne peut plus être modifiée. Vous verrez le résultat à la fin.",qz_label:"Formation",qz_title:"Quiz",qz_sub:"Regardez la vidéo, la photo ou lisez la situation, puis répondez Oui ou Non.",
 qz_home_d:"Vidéos, photos et situations écrites : répondez Oui ou Non avec votre code Drive.",
 qz_login_s:"Connectez-vous avec votre nom et le code personnel que vous utilisez déjà pour Drive. Vos réponses sont enregistrées à votre nom.",
 qz_nocode:"Pas encore de code, ou vous l'avez oublié ? Demandez-le au coordinateur : c'est le même code que pour Drive (Drive → Demander l'accès).",
 qz_signed:"Connecté avec votre code Drive",qz_f_todo:"À répondre",qz_f_done:"Répondues",qz_f_all:"Toutes",
 qz_s_done:"répondues",qz_s_ok:"justes",qz_s_ko:"fausses",qz_yes:"Oui",qz_no:"Non",
 qz_k_video:"Vidéo",qz_k_photo:"Photo",qz_k_text:"Situation",qz_n:"Question {i} sur {n}",
-qz_confirm:"Confirmer ma réponse",qz_change:"Changer",qz_final:"Votre réponse est définitive : vous ne pourrez plus la modifier.",
+qz_confirm:"Confirmer ma réponse",qz_change:"Changer",
 qz_right:"Bonne réponse !",qz_wrong:"Mauvaise réponse",qz_your:"Votre réponse : {a}",qz_correct_is:"Bonne réponse : {a}",qz_expl:"Explication",
 qz_none:"Pas encore de questions. Revenez bientôt !",qz_all_done:"Bravo : vous avez répondu à toutes les questions.",qz_no_done:"Vous n'avez encore répondu à aucune question.",
 qz_e_net:"Non enregistré. Vérifiez votre connexion et réessayez.",qz_open_video:"Ouvrir la vidéo",
@@ -6216,14 +6246,14 @@ qa_saved:"Enregistré.",qa_cur:"Fichier actuel",qa_del_q:"Supprimer cette questi
 qa_empty:"Pas encore de questions. Ajoutez la première ci-dessus.",qa_h_ref:"Arbitre",qa_h_ans:"Répondues",qa_h_ok:"Justes",qa_h_ko:"Fausses",qa_h_pct:"Score",qa_h_last:"Dernière réponse",
 qa_nocode:"pas de code Drive",qa_reset:"Supprimer les réponses de cet arbitre",qa_reset_q:"Supprimer toutes les réponses au quiz de {n} ? Il pourra répondre à nouveau.",qa_k_q:"questions",qa_k_refs:"arbitres ont répondu",qa_k_ans:"réponses",qa_k_pct:"justes au total",
 qa_det_none:"Pas encore de réponses.",st_s_quiz:"Quiz",st_a_quiz_login:"S'est connecté au quiz",st_a_quiz_answer:"A répondu à une question du quiz",qa_hidden:"masquée",qa_ans_lbl:"réponse"});
-Object.assign(T.nl,{qz_label:"Opleiding",qz_title:"Quiz",qz_sub:"Bekijk de video of de foto of lees de situatie en antwoord dan Ja of Nee.",
+Object.assign(T.nl,{qz_saved_a:"Antwoord opgeslagen: {a}",qz_saved_s:"Je ziet aan het einde van de quiz of het juist is.",qz_new_after:"Nieuwe vraag, toegevoegd nadat je klaar was: begin opnieuw om ze te beantwoorden.",qz_res_t:"Jouw resultaat",qz_res_when:"Afgerond op {d}",qz_res_more:"{n} nieuwe vra(a)g(en) toegevoegd nadat je klaar was. Begin opnieuw om ze te beantwoorden.",qz_res_note:"Je resultaat is opgeslagen. Je kunt de quiz opnieuw beginnen: dit resultaat blijft bewaard en een nieuwe poging start.",qz_restart:"Quiz opnieuw beginnen",qz_restart_q:"De quiz opnieuw beginnen? Je huidige resultaat blijft bewaard.",qz_s_left:"nog te beantwoorden",qz_hint_end:"Beantwoord alle vragen: aan het einde zie je je resultaat en de juiste antwoorden.",qz_all_sent:"Je hebt alle vragen beantwoord.",qz_hist:"Jouw pogingen",qa_st_open:"bezig",qa_st_finished:"afgerond",qa_st_restarted:"herbegonnen voor het einde",qa_k_att:"pogingen",qa_k_avg:"gemiddelde score",qa_h_att:"Pogingen",qa_h_lastatt:"Laatste poging",qa_h_best:"Beste",qa_answered_l:"beantwoord",qa_del_att:"Deze poging verwijderen",qa_del_att_q:"Deze poging en haar antwoorden verwijderen?",qz_final:"Je antwoord wordt opgeslagen en kan niet meer gewijzigd worden. Het resultaat zie je aan het einde.",qz_label:"Opleiding",qz_title:"Quiz",qz_sub:"Bekijk de video of de foto of lees de situatie en antwoord dan Ja of Nee.",
 qz_home_d:"Video's, foto's en geschreven situaties: antwoord Ja of Nee met je Drive-code.",
 qz_login_s:"Meld je aan met je naam en de persoonlijke code die je al voor Drive gebruikt. Je antwoorden worden op jouw naam bewaard.",
 qz_nocode:"Nog geen code, of vergeten? Vraag het aan de coördinator: het is dezelfde code als voor Drive (Drive → Toegang vragen).",
 qz_signed:"Aangemeld met je Drive-code",qz_f_todo:"Te beantwoorden",qz_f_done:"Beantwoord",qz_f_all:"Alle",
 qz_s_done:"beantwoord",qz_s_ok:"juist",qz_s_ko:"fout",qz_yes:"Ja",qz_no:"Nee",
 qz_k_video:"Video",qz_k_photo:"Foto",qz_k_text:"Situatie",qz_n:"Vraag {i} van {n}",
-qz_confirm:"Mijn antwoord bevestigen",qz_change:"Wijzigen",qz_final:"Je antwoord is definitief: je kunt het daarna niet meer wijzigen.",
+qz_confirm:"Mijn antwoord bevestigen",qz_change:"Wijzigen",
 qz_right:"Juist!",qz_wrong:"Fout antwoord",qz_your:"Jouw antwoord: {a}",qz_correct_is:"Juiste antwoord: {a}",qz_expl:"Uitleg",
 qz_none:"Nog geen vragen. Kom snel terug!",qz_all_done:"Goed zo: je hebt alle vragen beantwoord.",qz_no_done:"Je hebt nog geen enkele vraag beantwoord.",
 qz_e_net:"Niet opgeslagen. Controleer je verbinding en probeer opnieuw.",qz_open_video:"Video openen",
@@ -6237,7 +6267,7 @@ qa_empty:"Nog geen vragen. Voeg hierboven de eerste toe.",qa_h_ref:"Scheidsrecht
 qa_nocode:"geen Drive-code",qa_reset:"Antwoorden van deze scheidsrechter verwijderen",qa_reset_q:"Alle quizantwoorden van {n} verwijderen? Hij kan opnieuw antwoorden.",qa_k_q:"vragen",qa_k_refs:"scheidsrechters antwoordden",qa_k_ans:"antwoorden",qa_k_pct:"juist in totaal",
 qa_det_none:"Nog geen antwoorden.",st_s_quiz:"Quiz",st_a_quiz_login:"Aangemeld bij de quiz",st_a_quiz_answer:"Beantwoordde een quizvraag",qa_hidden:"verborgen",qa_ans_lbl:"antwoord"});
 
-var QZ={items:[],filter:"todo",sel:{},busy:{},loaded:false,name:""};
+var QZ={items:[],filter:"todo",sel:{},busy:{},loaded:false,name:"",attempt:null,history:[]};
 function qzG(id){return document.getElementById(id);}
 function qzT(k,o){return dvT(k,o);}
 async function qzCall(action,payload){
@@ -6260,7 +6290,7 @@ async function qzOpen(){
 }
 async function qzLoad(){
   try{var j=await qzCall("list");
-    if(j&&j.ok){QZ.items=j.items||[];QZ.name=j.name||"";QZ.loaded=true;qzRender();qzShow("list");qzBadge();}
+    if(j&&j.ok){var first=!QZ.loaded;QZ.items=j.items||[];QZ.name=j.name||"";QZ.attempt=j.attempt||null;QZ.history=j.history||[];QZ.loaded=true;if(first&&qzFinished()){QZ.filter="all";qzChips();}qzRender();qzShow("list");qzBadge();}
     else if(!(j&&j.reason==="signed_out"))qzShow(QZ.loaded?"list":"login");
   }catch(e){if(!QZ.loaded)qzShow("login");}
 }
@@ -6296,12 +6326,16 @@ function qzMedia(it){
 }
 function qzZoom(src){var d=document.createElement("div");d.className="qz-zoom";d.innerHTML='<img alt="" src="'+esc(src)+'"><button type="button" aria-label="Close">&times;</button>';d.onclick=function(){d.remove();};document.body.appendChild(d);}
 function qzCard(it,i,n){
-  var my=it.my,sel=QZ.sel[it.id],busy=QZ.busy[it.id];
+  var my=it.my,sel=QZ.sel[it.id],busy=QZ.busy[it.id],fin=qzFinished();
   var h='<div class="card qz-card" id="qz_c_'+it.id+'"><div class="qz-in"><div class="qz-top"><span class="qz-kind '+esc(it.kind)+'">'+esc(qzT("qz_k_"+it.kind))+'</span>'+(isRecent(it.created_at)?newBadge():'')+'<span class="qz-num">'+esc(qzT("qz_n",{i:i,n:n}))+'</span></div>'+(it.title?'<h3 class="qz-title">'+esc(it.title)+'</h3>':'')+'</div>';
   h+=qzMedia(it);
   h+='<div class="qz-in">'+(it.situation?'<div class="qz-sit">'+esc(it.situation)+'</div>':'')+'<p class="qz-q">'+esc(it.question)+'</p>';
-  if(my){
+  if(my&&fin&&my.right!==undefined){
     h+='<div class="qz-res '+(my.correct?'ok':'ko')+'"><b>'+(my.correct?'&#10004; ':'&#10008; ')+esc(qzT(my.correct?"qz_right":"qz_wrong"))+'</b><span>'+esc(qzT("qz_your",{a:qzYN(my.answer)}))+' · '+esc(qzT("qz_correct_is",{a:qzYN(my.right)}))+'</span>'+(my.explanation?'<div class="ex"><b style="font-size:13px">'+esc(qzT("qz_expl"))+'</b><br>'+esc(my.explanation)+'</div>':'')+'</div>';
+  }else if(my){
+    h+='<div class="qz-saved">&#10003; '+esc(qzT("qz_saved_a",{a:qzYN(my.answer)}))+'<small>'+esc(qzT("qz_saved_s"))+'</small></div>';
+  }else if(fin){
+    h+='<div class="qz-saved off">'+esc(qzT("qz_new_after"))+'</div>';
   }else{
     h+='<div class="qz-yn"><button type="button" class="y'+(sel===true?' sel':'')+'" onclick="qzPick(\''+it.id+'\',true)"'+(busy?' disabled':'')+'>'+esc(qzT("qz_yes"))+'</button><button type="button" class="n'+(sel===false?' sel':'')+'" onclick="qzPick(\''+it.id+'\',false)"'+(busy?' disabled':'')+'>'+esc(qzT("qz_no"))+'</button></div>';
     if(sel===true||sel===false)h+='<div class="qz-confirm"><small>'+esc(qzT("qz_final"))+'</small><button type="button" class="btn" onclick="qzSend(\''+it.id+'\')"'+(busy?' disabled':'')+'>'+(busy?'<span class="dv-spin"></span>':'')+esc(qzT("qz_confirm"))+'</button></div>';
@@ -6309,17 +6343,40 @@ function qzCard(it,i,n){
   }
   return h+'</div></div>';
 }
+function qzFinished(){return !!(QZ.attempt&&QZ.attempt.status==="finished");}
+function qzWhen(d){try{return new Intl.DateTimeFormat(dvLoc(),{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(d));}catch(e){return String(d||"").slice(0,16);}}
+function qzPct(c,n){return n?Math.round(c/n*100):0;}
+function qzScore(){
+  var L=QZ.items,n=L.length,a=QZ.attempt,box=qzG("qz_score"),res=qzG("qz_result");
+  if(qzFinished()){
+    var tot=a.total||n;
+    box.innerHTML='<div><b>'+a.answered+'/'+tot+'</b><small>'+esc(qzT("qz_s_done"))+'</small></div><div class="ok"><b>'+a.correct+'</b><small>'+esc(qzT("qz_s_ok"))+'</small></div><div class="ko"><b>'+a.wrong+'</b><small>'+esc(qzT("qz_s_ko"))+'</small></div>';
+    qzG("qz_bar").style.width="100%";
+    var more=L.filter(function(x){return !x.my;}).length;
+    res.hidden=false;
+    res.innerHTML='<div class="qz-final"><span class="k">'+esc(qzT("qz_res_t"))+'</span><b class="big">'+a.correct+' / '+tot+'</b><span class="pct">'+qzPct(a.correct,tot)+'%</span><small>'+esc(qzT("qz_res_when",{d:qzWhen(a.finished_at||a.started_at)}))+'</small>'+
+      (more?'<p class="qz-more">'+esc(qzT("qz_res_more",{n:more}))+'</p>':'')+
+      '<p class="dv-note">'+esc(qzT("qz_res_note"))+'</p><button type="button" class="btn dv-big" onclick="qzRestart()">&#8635; '+esc(qzT("qz_restart"))+'</button></div>';
+  }else{
+    var done=L.filter(function(x){return x.my;}).length;
+    box.innerHTML='<div><b>'+done+'/'+n+'</b><small>'+esc(qzT("qz_s_done"))+'</small></div><div class="wait" style="grid-column:span 2"><b>'+(n-done)+'</b><small>'+esc(qzT("qz_s_left"))+'</small></div>';
+    qzG("qz_bar").style.width=(n?Math.round(done/n*100):0)+"%";
+    res.hidden=false;
+    res.innerHTML='<p class="dv-note" style="margin:0">'+esc(qzT("qz_hint_end"))+'</p>'+(done?'<button type="button" class="btn ghost" style="margin-top:10px" onclick="qzRestart()">&#8635; '+esc(qzT("qz_restart"))+'</button>':'');
+  }
+  var hb=qzG("qz_hist"),H=(QZ.history||[]).filter(function(t){return !a||t.id!==a.id||t.status!=="open";});
+  if(!H.length){hb.hidden=true;hb.innerHTML="";}
+  else{hb.hidden=false;hb.innerHTML='<b class="qz-hh">'+esc(qzT("qz_hist"))+'</b>'+H.map(function(t){var tot=t.total||t.answered;return '<div class="qz-hr"><span>'+esc(qzWhen(t.finished_at||t.started_at))+'</span><span class="qst '+esc(t.status)+'">'+esc(qzT("qa_st_"+t.status))+'</span><b>'+t.correct+'/'+tot+'</b></div>';}).join("");}
+}
 function qzRender(){
   qzG("qz_av").textContent=(typeof dvInitials==="function")?dvInitials(QZ.name):"";qzG("qz_myname").textContent=QZ.name||"";
-  var L=QZ.items,n=L.length,done=L.filter(function(x){return x.my;}),ok=done.filter(function(x){return x.my.correct;}).length;
-  qzG("qz_score").innerHTML='<div><b>'+done.length+'/'+n+'</b><small>'+esc(qzT("qz_s_done"))+'</small></div><div class="ok"><b>'+ok+'</b><small>'+esc(qzT("qz_s_ok"))+'</small></div><div class="ko"><b>'+(done.length-ok)+'</b><small>'+esc(qzT("qz_s_ko"))+'</small></div>';
-  qzG("qz_bar").style.width=(n?Math.round(done.length/n*100):0)+"%";
-  var box=qzG("qz_list");
+  qzScore();
+  var L=QZ.items,n=L.length,box=qzG("qz_list");
   if(!n){box.innerHTML='<div class="card qz-empty">'+esc(qzT("qz_none"))+'</div>';return;}
   var idx={};L.forEach(function(x,i){idx[x.id]=i+1;});
   var V=L.filter(function(x){return QZ.filter==="all"||(QZ.filter==="done"?!!x.my:!x.my);});
   if(QZ.filter==="todo")V=sortNewFirst(V.slice());
-  if(!V.length){box.innerHTML='<div class="card qz-empty">'+esc(qzT(QZ.filter==="todo"?"qz_all_done":"qz_no_done"))+'</div>';return;}
+  if(!V.length){box.innerHTML='<div class="card qz-empty">'+esc(qzT(QZ.filter==="todo"?(qzFinished()?"qz_all_done":"qz_all_sent"):"qz_no_done"))+'</div>';return;}
   box.innerHTML=V.map(function(x){return qzCard(x,idx[x.id],n);}).join("");
 }
 function qzRerender(id){var it=QZ.items.filter(function(x){return x.id===id;})[0],el=qzG("qz_c_"+id);if(!it||!el){qzRender();return;}
@@ -6330,13 +6387,20 @@ async function qzSend(id){
   var j=null;try{j=await qzCall("answer",{item_id:id,answer:v});}catch(e){}
   QZ.busy[id]=false;
   var it=QZ.items.filter(function(x){return x.id===id;})[0];
-  if(j&&j.ok&&it){it.my={answer:j.answer,correct:j.correct,right:j.right,explanation:j.explanation||""};delete QZ.sel[id];
+  if(j&&j.ok&&it){it.my={answer:j.answer};delete QZ.sel[id];
     if(typeof stAct==="function")try{stAct("quiz_answer",true);}catch(e){}
-    /* the answered card stays in place until the next filter change, so the result is visible */
-    qzRerender(id);var L=QZ.items,done=L.filter(function(x){return x.my;}),ok=done.filter(function(x){return x.my.correct;}).length;
-    qzG("qz_score").innerHTML='<div><b>'+done.length+'/'+L.length+'</b><small>'+esc(qzT("qz_s_done"))+'</small></div><div class="ok"><b>'+ok+'</b><small>'+esc(qzT("qz_s_ok"))+'</small></div><div class="ko"><b>'+(done.length-ok)+'</b><small>'+esc(qzT("qz_s_ko"))+'</small></div>';
-    qzG("qz_bar").style.width=(L.length?Math.round(done.length/L.length*100):0)+"%";qzBadge();}
+    if(j.finished){QZ.filter="all";qzChips();await qzLoad();try{qzG("qz_result").scrollIntoView({behavior:"smooth",block:"start"});}catch(e){}return;}
+    if(!QZ.attempt)QZ.attempt={status:"open",answered:0};
+    qzRerender(id);qzScore();qzBadge();}
+  else if(j&&j.reason==="finished"){await qzLoad();}
   else{qzRerender(id);var e=qzG("qz_e_"+id);if(e){e.hidden=false;e.firstChild.textContent=qzT("qz_e_net");}}
+}
+function qzChips(){document.querySelectorAll("#qz_chips button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-f")===QZ.filter);});}
+async function qzRestart(){
+  if(!confirm(qzT("qz_restart_q")))return;
+  var j=null;try{j=await qzCall("restart");}catch(e){}
+  if(!(j&&j.ok)){alert(qzT("qz_e_net"));return;}
+  QZ.sel={};QZ.filter="todo";qzChips();await qzLoad();try{window.scrollTo({top:0,behavior:"smooth"});}catch(e){}
 }
 /* Home tile: «New» = questions uploaded in the last 7 days (same rule as documents, videos, photos)
    that this referee has not answered yet. Without sign-in the app cannot know them, so the tag uses the public count. */
@@ -6352,7 +6416,7 @@ function qzBadge(){var b=qzG("nb_quiz");if(!b)return;var k=0;
 /* ── ADMIN: Quiz ── */
 var QA={items:[],answers:[],refs:[],loaded:false,edit:null,kind:"video",src:"link",correct:null,photo:null,busy:false,tab:"items",open:null};
 async function qaCall(action,payload){var r=await fetch(FN+"/vcbe-quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({password:ADMIN_PW,action:action},payload||{}))});return r.json();}
-async function qaLoad(){if(!ADMIN_PW)return;try{var j=await qaCall("adm_list");if(j&&j.ok){QA.items=j.items||[];QA.answers=j.answers||[];QA.refs=j.referees||[];QA.loaded=true;}}catch(e){}qaRender();}
+async function qaLoad(){if(!ADMIN_PW)return;try{var j=await qaCall("adm_list");if(j&&j.ok){QA.items=j.items||[];QA.answers=j.answers||[];QA.attempts=j.attempts||[];QA.refs=j.referees||[];QA.loaded=true;}}catch(e){}qaRender();}
 function qaTab(tb){QA.tab=tb;qzG("qa_t_items").classList.toggle("on",tb==="items");qzG("qa_t_res").classList.toggle("on",tb==="res");qzG("qa_p_items").hidden=tb!=="items";qzG("qa_p_res").hidden=tb!=="res";if(!QA.loaded)qaLoad();}
 function qaStatus(m,c){var s=qzG("qa_st");s.textContent=m||"";s.className="va-st"+(c?" "+c:"");}
 function qaKind(k){QA.kind=k;["video","photo","text"].forEach(function(x){qzG("qa_k_"+x).classList.toggle("on",x===k);});
@@ -6404,12 +6468,13 @@ async function qaMove(id,d){var L=QA.items.slice(),i=L.findIndex(function(x){ret
 async function qaToggle(id){var it=QA.items.filter(function(x){return x.id===id;})[0];if(!it)return;try{var j=await qaCall("adm_update",{id:id,published:!it.published});if(!j||!j.ok)throw 0;}catch(e){alert(qzT("adm_error"));}await qaLoad();}
 async function qaDelete(id){var it=QA.items.filter(function(x){return x.id===id;})[0];if(!it)return;if(!confirm(qzT("qa_del_q",{t:it.title||it.question})))return;
   try{var j=await qaCall("adm_delete",{id:id});if(!j||!j.ok)throw 0;}catch(e){alert(qzT("adm_error"));}if(QA.edit===id)qaReset(true);await qaLoad();}
-async function qaResetRef(rid){var r=QA.refs.filter(function(x){return x.id===rid;})[0];if(!r||!confirm(qzT("qa_reset_q",{n:r.name})))return;
-  try{var j=await qaCall("adm_reset",{referee_id:rid});if(!j||!j.ok)throw 0;}catch(e){alert(qzT("adm_error"));}await qaLoad();}
-function qaOpenRef(rid){QA.open=QA.open===rid?null:rid;qaRenderRes();}
+async function qaDelAttempt(id){if(!confirm(qzT("qa_del_att_q")))return;
+  try{var j=await qaCall("adm_delete_attempt",{id:id});if(!j||!j.ok)throw 0;}catch(e){alert(qzT("adm_error"));}await qaLoad();}
+function qaOpenRef(rid){QA.open=QA.open===rid?null:rid;QA.openAtt=null;qaRenderRes();}
+function qaOpenAtt(id){QA.openAtt=QA.openAtt===id?null:id;qaRenderRes();}
 function qaFmt(d){try{return new Intl.DateTimeFormat(dvLoc(),{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"}).format(new Date(d));}catch(e){return String(d||"").slice(0,16);}}
 function qaRender(){
-  var n=QA.items.length,answered=QA.refs.filter(function(r){return r.answered>0;}).length;
+  var n=QA.items.length,answered=QA.refs.filter(function(r){return (QA.attempts||[]).some(function(t){return t.referee_id===r.id&&t.answered>0;});}).length;
   admCount("quiz",n);var c2=qzG("cnt_quizr");if(c2)c2.textContent=answered;
   var el=qzG("qa_list");if(!el)return;
   if(!QA.loaded){el.innerHTML='<div class="hint">'+esc(qzT("adm_loading"))+'</div>';}
@@ -6423,16 +6488,23 @@ function qaRender(){
 function qaRenderRes(){
   var box=qzG("qa_res"),kp=qzG("qa_kpi");if(!box)return;
   if(!QA.loaded){box.innerHTML='<div class="hint">'+esc(qzT("adm_loading"))+'</div>';kp.innerHTML="";return;}
-  var tot=QA.answers.length,ok=QA.answers.filter(function(a){return a.is_correct;}).length,n=QA.items.filter(function(x){return x.published;}).length;
-  var R=QA.refs.slice().sort(function(a,b){return (b.answered>0)-(a.answered>0)||(b.correct-a.correct)||(a.wrong-b.wrong)||a.name.localeCompare(b.name);});
-  kp.innerHTML='<div><b>'+n+'</b><small>'+esc(qzT("qa_k_q"))+'</small></div><div><b>'+R.filter(function(r){return r.answered;}).length+'</b><small>'+esc(qzT("qa_k_refs"))+'</small></div><div><b>'+tot+'</b><small>'+esc(qzT("qa_k_ans"))+'</small></div><div><b>'+(tot?Math.round(ok/tot*100):0)+'%</b><small>'+esc(qzT("qa_k_pct"))+'</small></div>';
+  var AT=(QA.attempts||[]).filter(function(t){return t.answered>0;}),fin=AT.filter(function(t){return t.status==="finished";});
+  var n=QA.items.filter(function(x){return x.published;}).length;
+  var avg=fin.length?Math.round(fin.reduce(function(s,t){return s+qzPct(t.correct,t.total||t.answered);},0)/fin.length):0;
+  var R=QA.refs.slice().map(function(r){r._att=AT.filter(function(t){return t.referee_id===r.id;});return r;});
+  R.sort(function(a,b){return (b._att.length>0)-(a._att.length>0)||String((b._att[0]||{}).started_at||"").localeCompare(String((a._att[0]||{}).started_at||""))||a.name.localeCompare(b.name);});
+  kp.innerHTML='<div><b>'+n+'</b><small>'+esc(qzT("qa_k_q"))+'</small></div><div><b>'+R.filter(function(r){return r._att.length;}).length+'</b><small>'+esc(qzT("qa_k_refs"))+'</small></div><div><b>'+AT.length+'</b><small>'+esc(qzT("qa_k_att"))+'</small></div><div><b>'+avg+'%</b><small>'+esc(qzT("qa_k_avg"))+'</small></div>';
   var Q={};QA.items.forEach(function(x){Q[x.id]=x;});
-  box.innerHTML='<table class="qa-tbl"><thead><tr><th>'+esc(qzT("qa_h_ref"))+'</th><th class="n">'+esc(qzT("qa_h_ans"))+'</th><th class="n">'+esc(qzT("qa_h_ok"))+'</th><th class="n">'+esc(qzT("qa_h_ko"))+'</th><th class="n">'+esc(qzT("qa_h_pct"))+'</th><th>'+esc(qzT("qa_h_last"))+'</th></tr></thead><tbody>'+
-    R.map(function(r){var on=QA.open===r.id;
-      var row='<tr class="rw'+(on?' on':'')+'" onclick="qaOpenRef(\''+r.id+'\')"><td><b>'+esc(r.name)+'</b>'+(r.email?'<br><small>'+esc(r.email)+'</small>':'')+(r.has_code?'':'<br><small style="color:var(--bad)">'+esc(qzT("qa_nocode"))+'</small>')+'</td><td class="n">'+r.answered+'/'+Math.max(n,r.answered)+'</td><td class="n ok">'+r.correct+'</td><td class="n ko">'+r.wrong+'</td><td class="n">'+(r.answered?Math.round(r.correct/r.answered*100)+'%':'–')+'</td><td><small>'+(r.last_at?esc(qaFmt(r.last_at)):'–')+'</small></td></tr>';
-      if(on){var A=QA.answers.filter(function(a){return a.referee_id===r.id;});
-        row+='<tr><td colspan="6"><div class="qa-det">'+(A.length?A.map(function(a){var it=Q[a.item_id]||{};return '<div class="r"><span class="qa-ans '+(a.is_correct?'y':'n')+'">'+(a.is_correct?'&#10004;':'&#10008;')+'</span><span class="q">'+esc(it.title||it.question||"")+(it.title?'<br><small>'+esc(it.question)+'</small>':'')+'<br><small>'+esc(qzT("qa_ans_lbl"))+': <b>'+esc(qzYN(a.answer))+'</b> · '+esc(qaFmt(a.created_at))+'</small></span></div>';}).join(""):'<div class="hint">'+esc(qzT("qa_det_none"))+'</div>')+
-          (A.length?'<div class="va-btns" style="margin-top:8px"><button type="button" class="btn ghost" style="color:var(--bad)" onclick="event.stopPropagation();qaResetRef(\''+r.id+'\')">'+esc(qzT("qa_reset"))+'</button></div>':'')+'</div></td></tr>';}
+  var sc=function(t){var tot=t.total||t.answered;return '<b>'+t.correct+'/'+tot+'</b> <small>('+qzPct(t.correct,tot)+'%)</small>';};
+  box.innerHTML='<table class="qa-tbl"><thead><tr><th>'+esc(qzT("qa_h_ref"))+'</th><th class="n">'+esc(qzT("qa_h_att"))+'</th><th>'+esc(qzT("qa_h_lastatt"))+'</th><th class="n">'+esc(qzT("qa_h_best"))+'</th></tr></thead><tbody>'+
+    R.map(function(r){var on=QA.open===r.id,L=r._att,last=L[0],best=L.filter(function(t){return t.status==="finished";}).reduce(function(b,t){return !b||qzPct(t.correct,t.total)>qzPct(b.correct,b.total)?t:b;},null);
+      var row='<tr class="rw'+(on?' on':'')+'" onclick="qaOpenRef(\''+r.id+'\')"><td><b>'+esc(r.name)+'</b>'+(r.email?'<br><small>'+esc(r.email)+'</small>':'')+(r.has_code?'':'<br><small style="color:var(--bad)">'+esc(qzT("qa_nocode"))+'</small>')+'</td><td class="n">'+L.length+'</td><td>'+(last?sc(last)+'<br><small>'+esc(qaFmt(last.finished_at||last.started_at))+' · '+esc(qzT("qa_st_"+last.status))+'</small>':'<small>–</small>')+'</td><td class="n">'+(best?sc(best):'–')+'</td></tr>';
+      if(on){
+        row+='<tr><td colspan="4"><div class="qa-det">'+(L.length?L.map(function(t,k){var tot=t.total||t.answered,op=QA.openAtt===t.id;
+          var h='<div class="qa-att'+(op?' on':'')+'" onclick="event.stopPropagation();qaOpenAtt(\''+t.id+'\')"><span class="no">#'+(L.length-k)+'</span><span class="q"><b>'+esc(qaFmt(t.started_at))+'</b>'+(t.finished_at?' → '+esc(qaFmt(t.finished_at)):'')+'<br><small class="qst '+esc(t.status)+'">'+esc(qzT("qa_st_"+t.status))+'</small> <small>· '+t.answered+'/'+tot+' '+esc(qzT("qa_answered_l"))+'</small></span><span class="sc"><b class="ok">'+t.correct+'</b> / <b class="ko">'+t.wrong+'</b><br><small>'+qzPct(t.correct,tot)+'%</small></span><button type="button" class="rm" title="'+esc(qzT("qa_del_att"))+'" onclick="event.stopPropagation();qaDelAttempt(\''+t.id+'\')">&times;</button></div>';
+          if(op){var A=QA.answers.filter(function(a){return a.attempt_id===t.id;});
+            h+='<div class="qa-attd">'+(A.length?A.map(function(a){var it=Q[a.item_id]||{};return '<div class="r"><span class="qa-ans '+(a.is_correct?'y':'n')+'">'+(a.is_correct?'&#10004;':'&#10008;')+'</span><span class="q">'+esc(it.title||it.question||"")+(it.title?'<br><small>'+esc(it.question)+'</small>':'')+'<br><small>'+esc(qzT("qa_ans_lbl"))+': <b>'+esc(qzYN(a.answer))+'</b> · '+esc(qaFmt(a.created_at))+'</small></span></div>';}).join(""):'<div class="hint">'+esc(qzT("qa_det_none"))+'</div>')+'</div>';}
+          return h;}).join(""):'<div class="hint">'+esc(qzT("qa_det_none"))+'</div>')+'</div></td></tr>';}
       return row;}).join("")+'</tbody></table>';
 }
 /* language + wiring */

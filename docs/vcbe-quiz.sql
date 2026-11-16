@@ -32,3 +32,27 @@ alter table public.vcbe_quiz_answers enable row level security;
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('vcbe-quiz','vcbe-quiz', true, 104857600, array['image/jpeg','image/png','image/webp','video/mp4','video/quicktime','video/webm','video/x-m4v'])
 on conflict (id) do nothing;
+
+-- Migration vcbe_quiz_attempts_20261116 (16/11/2026, richiesta utente): tentativi.
+-- Il risultato si vede solo alla fine; l'arbitro può ricominciare; ogni tentativo resta salvato (data/ora, punteggio) per l'admin.
+create table if not exists public.vcbe_quiz_attempts (
+  id uuid primary key default gen_random_uuid(),
+  referee_id uuid not null references public.vcbe_referees(id) on delete cascade,
+  started_at timestamptz not null default now(),
+  finished_at timestamptz,
+  restarted_at timestamptz,
+  total integer not null default 0,
+  answered integer not null default 0,
+  correct integer not null default 0,
+  wrong integer not null default 0,
+  status text not null default 'open' check (status in ('open','finished','restarted'))
+);
+create index if not exists vcbe_quiz_attempts_ref_idx on public.vcbe_quiz_attempts(referee_id, started_at desc);
+alter table public.vcbe_quiz_attempts enable row level security;
+alter table public.vcbe_quiz_answers add column if not exists attempt_id uuid references public.vcbe_quiz_attempts(id) on delete cascade;
+insert into public.vcbe_quiz_attempts (referee_id, started_at, answered, correct, wrong, status)
+select referee_id, min(created_at), count(*), count(*) filter (where is_correct), count(*) filter (where not is_correct), 'open'
+from public.vcbe_quiz_answers where attempt_id is null group by referee_id;
+update public.vcbe_quiz_answers a set attempt_id = t.id from public.vcbe_quiz_attempts t where a.attempt_id is null and t.referee_id = a.referee_id;
+alter table public.vcbe_quiz_answers drop constraint if exists vcbe_quiz_answers_item_id_referee_id_key;
+create unique index if not exists vcbe_quiz_answers_attempt_item_uq on public.vcbe_quiz_answers(attempt_id, item_id);
