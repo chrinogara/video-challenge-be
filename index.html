@@ -1689,6 +1689,105 @@ textarea.bk-in{min-height:140px;resize:vertical}
 .st-err small{display:block;color:var(--muted)}
 .st-note{font-size:12px;color:var(--muted);margin:6px 0 0}
 @media(max-width:560px){.st-p{flex-wrap:wrap}.st-p .tx{flex:1 1 calc(100% - 46px)}.st-p .st-pgl{max-width:calc(100% - 42px);margin-left:42px}}
+/* ── Quiz (16/11/2026, richiesta utente): domande con video, foto o situazione scritta + Sì/No ── */
+#page-quiz [hidden]{display:none!important}
+#page-quiz .btn svg{width:18px;height:18px;flex:none}
+#page-quiz .btn{gap:8px}
+#page-quiz .btn.ghost{background:#fff}
+#page-quiz .btn.dv-big{min-height:52px;font-size:16px}
+#page-quiz select.dv-in{-webkit-appearance:menulist;appearance:auto}
+.tile.tquiz{grid-column:1 / -1!important;display:flex!important;flex-direction:row!important;align-items:center;gap:14px;background:linear-gradient(120deg,#0F2E6B,#2563EB)!important;color:#fff;border:0}
+.tile.tquiz h3{color:#fff;margin:0 0 2px}
+.tile.tquiz p{color:#DCE7FB;margin:0}
+.tile.tquiz .ic{flex:none;background:rgba(255,255,255,.16)!important;color:#fff!important;margin:0}
+.tile.tquiz .qzt-tx{flex:1;min-width:0}
+.tile.tquiz .go{color:#FDE68A;margin:0;flex:none}
+.qz-me{display:flex;align-items:center;gap:12px}
+.qz-me .dv-av{width:44px;height:44px;border-radius:50%;background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:var(--fd);flex:none}
+.qz-me .tx{flex:1;min-width:0}.qz-me .tx b{display:block;font-size:15px}.qz-me .tx small{color:var(--muted);font-size:12.5px}
+.qz-score{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.qz-score div{background:var(--bg);border-radius:12px;padding:9px 6px;text-align:center}
+.qz-score b{display:block;font-family:var(--fd);font-size:22px;line-height:1.1}
+.qz-score small{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.qz-score .ok b{color:var(--ok)}.qz-score .ko b{color:var(--bad)}
+.qz-bar{height:6px;border-radius:4px;background:var(--line);margin-top:10px;overflow:hidden}.qz-bar i{display:block;height:100%;background:var(--violet);border-radius:4px}
+.qz-chips{display:flex;gap:6px;flex-wrap:wrap}
+.qz-chips button{border:1.5px solid var(--line2);background:#fff;border-radius:999px;padding:7px 13px;font:inherit;font-size:13.5px;font-weight:700;color:var(--ink);cursor:pointer}
+.qz-chips button.on{background:var(--violet);border-color:var(--violet);color:#fff}
+.qz-card{padding:0!important;overflow:hidden}
+.qz-card .qz-in{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.qz-card .qz-in+.qz-in{padding-top:0}
+.qz-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.qz-kind{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--violet-50);color:var(--violet)}
+.qz-kind.photo{background:#FCE7F3;color:#DB2777}.qz-kind.text{background:#FEF3C7;color:#B45309}
+.qz-num{font-size:12.5px;color:var(--muted);font-weight:700;margin-left:auto}
+.qz-title{font-family:var(--fd);font-size:16px;font-weight:800;margin:0}
+.qz-media{background:#0B1020;position:relative}
+.qz-media.v{aspect-ratio:16/9}
+.qz-media iframe,.qz-media video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.qz-media img{display:block;width:100%;max-height:70vh;object-fit:contain;background:#0B1020;cursor:zoom-in}
+.qz-sit{background:var(--bg);border-left:4px solid #F59E0B;border-radius:10px;padding:10px 12px;font-size:14.5px;line-height:1.5;white-space:pre-wrap}
+.qz-q{font-size:16px;font-weight:800;line-height:1.35;margin:0}
+.qz-yn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qz-yn button{min-height:52px;border-radius:14px;border:2px solid var(--line2);background:#fff;font:inherit;font-size:16px;font-weight:800;cursor:pointer;color:var(--ink)}
+.qz-yn button.sel.y{border-color:var(--ok);background:#E7F7EE;color:#0F7A3D}
+.qz-yn button.sel.n{border-color:var(--bad);background:#FDECEC;color:#B42318}
+.qz-confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.qz-confirm small{color:var(--muted);font-size:12.5px;flex:1 1 180px}
+.qz-res{border-radius:12px;padding:11px 13px;display:flex;flex-direction:column;gap:5px;font-size:14px;line-height:1.45}
+.qz-res.ok{background:#E7F7EE;color:#0F5132}.qz-res.ko{background:#FDECEC;color:#842029}
+.qz-res b{font-size:15px}
+.qz-res .ex{color:var(--ink);background:rgba(255,255,255,.7);border-radius:8px;padding:8px 10px;white-space:pre-wrap}
+.qz-empty{text-align:center;color:var(--muted);padding:26px 16px}
+.qz-zoom{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center}
+.qz-zoom img{max-width:100%;max-height:100%;object-fit:contain}
+.qz-zoom button{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:24px;cursor:pointer}
+@media(max-width:760px){
+ #page-quiz{padding-top:6px}
+ #page-quiz .adm-main{gap:10px;padding-top:4px}
+ #page-quiz .adm-top{background:transparent;box-shadow:none;border-radius:0;padding:0 2px;gap:10px;flex-wrap:nowrap;align-items:center;min-height:38px}
+ #page-quiz .adm-top .ttl{order:2;flex:1 1 auto;min-width:0}
+ #page-quiz .adm-top .seclabel,#page-quiz .adm-top .secsub{display:none}
+ #page-quiz .adm-top .sectitle{font-size:18px;margin:0;line-height:1.2;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #page-quiz .adm-top .adm-back{order:1;width:36px;height:36px;padding:0;justify-content:center;flex:none;border:0;border-radius:11px;background:rgba(255,255,255,.16);color:#fff}
+ #page-quiz .adm-top .adm-back svg{width:19px;height:19px}
+ #page-quiz .adm-top .adm-back span{display:none}
+ #page-quiz .card{padding:14px;border-radius:16px}
+ #page-quiz .dv-in{min-height:46px}
+ #page-quiz .dv-code{font-size:20px}
+}
+/* admin quiz */
+.qa-tabs{display:flex;gap:6px;margin-bottom:10px}
+.qa-tabs button{flex:1;border:1px solid var(--line2);background:#fff;border-radius:9px;padding:8px;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;color:var(--ink)}
+.qa-tabs button.on{background:var(--violet);border-color:var(--violet);color:#fff}
+.qa-yn{display:flex;gap:6px}
+.qa-yn button{flex:1;border:1.5px solid var(--line2);background:#fff;border-radius:9px;padding:8px;font:inherit;font-weight:800;cursor:pointer}
+.qa-yn button.on.y{background:#E7F7EE;border-color:var(--ok);color:#0F7A3D}
+.qa-yn button.on.n{background:#FDECEC;border-color:var(--bad);color:#B42318}
+.qa-th{flex:none;width:56px;height:42px;border-radius:6px;overflow:hidden;background:#1B2030;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.qa-th img{width:100%;height:100%;object-fit:cover}
+.qa-th.text{background:#FEF3C7;color:#B45309}
+.qa-ans{font-weight:800}.qa-ans.y{color:var(--ok)}.qa-ans.n{color:var(--bad)}
+.qa-tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.qa-tbl th{text-align:left;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:6px 6px;border-bottom:1px solid var(--line)}
+.qa-tbl td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+.qa-tbl tr.rw{cursor:pointer}.qa-tbl tr.rw:hover td{background:var(--bg)}
+.qa-tbl tr.on td{background:var(--violet-50)}
+.qa-tbl .n{text-align:center;font-weight:800}
+.qa-tbl .ok{color:var(--ok)}.qa-tbl .ko{color:var(--bad)}
+.qa-tbl small{color:var(--muted)}
+.qa-det{background:var(--bg);border-radius:10px;padding:10px;margin:4px 0 10px}
+.qa-det .r{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--line2);font-size:13.5px}
+.qa-det .r:last-child{border-bottom:0}
+.qa-det .r .q{flex:1;min-width:0}
+.qa-kpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}
+.qa-kpi div{background:var(--bg);border-radius:10px;padding:8px;text-align:center}.qa-kpi b{display:block;font-size:20px;font-family:var(--fd)}.qa-kpi small{font-size:11px;color:var(--muted);font-weight:700}
+.qa-wrap{overflow-x:auto}
+#qa_p_items{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
+#qa_p_items[hidden]{display:none}
+#qa_p_items>*{margin:0;min-width:0}
+@media(min-width:900px){#qa_p_items{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.dtile.kqz{--k:#2563EB;--kb:#E6EDFD}
 </style>
 </head>
 <body>
@@ -1762,6 +1861,11 @@ textarea.bk-in{min-height:140px;resize:vertical}
         <div class="tile wide w3" onclick="go('report')">
           <div class="ic" style="background:#E4ECFD;color:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/></svg></div>
           <h3 data-i18n="f3t">Challenge report</h3><p data-i18n="f3d">Fill the form; it becomes a PDF, emailed automatically.</p>
+          <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
+        </div>
+        <div class="tile wide tquiz" onclick="go('quiz')">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.2-2.5 3.9"/><path d="M12 17h.01"/></svg></div>
+          <div class="qzt-tx"><span class="cntnew tilenew" id="nb_quiz" hidden></span><h3 data-i18n="qz_title">Quiz</h3><p data-i18n="qz_home_d">Video, photo and written situations: answer Yes or No with your Drive code.</p></div>
           <div class="go"><span data-i18n="f_open">Open</span> &rarr;</div>
         </div>
       </div>
@@ -2078,6 +2182,52 @@ textarea.bk-in{min-height:140px;resize:vertical}
     </div>
   </section>
 
+  <section class="page" data-page="quiz" id="page-quiz">
+    <div class="adm-shell">
+      <aside class="adm-rail" data-rail="quiz" aria-label="Navigation"></aside>
+      <div class="adm-main">
+        <div class="adm-top">
+          <button class="adm-back" onclick="go('home')" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg><span data-i18n="adm_back">Back</span></button>
+          <div class="ttl">
+            <div class="seclabel" data-i18n="qz_label">Training</div>
+            <h2 class="sectitle" data-i18n="qz_title">Quiz</h2>
+            <p class="secsub" data-i18n="qz_sub">Watch the video, look at the photo or read the situation, then answer Yes or No.</p>
+          </div>
+        </div>
+        <div class="dv-wrap">
+          <div class="dv-view" data-qv="loading" hidden><div class="card dv-note"><span class="dv-spin"></span> <span data-i18n="dv_loading">Loading…</span></div></div>
+
+          <div class="dv-view" data-qv="login">
+            <div class="card dv-login">
+              <div class="dv-intro"><span class="dv-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><p data-i18n="qz_login_s">Sign in with your name and the personal code you already use for Drive. Your answers are saved under your name.</p></div>
+              <div class="dv-form">
+                <div><label class="dv-lbl" for="qz_name" data-i18n="dv_l_name">Name</label><select id="qz_name" class="dv-in"></select></div>
+                <div><label class="dv-lbl" for="qz_code" data-i18n="dv_l_code">Personal code</label><input id="qz_code" class="dv-in dv-code" type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="••••" onkeydown="if(event.key==='Enter')qzLogin()"></div>
+                <div class="dv-err" id="qz_lerr" role="alert" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg><span id="qz_lerr_t"></span></div>
+                <button type="button" class="btn dv-big" id="qz_login_btn" onclick="qzLogin()" data-i18n="dv_signin">Sign in</button>
+              </div>
+              <p class="dv-note" style="font-size:12.5px;line-height:1.45;margin:0" data-i18n="qz_nocode">No code yet, or you forgot it? Ask the coordinator: it is the same code as for Drive.</p>
+            </div>
+          </div>
+
+          <div class="dv-view" data-qv="list" hidden>
+            <div class="card">
+              <div class="qz-me"><span class="dv-av" id="qz_av"></span><div class="tx"><b id="qz_myname"></b><small data-i18n="qz_signed">Signed in with your Drive code</small></div><button type="button" class="btn ghost" onclick="qzLogout()" data-i18n="dv_signout">Sign out</button></div>
+              <div class="qz-score" id="qz_score"></div>
+              <div class="qz-bar"><i id="qz_bar" style="width:0"></i></div>
+            </div>
+            <div class="qz-chips" id="qz_chips">
+              <button type="button" data-f="todo" class="on" onclick="qzFilter('todo')" data-i18n="qz_f_todo">To answer</button>
+              <button type="button" data-f="done" onclick="qzFilter('done')" data-i18n="qz_f_done">Answered</button>
+              <button type="button" data-f="all" onclick="qzFilter('all')" data-i18n="qz_f_all">All</button>
+            </div>
+            <div id="qz_list" class="dv-view"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="page" data-page="admin" id="manage">
     <div class="adm-shell">
       <aside class="adm-rail" aria-label="Navigation">
@@ -2119,6 +2269,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
               <button type="button" class="dtile k2" data-col="col_vids" data-cnt="cnt_vids" onclick="admOpen('col_vids')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></span><span class="dtx"><b data-i18n="mvid">Video &amp; slides</b><small data-i18n="ad_d_vids">Training clips and slide decks</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="mvid">Video &amp; slides</small></span></button>
               <button type="button" class="dtile kph" data-col="col_photos" data-cnt="cnt_photos" onclick="admOpen('col_photos')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></span><span class="dtx"><b data-i18n="mpho">Photos</b><small data-i18n="ad_d_photos">Photos of halls and equipment</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="mpho">Photos</small></span></button>
               <button type="button" class="dtile kbk" data-col="col_books" data-cnt="cnt_books" onclick="admOpen('col_books')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/></svg></span><span class="dtx"><b data-i18n="mbook">Books</b><small data-i18n="ad_d_books">Books to read in the app</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="mbook">Books</small></span></button>
+              <button type="button" class="dtile kqz" data-col="col_quiz" data-cnt="cnt_quiz" onclick="admOpen('col_quiz');qaTab('items')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.2-2.5 3.9"/><path d="M12 17h.01"/></svg></span><span class="dtx"><b data-i18n="qa_title">Quiz</b><small data-i18n="ad_d_quiz">Video, photo and written questions (Yes/No)</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="qa_c_items">questions</small></span></button>
             </div></section>
             <section class="dgrp"><h4 data-i18n="ad_g_mon">Reports &amp; monitoring</h4><div class="dgrid">
               <button type="button" class="dtile k3" data-col="col_reps" data-cnt="cnt_reps" onclick="admOpen('col_reps')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/></svg></span><span class="dtx"><b data-i18n="mrep">Reports &amp; data</b><small data-i18n="ad_d_reps">Submitted reports, PDFs, Genius Sports</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="dg_reports">reports</small></span></button>
@@ -2130,6 +2281,7 @@ textarea.bk-in{min-height:140px;resize:vertical}
               <button type="button" class="dtile k7" data-col="col_tr" data-cnt="cnt_tr" onclick="admOpen('col_tr')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span class="dtx"><b data-i18n="tr_title">Team Right by first referee</b><small data-i18n="ad_d_tr">Overturned decisions per first referee</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="ad_c_tr">Team Right</small></span></button>
               <button type="button" class="dtile k2" data-col="col_drive" data-cnt="cnt_drive" onclick="admOpen('col_drive')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8z"/></svg></span><span class="dtx"><b data-i18n="dva_title">Drive access codes</b><small data-i18n="ad_d_drive">Personal codes for the Drive section</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="ad_c_drive">active</small></span></button>
               <button type="button" class="dtile kst" data-col="col_stats" data-cnt="cnt_stats" onclick="admOpen('col_stats')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><span class="dtx"><b data-i18n="st_title">Live visitors &amp; statistics</b><small data-i18n="ad_d_stats">Who is in the app now, visits and sections</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="st_online">online now</small></span></button>
+              <button type="button" class="dtile kqz" data-col="col_quiz" data-cnt="cnt_quizr" onclick="admOpen('col_quiz');qaTab('res')"><span class="dic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></span><span class="dtx"><b data-i18n="qa_res_title">Quiz results</b><small data-i18n="ad_d_quizr">Answers, correct and wrong per referee</small></span><span class="dnum"><b class="dcnt">–</b><small data-i18n="qa_c_refs">referees answered</small></span></button>
             </div></section>
           </div>
           <div class="adm-board" id="adm_detail">
@@ -2179,6 +2331,43 @@ textarea.bk-in{min-height:140px;resize:vertical}
                 </div>
               </details>
               <div class="mlist" id="mng_vidlist"></div>
+            </div>
+
+            <!-- ── QUIZ (16/11/2026) ──────────────────────────────── -->
+            <div class="acol c2 wide" id="col_quiz">
+              <div class="acol-h"><span data-i18n="qa_title">Quiz</span><i id="cnt_quiz">0</i><i id="cnt_quizr" hidden>0</i></div>
+              <div class="qa-tabs"><button type="button" id="qa_t_items" class="on" onclick="qaTab('items')" data-i18n="qa_t_items">Questions</button><button type="button" id="qa_t_res" onclick="qaTab('res')" data-i18n="qa_t_res">Results by referee</button></div>
+              <div id="qa_p_items">
+                <details class="aadd" id="qa_box">
+                  <summary>+ <span id="qa_sum" data-i18n="qa_add">Add question</span></summary>
+                  <div class="aform va-form">
+                    <div class="field"><label class="l" data-i18n="qa_kind">Type</label>
+                      <div class="va-src"><button type="button" id="qa_k_video" class="on" onclick="qaKind('video')" data-i18n="qa_k_video">Video</button><button type="button" id="qa_k_photo" onclick="qaKind('photo')" data-i18n="qa_k_photo">Photo</button><button type="button" id="qa_k_text" onclick="qaKind('text')" data-i18n="qa_k_text">Written situation</button></div></div>
+                    <div class="field"><label class="l" for="qa_title_in" data-i18n="qa_f_title">Title (optional)</label><input type="text" id="qa_title_in" maxlength="200"></div>
+                    <div class="field" id="qa_vidbox"><label class="l" data-i18n="qa_f_video">Video</label>
+                      <div class="va-src"><button type="button" id="qa_s_link" class="on" onclick="qaSrc('link')" data-i18n="va_s_link">Link</button><button type="button" id="qa_s_file" onclick="qaSrc('file')" data-i18n="va_s_file">Upload a file</button></div>
+                      <input type="url" id="qa_url" data-i18n-ph="va_url_ph" placeholder="YouTube, Vimeo, Google Drive…">
+                      <div id="qa_vfilebox" hidden><input type="file" id="qa_vfile" accept="video/mp4,video/quicktime,video/webm,.mp4,.m4v,.mov,.webm"><div class="hint" data-i18n="qa_vfile_hint">Video .mp4 / .mov, max 100 MB. Long videos: better a YouTube or Drive link.</div></div>
+                    </div>
+                    <div class="field" id="qa_phobox" hidden><label class="l" data-i18n="qa_f_photo">Photo</label><input type="file" id="qa_pfile" accept="image/*"><div class="hint" data-i18n="qa_pfile_hint">The photo is resized automatically.</div></div>
+                    <div class="hint" id="qa_curmedia"></div>
+                    <div class="field"><label class="l" for="qa_sit" id="qa_sit_l" data-i18n="qa_f_sit">Description of the situation (optional)</label><textarea id="qa_sit" maxlength="6000"></textarea></div>
+                    <div class="field"><label class="l" for="qa_q" data-i18n="qa_f_q">Question</label><textarea id="qa_q" maxlength="1000" style="min-height:60px"></textarea></div>
+                    <div class="field"><label class="l" data-i18n="qa_f_correct">Correct answer</label>
+                      <div class="qa-yn"><button type="button" id="qa_c_y" class="y" onclick="qaCorrect(true)" data-i18n="qz_yes">Yes</button><button type="button" id="qa_c_n" class="n" onclick="qaCorrect(false)" data-i18n="qz_no">No</button></div></div>
+                    <div class="field"><label class="l" for="qa_ex" data-i18n="qa_f_ex">Explanation shown after the answer (optional)</label><textarea id="qa_ex" maxlength="6000"></textarea></div>
+                    <label class="va-chk"><input type="checkbox" id="qa_pub" checked> <span data-i18n="va_pub">Visible in the app</span></label>
+                    <div class="va-btns"><button type="button" class="btn accent" id="qa_save" onclick="qaSave()" data-i18n="qa_add">Add question</button><button type="button" class="btn ghost" id="qa_cancel" onclick="qaReset(true)" hidden data-i18n="va_cancel">Cancel</button></div>
+                    <div class="va-st" id="qa_st"></div>
+                  </div>
+                </details>
+                <div class="mlist" id="qa_list"></div>
+              </div>
+              <div id="qa_p_res" class="card" hidden>
+                <div class="qa-kpi" id="qa_kpi"></div>
+                <div class="va-btns" style="margin-bottom:8px"><button type="button" class="btn ghost" onclick="qaLoad()" data-i18n="wk_refresh">&#8635; Refresh</button></div>
+                <div class="qa-wrap" id="qa_res"></div>
+              </div>
             </div>
 
             <!-- ── PHOTOS ─────────────────────────────────────────── -->
@@ -4100,8 +4289,8 @@ function admSyncTile(b){var src=document.getElementById(b.getAttribute("data-cnt
   });
 })();
 (function buildRails(){
-  var I={home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',library:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',report:'<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/>',diag:'<path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',drive:'<path d="M3 11l19-9-9 19-2-8z"/>',books:'<path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/>',admin:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
-  var T={home:'Home',library:'Library',report:'Report',diag:'Diagnostics',drive:'Drive',books:'Documents',admin:'Admin'};
+  var I={home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',library:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',report:'<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/>',diag:'<path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',drive:'<path d="M3 11l19-9-9 19-2-8z"/>',books:'<path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2z"/><path d="M12 6.5v14"/>',quiz:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.2-2.5 3.9"/><path d="M12 17h.01"/>',admin:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
+  var T={home:'Home',library:'Library',report:'Report',diag:'Diagnostics',drive:'Drive',books:'Documents',quiz:'Quiz',admin:'Admin'};
   document.querySelectorAll('.adm-rail[data-rail]').forEach(function(r){
     var cur=r.getAttribute('data-rail');
     r.innerHTML=Object.keys(I).map(function(k){return '<button data-go="'+k+'" onclick="go(\''+k+'\')" title="'+T[k]+'"'+(k===cur?' class="on"':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+I[k]+'</svg></button>';}).join('');
@@ -4130,6 +4319,7 @@ function go(p){
   if(p==='diag'&&typeof renderDiag==='function'){renderDiag();if(typeof loadIssueStatus==='function')loadIssueStatus().then(renderDiag);}
   if(p==='matches'&&typeof loadWeekMatches==='function')loadWeekMatches();
   if(p==='drive'&&typeof dvOpen==='function')dvOpen();
+  if(p==='quiz'&&typeof qzOpen==='function')qzOpen();
   if(p==='library'){document.querySelectorAll('#page-library .acol').forEach(function(c){c.classList.add('collapsed');});if(typeof markLibrarySeen==='function')markLibrarySeen();}
   try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
 }
@@ -5978,6 +6168,283 @@ function stRender(){
 function cevOpen(){var p=document.getElementById("cev_pop");p.hidden=false;var w=p.querySelector(".cev-wa");if(w)w.focus();}
 function cevClose(){var p=document.getElementById("cev_pop");if(p)p.hidden=true;}
 document.addEventListener("keydown",function(e){if(e.key==="Escape")cevClose();});
+</script>
+<script>
+/* ── Quiz (16/11/2026, richiesta utente) ─────────────────────────────────────────────
+   Pagina «Quiz»: domande con video, foto o situazione scritta + risposta Sì/No.
+   Accesso: nome + codice personale di Drive (login con vcbe-drive, stesso token vcbe_drive_token:
+   chi è già collegato a Drive entra direttamente). Una sola risposta per domanda, non modificabile.
+   Dati e risposte SOLO tramite la edge function vcbe-quiz (codice in docs/vcbe-quiz.ts).
+   Admin → «Quiz» (domande) e «Quiz results» (per arbitro: risposte, giuste, sbagliate). */
+Object.assign(T.en,{qz_label:"Training",qz_title:"Quiz",qz_sub:"Watch the video, look at the photo or read the situation, then answer Yes or No.",
+qz_home_d:"Video, photo and written situations: answer Yes or No with your Drive code.",
+qz_login_s:"Sign in with your name and the personal code you already use for Drive. Your answers are saved under your name.",
+qz_nocode:"No code yet, or you forgot it? Ask the coordinator: it is the same code as for Drive (Drive → Request access).",
+qz_signed:"Signed in with your Drive code",qz_f_todo:"To answer",qz_f_done:"Answered",qz_f_all:"All",
+qz_s_done:"answered",qz_s_ok:"correct",qz_s_ko:"wrong",qz_yes:"Yes",qz_no:"No",
+qz_k_video:"Video",qz_k_photo:"Photo",qz_k_text:"Situation",qz_n:"Question {i} of {n}",
+qz_confirm:"Confirm my answer",qz_change:"Change",qz_final:"Your answer is final: you cannot change it afterwards.",
+qz_right:"Correct!",qz_wrong:"Wrong answer",qz_your:"Your answer: {a}",qz_correct_is:"Correct answer: {a}",qz_expl:"Explanation",
+qz_none:"No questions yet. Come back soon!",qz_all_done:"Well done: you answered all the questions.",qz_no_done:"You have not answered any question yet.",
+qz_e_net:"Not saved. Check your connection and try again.",qz_open_video:"Open the video",
+qa_title:"Quiz",ad_d_quiz:"Video, photo and written questions (Yes/No)",qa_c_items:"questions",qa_res_title:"Quiz results",ad_d_quizr:"Answers, correct and wrong per referee",qa_c_refs:"referees answered",
+qa_t_items:"Questions",qa_t_res:"Results by referee",qa_add:"Add question",qa_save:"Save changes",qa_edit:"Edit",qa_kind:"Type",qa_k_video:"Video",qa_k_photo:"Photo",qa_k_text:"Written situation",
+qa_f_title:"Title (optional)",qa_f_video:"Video",qa_f_photo:"Photo",qa_vfile_hint:"Video .mp4 / .mov, max 100 MB. Long videos: better a YouTube or Drive link.",qa_pfile_hint:"The photo is resized automatically.",
+qa_f_sit:"Description of the situation (optional)",qa_f_sit_req:"Description of the situation",qa_f_q:"Question",qa_f_correct:"Correct answer",qa_f_ex:"Explanation shown after the answer (optional)",
+qa_need_q:"Write the question.",qa_need_c:"Choose the correct answer: Yes or No.",qa_need_media:"Add the video (link or file) or the photo.",qa_need_sit:"Describe the situation.",
+qa_saved:"Saved.",qa_cur:"Current file",qa_del_q:"Delete this question and all its answers?\n\n{t}",qa_answers:"{n} answers · {p}% correct",qa_noans:"no answers yet",
+qa_empty:"No questions yet. Add the first one above.",qa_h_ref:"Referee",qa_h_ans:"Answered",qa_h_ok:"Correct",qa_h_ko:"Wrong",qa_h_pct:"Score",qa_h_last:"Last answer",
+qa_nocode:"no Drive code",qa_reset:"Delete this referee's answers",qa_reset_q:"Delete all quiz answers of {n}? They can answer again.",qa_k_q:"questions",qa_k_refs:"referees answered",qa_k_ans:"answers",qa_k_pct:"correct overall",
+qa_det_none:"No answers yet.",st_s_quiz:"Quiz",st_a_quiz_login:"Signed in to the quiz",st_a_quiz_answer:"Answered a quiz question",qa_hidden:"hidden",qa_ans_lbl:"answer"});
+Object.assign(T.fr,{qz_label:"Formation",qz_title:"Quiz",qz_sub:"Regardez la vidéo, la photo ou lisez la situation, puis répondez Oui ou Non.",
+qz_home_d:"Vidéos, photos et situations écrites : répondez Oui ou Non avec votre code Drive.",
+qz_login_s:"Connectez-vous avec votre nom et le code personnel que vous utilisez déjà pour Drive. Vos réponses sont enregistrées à votre nom.",
+qz_nocode:"Pas encore de code, ou vous l'avez oublié ? Demandez-le au coordinateur : c'est le même code que pour Drive (Drive → Demander l'accès).",
+qz_signed:"Connecté avec votre code Drive",qz_f_todo:"À répondre",qz_f_done:"Répondues",qz_f_all:"Toutes",
+qz_s_done:"répondues",qz_s_ok:"justes",qz_s_ko:"fausses",qz_yes:"Oui",qz_no:"Non",
+qz_k_video:"Vidéo",qz_k_photo:"Photo",qz_k_text:"Situation",qz_n:"Question {i} sur {n}",
+qz_confirm:"Confirmer ma réponse",qz_change:"Changer",qz_final:"Votre réponse est définitive : vous ne pourrez plus la modifier.",
+qz_right:"Bonne réponse !",qz_wrong:"Mauvaise réponse",qz_your:"Votre réponse : {a}",qz_correct_is:"Bonne réponse : {a}",qz_expl:"Explication",
+qz_none:"Pas encore de questions. Revenez bientôt !",qz_all_done:"Bravo : vous avez répondu à toutes les questions.",qz_no_done:"Vous n'avez encore répondu à aucune question.",
+qz_e_net:"Non enregistré. Vérifiez votre connexion et réessayez.",qz_open_video:"Ouvrir la vidéo",
+qa_title:"Quiz",ad_d_quiz:"Questions vidéo, photo et écrites (Oui/Non)",qa_c_items:"questions",qa_res_title:"Résultats du quiz",ad_d_quizr:"Réponses justes et fausses par arbitre",qa_c_refs:"arbitres ont répondu",
+qa_t_items:"Questions",qa_t_res:"Résultats par arbitre",qa_add:"Ajouter une question",qa_save:"Enregistrer",qa_edit:"Modifier",qa_kind:"Type",qa_k_video:"Vidéo",qa_k_photo:"Photo",qa_k_text:"Situation écrite",
+qa_f_title:"Titre (facultatif)",qa_f_video:"Vidéo",qa_f_photo:"Photo",qa_vfile_hint:"Vidéo .mp4 / .mov, max 100 Mo. Vidéos longues : plutôt un lien YouTube ou Drive.",qa_pfile_hint:"La photo est redimensionnée automatiquement.",
+qa_f_sit:"Description de la situation (facultatif)",qa_f_sit_req:"Description de la situation",qa_f_q:"Question",qa_f_correct:"Bonne réponse",qa_f_ex:"Explication affichée après la réponse (facultatif)",
+qa_need_q:"Écrivez la question.",qa_need_c:"Choisissez la bonne réponse : Oui ou Non.",qa_need_media:"Ajoutez la vidéo (lien ou fichier) ou la photo.",qa_need_sit:"Décrivez la situation.",
+qa_saved:"Enregistré.",qa_cur:"Fichier actuel",qa_del_q:"Supprimer cette question et toutes ses réponses ?\n\n{t}",qa_answers:"{n} réponses · {p} % justes",qa_noans:"pas encore de réponses",
+qa_empty:"Pas encore de questions. Ajoutez la première ci-dessus.",qa_h_ref:"Arbitre",qa_h_ans:"Répondues",qa_h_ok:"Justes",qa_h_ko:"Fausses",qa_h_pct:"Score",qa_h_last:"Dernière réponse",
+qa_nocode:"pas de code Drive",qa_reset:"Supprimer les réponses de cet arbitre",qa_reset_q:"Supprimer toutes les réponses au quiz de {n} ? Il pourra répondre à nouveau.",qa_k_q:"questions",qa_k_refs:"arbitres ont répondu",qa_k_ans:"réponses",qa_k_pct:"justes au total",
+qa_det_none:"Pas encore de réponses.",st_s_quiz:"Quiz",st_a_quiz_login:"S'est connecté au quiz",st_a_quiz_answer:"A répondu à une question du quiz",qa_hidden:"masquée",qa_ans_lbl:"réponse"});
+Object.assign(T.nl,{qz_label:"Opleiding",qz_title:"Quiz",qz_sub:"Bekijk de video of de foto of lees de situatie en antwoord dan Ja of Nee.",
+qz_home_d:"Video's, foto's en geschreven situaties: antwoord Ja of Nee met je Drive-code.",
+qz_login_s:"Meld je aan met je naam en de persoonlijke code die je al voor Drive gebruikt. Je antwoorden worden op jouw naam bewaard.",
+qz_nocode:"Nog geen code, of vergeten? Vraag het aan de coördinator: het is dezelfde code als voor Drive (Drive → Toegang vragen).",
+qz_signed:"Aangemeld met je Drive-code",qz_f_todo:"Te beantwoorden",qz_f_done:"Beantwoord",qz_f_all:"Alle",
+qz_s_done:"beantwoord",qz_s_ok:"juist",qz_s_ko:"fout",qz_yes:"Ja",qz_no:"Nee",
+qz_k_video:"Video",qz_k_photo:"Foto",qz_k_text:"Situatie",qz_n:"Vraag {i} van {n}",
+qz_confirm:"Mijn antwoord bevestigen",qz_change:"Wijzigen",qz_final:"Je antwoord is definitief: je kunt het daarna niet meer wijzigen.",
+qz_right:"Juist!",qz_wrong:"Fout antwoord",qz_your:"Jouw antwoord: {a}",qz_correct_is:"Juiste antwoord: {a}",qz_expl:"Uitleg",
+qz_none:"Nog geen vragen. Kom snel terug!",qz_all_done:"Goed zo: je hebt alle vragen beantwoord.",qz_no_done:"Je hebt nog geen enkele vraag beantwoord.",
+qz_e_net:"Niet opgeslagen. Controleer je verbinding en probeer opnieuw.",qz_open_video:"Video openen",
+qa_title:"Quiz",ad_d_quiz:"Vragen met video, foto of tekst (Ja/Nee)",qa_c_items:"vragen",qa_res_title:"Quizresultaten",ad_d_quizr:"Antwoorden, juist en fout per scheidsrechter",qa_c_refs:"scheidsrechters antwoordden",
+qa_t_items:"Vragen",qa_t_res:"Resultaten per scheidsrechter",qa_add:"Vraag toevoegen",qa_save:"Wijzigingen opslaan",qa_edit:"Bewerken",qa_kind:"Type",qa_k_video:"Video",qa_k_photo:"Foto",qa_k_text:"Geschreven situatie",
+qa_f_title:"Titel (optioneel)",qa_f_video:"Video",qa_f_photo:"Foto",qa_vfile_hint:"Video .mp4 / .mov, max 100 MB. Lange video's: liever een YouTube- of Drive-link.",qa_pfile_hint:"De foto wordt automatisch verkleind.",
+qa_f_sit:"Beschrijving van de situatie (optioneel)",qa_f_sit_req:"Beschrijving van de situatie",qa_f_q:"Vraag",qa_f_correct:"Juiste antwoord",qa_f_ex:"Uitleg na het antwoord (optioneel)",
+qa_need_q:"Schrijf de vraag.",qa_need_c:"Kies het juiste antwoord: Ja of Nee.",qa_need_media:"Voeg de video (link of bestand) of de foto toe.",qa_need_sit:"Beschrijf de situatie.",
+qa_saved:"Opgeslagen.",qa_cur:"Huidig bestand",qa_del_q:"Deze vraag en alle antwoorden verwijderen?\n\n{t}",qa_answers:"{n} antwoorden · {p}% juist",qa_noans:"nog geen antwoorden",
+qa_empty:"Nog geen vragen. Voeg hierboven de eerste toe.",qa_h_ref:"Scheidsrechter",qa_h_ans:"Beantwoord",qa_h_ok:"Juist",qa_h_ko:"Fout",qa_h_pct:"Score",qa_h_last:"Laatste antwoord",
+qa_nocode:"geen Drive-code",qa_reset:"Antwoorden van deze scheidsrechter verwijderen",qa_reset_q:"Alle quizantwoorden van {n} verwijderen? Hij kan opnieuw antwoorden.",qa_k_q:"vragen",qa_k_refs:"scheidsrechters antwoordden",qa_k_ans:"antwoorden",qa_k_pct:"juist in totaal",
+qa_det_none:"Nog geen antwoorden.",st_s_quiz:"Quiz",st_a_quiz_login:"Aangemeld bij de quiz",st_a_quiz_answer:"Beantwoordde een quizvraag",qa_hidden:"verborgen",qa_ans_lbl:"antwoord"});
+
+var QZ={items:[],filter:"todo",sel:{},busy:{},loaded:false,name:""};
+function qzG(id){return document.getElementById(id);}
+function qzT(k,o){return dvT(k,o);}
+async function qzCall(action,payload){
+  var tok=(typeof DV!=="undefined"&&DV.token)||dvLoadToken();
+  var res=await fetch(FN+"/vcbe-quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action:action,token:tok},payload||{}))});
+  var j=null;try{j=await res.json();}catch(e){j={ok:false,reason:"bad response"};}
+  if(res.status===401){if(typeof dvForget==="function")dvForget();qzShow("login");}
+  return j||{};
+}
+function qzShow(v){document.querySelectorAll("#page-quiz .dv-view[data-qv]").forEach(function(s){s.hidden=s.getAttribute("data-qv")!==v;});}
+function qzFillNames(){var s=qzG("qz_name");if(!s||!REFS||!REFS.length)return;var cur=s.value;
+  s.innerHTML='<option value="">'+esc(qzT("dv_choose"))+'</option>'+REFS.map(function(n){return '<option value="'+esc(n)+'">'+esc(n)+'</option>';}).join("");
+  if(cur)s.value=cur;else{try{var last=localStorage.getItem("vcbe_drive_name");if(last)s.value=last;}catch(e){}}}
+async function qzOpen(){
+  qzFillNames();
+  var tok=(typeof DV!=="undefined"&&DV.token)||dvLoadToken();
+  if(!tok){qzShow("login");return;}
+  if(!QZ.loaded)qzShow("loading");
+  await qzLoad();
+}
+async function qzLoad(){
+  try{var j=await qzCall("list");
+    if(j&&j.ok){QZ.items=j.items||[];QZ.name=j.name||"";QZ.loaded=true;qzRender();qzShow("list");qzBadge();}
+    else if(!(j&&j.reason==="signed_out"))qzShow(QZ.loaded?"list":"login");
+  }catch(e){if(!QZ.loaded)qzShow("login");}
+}
+function qzLoginErr(m){var e=qzG("qz_lerr");e.hidden=!m;qzG("qz_lerr_t").textContent=m||"";}
+async function qzLogin(){
+  var name=qzG("qz_name").value,code=(qzG("qz_code").value||"").replace(/\D/g,"");qzLoginErr("");
+  if(!name){qzLoginErr(qzT("dv_e_name"));return;}
+  var b=qzG("qz_login_btn");b.disabled=true;var old=b.innerHTML;b.innerHTML='<span class="dv-spin"></span>'+esc(qzT("dv_signing"));
+  try{
+    var res=await fetch(FN+"/vcbe-drive",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"login",name:name,code:code,keep:true})});
+    var j=await res.json();
+    if(j&&j.ok){dvSaveToken(j.token,true);try{localStorage.setItem("vcbe_drive_name",name);}catch(e){}qzG("qz_code").value="";
+      if(typeof DV!=="undefined"){DV.name=j.name;DV.view="loading";}
+      if(typeof stAct==="function")try{stAct("quiz_login",true);}catch(e){}
+      qzShow("loading");await qzLoad();}
+    else{var r=j&&j.reason;qzLoginErr(r==="wrong"?qzT("dv_e_wrong",{n:j.left}):r==="locked"?qzT("dv_e_locked",{n:j.minutes||15}):r==="inactive"?qzT("dv_e_inactive"):r==="no_code"?qzT("dv_e_nocode"):r==="no_name"?qzT("dv_e_name"):qzT("dv_e_net"));}
+  }catch(e){qzLoginErr(qzT("dv_e_net"));}
+  b.disabled=false;b.innerHTML=old;
+}
+async function qzLogout(){if(typeof dvLogout==="function"){try{await dvLogout();}catch(e){}}else if(typeof dvForget==="function")dvForget();QZ.items=[];QZ.loaded=false;qzShow("login");qzBadge();}
+function qzFilter(f){QZ.filter=f;document.querySelectorAll("#qz_chips button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-f")===f);});qzRender();}
+function qzYN(v){return qzT(v?"qz_yes":"qz_no");}
+function qzMedia(it){
+  if(!it.media_url)return "";
+  if(it.kind==="photo")return '<div class="qz-media"><img loading="lazy" alt="" src="'+esc(it.media_url)+'" onclick="qzZoom(this.src)"></div>';
+  if(it.kind==="video"){
+    if(typeof vxIsFile==="function"&&vxIsFile(it.media_url))return '<div class="qz-media v"><video src="'+esc(it.media_url)+'" controls playsinline preload="metadata"></video></div>';
+    var e=embedUrl(it.media_url);
+    if(/youtube\.com\/embed|player\.vimeo|drive\.google\.com\/file/.test(e))return '<div class="qz-media v"><iframe src="'+esc(e+(/youtube/.test(e)?"?playsinline=1&rel=0":""))+'" allow="fullscreen; encrypted-media; picture-in-picture" allowfullscreen loading="lazy" title="Video"></iframe></div>';
+    return '<div class="qz-in" style="padding-bottom:0"><a class="btn ghost" href="'+esc(it.media_url)+'" target="_blank" rel="noopener">&#9654; '+esc(qzT("qz_open_video"))+'</a></div>';
+  }
+  return "";
+}
+function qzZoom(src){var d=document.createElement("div");d.className="qz-zoom";d.innerHTML='<img alt="" src="'+esc(src)+'"><button type="button" aria-label="Close">&times;</button>';d.onclick=function(){d.remove();};document.body.appendChild(d);}
+function qzCard(it,i,n){
+  var my=it.my,sel=QZ.sel[it.id],busy=QZ.busy[it.id];
+  var h='<div class="card qz-card" id="qz_c_'+it.id+'"><div class="qz-in"><div class="qz-top"><span class="qz-kind '+esc(it.kind)+'">'+esc(qzT("qz_k_"+it.kind))+'</span>'+(isRecent(it.created_at)?newBadge():'')+'<span class="qz-num">'+esc(qzT("qz_n",{i:i,n:n}))+'</span></div>'+(it.title?'<h3 class="qz-title">'+esc(it.title)+'</h3>':'')+'</div>';
+  h+=qzMedia(it);
+  h+='<div class="qz-in">'+(it.situation?'<div class="qz-sit">'+esc(it.situation)+'</div>':'')+'<p class="qz-q">'+esc(it.question)+'</p>';
+  if(my){
+    h+='<div class="qz-res '+(my.correct?'ok':'ko')+'"><b>'+(my.correct?'&#10004; ':'&#10008; ')+esc(qzT(my.correct?"qz_right":"qz_wrong"))+'</b><span>'+esc(qzT("qz_your",{a:qzYN(my.answer)}))+' · '+esc(qzT("qz_correct_is",{a:qzYN(my.right)}))+'</span>'+(my.explanation?'<div class="ex"><b style="font-size:13px">'+esc(qzT("qz_expl"))+'</b><br>'+esc(my.explanation)+'</div>':'')+'</div>';
+  }else{
+    h+='<div class="qz-yn"><button type="button" class="y'+(sel===true?' sel':'')+'" onclick="qzPick(\''+it.id+'\',true)"'+(busy?' disabled':'')+'>'+esc(qzT("qz_yes"))+'</button><button type="button" class="n'+(sel===false?' sel':'')+'" onclick="qzPick(\''+it.id+'\',false)"'+(busy?' disabled':'')+'>'+esc(qzT("qz_no"))+'</button></div>';
+    if(sel===true||sel===false)h+='<div class="qz-confirm"><small>'+esc(qzT("qz_final"))+'</small><button type="button" class="btn" onclick="qzSend(\''+it.id+'\')"'+(busy?' disabled':'')+'>'+(busy?'<span class="dv-spin"></span>':'')+esc(qzT("qz_confirm"))+'</button></div>';
+    h+='<div class="dv-err" id="qz_e_'+it.id+'" hidden><span></span></div>';
+  }
+  return h+'</div></div>';
+}
+function qzRender(){
+  qzG("qz_av").textContent=(typeof dvInitials==="function")?dvInitials(QZ.name):"";qzG("qz_myname").textContent=QZ.name||"";
+  var L=QZ.items,n=L.length,done=L.filter(function(x){return x.my;}),ok=done.filter(function(x){return x.my.correct;}).length;
+  qzG("qz_score").innerHTML='<div><b>'+done.length+'/'+n+'</b><small>'+esc(qzT("qz_s_done"))+'</small></div><div class="ok"><b>'+ok+'</b><small>'+esc(qzT("qz_s_ok"))+'</small></div><div class="ko"><b>'+(done.length-ok)+'</b><small>'+esc(qzT("qz_s_ko"))+'</small></div>';
+  qzG("qz_bar").style.width=(n?Math.round(done.length/n*100):0)+"%";
+  var box=qzG("qz_list");
+  if(!n){box.innerHTML='<div class="card qz-empty">'+esc(qzT("qz_none"))+'</div>';return;}
+  var idx={};L.forEach(function(x,i){idx[x.id]=i+1;});
+  var V=L.filter(function(x){return QZ.filter==="all"||(QZ.filter==="done"?!!x.my:!x.my);});
+  if(QZ.filter==="todo")V=sortNewFirst(V.slice());
+  if(!V.length){box.innerHTML='<div class="card qz-empty">'+esc(qzT(QZ.filter==="todo"?"qz_all_done":"qz_no_done"))+'</div>';return;}
+  box.innerHTML=V.map(function(x){return qzCard(x,idx[x.id],n);}).join("");
+}
+function qzRerender(id){var it=QZ.items.filter(function(x){return x.id===id;})[0],el=qzG("qz_c_"+id);if(!it||!el){qzRender();return;}
+  var i=QZ.items.indexOf(it)+1,w=document.createElement("div");w.innerHTML=qzCard(it,i,QZ.items.length);el.replaceWith(w.firstChild);}
+function qzPick(id,v){if(QZ.busy[id])return;QZ.sel[id]=v;qzRerender(id);}
+async function qzSend(id){
+  var v=QZ.sel[id];if(v!==true&&v!==false)return;QZ.busy[id]=true;qzRerender(id);
+  var j=null;try{j=await qzCall("answer",{item_id:id,answer:v});}catch(e){}
+  QZ.busy[id]=false;
+  var it=QZ.items.filter(function(x){return x.id===id;})[0];
+  if(j&&j.ok&&it){it.my={answer:j.answer,correct:j.correct,right:j.right,explanation:j.explanation||""};delete QZ.sel[id];
+    if(typeof stAct==="function")try{stAct("quiz_answer",true);}catch(e){}
+    /* the answered card stays in place until the next filter change, so the result is visible */
+    qzRerender(id);var L=QZ.items,done=L.filter(function(x){return x.my;}),ok=done.filter(function(x){return x.my.correct;}).length;
+    qzG("qz_score").innerHTML='<div><b>'+done.length+'/'+L.length+'</b><small>'+esc(qzT("qz_s_done"))+'</small></div><div class="ok"><b>'+ok+'</b><small>'+esc(qzT("qz_s_ok"))+'</small></div><div class="ko"><b>'+(done.length-ok)+'</b><small>'+esc(qzT("qz_s_ko"))+'</small></div>';
+    qzG("qz_bar").style.width=(L.length?Math.round(done.length/L.length*100):0)+"%";qzBadge();}
+  else{qzRerender(id);var e=qzG("qz_e_"+id);if(e){e.hidden=false;e.firstChild.textContent=qzT("qz_e_net");}}
+}
+/* Home tile: «New» = questions uploaded in the last 7 days (same rule as documents, videos, photos)
+   that this referee has not answered yet. Without sign-in the app cannot know them, so the tag uses the public count. */
+var QZ_PUB=null;
+async function qzSummary(){try{var r=await fetch(FN+"/vcbe-quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"summary"})});var j=await r.json();if(j&&j.ok)QZ_PUB=j;}catch(e){}qzBadge();}
+function qzBadge(){var b=qzG("nb_quiz");if(!b)return;var k=0;
+  if(QZ.loaded)k=QZ.items.filter(function(x){return !x.my&&isRecent(x.created_at);}).length;
+  else if(QZ_PUB&&QZ_PUB.recent)k=QZ_PUB.recent.filter(function(c){return isRecent(c);}).length;
+  b.textContent=k?(t("new_tag")+(k>1?" · "+k:"")):"";b.hidden=!k;
+  document.querySelectorAll(".adm-rail button[data-go=quiz]").forEach(function(btn){var d=btn.querySelector(".navnew");if(!k){if(d)d.remove();return;}if(!d){d=document.createElement("span");d.className="navnew";btn.appendChild(d);}d.textContent=t("new_tag");});
+}
+
+/* ── ADMIN: Quiz ── */
+var QA={items:[],answers:[],refs:[],loaded:false,edit:null,kind:"video",src:"link",correct:null,photo:null,busy:false,tab:"items",open:null};
+async function qaCall(action,payload){var r=await fetch(FN+"/vcbe-quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({password:ADMIN_PW,action:action},payload||{}))});return r.json();}
+async function qaLoad(){if(!ADMIN_PW)return;try{var j=await qaCall("adm_list");if(j&&j.ok){QA.items=j.items||[];QA.answers=j.answers||[];QA.refs=j.referees||[];QA.loaded=true;}}catch(e){}qaRender();}
+function qaTab(tb){QA.tab=tb;qzG("qa_t_items").classList.toggle("on",tb==="items");qzG("qa_t_res").classList.toggle("on",tb==="res");qzG("qa_p_items").hidden=tb!=="items";qzG("qa_p_res").hidden=tb!=="res";if(!QA.loaded)qaLoad();}
+function qaStatus(m,c){var s=qzG("qa_st");s.textContent=m||"";s.className="va-st"+(c?" "+c:"");}
+function qaKind(k){QA.kind=k;["video","photo","text"].forEach(function(x){qzG("qa_k_"+x).classList.toggle("on",x===k);});
+  qzG("qa_vidbox").hidden=k!=="video";qzG("qa_phobox").hidden=k!=="photo";qzG("qa_sit_l").textContent=qzT(k==="text"?"qa_f_sit_req":"qa_f_sit");qaCur();}
+function qaSrc(m){QA.src=m;qzG("qa_s_link").classList.toggle("on",m==="link");qzG("qa_s_file").classList.toggle("on",m==="file");qzG("qa_url").hidden=m!=="link";qzG("qa_vfilebox").hidden=m!=="file";}
+function qaCorrect(v){QA.correct=v;qzG("qa_c_y").classList.toggle("on",v===true);qzG("qa_c_n").classList.toggle("on",v===false);}
+function qaCur(){var c=qzG("qa_curmedia"),it=QA.edit?QA.items.filter(function(x){return x.id===QA.edit;})[0]:null;
+  c.textContent=(it&&it.media_path&&it.kind===QA.kind&&QA.kind!=="text")?qzT("qa_cur")+": "+decodeURIComponent(String(it.media_url||"").split("/").pop()):"";}
+function qaReset(close){QA.edit=null;QA.photo=null;["qa_title_in","qa_url","qa_sit","qa_q","qa_ex"].forEach(function(k){qzG(k).value="";});qzG("qa_vfile").value="";qzG("qa_pfile").value="";qzG("qa_pub").checked=true;
+  qaCorrect(null);qaKind("video");qaSrc("link");qzG("qa_save").textContent=qzT("qa_add");qzG("qa_sum").textContent=qzT("qa_add");qzG("qa_cancel").hidden=true;qaStatus("");if(close){qzG("qa_box").open=false;}}
+function qaEdit(id){var it=QA.items.filter(function(x){return x.id===id;})[0];if(!it)return;qaReset(false);QA.edit=id;
+  qzG("qa_title_in").value=it.title||"";qzG("qa_sit").value=it.situation||"";qzG("qa_q").value=it.question||"";qzG("qa_ex").value=it.explanation||"";qzG("qa_pub").checked=it.published!==false;
+  qaKind(it.kind);qaCorrect(!!it.correct);
+  if(it.kind==="video"){if(it.media_path)qaSrc("file");else{qaSrc("link");qzG("qa_url").value=it.media_url||"";}}
+  qaCur();qzG("qa_save").textContent=qzT("qa_save");qzG("qa_sum").textContent=qzT("qa_edit")+": "+(it.title||it.question).slice(0,60);qzG("qa_cancel").hidden=false;
+  var b=qzG("qa_box");b.open=true;try{b.scrollIntoView({behavior:"smooth",block:"start"});}catch(e){}}
+function qaPut(path,token,blob,type,onp){return new Promise(function(res,rej){var x=new XMLHttpRequest();x.open("PUT",SB_URL+"/storage/v1/object/upload/sign/vcbe-quiz/"+path.split("/").map(encodeURIComponent).join("/")+"?token="+encodeURIComponent(token));
+  x.setRequestHeader("Content-Type",type);x.setRequestHeader("x-upsert","false");x.setRequestHeader("apikey",SB_KEY);if(x.upload&&onp)x.upload.onprogress=function(e){if(e.lengthComputable)onp(e.loaded/e.total);};
+  x.onload=function(){if(x.status>=200&&x.status<300)res(path);else rej(new Error(x.status===413||/exceeded|too large/i.test(x.responseText||"")?"too_big":"upload "+x.status));};x.onerror=function(){rej(new Error("network"));};x.send(blob);});}
+function qaResize(f){return new Promise(function(res,rej){var img=new Image(),u=URL.createObjectURL(f);img.onload=function(){var M=1800,s=Math.min(1,M/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(function(b){b?res(b):rej(new Error("img"));},"image/jpeg",0.86);};img.onerror=function(){rej(new Error("img"));};img.src=u;});}
+async function qaSave(){if(QA.busy)return;
+  var cur=QA.edit?QA.items.filter(function(x){return x.id===QA.edit;})[0]:null;
+  var row={kind:QA.kind,title:qzG("qa_title_in").value.trim(),situation:qzG("qa_sit").value.trim(),question:qzG("qa_q").value.trim(),explanation:qzG("qa_ex").value.trim(),published:qzG("qa_pub").checked};
+  if(!row.question){qaStatus(qzT("qa_need_q"),"bad");return;}
+  if(QA.correct!==true&&QA.correct!==false){qaStatus(qzT("qa_need_c"),"bad");return;}
+  row.correct=QA.correct;
+  if(QA.kind==="text"&&!row.situation){qaStatus(qzT("qa_need_sit"),"bad");return;}
+  var keep=cur&&cur.kind===QA.kind&&cur.media_url;
+  var vf=QA.kind==="video"&&QA.src==="file"?(qzG("qa_vfile").files||[])[0]:null,pf=QA.kind==="photo"?(qzG("qa_pfile").files||[])[0]:null;
+  if(QA.kind==="video"&&QA.src==="link"){var u=qzG("qa_url").value.trim();if(!/^https?:\/\//i.test(u)){qaStatus(qzT("qa_need_media"),"bad");return;}row.media_url=u;}
+  else if(QA.kind==="video"&&!vf&&!(keep&&cur.media_path)){qaStatus(qzT("qa_need_media"),"bad");return;}
+  else if(QA.kind==="photo"&&!pf&&!(keep&&cur.media_path)){qaStatus(qzT("qa_need_media"),"bad");return;}
+  if(QA.kind==="text"&&cur&&cur.media_url)row.media_url="";
+  QA.busy=true;qzG("qa_save").disabled=true;
+  try{
+    var file=vf||pf;
+    if(file){var kind=vf?"video":"photo",ext,blob=file,type;
+      if(pf){blob=await qaResize(pf);ext="jpg";type="image/jpeg";}else{ext=(file.name.split(".").pop()||"").toLowerCase();type=file.type||vaMime(ext,file);}
+      var u1=await qaCall("adm_upload_url",{kind:kind,ext:ext});if(!u1||!u1.ok)throw new Error(u1&&u1.error==="bad_file_type"?"bad_type":"upload");
+      await qaPut(u1.path,u1.upload_token,blob,type,function(p){qaStatus(qzT("va_uploading").replace("{p}",Math.round(p*100)));});
+      row.media_path=u1.path;}
+    var j=QA.edit?await qaCall("adm_update",Object.assign({id:QA.edit},row)):await qaCall("adm_add",row);
+    if(!j||!j.ok)throw new Error((j&&j.error)||"save");
+    qaReset(true);qaStatus(qzT("qa_saved"),"ok");await qaLoad();if(QZ.loaded)qzLoad();else qzSummary();
+  }catch(e){var m=String(e&&e.message||e);qaStatus(m==="too_big"?qzT("va_big"):m==="bad_type"?qzT("va_badtype"):qzT("adm_error")+": "+m,"bad");}
+  finally{QA.busy=false;qzG("qa_save").disabled=false;}
+}
+async function qaMove(id,d){var L=QA.items.slice(),i=L.findIndex(function(x){return x.id===id;}),j=i+d;if(i<0||j<0||j>=L.length)return;var t0=L[i];L[i]=L[j];L[j]=t0;QA.items=L;qaRender();try{await qaCall("adm_reorder",{ids:L.map(function(x){return x.id;})});}catch(e){}}
+async function qaToggle(id){var it=QA.items.filter(function(x){return x.id===id;})[0];if(!it)return;try{var j=await qaCall("adm_update",{id:id,published:!it.published});if(!j||!j.ok)throw 0;}catch(e){alert(qzT("adm_error"));}await qaLoad();}
+async function qaDelete(id){var it=QA.items.filter(function(x){return x.id===id;})[0];if(!it)return;if(!confirm(qzT("qa_del_q",{t:it.title||it.question})))return;
+  try{var j=await qaCall("adm_delete",{id:id});if(!j||!j.ok)throw 0;}catch(e){alert(qzT("adm_error"));}if(QA.edit===id)qaReset(true);await qaLoad();}
+async function qaResetRef(rid){var r=QA.refs.filter(function(x){return x.id===rid;})[0];if(!r||!confirm(qzT("qa_reset_q",{n:r.name})))return;
+  try{var j=await qaCall("adm_reset",{referee_id:rid});if(!j||!j.ok)throw 0;}catch(e){alert(qzT("adm_error"));}await qaLoad();}
+function qaOpenRef(rid){QA.open=QA.open===rid?null:rid;qaRenderRes();}
+function qaFmt(d){try{return new Intl.DateTimeFormat(dvLoc(),{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"}).format(new Date(d));}catch(e){return String(d||"").slice(0,16);}}
+function qaRender(){
+  var n=QA.items.length,answered=QA.refs.filter(function(r){return r.answered>0;}).length;
+  admCount("quiz",n);var c2=qzG("cnt_quizr");if(c2)c2.textContent=answered;
+  var el=qzG("qa_list");if(!el)return;
+  if(!QA.loaded){el.innerHTML='<div class="hint">'+esc(qzT("adm_loading"))+'</div>';}
+  else if(!n)el.innerHTML='<div class="hint">'+esc(qzT("qa_empty"))+'</div>';
+  else{var per={};QA.answers.forEach(function(a){var p=per[a.item_id]||(per[a.item_id]={n:0,ok:0});p.n++;if(a.is_correct)p.ok++;});
+    el.innerHTML=QA.items.map(function(it,i){var p=per[it.id],th=it.kind==="photo"&&it.media_url?'<img alt="" src="'+esc(it.media_url)+'">':esc(qzT("qz_k_"+it.kind));
+      return '<div class="va-row'+(it.published?'':' off')+'"><div class="qa-th '+esc(it.kind)+'">'+th+'</div><div class="va-tx"><b>'+esc(it.title||it.question)+'</b><small>'+esc(qzT("qz_k_"+it.kind))+' · '+esc(qzT("qa_f_correct"))+': <span class="qa-ans '+(it.correct?'y':'n')+'">'+esc(qzYN(it.correct))+'</span> · '+esc(p?qzT("qa_answers",{n:p.n,p:Math.round(p.ok/p.n*100)}):qzT("qa_noans"))+(it.published?'':' · <span class="hid">'+esc(qzT("qa_hidden"))+'</span>')+'</small></div>'
+      +'<div class="va-bt"><button type="button" onclick="qaMove(\''+it.id+'\',-1)"'+(i===0?' disabled':'')+'>'+VX_I.up+'</button><button type="button" onclick="qaMove(\''+it.id+'\',1)"'+(i===n-1?' disabled':'')+'>'+VX_I.down+'</button><button type="button" onclick="qaToggle(\''+it.id+'\')">'+(it.published?VX_I.eye:VX_I.eyeoff)+'</button><button type="button" onclick="qaEdit(\''+it.id+'\')">'+VX_I.edit+'</button><button type="button" class="rm" onclick="qaDelete(\''+it.id+'\')">&times;</button></div></div>';}).join("");}
+  qaRenderRes();
+}
+function qaRenderRes(){
+  var box=qzG("qa_res"),kp=qzG("qa_kpi");if(!box)return;
+  if(!QA.loaded){box.innerHTML='<div class="hint">'+esc(qzT("adm_loading"))+'</div>';kp.innerHTML="";return;}
+  var tot=QA.answers.length,ok=QA.answers.filter(function(a){return a.is_correct;}).length,n=QA.items.filter(function(x){return x.published;}).length;
+  var R=QA.refs.slice().sort(function(a,b){return (b.answered>0)-(a.answered>0)||(b.correct-a.correct)||(a.wrong-b.wrong)||a.name.localeCompare(b.name);});
+  kp.innerHTML='<div><b>'+n+'</b><small>'+esc(qzT("qa_k_q"))+'</small></div><div><b>'+R.filter(function(r){return r.answered;}).length+'</b><small>'+esc(qzT("qa_k_refs"))+'</small></div><div><b>'+tot+'</b><small>'+esc(qzT("qa_k_ans"))+'</small></div><div><b>'+(tot?Math.round(ok/tot*100):0)+'%</b><small>'+esc(qzT("qa_k_pct"))+'</small></div>';
+  var Q={};QA.items.forEach(function(x){Q[x.id]=x;});
+  box.innerHTML='<table class="qa-tbl"><thead><tr><th>'+esc(qzT("qa_h_ref"))+'</th><th class="n">'+esc(qzT("qa_h_ans"))+'</th><th class="n">'+esc(qzT("qa_h_ok"))+'</th><th class="n">'+esc(qzT("qa_h_ko"))+'</th><th class="n">'+esc(qzT("qa_h_pct"))+'</th><th>'+esc(qzT("qa_h_last"))+'</th></tr></thead><tbody>'+
+    R.map(function(r){var on=QA.open===r.id;
+      var row='<tr class="rw'+(on?' on':'')+'" onclick="qaOpenRef(\''+r.id+'\')"><td><b>'+esc(r.name)+'</b>'+(r.email?'<br><small>'+esc(r.email)+'</small>':'')+(r.has_code?'':'<br><small style="color:var(--bad)">'+esc(qzT("qa_nocode"))+'</small>')+'</td><td class="n">'+r.answered+'/'+Math.max(n,r.answered)+'</td><td class="n ok">'+r.correct+'</td><td class="n ko">'+r.wrong+'</td><td class="n">'+(r.answered?Math.round(r.correct/r.answered*100)+'%':'–')+'</td><td><small>'+(r.last_at?esc(qaFmt(r.last_at)):'–')+'</small></td></tr>';
+      if(on){var A=QA.answers.filter(function(a){return a.referee_id===r.id;});
+        row+='<tr><td colspan="6"><div class="qa-det">'+(A.length?A.map(function(a){var it=Q[a.item_id]||{};return '<div class="r"><span class="qa-ans '+(a.is_correct?'y':'n')+'">'+(a.is_correct?'&#10004;':'&#10008;')+'</span><span class="q">'+esc(it.title||it.question||"")+(it.title?'<br><small>'+esc(it.question)+'</small>':'')+'<br><small>'+esc(qzT("qa_ans_lbl"))+': <b>'+esc(qzYN(a.answer))+'</b> · '+esc(qaFmt(a.created_at))+'</small></span></div>';}).join(""):'<div class="hint">'+esc(qzT("qa_det_none"))+'</div>')+
+          (A.length?'<div class="va-btns" style="margin-top:8px"><button type="button" class="btn ghost" style="color:var(--bad)" onclick="event.stopPropagation();qaResetRef(\''+r.id+'\')">'+esc(qzT("qa_reset"))+'</button></div>':'')+'</div></td></tr>';}
+      return row;}).join("")+'</tbody></table>';
+}
+/* language + wiring */
+(function(){
+  var _sl=setLang;
+  setLang=function(l){_sl(l);try{if(QZ.loaded)qzRender();qzFillNames();qzBadge();if(QA.loaded)qaRender();if(qzG("qa_sit_l"))qzG("qa_sit_l").textContent=qzT(QA.kind==="text"?"qa_f_sit_req":"qa_f_sit");}catch(e){}};
+  document.querySelectorAll("#page-quiz [data-i18n],#col_quiz [data-i18n],.tquiz [data-i18n],.dtile.kqz [data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(T[LANG]&&T[LANG][k]!==undefined)el.innerHTML=T[LANG][k];});
+  document.querySelectorAll("#col_quiz [data-i18n-ph]").forEach(function(el){var k=el.getAttribute("data-i18n-ph");if(T[LANG]&&T[LANG][k]!==undefined)el.placeholder=T[LANG][k];});
+  if(typeof admUnlocked==="function"){var _au=admUnlocked;admUnlocked=function(on){_au(on);if(on)qaLoad();else{QA.loaded=false;QA.items=[];QA.answers=[];QA.refs=[];}};}
+  qzSummary();
+  if(/[#&]quiz\b/.test(location.hash||""))setTimeout(function(){go("quiz");},600);
+})();
 </script>
 </body>
 </html>
