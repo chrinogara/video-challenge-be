@@ -2058,6 +2058,49 @@ body.vx-lock{overflow:hidden}
 .tab.on .ti-3d{opacity:1;filter:none;transform:translateY(-1px) scale(1.12)}
 .tab:active .ti-3d{transform:scale(.92)}
 @media (max-width:360px){.tab .ti-3d{width:26px;height:26px}}
+
+/* ===== Drive «Prossima gara» (proposta A, 25/11/2026) ===== */
+#page-drive .dvh{gap:14px}
+.dvh-me{display:flex;align-items:center;gap:12px;padding:4px 2px}
+.dvh-me .dv-av{flex:none}
+.dvh-who{flex:1;min-width:0}.dvh-who b{display:block;font-family:var(--fd);font-size:16px;color:#F1F5FF}
+.dvh-who small{display:flex;align-items:center;gap:5px;font-size:12.5px;color:#9FB3E0;min-width:0}
+.dvh-who small svg{width:14px;height:14px;flex:none}.dvh-who small span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.dvh-chg{flex:none;border:0;background:none;color:#93C5FD;font-weight:700;font-size:12.5px;padding:0 0 0 4px;cursor:pointer}
+.dvh-me .btn{padding:8px 12px;min-height:36px;font-size:13px;flex:none}
+.dvh-hero{border-radius:22px;padding:18px;background:linear-gradient(160deg,rgba(47,111,228,.35),rgba(15,29,69,.9) 55%);border:1px solid rgba(147,197,253,.3);box-shadow:0 14px 34px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12);display:flex;flex-direction:column;gap:6px;color:#F1F5FF}
+.dvh-top{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:#C7D2FE}.dvh-top span{flex:1}
+.dvh-top i{font-style:normal;font-size:11.5px;font-weight:700;color:#C7D2FE;background:rgba(147,197,253,.16);border-radius:99px;padding:3px 9px}
+.dvh-when{font-family:var(--fd);font-weight:800;font-size:28px;line-height:1.15;color:#fff}
+.dvh-teams{font-size:17px;font-weight:600;line-height:1.3;color:#F1F5FF}
+.dvh-addr{display:flex;align-items:center;gap:6px;color:#9FB3E0;font-size:14px}.dvh-addr svg{width:16px;height:16px;flex:none}
+.dvh-mid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.dvh-map{border-radius:14px;background:#0B1A3E;border:1px solid rgba(147,197,253,.2);overflow:hidden;min-height:66px}.dvh-map svg{width:100%;height:100%;display:block}
+.dvh-by{display:flex;align-items:center;gap:9px;border-radius:14px;padding:10px 12px;background:rgba(16,185,129,.16);border:1.5px solid rgba(52,211,153,.6);color:#D1FAE5;font-size:13.5px;line-height:1.25}
+.dvh-by svg{width:22px;height:22px;flex:none;color:#34D399}.dvh-by b{font-family:var(--fd);font-size:17px;color:#fff}
+@media(min-width:761px){.dvh-mid{grid-template-columns:1fr 1fr;max-height:96px}.dvh-map{height:96px}.dvh-map svg{height:96px}.dvh-by{font-size:15px}.dvh-by b{font-size:20px}}
+.dvh-btns{display:grid;grid-template-columns:1.25fr 1fr;gap:10px;margin-top:10px}
+.dvh-btns .btn{min-height:48px;border-radius:16px;font-weight:700;font-size:15.5px}
+.dvh-btns .btn.accent{box-shadow:0 0 0 1px rgba(163,230,53,.35),0 10px 24px rgba(163,230,53,.25)}
+.dvh-btns .dvh-now{background:transparent;border:1.5px solid var(--lime,#A3E635);color:var(--lime,#A3E635)}
+.dvh-empty{align-items:center;text-align:center;padding:24px 18px}.dvh-empty b{font-family:var(--fd);font-size:17px}
+.dvh-q{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dvh-q button{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px 12px;border-radius:18px;border:0;background:#fff;color:#15132B;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.25);font-family:var(--fb)}
+.dvh-q img{width:56px;height:56px;object-fit:contain}
+.dvh-q b{font-family:var(--fd);font-size:14px;font-weight:600;line-height:1.2;text-align:center}
+.dvh-q small{font-size:11px;color:#55526E;text-align:center;line-height:1.2}.dvh-q small:empty{display:none}
+.dvh-q .dv-badge{position:absolute;top:8px;right:8px}
+.dvh-sec h3{font-family:var(--fd);font-size:19px;font-weight:700;color:#F1F5FF;margin:6px 2px 10px;display:flex;align-items:center;gap:8px}
+.dvh-sec h3 i{font-style:normal;font-size:12px;color:#9FB3E0;font-weight:600}
+.dvh-list{display:flex;flex-direction:column;gap:8px}
+.dvh-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 14px;border-radius:16px;border:1px solid rgba(147,197,253,.22);background:rgba(23,52,111,.55);color:#F1F5FF;cursor:pointer;font-family:var(--fb)}
+.dvh-d{flex:none;width:48px;height:48px;border-radius:12px;background:#0B1A3E;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.dvh-d b{font-family:var(--fd);font-size:19px;color:#fff}.dvh-d small{font-size:10.5px;font-weight:700;color:#60A5FA;margin-top:3px}
+.dvh-row .tx{flex:1;min-width:0}.dvh-row .tx b{display:block;font-size:15px;line-height:1.3}.dvh-row .tx small{display:block;color:#9FB3E0;font-size:12.5px}
+.dvh-row .chev{width:18px;height:18px;color:#9FB3E0;flex:none}
+#dv_plans .dv-li{border:1px solid rgba(147,197,253,.22);border-radius:16px;background:rgba(23,52,111,.55);padding:11px 14px;color:#F1F5FF}
+#dv_plans .dv-li .tx i{color:#9FB3E0}
+@media(min-width:760px){.dvh-when{font-size:32px}.dvh-q img{width:64px;height:64px}}
 </style>
 </head>
 <body>
@@ -2352,16 +2395,17 @@ body.vx-lock{overflow:hidden}
           </div>
 
           <!-- signed in -->
-          <div class="dv-view" data-v="home" hidden>
-            <div class="card dv-me"><span class="dv-av" id="dv_av"></span><span class="grow" style="flex:1;min-width:0"><b id="dv_myname"></b><small data-i18n="dv_signed">Video Referee · signed in</small></span><button type="button" class="btn ghost" onclick="dvLogout()" data-i18n="dv_signout">Sign out</button></div>
+          <div class="dv-view dvh" data-v="home" hidden>
+            <div class="dvh-me"><span class="dv-av" id="dv_av"></span><span class="dvh-who"><b id="dv_myname"></b><small id="dv_homeline"></small></span><button type="button" class="btn ghost" onclick="dvLogout()" data-i18n="dv_signout">Sign out</button></div>
             <div id="dv_homecard"></div>
             <div id="dv_next"></div>
-            <div class="card" id="dv_more_card" hidden><div class="dv-k" style="margin-bottom:4px" data-i18n="dv_more">Your next designations</div><div class="dv-list" id="dv_more"></div></div>
-            <div class="card"><div class="dv-list">
-              <button type="button" class="dv-li" onclick="dvVenues()"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/></svg></span><span class="tx"><b data-i18n="dv_allv">All venues</b><small data-i18n="dv_allv_s">Men and women league teams, 2026–2027</small></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
-              <button type="button" class="dv-li" onclick="dvPplOpen('live')"><span class="ic dv-ic-ref"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.6"/><path d="M8 21l1.2-7.5L7 11l2.5-3h5L17 11l-2.2 2.5L16 21"/><path d="M9.5 8l2.5 3 2.5-3"/><path d="M18 3.5l2.5 1.5"/></svg></span><span class="tx"><b data-i18n="dv_refs_t">Referees</b><small id="dv_ppl_sum"></small></span><span class="dv-badge" id="dv_unread_h" hidden></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
-              <div class="dv-li" style="cursor:default"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3L2 6"/><path d="M19 3l3 3"/></svg></span><span class="tx"><b data-i18n="dv_planned">Planned drives</b><small id="dv_plans_n"></small></span></div>
-            </div><div class="dv-list" id="dv_plans"></div></div>
+            <div class="dvh-q">
+              <button type="button" onclick="dvPlanHome()"><img src="icons/drv-home.png?v=1" alt="" width="56" height="56" decoding="async"><b data-i18n="dvh_q_home">Drive home</b></button>
+              <button type="button" onclick="dvVenues()"><img src="icons/drv-venues.png?v=1" alt="" width="56" height="56" decoding="async"><b data-i18n="dv_allv">All venues</b></button>
+              <button type="button" onclick="dvPplOpen('live')"><img src="icons/drv-refs.png?v=1" alt="" width="56" height="56" decoding="async"><b data-i18n="dvh_q_refs">Referees on the road</b><small id="dv_ppl_sum"></small><span class="dv-badge" id="dv_unread_h" hidden></span></button>
+            </div>
+            <div class="dvh-sec" id="dv_more_card" hidden><h3 data-i18n="dvh_other">My other matches</h3><div class="dvh-list" id="dv_more"></div></div>
+            <div class="dvh-sec"><h3><span data-i18n="dvh_trips">Planned trips</span> <i id="dv_plans_n"></i></h3><div class="dvh-list" id="dv_plans"></div></div>
           </div>
 
           <!-- venues -->
@@ -3216,6 +3260,9 @@ Object.assign(T.nl,{"bk_download":"Downloaden"});
 Object.assign(T.en,{"mbook": "Documents", "bk_home_d": "Official rules, Video Challenge documents and guides, by topic.", "ad_d_books": "Documents by topic: rules, Video Challenge, guides", "bk_nobooks": "No documents", "bk_nobooks_s": "Documents added by the coordinator will appear here.", "bk_book": "Document", "bk_new": "New documents", "bk_new_s": "Added in the last 7 days", "bk_all": "All documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, topics and authors", "bk_share": "Share document", "bk_opening": "Opening the document…", "bk_open_err": "The document could not be opened here.", "bk_sbook": "Search in the document", "bk_sbook_ph": "In this document", "bk_toc_e": "This document has no table of contents. Go to a page:", "bk_fin_e": "Documents you have finished appear here.", "bka_add": "Add document", "bka_del_q": "Delete the document “{t}” and its file?", "bk_sort_topic": "By topic", "bk_browse": "Topics", "bk_cat_rules": "Official rules", "bk_cat_vc": "Video Challenge documents", "bk_cat_tech": "Equipment & technical guides", "bk_cat_training": "Training", "bk_cat_other": "Other documents", "bka_topic": "Topic (section where the document appears)", "bka_move": "Topic:", "bka_up": "Move up", "bka_down": "Move down", "bka_cat_empty": "No documents in this topic yet.", "bka_ord_err": "The order could not be saved. Try again.", "bka_help": "Every document is in one topic. To move a document, choose another topic in its menu. Use ↑ ↓ to change the order inside a topic. ✎ edits title, description and source.", "doc_title": "Video & photos", "doc_sub": "Training videos, slides and photos of the halls."});
 Object.assign(T.fr,{"mbook": "Documents", "bk_home_d": "Règlements officiels, documents Video Challenge et guides, par sujet.", "ad_d_books": "Documents par sujet : règlements, Video Challenge, guides", "bk_nobooks": "Aucun document", "bk_nobooks_s": "Les documents ajoutés par le coordinateur apparaîtront ici.", "bk_book": "Document", "bk_new": "Nouveaux documents", "bk_new_s": "Ajoutés ces 7 derniers jours", "bk_all": "Tous les documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, sujets et auteurs", "bk_share": "Partager le document", "bk_opening": "Ouverture du document…", "bk_open_err": "Le document n'a pas pu être ouvert ici.", "bk_sbook": "Rechercher dans le document", "bk_sbook_ph": "Dans ce document", "bk_toc_e": "Ce document n'a pas de table des matières. Aller à une page :", "bk_fin_e": "Les documents terminés apparaissent ici.", "bka_add": "Ajouter un document", "bka_del_q": "Supprimer le document « {t} » et son fichier ?", "bk_sort_topic": "Par sujet", "bk_browse": "Sujets", "bk_cat_rules": "Règlements officiels", "bk_cat_vc": "Documents Video Challenge", "bk_cat_tech": "Matériel et guides techniques", "bk_cat_training": "Formation", "bk_cat_other": "Autres documents", "bka_topic": "Sujet (section où le document apparaît)", "bka_move": "Sujet :", "bka_up": "Monter", "bka_down": "Descendre", "bka_cat_empty": "Pas encore de documents dans ce sujet.", "bka_ord_err": "L'ordre n'a pas pu être enregistré. Réessayez.", "bka_help": "Chaque document est dans un sujet. Pour déplacer un document, choisissez un autre sujet dans son menu. ↑ ↓ changent l'ordre dans le sujet. ✎ modifie le titre, la description et la source.", "doc_title": "Vidéos & photos", "doc_sub": "Vidéos de formation, présentations et photos des salles."});
 Object.assign(T.nl,{"mbook": "Documenten", "bk_home_d": "Officiële reglementen, Video Challenge-documenten en handleidingen, per onderwerp.", "ad_d_books": "Documenten per onderwerp: reglementen, Video Challenge, handleidingen", "bk_nobooks": "Geen documenten", "bk_nobooks_s": "Documenten die de coördinator toevoegt, verschijnen hier.", "bk_book": "Document", "bk_new": "Nieuwe documenten", "bk_new_s": "Toegevoegd in de laatste 7 dagen", "bk_all": "Alle documenten", "bk_count": "{n} documenten", "bk_count1": "1 document", "bk_search_ph": "Documenten, onderwerpen en auteurs", "bk_share": "Document delen", "bk_opening": "Document openen…", "bk_open_err": "Het document kon hier niet worden geopend.", "bk_sbook": "Zoeken in het document", "bk_sbook_ph": "In dit document", "bk_toc_e": "Dit document heeft geen inhoudsopgave. Ga naar een pagina:", "bk_fin_e": "Documenten die je hebt uitgelezen, verschijnen hier.", "bka_add": "Document toevoegen", "bka_del_q": "Het document “{t}” en het bestand verwijderen?", "bk_sort_topic": "Per onderwerp", "bk_browse": "Onderwerpen", "bk_cat_rules": "Officiële reglementen", "bk_cat_vc": "Video Challenge-documenten", "bk_cat_tech": "Materiaal en technische handleidingen", "bk_cat_training": "Opleiding", "bk_cat_other": "Andere documenten", "bka_topic": "Onderwerp (sectie waar het document verschijnt)", "bka_move": "Onderwerp:", "bka_up": "Omhoog", "bka_down": "Omlaag", "bka_cat_empty": "Nog geen documenten in dit onderwerp.", "bka_ord_err": "De volgorde kon niet worden opgeslagen. Probeer opnieuw.", "bka_help": "Elk document staat in één onderwerp. Kies een ander onderwerp in het menu om een document te verplaatsen. Met ↑ ↓ verander je de volgorde binnen het onderwerp. ✎ wijzigt titel, beschrijving en bron.", "doc_title": "Video's & foto's", "doc_sub": "Opleidingsvideo's, presentaties en foto's van de zalen."});
+Object.assign(T.en,{"dvh_next": "Your next match", "dvh_by": "Be at the venue by ", "dvh_plan": "Plan my drive", "dvh_now": "Leave now", "dvh_q_home": "Drive home", "dvh_q_refs": "Referees on the road", "dvh_other": "My other matches", "dvh_trips": "Planned trips"});
+Object.assign(T.fr,{"dvh_next": "Votre prochain match", "dvh_by": "À la salle à ", "dvh_plan": "Planifier mon trajet", "dvh_now": "Partir maintenant", "dvh_q_home": "Rentrer à la maison", "dvh_q_refs": "Arbitres sur la route", "dvh_other": "Mes autres matchs", "dvh_trips": "Trajets prévus"});
+Object.assign(T.nl,{"dvh_next": "Je volgende wedstrijd", "dvh_by": "In de sporthal om ", "dvh_plan": "Mijn rit plannen", "dvh_now": "Nu vertrekken", "dvh_q_home": "Naar huis", "dvh_q_refs": "Scheidsrechters onderweg", "dvh_other": "Mijn andere wedstrijden", "dvh_trips": "Geplande ritten"});
 Object.assign(T.en,{"dg_k_open": "Teams with open problems", "dg_k_rep": "Reports", "dg_k_clean": "Teams without open problems", "dg_attn": "Needs attention", "dg_seen": "Issues reported", "dg_good": "All good", "dg_iss_n": "{n} issues", "dg_iss_1": "1 issue", "dg_last": "last {d}", "dg_noiss": "No issues", "dg_st_open": "Problem still open", "dg_st_ok": "No open problem"});
 Object.assign(T.fr,{"dg_k_open": "Équipes avec problème ouvert", "dg_k_rep": "Rapports", "dg_k_clean": "Équipes sans problème ouvert", "dg_attn": "À surveiller", "dg_seen": "Problèmes signalés", "dg_good": "Tout est OK", "dg_iss_n": "{n} problèmes", "dg_iss_1": "1 problème", "dg_last": "dernier {d}", "dg_noiss": "Aucun problème", "dg_st_open": "Problème encore ouvert", "dg_st_ok": "Aucun problème ouvert"});
 Object.assign(T.nl,{"dg_k_open": "Ploegen met open probleem", "dg_k_rep": "Rapporten", "dg_k_clean": "Ploegen zonder open probleem", "dg_attn": "Aandacht nodig", "dg_seen": "Gemelde problemen", "dg_good": "Alles OK", "dg_iss_n": "{n} problemen", "dg_iss_1": "1 probleem", "dg_last": "laatste {d}", "dg_noiss": "Geen problemen", "dg_st_open": "Probleem nog open", "dg_st_ok": "Geen open probleem"});
@@ -4738,26 +4785,30 @@ function dvLaterKey(m){return "vcbe_dv_later_"+m.match_code+"_"+m.match_date;}
 function dvRecArrive(m){var k=dvAt(m.match_date,m.match_time);return new Date(k.getTime()-DV_ARRIVE_BEFORE*60000);}
 function dvRenderHome(){
   dvGet("dv_av").textContent=dvInitials(DV.name);dvGet("dv_myname").textContent=DV.name||"";dvRenderHomeCard();
+  var hl=dvGet("dv_homeline");if(hl)hl.innerHTML=DV.home?(dvIcon("home")+'<span>'+esc(DV.home.label)+'</span> <button type="button" class="dvh-chg" onclick="dvHomeEdit()">'+esc(dvT("dv_home_chg"))+'</button>'):esc(dvT("dv_signed"));
   var box=dvGet("dv_next"),m=DV.matches[0];
-  if(!m){box.innerHTML='<div class="card" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 18px"><span class="dv-lock" style="background:var(--bg);color:var(--muted)">'+dvIcon("cal")+'</span><b style="font-family:var(--fd);font-size:16px">'+esc(dvT("dv_nomatch"))+'</b><p class="dv-note">'+esc(dvT("dv_nomatch_s"))+'</p><button class="btn" onclick="dvVenues()">'+esc(dvT("dv_choose_venue"))+'</button></div>';}
+  if(!m){box.innerHTML='<div class="dvh-hero dvh-empty"><span class="dv-lock">'+dvIcon("cal")+'</span><b>'+esc(dvT("dv_nomatch"))+'</b><p class="dv-note">'+esc(dvT("dv_nomatch_s"))+'</p><button class="btn" onclick="dvVenues()">'+esc(dvT("dv_choose_venue"))+'</button></div>';}
   else{
-    var later=false;try{later=!!localStorage.getItem(dvLaterKey(m));}catch(e){}
     var rec=dvRecArrive(m),venue=dvTitle(m.venue_name||m.venue_city||"");
-    box.innerHTML='<div class="card dv-match"><div class="in">'+
-      '<div class="dv-row"><span class="dv-k grow">'+esc(dvT("dv_next"))+'</span><span class="dv-pill">'+esc(m.match_code)+' · '+esc(dvLeague(m.league))+'</span></div>'+
-      '<div class="dv-when">'+esc(dvDay(m.match_date))+' · '+esc(m.match_time||"")+'</div>'+
-      '<div class="dv-teams">'+esc(m.home_team)+' <span>'+esc(dvT("dv_vs"))+'</span> '+esc(m.away_team)+'</div>'+
-      '<div class="dv-addr">'+dvIcon("pin")+'<span><b style="color:var(--ink)">'+esc(venue)+'</b> · '+esc(m.address||m.venue_city||"")+'</span></div>'+
-      '<div class="dv-target">'+esc(dvT("dv_be_there",{t:dvHM(rec),n:dvDur(DV_ARRIVE_BEFORE)}))+'</div></div>'+
-      (later?'<div class="dv-later">'+dvIcon("clock")+'<span class="grow" style="flex:1">'+esc(dvT("dv_later_msg"))+'</span><button class="btn ghost" onclick="dvUnlater()">'+esc(dvT("dv_plan_now"))+'</button></div>':
-       '<div class="dv-ask"><b>'+esc(dvT("dv_ask",{v:venue}))+'</b><div class="dv-row"><button class="btn" onclick="dvPlanMatch(0)">'+dvIcon("nav")+' '+esc(dvT("dv_yes"))+'</button><button class="btn ghost" style="flex:0 0 auto" onclick="dvLater()">'+esc(dvT("dv_notnow"))+'</button></div></div>')+
+    box.innerHTML='<div class="dvh-hero">'+
+      '<div class="dvh-top"><span>'+esc(dvT("dvh_next"))+'</span><i>'+esc(m.match_code)+' · '+esc(dvLeague(m.league))+'</i></div>'+
+      '<div class="dvh-when">'+esc(dvDay(m.match_date))+' · '+esc(m.match_time||"")+'</div>'+
+      '<div class="dvh-teams">'+esc(m.home_team)+' – '+esc(m.away_team)+'</div>'+
+      '<div class="dvh-addr">'+dvIcon("pin")+'<span>'+esc(venue)+(m.venue_city?', '+esc(dvTitle(m.venue_city)):'')+'</span></div>'+
+      '<div class="dvh-mid"><div class="dvh-map" aria-hidden="true"><svg viewBox="0 0 160 70"><path d="M0 52 L40 30 L75 44 L110 18 L160 30" stroke="rgba(147,197,253,.18)" stroke-width="7" fill="none"/><path d="M10 60 L45 22 M90 0 L120 70 M0 20 L160 52" stroke="rgba(147,197,253,.12)" stroke-width="3" fill="none"/><path d="M22 50 C 50 52, 60 28, 88 36 S 122 22, 136 18" stroke="#60A5FA" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="22" cy="50" r="5" fill="#3B82F6" stroke="#fff" stroke-width="2"/><path d="M136 6c-4.5 0-8 3.4-8 7.6 0 5.4 8 12.4 8 12.4s8-7 8-12.4C144 9.4 140.5 6 136 6z" fill="#EF4444"/><circle cx="136" cy="13.5" r="2.6" fill="#fff"/></svg></div>'+
+      '<div class="dvh-by">'+dvIcon("clock")+'<span>'+esc(dvT("dvh_by"))+'<b>'+esc(dvHM(rec))+'</b></span></div></div>'+
+      '<div class="dvh-btns"><button type="button" class="btn accent" onclick="dvPlanMatch(0)">'+esc(dvT("dvh_plan"))+'</button><button type="button" class="btn dvh-now" onclick="dvLeaveNow(0)">'+esc(dvT("dvh_now"))+'</button></div>'+
       '</div>';
   }
   var more=dvGet("dv_more"),mc=dvGet("dv_more_card");
-  if(DV.matches.length>1){mc.hidden=false;more.innerHTML=DV.matches.slice(1).map(function(x,i){return '<button class="dv-li" onclick="dvPlanMatch('+(i+1)+')"><span class="ic">'+esc(String(x.match_code||"").split("-")[0])+'</span><span class="tx"><b>'+esc(x.home_team)+' '+esc(dvT("dv_vs"))+' '+esc(x.away_team)+'</b><i>'+esc(dvDay(x.match_date))+' · '+esc(x.match_time||"")+'</i><small>'+esc(dvTitle(x.venue_name||""))+' · '+esc(x.venue_city||"")+'</small></span>'+dvIcon("chev","chev")+'</button>';}).join("");}
+  if(DV.matches.length>1){mc.hidden=false;more.innerHTML=DV.matches.slice(1).map(function(x,i){return '<button class="dvh-row" onclick="dvPlanMatch('+(i+1)+')"><span class="dvh-d"><b>'+esc(String(x.match_date||"").slice(8,10))+'</b><small>'+esc(dvMon(x.match_date))+'</small></span><span class="tx"><b>'+esc(x.home_team)+' – '+esc(x.away_team)+'</b><small>'+esc(x.match_time||"")+' · '+esc(dvTitle(x.venue_name||x.venue_city||""))+'</small></span>'+dvIcon("chev","chev")+'</button>';}).join("");}
   else{mc.hidden=true;more.innerHTML="";}
   dvRenderPlans();
 }
+function dvMon(d){try{return new Date(d+"T12:00:00").toLocaleDateString(LANG==="nl"?"nl-BE":LANG==="fr"?"fr-BE":"en-GB",{month:"short"}).replace(".","").toUpperCase();}catch(e){return "";}}
+function dvLeaveNow(i){var m=DV.matches[i];if(!m)return;
+  DV.target={kind:"match",name:dvTitle(m.venue_name||m.venue_city||""),address:m.address||m.venue,lat:m.lat,lng:m.lng,match:m};
+  var d=new Date(Date.now()+5*60000);d.setMinutes(Math.ceil(d.getMinutes()/5)*5,0,0);DV.plan.mode="leave";DV.plan.date=dvISO(d);DV.plan.time=dvHM(d);dvOpenPlan();}
 function dvLater(){var m=DV.matches[0];if(!m)return;try{localStorage.setItem(dvLaterKey(m),"1");}catch(e){}dvRenderHome();}
 function dvUnlater(){var m=DV.matches[0];if(!m)return;try{localStorage.removeItem(dvLaterKey(m));}catch(e){}dvPlanMatch(0);}
 
@@ -5156,7 +5207,8 @@ function dvMeArrow(){var N=DV.nav;if(!N||!N.me)return;var el=N.me.getElement&&N.
 function dvRenderHomeCard(){
   var box=dvGet("dv_homecard");if(!box)return;var h=DV.home;
   if(!h){box.innerHTML='<div class="card dv-homec empty"><div class="dv-row"><span class="dv-lock" style="background:#fff;color:var(--violet-d)">'+dvIcon("home")+'</span><span class="grow" style="flex:1;min-width:0"><b style="font-family:var(--fd);font-size:16px;display:block">'+esc(dvT("dv_home_t"))+'</b><small class="dv-note">'+esc(dvT("dv_home_s"))+'</small></span></div><button type="button" class="btn" onclick="dvHomeEdit()">'+dvIcon("home")+' '+esc(dvT("dv_home_set"))+'</button></div>';return;}
-  box.innerHTML='<div class="card dv-homec"><div class="dv-row"><span class="dv-lock" style="background:var(--violet-50);color:var(--violet-d)">'+dvIcon("home")+'</span><span class="grow" style="flex:1;min-width:0"><small class="dv-k">'+esc(dvT("dv_home_t"))+'</small><b style="display:block;font-size:14.5px">'+esc(h.label)+'</b></span></div><div class="dv-row"><button type="button" class="btn" onclick="dvPlanHome()">'+dvIcon("nav")+' '+esc(dvT("dv_home_go"))+'</button><button type="button" class="btn ghost" onclick="dvHomeEdit()">'+esc(dvT("dv_home_chg"))+'</button></div></div>';
+  box.innerHTML="";
+  if(dvGet("dv_homeline")&&typeof dvRenderHome==="function"&&DV.view==="home"){var hl=dvGet("dv_homeline");hl.innerHTML=dvIcon("home")+'<span>'+esc(h.label)+'</span> <button type="button" class="dvh-chg" onclick="dvHomeEdit()">'+esc(dvT("dv_home_chg"))+'</button>';}
 }
 function dvHomeEdit(){dvGet("dv_hres").innerHTML="";dvGet("dv_hq").value=DV.home?DV.home.label:"";dvOpenSheet("dv_sh_home");setTimeout(function(){try{dvGet("dv_hq").focus();}catch(e){}},80);}
 async function dvHomeSearch(){
