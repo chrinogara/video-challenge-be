@@ -763,6 +763,36 @@ details.tr-more summary{cursor:pointer;font-weight:700;font-size:12.5px}
 .wm-score .lbl{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#DC2626}
 .wm-score.final .lbl{color:var(--muted)}
 .wm-src{font-size:11.5px;color:var(--hint);padding:2px 4px}
+.sd-box{background:var(--an-glass,var(--surface));border:1px solid var(--line2);border-radius:16px;padding:14px 16px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.sd-hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sd-hd .ic{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#FACC15,#F59E0B);display:inline-flex;align-items:center;justify-content:center;flex:none;box-shadow:0 4px 12px rgba(245,158,11,.35)}
+.sd-hd .ic svg{width:19px;height:19px}
+.sd-hd h3{margin:0;font-size:16px;font-weight:800;line-height:1.2}
+.sd-hd small{display:block;font-size:12px;font-weight:500;color:var(--muted)}
+.sd-btns{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.sd-btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:rgba(255,255,255,.06);color:inherit;font:inherit;font-size:13.5px;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer}
+.sd-btn .g{width:9px;height:9px;border-radius:50%;background:#60A5FA}.sd-btn.F .g{background:#F472B6}
+.sd-btn.on{background:var(--violet);border-color:var(--violet);color:#fff}.sd-btn.on .g{background:#fff}
+.sd-btn svg{width:13px;height:13px;transition:transform .2s}.sd-btn.on svg{transform:rotate(180deg)}
+.sd-body{margin-top:12px}
+.sd-tbl{width:100%;border-collapse:collapse;font-size:14px}
+.sd-tbl th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:7px 6px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+.sd-tbl th.tm{text-align:left}
+.sd-tbl td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:center;font-variant-numeric:tabular-nums}
+.sd-tbl tr:last-child td{border-bottom:0}
+.sd-tbl td.ps{font-weight:800;width:34px}
+.sd-tbl td.tm{text-align:left;font-weight:600}
+.sd-tbl td.tm .w{display:flex;align-items:center;gap:9px;min-width:0}
+.sd-tbl td.tm .nm{overflow-wrap:anywhere}
+.sd-tbl td.pt{font-weight:800;font-size:15px}
+.sd-tbl .lg{width:28px;height:28px;border-radius:50%;background:#fff;object-fit:contain;flex:none;padding:2px}
+.sd-tbl .lg.ini{display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#0A1838;padding:0}
+.sd-tbl tr.top td.ps{color:#FACC15}
+.sd-live{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:800;color:#34D399;text-transform:uppercase;margin-left:6px;white-space:nowrap}
+.sd-foot{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;font-size:11.5px;color:var(--hint);margin-top:10px}
+.sd-foot a{color:inherit}
+.sd-msg{padding:14px 4px;color:var(--muted);font-size:13.5px}
+@media(max-width:640px){.sd-tbl .xs{display:none}.sd-btns{margin-left:0;width:100%}.sd-btn{flex:1;justify-content:center}.sd-tbl{font-size:13.5px}.sd-tbl td,.sd-tbl th{padding:7px 4px}}
 .wm-ls{display:inline-flex;align-items:center;gap:7px;margin-top:7px;padding:6px 14px 6px 6px;border:0;border-radius:999px;background:#07192F;color:#fff;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;line-height:1.2;box-shadow:0 1px 3px rgba(0,0,0,.18)}
 .wm-ls .pl{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#FD2D06;flex:none}
 .wm-ls .pl svg{width:11px;height:11px;margin-left:2px}
@@ -2200,6 +2230,17 @@ body.vx-lock{overflow:hidden}
             <p class="secsub" data-i18n="wm_sub">All matches with a designated Video Referee, week by week.</p>
           </div>
         </div>
+        <div class="sd-box" id="sd_box">
+          <div class="sd-hd">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/></svg></span>
+            <div><h3 data-i18n="sd_title">Standings</h3><small data-i18n="sd_sub">Lotto Volley League · updated after every result</small></div>
+            <div class="sd-btns">
+              <button type="button" class="sd-btn M" id="sd_b_LIGH" onclick="sdOpen('LIGH')"><span class="g"></span><span data-i18n="sd_men">Men</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+              <button type="button" class="sd-btn F" id="sd_b_LIGD" onclick="sdOpen('LIGD')"><span class="g"></span><span data-i18n="sd_women">Women</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            </div>
+          </div>
+          <div class="sd-body" id="sd_body" hidden></div>
+        </div>
         <div id="wm_list" class="wm-wrap"></div>
       </div>
     </div>
@@ -3231,6 +3272,65 @@ function renderWeekMatches(){
 }
 setInterval(function(){if(document.hidden)return;if(WM.rows&&Date.now()-WM.at>300000)loadWeekMatches(true);else{if(WM.rows&&wmNearLive(wmNowBx())&&Date.now()-WM.sat>50000)loadLiveScores();renderWeekMatches();}},60000);
 document.addEventListener("visibilitychange",function(){if(!document.hidden)loadWeekMatches(true);});
+
+/* standings (25/11/2026): edge function vcbe-standings = official VolleyAdmin standings LIGH / LIGD, re-read at most every 90 s */
+Object.assign(T.en,{sd_title:"Standings",sd_sub:"Lotto Volley League · updated after every result",sd_men:"Men",sd_women:"Women",sd_men_t:"Liga Heren – Men",sd_women_t:"Liga Dames – Women",sd_h_team:"Team",sd_h_p:"P",sd_h_w:"W",sd_h_l:"L",sd_h_30:"3-0 / 3-1",sd_h_32:"3-2",sd_h_23:"2-3",sd_h_03:"0-3 / 1-3",sd_h_sets:"Sets",sd_h_pts:"Pts",sd_src:"Source: VolleyAdmin (official standings)",sd_upd:"Updated {t}",sd_stale:"VolleyAdmin is not answering: last saved standings",sd_loading:"Loading…",sd_err:"Could not load the standings. Please try again later.",sd_live:"Live",sd_legend:"P played · W won · L lost · Pts points"});
+Object.assign(T.fr,{sd_title:"Classement",sd_sub:"Lotto Volley League · mis à jour après chaque résultat",sd_men:"Hommes",sd_women:"Dames",sd_men_t:"Ligue Hommes",sd_women_t:"Ligue Dames",sd_h_team:"Équipe",sd_h_p:"J",sd_h_w:"G",sd_h_l:"P",sd_h_30:"3-0 / 3-1",sd_h_32:"3-2",sd_h_23:"2-3",sd_h_03:"0-3 / 1-3",sd_h_sets:"Sets",sd_h_pts:"Pts",sd_src:"Source : VolleyAdmin (classement officiel)",sd_upd:"Mis à jour à {t}",sd_stale:"VolleyAdmin ne répond pas : dernier classement enregistré",sd_loading:"Chargement…",sd_err:"Impossible de charger le classement. Réessayez plus tard.",sd_live:"En cours",sd_legend:"J joués · G gagnés · P perdus · Pts points"});
+Object.assign(T.nl,{sd_title:"Rangschikking",sd_sub:"Lotto Volley League · bijgewerkt na elk resultaat",sd_men:"Heren",sd_women:"Dames",sd_men_t:"Liga Heren",sd_women_t:"Liga Dames",sd_h_team:"Ploeg",sd_h_p:"G",sd_h_w:"W",sd_h_l:"V",sd_h_30:"3-0 / 3-1",sd_h_32:"3-2",sd_h_23:"2-3",sd_h_03:"0-3 / 1-3",sd_h_sets:"Sets",sd_h_pts:"Ptn",sd_src:"Bron: VolleyAdmin (officiële rangschikking)",sd_upd:"Bijgewerkt om {t}",sd_stale:"VolleyAdmin antwoordt niet: laatst opgeslagen rangschikking",sd_loading:"Laden…",sd_err:"De rangschikking kon niet geladen worden. Probeer later opnieuw.",sd_live:"Bezig",sd_legend:"G gespeeld · W gewonnen · V verloren · Ptn punten"});
+var SDD={open:null,data:null,at:0,loading:false,err:false};
+var SD_STOP={volley:1,vc:1,vt:1,vbc:1,hvc:1,es:1,a:1,e:1,s:1,team:1,de:1,the:1,van:1};
+function sdTok(n){return String(n||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().split(/[^a-z0-9]+/).filter(function(w){return w&&w.length>1&&!SD_STOP[w];});}
+function sdSame(a,b){var A=sdTok(a),B=sdTok(b),n=0;A.forEach(function(w){if(B.indexOf(w)>=0)n++;});return n;}
+function sdLogo(team){
+  var best=null,bs=0;if(typeof PG_TEAM_IMG==="undefined")return null;
+  Object.keys(PG_TEAM_IMG).forEach(function(k){var sc=sdSame(team,k);if(sc>bs){bs=sc;best=k;}});
+  return best&&typeof pgLogoUrl==="function"?pgLogoUrl(best):null;
+}
+function sdIni(team){return sdTok(team).slice(0,2).map(function(w){return w[0];}).join("").toUpperCase()||"?";}
+function sdLiveTeams(reeks){
+  var now=wmNowBx(),out=[];
+  (WM.rows||[]).forEach(function(r){if(wmState(r,now)!=="live")return;var code=(r.match_code||"").toUpperCase();if(code.indexOf(reeks)!==0)return;out.push(r.home_team,r.away_team);});
+  return out;
+}
+async function loadStandings(force){
+  if(SDD.loading)return;
+  if(!force&&SDD.data&&Date.now()-SDD.at<60000){renderStandings();return;}
+  SDD.loading=true;if(!SDD.data)renderStandings();
+  try{var res=await fetch(FN+"/vcbe-standings",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},H),body:"{}"});
+    if(!res.ok)throw new Error(res.status);var j=await res.json();SDD.data=j.standings||{};SDD.at=Date.now();SDD.err=false;}
+  catch(e){SDD.err=true;}
+  SDD.loading=false;renderStandings();
+}
+function sdOpen(reeks){
+  SDD.open=SDD.open===reeks?null:reeks;
+  ["LIGH","LIGD"].forEach(function(s){var b=document.getElementById("sd_b_"+s);if(b){b.classList.toggle("on",SDD.open===s);b.setAttribute("aria-expanded",SDD.open===s?"true":"false");}});
+  var bd=document.getElementById("sd_body");if(bd)bd.hidden=!SDD.open;
+  if(SDD.open){loadStandings();if(typeof stAct==="function")try{stAct("standings_"+(reeks==="LIGD"?"women":"men"));}catch(e){}}
+}
+function renderStandings(){
+  var bd=document.getElementById("sd_body");if(!bd||!SDD.open)return;
+  var d=SDD.data&&SDD.data[SDD.open];
+  if(!d||!d.rows||!d.rows.length){bd.innerHTML='<div class="sd-msg">'+esc(t(SDD.loading?"sd_loading":(SDD.err?"sd_err":"sd_loading")))+'</div>';return;}
+  var live=sdLiveTeams(SDD.open);
+  var h='<table class="sd-tbl"><thead><tr><th>#</th><th class="tm">'+esc(t("sd_h_team"))+'</th><th>'+esc(t("sd_h_p"))+'</th><th>'+esc(t("sd_h_w"))+'</th><th>'+esc(t("sd_h_l"))+'</th>'
+    +'<th class="xs">'+esc(t("sd_h_30"))+'</th><th class="xs">'+esc(t("sd_h_32"))+'</th><th class="xs">'+esc(t("sd_h_23"))+'</th><th class="xs">'+esc(t("sd_h_03"))+'</th>'
+    +'<th>'+esc(t("sd_h_sets"))+'</th><th>'+esc(t("sd_h_pts"))+'</th></tr></thead><tbody>';
+  d.rows.forEach(function(r){
+    var lg=sdLogo(r.team),isLive=live.some(function(x){return sdSame(x,r.team)>=1;});
+    h+='<tr class="'+(r.pos===1?"top":"")+'"><td class="ps">'+esc(r.pos)+'</td>'
+      +'<td class="tm"><div class="w">'+(lg?'<img class="lg" src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.outerHTML=\'<span class=&quot;lg ini&quot;>'+esc(sdIni(r.team))+'</span>\'">':'<span class="lg ini">'+esc(sdIni(r.team))+'</span>')
+      +'<span class="nm">'+esc(r.team)+(isLive?'<span class="sd-live"><span class="livedot"></span>'+esc(t("sd_live"))+'</span>':"")+'</span></div></td>'
+      +'<td>'+esc(r.played)+'</td><td>'+esc(r.w30+r.w32)+'</td><td>'+esc(r.l23+r.l03)+'</td>'
+      +'<td class="xs">'+esc(r.w30)+'</td><td class="xs">'+esc(r.w32)+'</td><td class="xs">'+esc(r.l23)+'</td><td class="xs">'+esc(r.l03)+'</td>'
+      +'<td>'+esc(r.sets_won)+':'+esc(r.sets_lost)+'</td><td class="pt">'+esc(r.points)+'</td></tr>';
+  });
+  h+='</tbody></table>';
+  var tm=d.fetched_at?new Date(d.fetched_at).toLocaleTimeString(LANG==="fr"?"fr-BE":LANG==="nl"?"nl-BE":"en-GB",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Brussels"}):"";
+  h+='<div class="sd-foot"><span>'+esc(t(SDD.open==="LIGD"?"sd_women_t":"sd_men_t"))+' · '+esc(t("sd_legend"))+'</span><span>'+(d.stale?esc(t("sd_stale"))+' · ':"")+esc(t("sd_src"))+(tm?' · '+esc(t("sd_upd").replace("{t}",tm)):"")+'</span></div>';
+  bd.innerHTML=h;
+}
+setInterval(function(){if(document.hidden||!SDD.open)return;var pg=document.getElementById("page-matches");if(pg&&!pg.classList.contains("on")&&pg.offsetParent===null)return;loadStandings(true);},90000);
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&SDD.open)loadStandings(true);});
 Object.assign(T.en,{tr_title:"Team Right by first referee",tr_intro:"Each challenge with result Team Right means the team won the challenge: the decision of the referee was overturned. It is counted for the first referee (SR1) of the match, using the Video Referee reports and the weekly designations.",tr_all:"All first referees",tr_pdf:"Download PDF",tr_pdf_wait:"Preparing PDF…",tr_rank:"Ranking",tr_list:"Matches",tr_h_ref:"First referee",tr_h_tr:"Team Right",tr_h_m:"Matches",tr_h_pm:"TR / match",tr_h_ch:"Challenges",tr_h_pct:"% TR",tr_h_last:"Last match",tr_h_date:"Date",tr_h_match:"Match / club",tr_h_vr:"Video Referee",tr_totals:"{m} matches with report · <b>{tr} Team Right</b> out of {c} challenges · {r} first referees",tr_updated:"Updated at {time} · refreshes automatically every minute",tr_pending:"Matches played, report not received yet ({n})",tr_unknown:"Reports without known first referee ({n}, not counted)",tr_unknown_hint:"Load the designations (Aanduidingen) of those weeks to include them.",tr_r_no_designation:"match not in the loaded designations",tr_r_no_sr1:"first referee missing in the designation",tr_empty:"No match with a known first referee yet.",tr_click:"Tap a first referee to see only his or her matches."});
 Object.assign(T.fr,{tr_title:"Team Right par premier arbitre",tr_intro:"Chaque challenge avec le résultat Team Right signifie que l'équipe a gagné le challenge : la décision de l'arbitre a été renversée. Il est compté pour le premier arbitre (SR1) du match, à partir des rapports des Video Referees et des désignations hebdomadaires.",tr_all:"Tous les premiers arbitres",tr_pdf:"Télécharger le PDF",tr_pdf_wait:"Préparation du PDF…",tr_rank:"Classement",tr_list:"Matchs",tr_h_ref:"Premier arbitre",tr_h_tr:"Team Right",tr_h_m:"Matchs",tr_h_pm:"TR / match",tr_h_ch:"Challenges",tr_h_pct:"% TR",tr_h_last:"Dernier match",tr_h_date:"Date",tr_h_match:"Match / club",tr_h_vr:"Video Referee",tr_totals:"{m} matchs avec rapport · <b>{tr} Team Right</b> sur {c} challenges · {r} premiers arbitres",tr_updated:"Mis à jour à {time} · actualisation automatique chaque minute",tr_pending:"Matchs joués, rapport pas encore reçu ({n})",tr_unknown:"Rapports sans premier arbitre connu ({n}, non comptés)",tr_unknown_hint:"Chargez les désignations (Aanduidingen) de ces semaines pour les inclure.",tr_r_no_designation:"match absent des désignations chargées",tr_r_no_sr1:"premier arbitre absent de la désignation",tr_empty:"Aucun match avec un premier arbitre connu pour l'instant.",tr_click:"Touchez un premier arbitre pour ne voir que ses matchs."});
 Object.assign(T.nl,{tr_title:"Team Right per eerste scheidsrechter",tr_intro:"Elke challenge met resultaat Team Right betekent dat de ploeg de challenge won: de beslissing van de scheidsrechter werd herzien. Hij wordt geteld voor de eerste scheidsrechter (SR1) van de wedstrijd, op basis van de verslagen van de Video Referees en de wekelijkse aanduidingen.",tr_all:"Alle eerste scheidsrechters",tr_pdf:"PDF downloaden",tr_pdf_wait:"PDF wordt gemaakt…",tr_rank:"Rangschikking",tr_list:"Wedstrijden",tr_h_ref:"Eerste scheidsrechter",tr_h_tr:"Team Right",tr_h_m:"Wedstr.",tr_h_pm:"TR / wedstr.",tr_h_ch:"Challenges",tr_h_pct:"% TR",tr_h_last:"Laatste wedstr.",tr_h_date:"Datum",tr_h_match:"Wedstrijd / club",tr_h_vr:"Video Referee",tr_totals:"{m} wedstrijden met verslag · <b>{tr} Team Right</b> op {c} challenges · {r} eerste scheidsrechters",tr_updated:"Bijgewerkt om {time} · wordt elke minuut automatisch vernieuwd",tr_pending:"Gespeelde wedstrijden, verslag nog niet ontvangen ({n})",tr_unknown:"Verslagen zonder gekende eerste scheidsrechter ({n}, niet meegeteld)",tr_unknown_hint:"Laad de aanduidingen van die weken om ze mee te tellen.",tr_r_no_designation:"wedstrijd niet in de geladen aanduidingen",tr_r_no_sr1:"eerste scheidsrechter ontbreekt in de aanduiding",tr_empty:"Nog geen wedstrijd met gekende eerste scheidsrechter.",tr_click:"Tik op een eerste scheidsrechter om enkel zijn of haar wedstrijden te zien."});
