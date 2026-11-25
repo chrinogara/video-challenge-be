@@ -2020,35 +2020,6 @@ input,select,textarea{color-scheme:dark}
 body.vx-lock{overflow:hidden}
 @media(min-width:760px){.vx-feat{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);grid-template-rows:auto 1fr auto;column-gap:18px;align-items:start}.vx-feat .lb{grid-column:2;grid-row:1;margin-top:4px}.vx-feat .th{grid-column:1;grid-row:1/4}.vx-feat>b{grid-column:2;grid-row:2;font-size:22px;margin-top:4px}.vx-feat .vx-watch{grid-column:2;grid-row:3;justify-self:start}}
 
-/* ===== Report «Sezioni numerate» (proposta B) ===== */
-#formcard.rs{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
-#formcard.rs .rs-prog{margin:2px 2px 14px}
-#formcard.rs .rs-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden}
-#formcard.rs .rs-bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--lime,#A3E635);transition:width .35s ease}
-#formcard.rs .rs-pt{text-align:right;font-size:12px;color:#C7D2FE;margin-top:6px;font-weight:600}
-#formcard.rs>.fgroup{background:#fff!important;border-radius:18px!important;margin:0 0 12px!important;padding:0!important;box-shadow:0 8px 24px rgba(0,0,0,.28);overflow:hidden;min-width:0;scroll-margin-top:72px}
-#formcard.rs>.fgroup>legend{display:none!important}
-#formcard.rs .rs-hd{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
-#formcard.rs .rs-n{flex:none;width:32px;height:32px;border-radius:50%;background:#2563EB;color:#fff;font-family:var(--fd);font-weight:700;font-size:15px;display:grid;place-items:center}
-#formcard.rs .fgroup.rs-bad .rs-n{background:#E23B3B}
-#formcard.rs .rs-tt{flex:1;min-width:0}
-#formcard.rs .rs-t{font-family:var(--fd);font-weight:700;font-size:17px;color:#15132B;line-height:1.2}
-#formcard.rs .rs-s{font-size:12.5px;color:#55526E;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#formcard.rs .fgroup.open .rs-s{display:none}
-#formcard.rs .rs-ok{flex:none;width:22px;height:22px;display:none}
-#formcard.rs .fgroup.rs-done .rs-ok{display:block}
-#formcard.rs .rs-ch{flex:none;width:20px;height:20px;color:#8A87A3;transition:transform .2s}
-#formcard.rs .fgroup.open .rs-ch{transform:rotate(180deg)}
-#formcard.rs .rs-bd{padding:2px 16px 16px;border-top:1px solid #EEF0F6}
-#formcard.rs .fgroup:not(.open) .rs-bd{display:none}
-#formcard.rs .rs-next{display:block;margin:14px 0 0 auto;padding:9px 18px;border-radius:12px;background:#E8EFFD;border:0;color:#1D4ED8;font-weight:700;font-size:14px;cursor:pointer}
-#formcard.rs .sendnote{color:#C7D2FE;background:transparent;border:0}
-@supports(overflow:clip){body{overflow-x:clip}}
-#formcard.rs .rs-send{position:sticky;bottom:calc(var(--tab-h,64px) + env(safe-area-inset-bottom) + 6px);z-index:6;padding:10px 0 6px}
-#formcard.rs .rs-send #genbtn{border-radius:16px;font-weight:700;font-size:16px!important;box-shadow:0 0 0 1px rgba(163,230,53,.35),0 10px 26px rgba(0,0,0,.35)}
-#formcard.rs .rs-send #submitstatus:not(:empty){margin-top:8px;background:#fff;color:#15132B;padding:8px 12px;border-radius:10px}
-#formcard.rs .rs-send #submitstatus.bad{background:#FDECEC;color:#B42318}
-@media(min-width:900px){#formcard.rs .rs-send{bottom:12px}}
 </style>
 </head>
 <body>
@@ -3218,9 +3189,6 @@ Object.assign(T.nl,{"bk_download":"Downloaden"});
 Object.assign(T.en,{"mbook": "Documents", "bk_home_d": "Official rules, Video Challenge documents and guides, by topic.", "ad_d_books": "Documents by topic: rules, Video Challenge, guides", "bk_nobooks": "No documents", "bk_nobooks_s": "Documents added by the coordinator will appear here.", "bk_book": "Document", "bk_new": "New documents", "bk_new_s": "Added in the last 7 days", "bk_all": "All documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, topics and authors", "bk_share": "Share document", "bk_opening": "Opening the document…", "bk_open_err": "The document could not be opened here.", "bk_sbook": "Search in the document", "bk_sbook_ph": "In this document", "bk_toc_e": "This document has no table of contents. Go to a page:", "bk_fin_e": "Documents you have finished appear here.", "bka_add": "Add document", "bka_del_q": "Delete the document “{t}” and its file?", "bk_sort_topic": "By topic", "bk_browse": "Topics", "bk_cat_rules": "Official rules", "bk_cat_vc": "Video Challenge documents", "bk_cat_tech": "Equipment & technical guides", "bk_cat_training": "Training", "bk_cat_other": "Other documents", "bka_topic": "Topic (section where the document appears)", "bka_move": "Topic:", "bka_up": "Move up", "bka_down": "Move down", "bka_cat_empty": "No documents in this topic yet.", "bka_ord_err": "The order could not be saved. Try again.", "bka_help": "Every document is in one topic. To move a document, choose another topic in its menu. Use ↑ ↓ to change the order inside a topic. ✎ edits title, description and source.", "doc_title": "Video & photos", "doc_sub": "Training videos, slides and photos of the halls."});
 Object.assign(T.fr,{"mbook": "Documents", "bk_home_d": "Règlements officiels, documents Video Challenge et guides, par sujet.", "ad_d_books": "Documents par sujet : règlements, Video Challenge, guides", "bk_nobooks": "Aucun document", "bk_nobooks_s": "Les documents ajoutés par le coordinateur apparaîtront ici.", "bk_book": "Document", "bk_new": "Nouveaux documents", "bk_new_s": "Ajoutés ces 7 derniers jours", "bk_all": "Tous les documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, sujets et auteurs", "bk_share": "Partager le document", "bk_opening": "Ouverture du document…", "bk_open_err": "Le document n'a pas pu être ouvert ici.", "bk_sbook": "Rechercher dans le document", "bk_sbook_ph": "Dans ce document", "bk_toc_e": "Ce document n'a pas de table des matières. Aller à une page :", "bk_fin_e": "Les documents terminés apparaissent ici.", "bka_add": "Ajouter un document", "bka_del_q": "Supprimer le document « {t} » et son fichier ?", "bk_sort_topic": "Par sujet", "bk_browse": "Sujets", "bk_cat_rules": "Règlements officiels", "bk_cat_vc": "Documents Video Challenge", "bk_cat_tech": "Matériel et guides techniques", "bk_cat_training": "Formation", "bk_cat_other": "Autres documents", "bka_topic": "Sujet (section où le document apparaît)", "bka_move": "Sujet :", "bka_up": "Monter", "bka_down": "Descendre", "bka_cat_empty": "Pas encore de documents dans ce sujet.", "bka_ord_err": "L'ordre n'a pas pu être enregistré. Réessayez.", "bka_help": "Chaque document est dans un sujet. Pour déplacer un document, choisissez un autre sujet dans son menu. ↑ ↓ changent l'ordre dans le sujet. ✎ modifie le titre, la description et la source.", "doc_title": "Vidéos & photos", "doc_sub": "Vidéos de formation, présentations et photos des salles."});
 Object.assign(T.nl,{"mbook": "Documenten", "bk_home_d": "Officiële reglementen, Video Challenge-documenten en handleidingen, per onderwerp.", "ad_d_books": "Documenten per onderwerp: reglementen, Video Challenge, handleidingen", "bk_nobooks": "Geen documenten", "bk_nobooks_s": "Documenten die de coördinator toevoegt, verschijnen hier.", "bk_book": "Document", "bk_new": "Nieuwe documenten", "bk_new_s": "Toegevoegd in de laatste 7 dagen", "bk_all": "Alle documenten", "bk_count": "{n} documenten", "bk_count1": "1 document", "bk_search_ph": "Documenten, onderwerpen en auteurs", "bk_share": "Document delen", "bk_opening": "Document openen…", "bk_open_err": "Het document kon hier niet worden geopend.", "bk_sbook": "Zoeken in het document", "bk_sbook_ph": "In dit document", "bk_toc_e": "Dit document heeft geen inhoudsopgave. Ga naar een pagina:", "bk_fin_e": "Documenten die je hebt uitgelezen, verschijnen hier.", "bka_add": "Document toevoegen", "bka_del_q": "Het document “{t}” en het bestand verwijderen?", "bk_sort_topic": "Per onderwerp", "bk_browse": "Onderwerpen", "bk_cat_rules": "Officiële reglementen", "bk_cat_vc": "Video Challenge-documenten", "bk_cat_tech": "Materiaal en technische handleidingen", "bk_cat_training": "Opleiding", "bk_cat_other": "Andere documenten", "bka_topic": "Onderwerp (sectie waar het document verschijnt)", "bka_move": "Onderwerp:", "bka_up": "Omhoog", "bka_down": "Omlaag", "bka_cat_empty": "Nog geen documenten in dit onderwerp.", "bka_ord_err": "De volgorde kon niet worden opgeslagen. Probeer opnieuw.", "bka_help": "Elk document staat in één onderwerp. Kies een ander onderwerp in het menu om een document te verplaatsen. Met ↑ ↓ verander je de volgorde binnen het onderwerp. ✎ wijzigt titel, beschrijving en bron.", "doc_title": "Video's & foto's", "doc_sub": "Opleidingsvideo's, presentaties en foto's van de zalen."});
-Object.assign(T.en,{"rs_next":"Next","rs_prog":"{p}% complete","rs_allok":"All OK","rs_flags":"{n} answers to check","rs_ans":"{n} of {m} answered","rs_todo":"To complete","rs_open":"Tap to open"});
-Object.assign(T.fr,{"rs_next":"Suivant","rs_prog":"{p} % complété","rs_allok":"Tout est OK","rs_flags":"{n} réponses à vérifier","rs_ans":"{n} sur {m} répondues","rs_todo":"À compléter","rs_open":"Touchez pour ouvrir"});
-Object.assign(T.nl,{"rs_next":"Volgende","rs_prog":"{p}% ingevuld","rs_allok":"Alles OK","rs_flags":"{n} antwoorden om na te kijken","rs_ans":"{n} van {m} beantwoord","rs_todo":"In te vullen","rs_open":"Tik om te openen"});
 Object.assign(T.en,{vx_search_ph:"Search videos",vx_featured:"Featured",vx_watch:"Watch",vx_open_sl:"Open",vx_topics:"Browse by topic",vx_latest:"Latest videos",vx_back:"All videos",vx_results:"Results",vt_rules:"Rules situations",vt_system:"Video Challenge system",vt_training:"Training",vt_slides:"Slides",vt_other:"Other videos"});
 Object.assign(T.fr,{vx_search_ph:"Rechercher des vidéos",vx_featured:"À la une",vx_watch:"Regarder",vx_open_sl:"Ouvrir",vx_topics:"Parcourir par sujet",vx_latest:"Dernières vidéos",vx_back:"Toutes les vidéos",vx_results:"Résultats",vt_rules:"Situations de jeu",vt_system:"Système Video Challenge",vt_training:"Formation",vt_slides:"Présentations",vt_other:"Autres vidéos"});
 Object.assign(T.nl,{vx_search_ph:"Video's zoeken",vx_featured:"Uitgelicht",vx_watch:"Bekijken",vx_open_sl:"Openen",vx_topics:"Bladeren per onderwerp",vx_latest:"Nieuwste video's",vx_back:"Alle video's",vx_results:"Resultaten",vt_rules:"Spelsituaties",vt_system:"Video Challenge-systeem",vt_training:"Opleiding",vt_slides:"Presentaties",vt_other:"Andere video's"});
@@ -3894,105 +3862,6 @@ genbtn.addEventListener("click",async()=>{
   finally{genbtn.disabled=false;genbtn.textContent=t("btn_send");}
 });
 
-/* ===== Report «Sezioni numerate»: 5 schede numerate, riepilogo, avanzamento, bottone fisso ===== */
-var RS={secs:[],seen:{}};
-function rsInit(){
-  var fc=document.getElementById("formcard");if(!fc||fc.classList.contains("rs"))return;
-  fc.classList.add("rs");
-  var prog=document.createElement("div");prog.className="rs-prog";prog.innerHTML='<div class="rs-bar"><i id="rs_bar"></i></div><div class="rs-pt" id="rs_pt"></div>';
-  fc.insertBefore(prog,fc.firstChild);
-  var fs=Array.prototype.slice.call(fc.querySelectorAll(":scope>fieldset.fgroup"));
-  fs.forEach(function(f,i){
-    var lg=f.querySelector(":scope>legend");
-    var hd=document.createElement("div");hd.className="rs-hd";hd.setAttribute("role","button");hd.tabIndex=0;
-    hd.innerHTML='<span class="rs-n">'+(i+1)+'</span><span class="rs-tt"><div class="rs-t"></div><div class="rs-s"></div></span><svg class="rs-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#0E9F6E"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="rs-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
-    var bd=document.createElement("div");bd.className="rs-bd";
-    Array.prototype.slice.call(f.childNodes).forEach(function(n){if(n!==lg)bd.appendChild(n);});
-    if(i<fs.length-1){var nx=document.createElement("button");nx.type="button";nx.className="rs-next";nx.addEventListener("click",function(e){e.preventDefault();rsNext(i);});bd.appendChild(nx);}
-    if(lg)lg.after(hd);else f.appendChild(hd);f.appendChild(bd);
-    hd.addEventListener("click",function(){rsToggle(i);});
-    hd.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();rsToggle(i);}});
-    RS.secs.push({f:f,lg:lg,hd:hd});
-  });
-  var note=fc.querySelector(":scope>.sendnote");var btn=document.getElementById("genbtn");var st=document.getElementById("submitstatus");
-  var sw=document.createElement("div");sw.className="rs-send";
-  if(btn){btn.parentNode.insertBefore(sw,btn);sw.appendChild(btn);}if(st)sw.appendChild(st);
-  rsOpen(0,true);
-  fc.addEventListener("click",function(){setTimeout(rsRender,0);});
-  fc.addEventListener("input",function(){setTimeout(rsRender,0);});
-  fc.addEventListener("change",function(){setTimeout(rsRender,0);});
-  if(btn)btn.addEventListener("click",function(){setTimeout(rsAfterSubmit,30);});
-  setInterval(function(){var r=document.getElementById("report");if(r&&r.offsetParent!==null)rsRender();},1500);
-  rsRender();
-}
-function rsOpen(i,on){var s=RS.secs[i];if(!s)return;s.f.classList.toggle("open",on);if(on)RS.seen[i]=1;}
-function rsToggle(i){var s=RS.secs[i];rsOpen(i,!s.f.classList.contains("open"));rsRender();}
-function rsNext(i){rsOpen(i,false);rsOpen(i+1,true);rsRender();var n=RS.secs[i+1];if(n)try{n.f.scrollIntoView({behavior:"smooth",block:"start"});}catch(_){}}
-function rsSegOn(k){var g=document.querySelector('.seg[data-k="'+k+'"]');return g?g.querySelector("button.on"):null;}
-function rsDM(v){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||"");return m?m[3]+"/"+m[2]:"";}
-function rsState(i){
-  var f=RS.secs[i].f,done=false,sum="";
-  if(i===0){
-    var ref=(document.getElementById("f_ref")||{}).value||"",tm=(document.getElementById("f_team")||{}).value||"";
-    var pb=document.getElementById("pi_box"),piOk=true;
-    if(pb&&pb.style.display!=="none"){pb.querySelectorAll("#pi_list .pi-item").forEach(function(it){if(!it.querySelector(".pi-seg button.on"))piOk=false;});}
-    var lg=document.querySelector("#seg_league button.on");
-    done=!!ref.trim()&&piOk;
-    sum=[ref,tm,lg?lg.textContent:"",rsDM((document.getElementById("f_date")||{}).value)].filter(Boolean).join(" · ");
-  }else if(i===1){
-    var segs=f.querySelectorAll(".seg[data-k]"),nOn=0,nFlag=0;
-    segs.forEach(function(g){var b=g.querySelector("button.on");if(b){nOn++;if(b!==g.querySelector("button"))nFlag++;}});
-    done=nOn===segs.length&&!!RS.seen[i];
-    sum=nOn<segs.length?t("rs_ans").replace("{n}",nOn).replace("{m}",segs.length):nFlag?t("rs_flags").replace("{n}",nFlag):t("rs_allok");
-  }else if(i===2){
-    var ks=[["gs_split","gs_split_s"],["gs_bm","gs_bm_s"],["gs_del","gs_del_s"]],n=0,parts=[];
-    ks.forEach(function(k){var b=rsSegOn(k[0]);if(b){n++;parts.push(t(k[1])+": "+b.textContent);}});
-    done=n===3;sum=n===3?parts.join(" · "):t("rs_ans").replace("{n}",n).replace("{m}",3);
-  }else if(i===3){
-    var cv=function(k){var x=document.querySelector('select.cnt[data-k="'+k+'"]');return x?(parseInt(x.value)||0):0;};
-    done=!!RS.seen[i];
-    sum=t("pv_total")+" "+cv("total")+" · "+t("pv_right")+" "+cv("right")+" · "+t("pv_wrong")+" "+cv("wrong");
-  }else{
-    var ch=Array.prototype.slice.call(f.querySelectorAll(".chip.on")).map(function(c){return c.textContent;});
-    var fr=document.getElementById("fix_row"),fixOk=!fr||fr.style.display==="none"||!!fr.querySelector(".seg button.on");
-    done=ch.length>0&&fixOk&&!!RS.seen[i];
-    var st=document.querySelectorAll("#stars i.on").length;
-    sum=(ch.join(", ")||t("rs_todo"))+(st?" · "+st+"★":"");
-  }
-  return {done:done,sum:sum};
-}
-function rsRender(){
-  if(!RS.secs.length)return;var nd=0;
-  RS.secs.forEach(function(s,i){
-    var r=rsState(i);if(r.done)nd++;
-    s.f.classList.toggle("rs-done",r.done);
-    s.hd.querySelector(".rs-t").textContent=s.lg?s.lg.textContent:"";
-    var sm=r.sum||t("rs_open");var se=s.hd.querySelector(".rs-s");if(se.textContent!==sm)se.textContent=sm;
-    if(!s.f.querySelector(".err")&&(r.done||!s.f.classList.contains("rs-need")))s.f.classList.remove("rs-bad","rs-need");
-    var nx=s.f.querySelector(".rs-next");if(nx)nx.textContent=t("rs_next")+" →";
-  });
-  var p=Math.round(nd*100/RS.secs.length);
-  var b=document.getElementById("rs_bar");if(b)b.style.width=p+"%";
-  var pt=document.getElementById("rs_pt");if(pt)pt.textContent=t("rs_prog").replace("{p}",p);
-}
-function rsAfterSubmit(){
-  var st=document.getElementById("submitstatus");if(!st||!st.classList.contains("bad"))return rsRender();
-  var first=null;
-  RS.secs.forEach(function(s,i){
-    var bad=!!s.f.querySelector(".err");var r=rsState(i);
-    var fr=document.getElementById("fix_row");
-    var need=(i===0&&!r.done)||(i===2&&!r.done)||(i===4&&fr&&fr.style.display!=="none"&&!fr.querySelector(".seg button.on"));
-    if(bad||need)rsOpen(i,true);
-    if(need)s.f.classList.add("rs-bad","rs-need");
-    if(need&&!bad&&first===null)first=i;
-    if(bad){s.f.classList.add("rs-bad");if(first===null)first=i;}
-  });
-  rsRender();
-  var tg=first!==null?(RS.secs[first].f.querySelector(".err")||RS.secs[first].f):null;
-  if(tg)try{tg.scrollIntoView({behavior:"smooth",block:"center"});}catch(_){}
-  if(first===0){var ref=document.getElementById("f_ref");if(ref&&ref.classList.contains("err"))try{ref.focus();}catch(_){}}
-}
-rsInit();
 
 async function adminCall(action,payload){
   const res=await fetch(FN+"/admin-write",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({password:ADMIN_PW,action:action},payload||{}))});
