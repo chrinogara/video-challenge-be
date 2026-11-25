@@ -1970,6 +1970,55 @@ input,select,textarea{color-scheme:dark}
 .dc-tx .bk-bar{margin-top:4px}
 .dc-new{font-style:normal;display:inline-block;vertical-align:2px;margin-left:4px;padding:1px 7px;border-radius:99px;background:#22C55E;color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.03em}
 .dc-lh{gap:12px}.dc-lh h1{font-size:26px!important}
+/* ── Pagina Video: proposta C «Argomenti e griglia» (25/11/2026, scelta utente) ── */
+#vidgrid.vx{background:transparent!important;border-radius:0;overflow:visible}
+.vx-sr{display:flex;align-items:center;gap:10px;margin:4px 0 14px;padding:11px 14px;border-radius:14px;border:1px solid rgba(147,197,253,.35);background:rgba(255,255,255,.05);color:var(--muted)}
+.vx-sr svg{width:18px;height:18px;flex:none}
+.vx-sr input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:15px;outline:none;-webkit-appearance:none}
+.vx-feat{border-radius:18px;padding:12px;border:1px solid rgba(147,197,253,.28);background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.04));box-shadow:0 10px 26px rgba(0,0,0,.3)}
+.vx-feat .lb{display:block;font-size:12.5px;color:var(--muted);margin:0 0 8px 2px}
+.vx-feat .th{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;border-radius:12px;overflow:hidden;background:#0B1B44;cursor:pointer}
+.vx-feat .th img,.vx-feat .th .vx-gen{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vx-feat>b{display:block;font-family:var(--fd);font-size:19px;font-weight:800;color:var(--ink);margin:12px 2px 10px;line-height:1.25}
+.vx-watch{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;padding:9px 18px;background:#22C55E;color:#04210F;font:inherit;font-weight:800;font-size:15px;cursor:pointer}
+.vx-watch svg{width:16px;height:16px}
+.vx-h{font-family:var(--fd);font-size:18px;font-weight:800;color:var(--ink);margin:22px 2px 12px}
+.vx-h i{font-style:normal;font-size:13px;color:#BFDBFE;background:rgba(59,130,246,.18);border-radius:99px;padding:2px 9px;margin-left:6px;vertical-align:2px}
+.vx-topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.vx-topic{display:flex;align-items:center;gap:10px;min-height:76px;padding:10px 12px;border-radius:16px;border:1px solid rgba(147,197,253,.26);background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.04));color:var(--ink);text-align:left;font:inherit;cursor:pointer}
+.vx-topic.empty{opacity:.55}
+.vx-topic .ic{flex:none;width:52px;height:52px;display:flex;align-items:center;justify-content:center}
+.vx-topic .ic img{width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.vx-topic.my .ic svg{width:30px;height:30px;color:var(--lime)}
+.vx-topic .tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.vx-topic b{font-size:14.5px;font-weight:700;line-height:1.25}
+.vx-topic small{font-size:12.5px;color:var(--muted)}
+.vx-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px;padding-bottom:10px}
+@media(min-width:900px){.vx-cards{grid-template-columns:repeat(3,minmax(0,1fr))}.vx-topics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.vx-card{display:flex;flex-direction:column;gap:7px;border:0;padding:0;background:none;color:var(--ink);text-align:left;font:inherit;cursor:pointer}
+.vx-card .th{position:relative;display:block;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#0B1B44;border:1px solid rgba(147,197,253,.22)}
+.vx-card .th img,.vx-card .th .vx-gen{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vx-card .ty{position:absolute;left:6px;top:6px;z-index:2;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;color:#fff}
+.vx-card .ty svg{width:12px;height:12px}
+.vx-card .newbadge{position:absolute;right:6px;top:6px;z-index:2;margin:0}
+.vx-card .vx-dur{right:6px;bottom:6px}
+.vx-card b{font-size:13.5px;font-weight:700;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vx-back{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:#93C5FD;font:inherit;font-weight:700;font-size:14px;padding:2px 0;cursor:pointer}
+.vx-back svg{width:18px;height:18px}
+.vx-th{display:flex;align-items:center;gap:10px;margin:10px 2px 14px}
+.vx-th .ic img{width:48px;height:48px;object-fit:contain}
+.vx-th h4{flex:1;margin:0;font-family:var(--fd);font-size:22px;font-weight:800;color:var(--ink)}
+.vx-th i{font-style:normal;font-size:13px;color:#BFDBFE;background:rgba(59,130,246,.18);border-radius:99px;padding:2px 10px}
+.vx-ov{position:fixed;inset:0;z-index:400;background:#050C22;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.vx-ov[hidden]{display:none}
+.vx-ovin{max-width:900px;margin:0 auto;padding:env(safe-area-inset-top) 0 calc(30px + env(safe-area-inset-bottom))}
+.vx-ovtop{display:flex;align-items:center;gap:10px;padding:10px 12px;color:var(--ink)}
+.vx-ovtop b{font-family:var(--fd);font-size:17px}
+.vx-ovx{width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.vx-ovx svg{width:20px;height:20px}
+.vx-ov .vx-h,.vx-ov .vx-cards{margin-left:14px;margin-right:14px}
+body.vx-lock{overflow:hidden}
+@media(min-width:760px){.vx-feat{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);grid-template-rows:auto 1fr auto;column-gap:18px;align-items:start}.vx-feat .lb{grid-column:2;grid-row:1;margin-top:4px}.vx-feat .th{grid-column:1;grid-row:1/4}.vx-feat>b{grid-column:2;grid-row:2;font-size:22px;margin-top:4px}.vx-feat .vx-watch{grid-column:2;grid-row:3;justify-self:start}}
 </style>
 </head>
 <body>
@@ -3142,6 +3191,9 @@ Object.assign(T.nl,{"bk_download":"Downloaden"});
 Object.assign(T.en,{"mbook": "Documents", "bk_home_d": "Official rules, Video Challenge documents and guides, by topic.", "ad_d_books": "Documents by topic: rules, Video Challenge, guides", "bk_nobooks": "No documents", "bk_nobooks_s": "Documents added by the coordinator will appear here.", "bk_book": "Document", "bk_new": "New documents", "bk_new_s": "Added in the last 7 days", "bk_all": "All documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, topics and authors", "bk_share": "Share document", "bk_opening": "Opening the document…", "bk_open_err": "The document could not be opened here.", "bk_sbook": "Search in the document", "bk_sbook_ph": "In this document", "bk_toc_e": "This document has no table of contents. Go to a page:", "bk_fin_e": "Documents you have finished appear here.", "bka_add": "Add document", "bka_del_q": "Delete the document “{t}” and its file?", "bk_sort_topic": "By topic", "bk_browse": "Topics", "bk_cat_rules": "Official rules", "bk_cat_vc": "Video Challenge documents", "bk_cat_tech": "Equipment & technical guides", "bk_cat_training": "Training", "bk_cat_other": "Other documents", "bka_topic": "Topic (section where the document appears)", "bka_move": "Topic:", "bka_up": "Move up", "bka_down": "Move down", "bka_cat_empty": "No documents in this topic yet.", "bka_ord_err": "The order could not be saved. Try again.", "bka_help": "Every document is in one topic. To move a document, choose another topic in its menu. Use ↑ ↓ to change the order inside a topic. ✎ edits title, description and source.", "doc_title": "Video & photos", "doc_sub": "Training videos, slides and photos of the halls."});
 Object.assign(T.fr,{"mbook": "Documents", "bk_home_d": "Règlements officiels, documents Video Challenge et guides, par sujet.", "ad_d_books": "Documents par sujet : règlements, Video Challenge, guides", "bk_nobooks": "Aucun document", "bk_nobooks_s": "Les documents ajoutés par le coordinateur apparaîtront ici.", "bk_book": "Document", "bk_new": "Nouveaux documents", "bk_new_s": "Ajoutés ces 7 derniers jours", "bk_all": "Tous les documents", "bk_count": "{n} documents", "bk_count1": "1 document", "bk_search_ph": "Documents, sujets et auteurs", "bk_share": "Partager le document", "bk_opening": "Ouverture du document…", "bk_open_err": "Le document n'a pas pu être ouvert ici.", "bk_sbook": "Rechercher dans le document", "bk_sbook_ph": "Dans ce document", "bk_toc_e": "Ce document n'a pas de table des matières. Aller à une page :", "bk_fin_e": "Les documents terminés apparaissent ici.", "bka_add": "Ajouter un document", "bka_del_q": "Supprimer le document « {t} » et son fichier ?", "bk_sort_topic": "Par sujet", "bk_browse": "Sujets", "bk_cat_rules": "Règlements officiels", "bk_cat_vc": "Documents Video Challenge", "bk_cat_tech": "Matériel et guides techniques", "bk_cat_training": "Formation", "bk_cat_other": "Autres documents", "bka_topic": "Sujet (section où le document apparaît)", "bka_move": "Sujet :", "bka_up": "Monter", "bka_down": "Descendre", "bka_cat_empty": "Pas encore de documents dans ce sujet.", "bka_ord_err": "L'ordre n'a pas pu être enregistré. Réessayez.", "bka_help": "Chaque document est dans un sujet. Pour déplacer un document, choisissez un autre sujet dans son menu. ↑ ↓ changent l'ordre dans le sujet. ✎ modifie le titre, la description et la source.", "doc_title": "Vidéos & photos", "doc_sub": "Vidéos de formation, présentations et photos des salles."});
 Object.assign(T.nl,{"mbook": "Documenten", "bk_home_d": "Officiële reglementen, Video Challenge-documenten en handleidingen, per onderwerp.", "ad_d_books": "Documenten per onderwerp: reglementen, Video Challenge, handleidingen", "bk_nobooks": "Geen documenten", "bk_nobooks_s": "Documenten die de coördinator toevoegt, verschijnen hier.", "bk_book": "Document", "bk_new": "Nieuwe documenten", "bk_new_s": "Toegevoegd in de laatste 7 dagen", "bk_all": "Alle documenten", "bk_count": "{n} documenten", "bk_count1": "1 document", "bk_search_ph": "Documenten, onderwerpen en auteurs", "bk_share": "Document delen", "bk_opening": "Document openen…", "bk_open_err": "Het document kon hier niet worden geopend.", "bk_sbook": "Zoeken in het document", "bk_sbook_ph": "In dit document", "bk_toc_e": "Dit document heeft geen inhoudsopgave. Ga naar een pagina:", "bk_fin_e": "Documenten die je hebt uitgelezen, verschijnen hier.", "bka_add": "Document toevoegen", "bka_del_q": "Het document “{t}” en het bestand verwijderen?", "bk_sort_topic": "Per onderwerp", "bk_browse": "Onderwerpen", "bk_cat_rules": "Officiële reglementen", "bk_cat_vc": "Video Challenge-documenten", "bk_cat_tech": "Materiaal en technische handleidingen", "bk_cat_training": "Opleiding", "bk_cat_other": "Andere documenten", "bka_topic": "Onderwerp (sectie waar het document verschijnt)", "bka_move": "Onderwerp:", "bka_up": "Omhoog", "bka_down": "Omlaag", "bka_cat_empty": "Nog geen documenten in dit onderwerp.", "bka_ord_err": "De volgorde kon niet worden opgeslagen. Probeer opnieuw.", "bka_help": "Elk document staat in één onderwerp. Kies een ander onderwerp in het menu om een document te verplaatsen. Met ↑ ↓ verander je de volgorde binnen het onderwerp. ✎ wijzigt titel, beschrijving en bron.", "doc_title": "Video's & foto's", "doc_sub": "Opleidingsvideo's, presentaties en foto's van de zalen."});
+Object.assign(T.en,{vx_search_ph:"Search videos",vx_featured:"Featured",vx_watch:"Watch",vx_open_sl:"Open",vx_topics:"Browse by topic",vx_latest:"Latest videos",vx_back:"All videos",vx_results:"Results",vt_rules:"Rules situations",vt_system:"Video Challenge system",vt_training:"Training",vt_slides:"Slides",vt_other:"Other videos"});
+Object.assign(T.fr,{vx_search_ph:"Rechercher des vidéos",vx_featured:"À la une",vx_watch:"Regarder",vx_open_sl:"Ouvrir",vx_topics:"Parcourir par sujet",vx_latest:"Dernières vidéos",vx_back:"Toutes les vidéos",vx_results:"Résultats",vt_rules:"Situations de jeu",vt_system:"Système Video Challenge",vt_training:"Formation",vt_slides:"Présentations",vt_other:"Autres vidéos"});
+Object.assign(T.nl,{vx_search_ph:"Video's zoeken",vx_featured:"Uitgelicht",vx_watch:"Bekijken",vx_open_sl:"Openen",vx_topics:"Bladeren per onderwerp",vx_latest:"Nieuwste video's",vx_back:"Alle video's",vx_results:"Resultaten",vt_rules:"Spelsituaties",vt_system:"Video Challenge-systeem",vt_training:"Opleiding",vt_slides:"Presentaties",vt_other:"Andere video's"});
 Object.assign(T.en,{"dc_recent":"Recently added","dc_pages":"{n} pages"});
 Object.assign(T.fr,{"dc_recent":"Ajoutés récemment","dc_pages":"{n} pages"});
 Object.assign(T.nl,{"dc_recent":"Onlangs toegevoegd","dc_pages":"{n} pagina's"});
@@ -3387,6 +3439,8 @@ const SLIDE_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" str
 function vidMap(x){return {id:x.id,title:x.title||"",sub:x.subtitle||"",url:x.url||"",dur:x.duration||"",created_at:x.created_at,desc:x.description||"",presenter:x.presenter||"",cat:x.category||"",cover:x.cover_url||"",kind:x.kind||"",published:x.published!==false,sort:Number(x.sort_order)||0};}
 var VX={cur:null,play:false,tab:"more",cat:"",more:false};
 var VX_I={
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>',
   slides:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>',
   plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg>',
@@ -3426,50 +3480,69 @@ function vxStage(v){
 }
 function vxPost(v,cur){var k=vxKind(v);
   return '<button type="button" class="vx-post'+(cur?' cur':'')+'" data-id="'+esc(v.id)+'" onclick="vxPick(this.dataset.id)">'+vxImg(v)+'<span class="ty">'+(k==="slides"?VX_I.slides:VX_I.play)+'</span>'+(isRecent(v.created_at)?newBadge():'')+'<b>'+esc(v.title)+'</b></button>';}
+var VX_TOPICS=["rules","system","training","slides","other"];
+function vxTopic(v){if(vxKind(v)==="slides")return"slides";var c=(v.cat||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  if(!c)return"other";if(VX_TOPICS.indexOf(c)>=0)return c;
+  if(/rule|regle|regel|situation|spelsit/.test(c))return"rules";if(/system|systeme|systeem|challenge|camera|setup/.test(c))return"system";
+  if(/train|format|opleid|cours|course/.test(c))return"training";if(/slide|present/.test(c))return"slides";return"other";}
+function vxTopicIc(k){return '<img src="icons/vid-'+k+'.png?v=1" alt="" width="52" height="52" decoding="async">';}
+function vxCard(v){return '<button type="button" class="vx-card" data-id="'+esc(v.id)+'" onclick="vxOpen(this.dataset.id)"><span class="th">'+vxImg(v)+'<span class="ty">'+(vxKind(v)==="slides"?VX_I.slides:VX_I.play)+'</span>'+(isRecent(v.created_at)?newBadge():'')+(v.dur?'<span class="vx-dur">'+esc(v.dur)+'</span>':'')+'</span><b>'+esc(v.title)+'</b></button>';}
+function vxCards(L){return L.length?'<div class="vx-cards">'+L.map(vxCard).join("")+'</div>':'<div class="vx-note">'+esc(dvT("vx_none"))+'</div>';}
 function renderVideos(){
   var L=vxList();admCount("libvids",L.length);setHeadNew("hn_libvids",L);
   var el=document.getElementById("vidgrid");if(!el)return;
-  if(!L.length){el.innerHTML='<div class="vx-empty">'+esc(dvT("vid_empty"))+'</div>';return;}
-  var v=L.filter(function(x){return x.id===VX.cur;})[0];if(!v){v=L[0];VX.cur=v.id;VX.play=false;}
-  var k=vxKind(v),my=vxMy(),inList=my.indexOf(v.id)>-1;
-  /* keep the running player when the page is redrawn (language change, data refresh) */
-  var oldStage=document.getElementById("vx_stage"),keep=VX.play&&oldStage&&oldStage.dataset.id===v.id;
-  var desc=v.desc||v.sub||"",longDesc=desc.length>170||desc.split("\n").length>3;
-  var meta=[];if(isRecent(v.created_at))meta.push(newBadge());meta.push('<span class="k">'+esc(dvT(k==="slides"?"vx_k_slides":"vx_k_video"))+'</span>');
-  if(v.cat)meta.push('<span>'+esc(v.cat)+'</span>');if(v.dur)meta.push('<span>'+esc(v.dur)+'</span>');if(v.desc&&v.sub)meta.push('<span>'+esc(v.sub)+'</span>');
-  var h='<div class="vx-stage" id="vx_stage" data-id="'+esc(v.id)+'"></div><div class="vx-bar"><i style="width:'+(VX.play?100:0)+'%"></i></div>'
+  if(!L.length){el.innerHTML='<div class="vx-empty">'+esc(dvT("vid_empty"))+'</div>';vxOvRender();return;}
+  var q=(VX.q||"").trim().toLowerCase(),h='<div class="vx-sr">'+VX_I.search+'<input type="search" id="vx_q" autocomplete="off" placeholder="'+esc(dvT("vx_search_ph"))+'" value="'+esc(VX.q||"")+'" oninput="VX.q=this.value;renderVideos();var i=document.getElementById(\'vx_q\');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}"></div>';
+  if(q){var R=L.filter(function(v){return (v.title+" "+v.cat+" "+v.desc+" "+v.presenter).toLowerCase().indexOf(q)>=0;});
+    el.innerHTML=h+'<h4 class="vx-h">'+esc(dvT("vx_results"))+' <i>'+R.length+'</i></h4>'+vxCards(R);vxOvRender();return;}
+  if(VX.topic){var T=L.filter(function(v){return vxTopic(v)===VX.topic;});
+    el.innerHTML=h+'<button type="button" class="vx-back" onclick="VX.topic=\'\';renderVideos()">'+VX_I.back+'<span>'+esc(dvT("vx_back"))+'</span></button><div class="vx-th"><span class="ic">'+vxTopicIc(VX.topic)+'</span><h4>'+esc(dvT("vt_"+VX.topic))+'</h4><i>'+T.length+'</i></div>'+vxCards(T);vxOvRender();return;}
+  if(VX.tab==="my"){var my=vxMy().map(function(id){return L.filter(function(x){return x.id===id;})[0];}).filter(Boolean);
+    el.innerHTML=h+'<button type="button" class="vx-back" onclick="VX.tab=\'more\';renderVideos()">'+VX_I.back+'<span>'+esc(dvT("vx_back"))+'</span></button><h4 class="vx-h">'+esc(dvT("vx_tab_my"))+' <i>'+my.length+'</i></h4>'+(my.length?vxCards(my):'<div class="vx-note">'+esc(dvT("vx_my_empty"))+'</div>');vxOvRender();return;}
+  var f=L[0];
+  h+='<div class="vx-feat"><span class="lb">'+esc(dvT("vx_featured"))+'</span><button type="button" class="th" data-id="'+esc(f.id)+'" onclick="vxOpen(this.dataset.id)">'+vxImg(f)+(f.dur?'<span class="vx-dur">'+esc(f.dur)+'</span>':'')+'</button><b>'+esc(f.title)+'</b><button type="button" class="vx-watch" data-id="'+esc(f.id)+'" onclick="vxOpen(this.dataset.id)">'+VX_I.play+'<span>'+esc(dvT(vxKind(f)==="slides"?"vx_open_sl":"vx_watch"))+'</span></button></div>';
+  h+='<h4 class="vx-h">'+esc(dvT("vx_topics"))+'</h4><div class="vx-topics">'+VX_TOPICS.map(function(k){var n=L.filter(function(v){return vxTopic(v)===k;}).length;
+    return '<button type="button" class="vx-topic'+(n?'':' empty')+'" data-k="'+k+'" onclick="VX.topic=this.dataset.k;renderVideos()"><span class="ic">'+vxTopicIc(k)+'</span><span class="tx"><b>'+esc(dvT("vt_"+k))+'</b><small>'+n+'</small></span></button>';}).join("");
+  var myn=vxMy().filter(function(id){return L.some(function(x){return x.id===id;});}).length;
+  if(myn)h+='<button type="button" class="vx-topic my" onclick="VX.tab=\'my\';renderVideos()"><span class="ic">'+VX_I.check+'</span><span class="tx"><b>'+esc(dvT("vx_tab_my"))+'</b><small>'+myn+'</small></span></button>';
+  h+='</div><h4 class="vx-h">'+esc(dvT("vx_latest"))+'</h4>'+vxCards(L.slice().sort(function(a,b){return String(b.created_at||"").localeCompare(String(a.created_at||""));}));
+  el.innerHTML=h;vxOvRender();
+}
+/* full-screen player: opens when a video is tapped */
+function vxOpen(id){VX.cur=id;VX.play=false;VX.more=false;VX.ov=true;vxOvRender();var v=vxCurV();if(v&&v.url)vxPlay();
+  try{if(!(history.state&&history.state.vxov))history.pushState({vxov:1},"");}catch(e){}}
+function vxClose(viaBack){VX.ov=false;VX.play=false;var o=document.getElementById("vx_ov");if(o){o.hidden=true;o.innerHTML="";}document.body.classList.remove("vx-lock");
+  if(!viaBack){try{if(history.state&&history.state.vxov)history.back();}catch(e){}}}
+window.addEventListener("popstate",function(){if(VX.ov)vxClose(true);});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&VX.ov)vxClose();});
+function vxOvRender(){if(!VX.ov)return;var v=vxCurV();if(!v){vxClose();return;}
+  var o=document.getElementById("vx_ov");if(!o){o=document.createElement("div");o.id="vx_ov";o.className="vx-ov";o.setAttribute("role","dialog");document.body.appendChild(o);}
+  var oldStage=document.getElementById("vx_stage"),keep=VX.play&&oldStage&&oldStage.dataset.id===v.id&&o.contains(oldStage);
+  var k=vxKind(v),inList=vxMy().indexOf(v.id)>-1,desc=v.desc||v.sub||"",longDesc=desc.length>170||desc.split("\n").length>3;
+  var meta=[];if(isRecent(v.created_at))meta.push(newBadge());meta.push('<span class="k">'+esc(dvT(k==="slides"?"vx_k_slides":"vx_k_video"))+'</span>');meta.push('<span>'+esc(dvT("vt_"+vxTopic(v)))+'</span>');if(v.dur)meta.push('<span>'+esc(v.dur)+'</span>');
+  var L=vxList(),rel=L.filter(function(x){return x.id!==v.id&&vxTopic(x)===vxTopic(v);}).concat(L.filter(function(x){return x.id!==v.id&&vxTopic(x)!==vxTopic(v);}));
+  o.innerHTML='<div class="vx-ovin"><div class="vx-ovtop"><button type="button" class="vx-ovx" onclick="vxClose()" aria-label="Close">'+VX_I.back+'</button><b>'+esc(dvT("vid_title"))+'</b></div>'
+   +'<div class="vx-stage" id="vx_stage" data-id="'+esc(v.id)+'"></div><div class="vx-bar"><i style="width:'+(VX.play?100:0)+'%"></i></div>'
    +'<div class="vx-info"><h3 class="vx-title">'+esc(v.title)+'</h3><div class="vx-meta">'+meta.join("")+'</div>'
-   +(desc?'<p class="vx-desc'+(longDesc&&!VX.more?' clamp':'')+'">'+esc(desc)+'</p>'+(longDesc?'<button type="button" class="vx-morebtn" onclick="VX.more=!VX.more;renderVideos()">'+esc(dvT(VX.more?"vx_less":"vx_more"))+'</button>':''):'')
+   +(desc?'<p class="vx-desc'+(longDesc&&!VX.more?' clamp':'')+'">'+esc(desc)+'</p>'+(longDesc?'<button type="button" class="vx-morebtn" onclick="VX.more=!VX.more;vxOvRender()">'+esc(dvT(VX.more?"vx_less":"vx_more"))+'</button>':''):'')
    +(v.presenter?'<div class="vx-cred">'+esc(dvT("vx_by"))+': '+esc(v.presenter)+'</div>':'')+'</div>'
    +'<div class="vx-acts"><button type="button" class="'+(inList?'on':'')+'" onclick="vxToggleMy()">'+(inList?VX_I.check:VX_I.plus)+'<span>'+esc(dvT("vx_mylist"))+'</span></button>'
    +'<button type="button" onclick="vxShare()">'+VX_I.share+'<span>'+esc(dvT("vx_share"))+'</span></button>'
    +(v.url?'<button type="button" onclick="vxFull()">'+VX_I.full+'<span>'+esc(dvT("vx_full"))+'</span></button>':'')+'</div>'
-   +'<div class="vx-tabs"><button type="button" class="'+(VX.tab==="more"?'on':'')+'" onclick="VX.tab=\'more\';renderVideos()">'+esc(dvT("vx_tab_more"))+'</button><button type="button" class="'+(VX.tab==="my"?'on':'')+'" onclick="VX.tab=\'my\';renderVideos()">'+esc(dvT("vx_tab_my"))+(my.length?' ('+my.filter(function(id){return L.some(function(x){return x.id===id;});}).length+')':'')+'</button></div>';
-  var grid;
-  if(VX.tab==="my"){grid=my.map(function(id){return L.filter(function(x){return x.id===id;})[0];}).filter(Boolean);
-    h+=grid.length?'<div class="vx-grid">'+grid.map(function(x){return vxPost(x,x.id===v.id);}).join("")+'</div>':'<div class="vx-note">'+esc(dvT("vx_my_empty"))+'</div>';}
-  else{var cats=[];L.forEach(function(x){if(x.cat&&cats.indexOf(x.cat)<0)cats.push(x.cat);});if(VX.cat&&cats.indexOf(VX.cat)<0)VX.cat="";
-    if(cats.length>1)h+='<div class="vx-chips"><button type="button" class="'+(VX.cat?'':'on')+'" onclick="VX.cat=\'\';renderVideos()">'+esc(dvT("vx_all"))+'</button>'+cats.map(function(c){return '<button type="button" class="'+(VX.cat===c?'on':'')+'" data-c="'+esc(c)+'" onclick="VX.cat=this.dataset.c;renderVideos()">'+esc(c)+'</button>';}).join("")+'</div>';
-    grid=L.filter(function(x){return !VX.cat||x.cat===VX.cat;});
-    /* same category as the video on top first */
-    if(!VX.cat&&v.cat)grid=grid.filter(function(x){return x.cat===v.cat;}).concat(grid.filter(function(x){return x.cat!==v.cat;}));
-    h+=grid.length?'<div class="vx-grid">'+grid.map(function(x){return vxPost(x,x.id===v.id);}).join("")+'</div>':'<div class="vx-note">'+esc(dvT("vx_none"))+'</div>';}
-  el.innerHTML=h;
-  var st=document.getElementById("vx_stage");
-  if(keep){st.replaceWith(oldStage);}else st.innerHTML=vxStage(v);
-}
+   +(rel.length?'<h4 class="vx-h">'+esc(dvT("vx_tab_more"))+'</h4>'+vxCards(rel.slice(0,12)):'')+'</div>';
+  o.hidden=false;document.body.classList.add("vx-lock");
+  var st=document.getElementById("vx_stage");if(keep)st.replaceWith(oldStage);else st.innerHTML=vxStage(v);}
 function vxCurV(){return vxList().filter(function(x){return x.id===VX.cur;})[0];}
 function vxPlay(){var v=vxCurV();if(!v||!v.url)return;VX.play=true;var st=document.getElementById("vx_stage");if(st){st.innerHTML=vxStage(v);var b=document.querySelector(".vx-bar i");if(b)b.style.width="100%";}}
 function vxStop(){VX.play=false;var v=vxCurV(),st=document.getElementById("vx_stage");if(v&&st){st.innerHTML=vxStage(v);var b=document.querySelector(".vx-bar i");if(b)b.style.width="0";}}
-function vxPick(id){if(VX.cur===id){vxPlay();return;}VX.cur=id;VX.play=false;VX.more=false;renderVideos();
-  var el=document.getElementById("vidgrid");if(el&&el.scrollIntoView)try{el.scrollIntoView({behavior:"smooth",block:"start"});}catch(e){el.scrollIntoView();}}
+function vxPick(id){vxOpen(id);}
 function vxToggleMy(){var a=vxMy(),i=a.indexOf(VX.cur);if(i>-1)a.splice(i,1);else a.unshift(VX.cur);vxMySet(a);renderVideos();}
 function vxFull(){var v=vxCurV();if(!v||!v.url)return;if(VX.play)vxStop();if(vxIsFile(v.url)){window.open(v.url,"_blank","noopener");return;}openViewer(v.title,v.url);}
 async function vxShare(){var v=vxCurV();if(!v)return;var url=location.origin+location.pathname+"#video="+v.id;
   try{if(navigator.share){await navigator.share({title:v.title,text:v.title,url:url});return;}}catch(e){if(e&&e.name==="AbortError")return;}
   try{await navigator.clipboard.writeText(url);alert(dvT("vx_copied"));}catch(e){prompt(dvT("vx_copy"),url);}}
 /* deep link: …/#video=<id> opens the video page with that video on top */
-(function(){var m=/[#&]video=([0-9a-f-]{36})/i.exec(location.hash||"");if(m){VX.cur=m[1];setTimeout(function(){if(typeof openLib==="function"){openLib("col_libvids");var c=document.getElementById("col_libvids");if(c)c.classList.remove("collapsed");renderVideos();}},700);}})();
+(function(){var m=/[#&]video=([0-9a-f-]{36})/i.exec(location.hash||"");if(m){VX.cur=m[1];setTimeout(function(){if(typeof openLib==="function"){openLib("col_libvids");var c=document.getElementById("col_libvids");if(c)c.classList.remove("collapsed");renderVideos();vxOpen(m[1]);}},700);}})();
 
 /* ── ADMIN: Video & slides (edge function vcbe-videos, admin password) ── */
 var VA={list:[],loaded:false,loading:false,edit:null,src:"link",cover:null,coverRm:false,busy:false};
@@ -3479,7 +3552,7 @@ async function vaRefreshPublic(){try{var v=await rest("vcbe_videos?select=*&publ
 function vaSorted(){return VA.list.slice().sort(function(a,b){return (a.sort-b.sort)||(String(b.created_at||"").localeCompare(String(a.created_at||"")));});}
 function vaRender(){var el=document.getElementById("mng_vidlist");if(!el)return;
   var L=VA.loaded?vaSorted():vxList();admCount("vids",L.length);
-  var dl=document.getElementById("va_cats");if(dl){var cs=[];L.forEach(function(x){if(x.cat&&cs.indexOf(x.cat)<0)cs.push(x.cat);});["Video Challenge","Training","Slides"].forEach(function(c){if(cs.indexOf(c)<0)cs.push(c);});dl.innerHTML=cs.map(function(c){return '<option value="'+esc(c)+'">';}).join("");}
+  var dl=document.getElementById("va_cats");if(dl){var cs=[];L.forEach(function(x){if(x.cat&&cs.indexOf(x.cat)<0)cs.push(x.cat);});["Rules situations","Video Challenge system","Training","Slides"].forEach(function(c){if(cs.indexOf(c)<0)cs.push(c);});dl.innerHTML=cs.map(function(c){return '<option value="'+esc(c)+'">';}).join("");}
   if(!L.length){el.innerHTML='<div class="hint">'+esc(dvT("vid_empty"))+'</div>';return;}
   el.innerHTML=L.map(function(v,i){var k=vxKind(v);
     return '<div class="va-row'+(v.published?'':' off')+'"><div class="va-th">'+vxImg(v)+'</div><div class="va-tx"><b>'+esc(v.title)+'</b><small>'+esc(dvT(k==="slides"?"vx_k_slides":"vx_k_video"))+(v.cat?' · '+esc(v.cat):'')+(v.published?'':' · <span class="hid">'+esc(dvT("va_hidden"))+'</span>')+'</small></div>'
